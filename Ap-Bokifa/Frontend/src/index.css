@@ -1,0 +1,49 @@
+/* d:/Projects/Ap-Bokifa-main/src/index.css */
+@import "tailwindcss";
+@plugin "daisyui";
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-color: #f9f5f0;
+}
+
+/* Add this to your main CSS file for multi-line truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* Sets the text to cut off exactly after the third line */
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+}
+
+a,
+button,
+[role="button"],
+[onclick],
+select,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}

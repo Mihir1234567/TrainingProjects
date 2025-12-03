@@ -1,0 +1,38 @@
+/* ProductLayoutLeftThumbs.css - placeholder styles
+   This file existed previously and imports failed in dev when it was missing.
+   Minimal styles to preserve layout and to be expanded later.
+*/
+
+/* Container adjustments used by product layout pages */
+.product-layout-left-thumbs {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Basic thumbnail styles */
+.product-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-thumbnails img {
+  width: 64px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main image area */
+.product-main-image {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Fallback responsive tweaks */
+@media (max-width: 768px) {
+  .product-layout-left-thumbs {
+    flex-direction: column;
+  }
+}
