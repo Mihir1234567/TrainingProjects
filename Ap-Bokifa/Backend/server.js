@@ -4,6 +4,7 @@ import app from "./app.js";
 
 const PORT = process.env.PORT || 4000;
 
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
@@ -15,4 +16,5 @@ mongoose
   })
   .catch((error) => {
     console.log("Failed to connect to MongoDB", error);
+    process.exit(1);
   });
