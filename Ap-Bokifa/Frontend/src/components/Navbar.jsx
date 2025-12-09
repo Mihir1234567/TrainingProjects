@@ -538,15 +538,14 @@ const SearchDrawer = ({ isOpen, onClose, products }) => {
   const [activeTab, setActiveTab] = useState("PRODUCTS");
 
   // Filter Logic
-  const filteredProducts = products.filter(
+  const filteredProducts = (products || []).filter(
     (product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.author.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredArticles = blogData.filter((article) =>
-    article.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredArticles = blogData.filter((article) => ... );
+  const filteredArticles = []; // Static data removed
 
   // Define pages locally or pass as prop. Since they are static in Navbar, we can redefine or move them out.
   // For now, I'll redefine the simple list here to avoid prop drilling complexity if they aren't changing.
@@ -1319,15 +1318,17 @@ const Navbar = ({
         )}
       </AnimatePresence>
 
-      {/* Search Drawer */}
-      <SearchDrawer
-        isOpen={isSearchOpen}
-        onClose={onSearchClose}
-        products={ALL_PRODUCTS}
-      />
-
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
+      {/* Search Drawer */}
+      {isSearchOpen && (
+        <SearchDrawer
+          isOpen={isSearchOpen}
+          onClose={onSearchClose}
+          products={[]} // TODO: Connect to backend search
+        />
+      )}
     </>
   );
 };

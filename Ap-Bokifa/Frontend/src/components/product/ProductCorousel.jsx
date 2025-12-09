@@ -3,7 +3,6 @@
 import React from "react";
 import Slider from "react-slick";
 import ProductCard from "./ProductCard";
-import ALL_PRODUCTS from "../productsData";
 
 // Import react-slick styles
 import "slick-carousel/slick/slick.css";
@@ -14,18 +13,13 @@ import { s } from "framer-motion/client";
 const ProductCarousel = ({
   title,
   onQuickView, // 1. You receive it here...
-  productIds,
+  products = [], // Changed from productIds to products array
   onViewProduct,
   slidesToShowCount = 4,
   // --- NEW PROPS ---
   showBrowseButton = true, // Default to true to not break other components
   titleCenter = false, // Default to false
 }) => {
-  // Filter ALL_PRODUCTS based on the passed IDs
-  const products = productIds
-    ? ALL_PRODUCTS.filter((p) => productIds.includes(p.id))
-    : ALL_PRODUCTS;
-
   // Configuration settings for the react-slick carousel
   const sliderSettings = {
     dots: false,
@@ -57,6 +51,10 @@ const ProductCarousel = ({
       },
     ],
   };
+
+  if (!products || products.length === 0) {
+    return null; // Don't render if no products
+  }
 
   return (
     <div className="py-12 px-4 sm:px-8 bg-white">

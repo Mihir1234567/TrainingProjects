@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Repeat } from "lucide-react";
 import Slider from "react-slick";
-import ALL_PRODUCTS from "/src/components/productsData";
+import { fetchProductById } from "../api/productService";
 import useRecentlyViewed from "/src/hooks/useRecentlyViwed";
 import ProductCarousel from "/src/components/product/ProductCorousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -739,30 +739,44 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const foundProduct = ALL_PRODUCTS.find((p) => p.id === parseInt(productId));
 
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setSelectedFormat("Paperback");
-      setSelectedImageIndex(0);
-      setEnlargedImageUrl(null);
-      setActiveTab("Description");
-      setIsReviewFormVisible(false);
-      setReviewSubmitted(false);
+    const loadProduct = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchProductById(productId);
+        if (data && data.success) {
+          // Backend returns { success: true, data: {...} }
+          const foundProduct = data.data;
+          setProduct(foundProduct);
+          setSelectedFormat("Paperback");
+          setSelectedImageIndex(0);
+          setEnlargedImageUrl(null);
+          setActiveTab("Description");
+          setIsReviewFormVisible(false);
+          setReviewSubmitted(false);
 
-      setTimeout(() => {
-        try {
-          addRecentlyViewed(foundProduct);
-        } catch (e) {
-          console.error(e);
+          setTimeout(() => {
+            try {
+              addRecentlyViewed(foundProduct);
+            } catch (e) {
+              console.error(e);
+            }
+          }, 0);
+        } else {
+          // Handle product not found or error structure
+          console.error("Product not found or invalid response");
+          navigate("/");
         }
-      }, 0);
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+        navigate("/");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-      setIsLoading(false);
-    } else {
-      navigate("/");
-    }
-  }, [productId, navigate]);
+    loadProduct();
+  }, [productId, navigate, addRecentlyViewed]);
 
   useEffect(() => {
     const checkVisibility = () => {

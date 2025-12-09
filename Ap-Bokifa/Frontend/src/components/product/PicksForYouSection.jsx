@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 1. Import useNavigate
 import { Heart, Star, ShoppingCart, Eye, Repeat } from "lucide-react";
-import ALL_PRODUCTS from "../productsData";
 import { useCurrency } from "../../context/CurrencyContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useCompare } from "../../context/CompareContext";
@@ -99,8 +98,8 @@ const SmallBookItem = ({ book, onViewProduct, currency }) => {
 
 // --- Main Component ---
 export const PicksForYouSection = ({
-  featuredBooks,
-  smallBook,
+  featuredBook, // Changed to receive object
+  smallBooks = [], // Changed to receive array of objects
   onViewProduct,
   onQuickView, // Make sure Parent passes this prop!
 }) => {
@@ -110,18 +109,13 @@ export const PicksForYouSection = ({
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Hook for navigation
 
-  const featuredBook = ALL_PRODUCTS.find((book) =>
-    featuredBooks.includes(book.id)
-  );
-  const smallBooks = ALL_PRODUCTS.filter((book) => smallBook.includes(book.id));
-
   const isWishlisted = featuredBook ? isInWishlist(featuredBook.id) : false;
   const isCompared = featuredBook ? isInCompare(featuredBook.id) : false;
 
   if (!featuredBook || smallBooks.length === 0) {
     return (
       <div className="p-6 text-center text-red-500">
-        Error: Book data not found.
+        Loading Picks for you...
       </div>
     );
   }

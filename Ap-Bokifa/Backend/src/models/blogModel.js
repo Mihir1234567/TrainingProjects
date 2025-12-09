@@ -51,14 +51,13 @@ const blogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-blogSchema.pre("save", function (next) {
+blogSchema.pre("save", async function () {
   if (this.isModified("title")) {
     this.slug = this.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
   }
-  next();
 });
 
 blogSchema.index({
