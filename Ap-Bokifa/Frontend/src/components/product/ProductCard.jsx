@@ -144,7 +144,7 @@ const ProductCard = ({
               variant={variant}
             />
           )}
-          <div className="absolute top-3 right-3 flex flex-col items-center space-y-2 z-10 transition-opacity duration-300">
+          <div className="absolute top-3 right-3 flex flex-col items-center space-y-2 z-30 transition-opacity duration-300">
             <div className="flex flex-col items-center space-y-2 group/icon relative">
               <button
                 onClick={(e) => {

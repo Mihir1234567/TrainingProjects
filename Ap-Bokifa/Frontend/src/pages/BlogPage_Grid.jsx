@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { blogData } from "../components/BlogData"; // Adjust this import path if needed
+// import { blogData } from "../components/BlogData"; // REMOVED
+import { useBlogs } from "../hooks/useBlogs"; // ADDED
 
 /**
  * BlogCard Component
@@ -58,6 +59,10 @@ const BlogCard = ({ post }) => {
  * Renders the entire "News" page.
  */
 const BlogPage = () => {
+  // Fetch blogs dynamically
+  const { blogs } = useBlogs();
+  const blogData = blogs || [];
+
   const [currentPage, setCurrentPage] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const postsPerPage = 6;

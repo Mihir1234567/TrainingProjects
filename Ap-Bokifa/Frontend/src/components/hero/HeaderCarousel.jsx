@@ -5,7 +5,7 @@ import corouselImg1 from "../../assets/corouselImg1.webp";
 import corouselImg2 from "../../assets/corouselImg2.webp";
 import corouselImg3 from "../../assets/corouselImg3.webp";
 
-export const HeaderCorousel = () => {
+export const HeaderCarousel = () => {
   const [activeSlide, setActiveSlide] = useState("item1");
   const [startX, setStartX] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -240,4 +240,4 @@ export const HeaderCorousel = () => {
   );
 };
 
-export default HeaderCorousel;
+export default HeaderCarousel;

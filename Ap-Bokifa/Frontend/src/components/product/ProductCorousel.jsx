@@ -3,6 +3,7 @@
 import React from "react";
 import Slider from "react-slick";
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 // Import react-slick styles
 import "slick-carousel/slick/slick.css";
@@ -18,7 +19,8 @@ const ProductCarousel = ({
   slidesToShowCount = 4,
   // --- NEW PROPS ---
   showBrowseButton = true, // Default to true to not break other components
-  titleCenter = false, // Default to false
+  titleCenter = false,
+  loading = false, // ADDED
 }) => {
   // Configuration settings for the react-slick carousel
   const sliderSettings = {
@@ -97,17 +99,26 @@ const ProductCarousel = ({
       {/* Carousel Content */}
       <div className="relative">
         <Slider {...sliderSettings}>
-          {products.map((product) => (
-            <div key={product.id} className="p-2">
-              <div className="max-w-[280px] mx-auto">
-                <ProductCard
-                  product={product}
-                  onViewProduct={onViewProduct}
-                  onQuickView={onQuickView}
-                />
-              </div>
-            </div>
-          ))}
+          {/* LOAD SKELETONS IF LOADING */}
+          {loading
+            ? Array.from({ length: slidesToShowCount + 2 }).map((_, index) => (
+                <div key={`skeleton-${index}`} className="p-2">
+                  <div className="max-w-[280px] mx-auto">
+                    <ProductCardSkeleton />
+                  </div>
+                </div>
+              ))
+            : products.map((product) => (
+                <div key={product.id} className="p-2">
+                  <div className="max-w-[280px] mx-auto">
+                    <ProductCard
+                      product={product}
+                      onViewProduct={onViewProduct}
+                      onQuickView={onQuickView}
+                    />
+                  </div>
+                </div>
+              ))}
         </Slider>
       </div>
     </div>

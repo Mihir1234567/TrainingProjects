@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Repeat } from "lucide-react";
 import Slider from "react-slick";
-import { fetchProductById } from "../api/productService";
+import { fetchProductById, fetchProducts } from "../api/productService";
 import useRecentlyViewed from "/src/hooks/useRecentlyViwed";
 import ProductCarousel from "/src/components/product/ProductCorousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -737,16 +737,20 @@ const ProductDetailPage = () => {
   // 2. ADD STATE FOR QUICK VIEW PRODUCT
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
+  // 🌟 NEW: State for related lists
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [alsoLikeProducts, setAlsoLikeProducts] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const loadProduct = async () => {
+    const loadData = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchProductById(productId);
-        if (data && data.success) {
-          // Backend returns { success: true, data: {...} }
-          const foundProduct = data.data;
+        // 1. Fetch Main Product
+        const productRes = await fetchProductById(productId);
+        if (productRes && productRes.success) {
+          const foundProduct = productRes.data;
           setProduct(foundProduct);
           setSelectedFormat("Paperback");
           setSelectedImageIndex(0);
@@ -762,9 +766,24 @@ const ProductDetailPage = () => {
               console.error(e);
             }
           }, 0);
+
+          // 2. Fetch Related (Highlight) - Exclude current
+          fetchProducts({ isHighlight: true, limit: 5 }).then((res) => {
+            const list = (res.data || [])
+              .filter((p) => p.id !== foundProduct.id)
+              .slice(0, 4);
+            setRelatedProducts(list);
+          });
+
+          // 3. Fetch Also Like (Bestselling) - Exclude current
+          fetchProducts({ currentBestselling: true, limit: 5 }).then((res) => {
+            const list = (res.data || [])
+              .filter((p) => p.id !== foundProduct.id)
+              .slice(0, 4);
+            setAlsoLikeProducts(list);
+          });
         } else {
-          // Handle product not found or error structure
-          console.error("Product not found or invalid response");
+          console.error("Product not found");
           navigate("/");
         }
       } catch (error) {
@@ -775,16 +794,20 @@ const ProductDetailPage = () => {
       }
     };
 
-    loadProduct();
+    loadData();
   }, [productId, navigate, addRecentlyViewed]);
 
   useEffect(() => {
     const checkVisibility = () => {
       try {
         const el = addToCartRef.current;
-        if (!el) return setIsStickyBarVisible(false);
+        if (!el) {
+          setIsStickyBarVisible(false);
+          return;
+        }
         const rect = el.getBoundingClientRect();
-        setIsStickyBarVisible(rect.bottom < 0 || rect.top > window.innerHeight);
+        // Match logic from ProductLayoutClassic: Show when bottom of button is above viewport (scrolled past)
+        setIsStickyBarVisible(rect.bottom < 0);
       } catch (e) {
         setIsStickyBarVisible(false);
       }
@@ -822,18 +845,6 @@ const ProductDetailPage = () => {
     originalPrice,
     discount,
   } = currentPriceDetails;
-
-  const relatedProductIds = ALL_PRODUCTS.filter(
-    (p) => p.isHighlight === true && p.id !== parseInt(productId)
-  )
-    .slice(0, 4)
-    .map((p) => p.id);
-
-  const youMayAlsoLikeIds = ALL_PRODUCTS.filter(
-    (p) => p.currentBestselling === true && p.id !== parseInt(productId)
-  )
-    .slice(0, 4)
-    .map((p) => p.id);
 
   const plusplus = () => setQtyValue(qtyValue + 1);
   const minusminus = () => {
@@ -1259,14 +1270,14 @@ const ProductDetailPage = () => {
                 <div className="flex flex-col sm:flex-row w-full max-w-lg gap-4">
                   <button
                     className="flex-1 bg-white text-green-700 font-bold py-2 px-4 md:py-3 md:px-6 rounded-full border-2 border-green-700 hover:bg-green-50 transition-colors shadow-md text-base md:text-lg"
-                    onClick={() => handleAddToCart(qtyValue)}
+                    onClick={() => addToCart(product, qtyValue, selectedFormat)}
                   >
                     Add to Cart
                   </button>
 
                   <button
                     className="flex-1 bg-green-700 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-full hover:bg-green-600 transition-colors shadow-md text-base md:text-lg"
-                    onClick={() => console.log(`Buy Now ${qtyValue} items`)}
+                    onClick={() => {}}
                   >
                     Buy It Now
                   </button>
@@ -1450,30 +1461,30 @@ const ProductDetailPage = () => {
         {/* 3. PASS onQuickView TO CAROUSELS */}
         <hr className="my-3 max-w-8xl mx-auto border-gray-200" />
         <div className="w-full max-w-8xlx-auto px-4 sm:px-6 lg:px-8">
-          {relatedProductIds.length > 0 && (
+          {relatedProducts.length > 0 && (
             <ProductCarousel
               title="Related Products"
-              productIds={relatedProductIds}
+              products={relatedProducts} // Changed from productIds
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}
               slidesToShowCount={4}
-              onQuickView={(p) => setQuickViewProduct(p)} // Added
+              onQuickView={(p) => setQuickViewProduct(p)}
             />
           )}
         </div>
 
         <hr className="my-3 max-w-8xl mx-auto border-gray-200" />
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          {youMayAlsoLikeIds.length > 0 && (
+          {alsoLikeProducts.length > 0 && (
             <ProductCarousel
               title="You may also like"
-              productIds={youMayAlsoLikeIds}
+              products={alsoLikeProducts} // Changed from productIds
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}
               slidesToShowCount={4}
-              onQuickView={(p) => setQuickViewProduct(p)} // Added
+              onQuickView={(p) => setQuickViewProduct(p)}
             />
           )}
         </div>

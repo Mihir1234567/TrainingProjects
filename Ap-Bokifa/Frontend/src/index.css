@@ -8,6 +8,13 @@
 
 body {
   background-color: #f9f5f0;
+  overflow-x: hidden;
+}
+
+html,
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Add this to your main CSS file for multi-line truncation */
@@ -46,4 +53,19 @@ input[type="radio"] {
   display: inline-block;
   white-space: nowrap;
   animation: marquee 20s linear infinite;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.35s ease-out forwards;
 }

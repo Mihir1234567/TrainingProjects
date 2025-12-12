@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { blogData } from "../components/BlogData"; // Adjust path if needed
+import { useBlogs } from "../hooks/useBlogs"; // ADDED
+// import { blogData } from "../components/BlogData"; // REMOVED
 
 /**
  * BlogListItem Component
@@ -57,7 +58,7 @@ const BlogListItem = ({ post }) => {
  * Sidebar Component
  * Renders the Search, About, Categories, Recent Posts, etc.
  */
-const Sidebar = ({ onSearchClick }) => {
+const Sidebar = ({ onSearchClick, blogData }) => {
   // Dummy data for the sidebar elements to match image
   const categories = [
     "Tips & Tricks",
@@ -66,7 +67,7 @@ const Sidebar = ({ onSearchClick }) => {
     "Repair",
     "Technology",
   ];
-  const recentPosts = blogData.slice(0, 3); // Take first 3 posts as "Recent"
+  const recentPosts = (blogData || []).slice(0, 3); // Take first 3 posts as "Recent"
   const tags = ["Tips & Tricks", "Books", "Events", "Authors"];
 
   return (
@@ -201,9 +202,30 @@ const Sidebar = ({ onSearchClick }) => {
  */
 const BlogPageList = ({ onSearchClick }) => {
   // --- Pagination Logic (Same as your Grid) ---
+  // 🚀 Fetch Data
+  const { blogs, loading, error } = useBlogs();
+  const blogData = blogs || []; // Mapping for compatibility
+
+  // --- Pagination Logic (Same as your Grid) ---
   const [currentPage, setCurrentPage] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const postsPerPage = 3; // Usually list views show fewer per page than grids
+
+  // 🚀 Loading State
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  // 🚀 Error State
+  if (error) {
+    return (
+      <div className="text-center py-20 text-red-500">Error loading blogs.</div>
+    );
+  }
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -335,7 +357,7 @@ const BlogPageList = ({ onSearchClick }) => {
 
           {/* Right Column: Sidebar */}
           <div className="lg:col-span-1">
-            <Sidebar onSearchClick={onSearchClick} />
+            <Sidebar onSearchClick={onSearchClick} blogData={blogData} />
           </div>
         </div>
       </div>

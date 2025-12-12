@@ -9,7 +9,8 @@ router.get("/", blogController.getAllBlogs);
 router.get("/search", blogController.searchBlogs);
 router.get("/slug/:slug", blogController.getBlogBySlug);
 router.get("/:id", blogController.getBlogById);
-router.post("/:id/comments", blogController.addComment);
+// Protected (Comment requires login)
+router.post("/:id/comments", protect, blogController.addComment);
 
 // Admin
 router.post("/", protect, isAdmin, blogController.createBlog);

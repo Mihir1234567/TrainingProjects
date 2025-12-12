@@ -192,7 +192,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 >
                   <div className="w-24 h-36 shrink-0 bg-gray-100 rounded overflow-hidden">
                     <img
-                      src={item.image}
+                      src={item.imageUrl}
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />

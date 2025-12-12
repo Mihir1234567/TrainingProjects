@@ -1,15 +1,19 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import ALL_PRODUCTS from "../components/productsData";
+// import ALL_PRODUCTS from "../components/productsData"; // REMOVED
 import CustomCarousel from "../components/product/CustomCarousel";
 import QuickViewDrawer from "../components/QuickViewDrawer";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext"; // ADDED
+import { createOrder } from "../api/orderService"; // ADDED
 import { SHIPPING_DATA } from "../data/shippingData";
+import { useProducts } from "../hooks/useProducts"; // Added for carousel
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const { user, openLoginModal } = useAuth(); // Correct place
 
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
 
   const [note, setNote] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -99,6 +103,45 @@ const CartPage = () => {
   };
 
   const handleViewProduct = (product) => navigate(`/product/${product.id}`);
+
+  const handleCheckout = async () => {
+    if (!user) {
+      openLoginModal();
+      return;
+    }
+
+    // Existing Checkout Logic (Mock)
+    try {
+      // Create order in backend
+      const orderData = {
+        products: cart.map((item) => ({
+          product: item.id,
+          quantity: item.quantity,
+          format: item.format,
+          price: item.price,
+        })),
+        totalAmount: total,
+        shippingInfo: {
+          address: "123 Test St", // Placeholder
+          city: "Test City",
+          country: shippingCountry || "USA",
+          zipCode: shippingZip || "12345",
+        },
+      };
+
+      // Call API (Already imported)
+      await createOrder(orderData);
+
+      // Clear Cart
+      clearCart();
+
+      // Redirect
+      navigate("/my-orders"); // or confirmation page
+    } catch (error) {
+      console.error("Checkout failed", error);
+      alert("Checkout failed. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -373,6 +416,7 @@ const CartPage = () => {
           </div>
 
           <button
+            onClick={handleCheckout}
             disabled={!termsAccepted}
             className={`w-full py-4 rounded-full font-bold text-white ${
               termsAccepted ? "bg-[#3AB757]" : "bg-gray-400 cursor-not-allowed"
@@ -399,17 +443,63 @@ const CartPage = () => {
 
       {/* FULL-WIDTH CAROUSEL */}
       <div className="w-full mt-16 bg-white">
-        <CustomCarousel
-          title="You may also like"
-          products={ALL_PRODUCTS.slice(0, 8)}
+        <ProductsCarouselWrapper
           onViewProduct={handleViewProduct}
-          showBrowseButton={false}
-          titleCenter={true}
-          onQuickView={(p) => setQuickViewProduct(p)}
+          setQuickViewProduct={setQuickViewProduct}
         />
       </div>
     </>
   );
 };
+
+// Start Helper Component
+const ProductsCarouselWrapper = ({ onViewProduct, setQuickViewProduct }) => {
+  const { products } = useProducts();
+  const { cart } = useCart();
+
+  // Logic to find related products
+  const relatedProducts = useMemo(() => {
+    if (!products) return [];
+
+    // 1. Get IDs of items in cart to exclude them
+    const cartIds = new Set(cart.map((item) => item.id));
+
+    // 2. Determine target category from the first item in the cart
+    let targetCategory = null;
+    if (cart.length > 0) {
+      // We need to look up the full product details because cart items might not have 'category'
+      const firstCartItemFull = products.find((p) => p.id === cart[0].id);
+      if (firstCartItemFull) {
+        targetCategory = firstCartItemFull.category;
+      }
+    }
+
+    // 3. Filter and Sort
+    let filtered = products.filter((p) => !cartIds.has(p.id));
+
+    if (targetCategory) {
+      // Prioritize same category
+      filtered.sort((a, b) => {
+        const aMatch = a.category === targetCategory ? 1 : 0;
+        const bMatch = b.category === targetCategory ? 1 : 0;
+        return bMatch - aMatch; // Descending (matches first)
+      });
+    }
+
+    return filtered.slice(0, 8);
+  }, [products, cart]);
+
+  return (
+    <CustomCarousel
+      title={cart.length > 0 ? "You may also like" : "Popular Titles"}
+      products={relatedProducts}
+      onViewProduct={onViewProduct}
+      showBrowseButton={false}
+      titleCenter={true}
+      onQuickView={(p) => setQuickViewProduct(p)}
+    />
+  );
+};
+// End Helper Component
 
 export default CartPage;

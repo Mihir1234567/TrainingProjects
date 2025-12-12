@@ -1,5 +1,6 @@
 // src/components/product/StickyBottomBar.jsx
 import React from "react";
+import { createPortal } from "react-dom";
 import { FORMAT_MULTIPLIERS } from "../../constants";
 
 const StickyBottomBar = ({
@@ -15,9 +16,9 @@ const StickyBottomBar = ({
 
   const productTitle = product?.title || "";
 
-  return (
+  return createPortal(
     <div
-      className={`fixed bottom-0 left-0 right-0 w-full bg-white shadow-[-2px_-2px_10px_rgba(0,0,0,0.1)] transform transition-transform duration-300 ease-in-out z-40 ${
+      className={`fixed bottom-0 left-0 right-0 w-full bg-white shadow-[-2px_-2px_10px_rgba(0,0,0,0.1)] transform transition-transform duration-300 ease-in-out z-[9999] ${
         isVisible ? "translate-y-0" : "translate-y-full"
       }`}
     >
@@ -66,7 +67,8 @@ const StickyBottomBar = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

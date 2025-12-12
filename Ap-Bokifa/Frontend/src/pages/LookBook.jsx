@@ -4,7 +4,8 @@ import { Home, Instagram, X, ChevronUp, Minus, Plus } from "lucide-react";
 import Slider from "react-slick";
 import ProductCard from "../components/product/ProductCard";
 import ProductCarousel from "../components/product/ProductCorousel";
-import ALL_PRODUCTS from "../components/productsData";
+// import ALL_PRODUCTS from "../components/productsData"; // REMOVED
+import { useProducts } from "../hooks/useProducts"; // ADDED
 import { useCurrency } from "../context/CurrencyContext";
 import QuickViewDrawer from "../components/QuickViewDrawer";
 import { FORMAT_MULTIPLIERS } from "../constants";
@@ -84,7 +85,8 @@ const LookBook = () => {
   const toggleBtnRef = useRef(null);
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  // FIX: Force visibility to true to prevent rendering issues
+  const [isVisible, setIsVisible] = useState(true);
   const [isHotspotOpen, setIsHotspotOpen] = useState(false);
 
   // --- Product State ---
@@ -93,7 +95,17 @@ const LookBook = () => {
   const [quantity, setQuantity] = useState(1);
 
   // --- Data Setup ---
-  const hotspotProduct = ALL_PRODUCTS[19] || {};
+  // 🚀 Dynamic Data Logic
+  const { products: allProducts, loading: productsLoading } = useProducts({
+    limit: 50,
+  });
+  const fetchedProducts = allProducts || [];
+
+  // Fallback if loading or empty
+  const hotspotProduct =
+    fetchedProducts.length > 19
+      ? fetchedProducts[19]
+      : fetchedProducts[0] || {};
 
   // Calculate Price dynamically based on selectedFormat
   const priceDetails = getPriceDetails(
@@ -101,6 +113,9 @@ const LookBook = () => {
     selectedFormat,
     currency
   );
+
+  const sliderProducts = fetchedProducts.slice(0, 5);
+  const highlightIds = sliderProducts.map((p) => p.id);
 
   const services = [
     {
@@ -119,9 +134,6 @@ const LookBook = () => {
     },
   ];
 
-  const sliderProducts = ALL_PRODUCTS.slice(0, 5);
-  const highlightIds = ALL_PRODUCTS.slice(0, 5).map((p) => p.id);
-
   const instagramFeed = [
     { type: "info" },
     { type: "image", src: "/src/assets/AboutUsIgImg1.png" },
@@ -131,6 +143,8 @@ const LookBook = () => {
   ];
 
   // --- Effects ---
+  /* 
+  // REMOVED: Animation causing visibility issues
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -139,11 +153,12 @@ const LookBook = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+  */
 
   useEffect(() => {
     if (isVisible) {
@@ -210,6 +225,14 @@ const LookBook = () => {
       { breakpoint: 480, settings: { slidesToShow: 1 } },
     ],
   };
+
+  if (productsLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-700"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full font-sans bg-white relative">
@@ -549,7 +572,7 @@ const LookBook = () => {
             </button>
           </div>
           <button
-            onClick={() => console.log(`Added to cart`)}
+            onClick={() => {}}
             className="w-full bg-[#008040] text-white font-bold text-sm py-4 rounded-full mt-8 hover:bg-green-800 transition-colors"
           >
             Add To Cart

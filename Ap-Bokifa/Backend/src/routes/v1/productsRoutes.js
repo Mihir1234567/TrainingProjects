@@ -4,6 +4,7 @@ import { protect, isAdmin } from "../../middlewares/authMiddleware.js";
 
 const router = Router();
 
+router.get("/filters", productController.getProductFilters); // 🌟 NEW: Facets
 router.get("/", productController.getAllProducts);
 router.get("/:id", productController.getProductById);
 router.post("/", protect, isAdmin, productController.createProduct);

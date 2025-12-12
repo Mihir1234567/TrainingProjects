@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "../components/product/ProductCard";
 import ProductCarousel from "../components/product/ProductCorousel";
-import ALL_PRODUCTS from "../components/productsData";
+// import ALL_PRODUCTS from "../components/productsData"; // REMOVED
 import useRecentlyViewed from "../hooks/useRecentlyViwed";
 import CategoryBanner from "../components/CategoryBanner";
 
@@ -413,19 +413,17 @@ const SearchResultsPage = () => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q") || "";
 
-  const { viewedItems, addRecentlyViewed } = useRecentlyViewed();
-  const recentlyViewedIds = viewedItems.map((item) => item.id);
+  // Use the hook to fetch products with the SEARCH param
+  // RENAMED RESULT TO fetchedProducts TO AVOID CONFLICT
+  const {
+    products: fetchedProducts,
+    loading,
+    error,
+  } = useProducts({
+    search: query,
+  });
 
-  // Filter products by query FIRST
-  const initialSearchResults = useMemo(() => {
-    if (!query) return [];
-    const lowerQuery = query.toLowerCase();
-    return ALL_PRODUCTS.filter(
-      (product) =>
-        product.title.toLowerCase().includes(lowerQuery) ||
-        product.author.toLowerCase().includes(lowerQuery)
-    );
-  }, [query]);
+  const { viewedItems, addRecentlyViewed } = useRecentlyViewed();
 
   // --- STATE MANAGEMENT ---
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -434,11 +432,12 @@ const SearchResultsPage = () => {
   const [selectedRatings, setSelectedRatings] = useState([]);
   const [selectedSort, setSelectedSort] = useState("title-asc");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [isMobileSortOpen, setIsMobileSortOpen] = useState(false);
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
-
   const PRODUCTS_PER_PAGE = 16;
+
+  // NOTE: Server-side search replaces the client-side useMemo filtering
+  // We use fetchedProducts as the base list now.
 
   // Function to calculate all filter options and COUNTS
   const getFilterData = useCallback((products, allProducts) => {
@@ -505,7 +504,8 @@ const SearchResultsPage = () => {
   const sortedAndFilteredProducts = useMemo(() => {
     setCurrentPage(1);
 
-    let list = initialSearchResults.filter((product) => {
+    // FIX: Use 'fetchedProducts' instead of 'initialSearchResults'
+    let list = (fetchedProducts || []).filter((product) => {
       if (
         selectedCategories.length > 0 &&
         !selectedCategories.includes(product.category)
@@ -563,7 +563,7 @@ const SearchResultsPage = () => {
     }
     return sortedList;
   }, [
-    initialSearchResults,
+    fetchedProducts, // FIX Dependency
     selectedCategories,
     selectedFormats,
     selectedAvailability,
@@ -573,8 +573,8 @@ const SearchResultsPage = () => {
 
   // Dynamic Filter Options
   const dynamicFilterOptions = useMemo(
-    () => getFilterData(sortedAndFilteredProducts, initialSearchResults),
-    [sortedAndFilteredProducts, initialSearchResults, getFilterData]
+    () => getFilterData(sortedAndFilteredProducts, fetchedProducts || []),
+    [sortedAndFilteredProducts, fetchedProducts, getFilterData]
   );
 
   const handleCategoryLinkSelect = (categoryName) => {

@@ -3,6 +3,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
+import { useAuth } from "./context/AuthContext"; // ADDED
+import { AnimatePresence } from "framer-motion"; // ADDED
+import PageTransition from "./components/common/PageTransition"; // ADDED
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -40,9 +43,11 @@ import LookBook from "./pages/LookBook";
 import FAQPage from "./pages/FAQPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import LoginPromptModal from "./components/LoginPromptModal"; // New Import
 import CartPage from "./pages/CartPage";
 import Wishlist from "./pages/Wishlist";
 import Compare from "./pages/Compare";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
 import { WishlistProvider } from "./context/WishlistContext";
 import { CompareProvider } from "./context/CompareContext";
 
@@ -62,6 +67,9 @@ const App = () => {
   const openSearch = () => setIsSearchOpen(true);
   const closeSearch = () => setIsSearchOpen(false);
 
+  // Access Auth Context for Modal Control
+  const { isLoginModalOpen, closeLoginModal } = useAuth(); // New Hook Usage
+
   // Get current location to detect route changes
   const location = useLocation();
 
@@ -76,7 +84,9 @@ const App = () => {
       isUpsellModalOpen ||
       isCrossSellOpen ||
       isCouponVisible ||
-      isSearchOpen
+      isCouponVisible ||
+      isSearchOpen ||
+      isLoginModalOpen // Added
     ) {
       body.style.overflow = "hidden";
     } else {
@@ -85,7 +95,13 @@ const App = () => {
     return () => {
       body.style.overflow = "auto";
     };
-  }, [isUpsellModalOpen, isCrossSellOpen, isCouponVisible, isSearchOpen]);
+  }, [
+    isUpsellModalOpen,
+    isCrossSellOpen,
+    isCouponVisible,
+    isSearchOpen,
+    isLoginModalOpen, // Added to Dependencies
+  ]);
 
   const closeCoupon = () => {
     setIsCouponVisible(false);
@@ -114,6 +130,9 @@ const App = () => {
     setIsCrossSellOpen(false);
   };
 
+  // Add login modal to scroll lock effect if needed, or just let it overlay.
+  // Removed redundant scroll lock effect (merged above)
+
   return (
     <>
       <CartProvider>
@@ -134,68 +153,104 @@ const App = () => {
                 />
               )}
 
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/AllProducts" element={<BookstorePage />} />
-                <Route
-                  path="/collections/categories"
-                  element={<CategoryLanding />}
-                />
-                <Route
-                  path="/collections/books"
-                  element={<CollectionsBooks />}
-                />
+              <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
+                  <Route
+                    path="/"
+                    element={
+                      <PageTransition>
+                        <Home />
+                      </PageTransition>
+                    }
+                  />
+                  <Route
+                    path="/AllProducts"
+                    element={
+                      <PageTransition>
+                        <BookstorePage />
+                      </PageTransition>
+                    }
+                  />
+                  <Route
+                    path="/collections/categories"
+                    element={<CategoryLanding />}
+                  />
+                  <Route
+                    path="/collections/books"
+                    element={<CollectionsBooks />}
+                  />
 
-                <Route
-                  path="/productPageClassic"
-                  element={<ProductLayoutClassic />}
-                />
-                <Route
-                  path="/productPageScrollFixed"
-                  element={<ProductLayoutScrollFixed />}
-                />
-                <Route
-                  path="/productPageLeftThumbs"
-                  element={<ProductLayoutLeftThumbs />}
-                />
-                <Route
-                  path="/productPageRightThumbs"
-                  element={<ProductLayoutRightThumbs />}
-                />
-                <Route
-                  path="/productPageWithoutThumbs"
-                  element={<ProductLayoutWithoutThumbs />}
-                />
-                <Route path="/typeWithVideo" element={<TypeWithVideo />} />
-                <Route
-                  path="/product/:productId"
-                  element={<ProductDetailPage />}
-                />
-                <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/blog/grid" element={<BlogPage />} />
-                <Route
-                  path="/blog/standard"
-                  element={<BlogPageList onSearchClick={openSearch} />}
-                />
-                <Route
-                  path="/blog/post/:postId"
-                  element={
-                    <BlogPostDetailWithSidebar onSearchClick={openSearch} />
-                  }
-                />
-                <Route path="/about" element={<AboutSection />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/our-team" element={<MeetOurTeam />} />
-                <Route path="/PageNotFound" element={<NotFoundPage />} />
-                <Route path="/LookBook" element={<LookBook />} />
-                <Route path="/FAQ" element={<FAQPage />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/compare" element={<Compare />} />
-                <Route path="/*" element={<NotFoundPage />} />
-              </Routes>
+                  <Route
+                    path="/productPageClassic"
+                    element={<ProductLayoutClassic />}
+                  />
+                  <Route
+                    path="/productPageScrollFixed"
+                    element={<ProductLayoutScrollFixed />}
+                  />
+                  <Route
+                    path="/productPageLeftThumbs"
+                    element={<ProductLayoutLeftThumbs />}
+                  />
+                  <Route
+                    path="/productPageRightThumbs"
+                    element={<ProductLayoutRightThumbs />}
+                  />
+                  <Route
+                    path="/productPageWithoutThumbs"
+                    element={<ProductLayoutWithoutThumbs />}
+                  />
+                  <Route path="/typeWithVideo" element={<TypeWithVideo />} />
+                  <Route
+                    path="/product/:productId"
+                    element={
+                      <PageTransition>
+                        <ProductDetailPage />
+                      </PageTransition>
+                    }
+                  />
+                  <Route path="/search" element={<SearchResultsPage />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/compare" element={<Compare />} />
+                  <Route path="/orderHistory" element={<OrderHistoryPage />} />
+                  <Route path="/blog/grid" element={<BlogPage />} />
+                  <Route
+                    path="/blog/standard"
+                    element={<BlogPageList onSearchClick={openSearch} />}
+                  />
+                  <Route
+                    path="/blog/post/:postId"
+                    element={
+                      <BlogPostDetailWithSidebar onSearchClick={openSearch} />
+                    }
+                  />
+                  <Route path="/about" element={<AboutSection />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/our-team" element={<MeetOurTeam />} />
+                  <Route path="/PageNotFound" element={<NotFoundPage />} />
+                  <Route path="/LookBook" element={<LookBook />} />
+                  <Route path="/FAQ" element={<FAQPage />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/cart"
+                    element={
+                      <PageTransition>
+                        <CartPage />
+                      </PageTransition>
+                    }
+                  />
+                  <Route
+                    path="/my-orders"
+                    element={
+                      <PageTransition>
+                        <OrderHistoryPage />
+                      </PageTransition>
+                    }
+                  />
+                  <Route path="/*" element={<NotFoundPage />} />
+                </Routes>
+              </AnimatePresence>
 
               {/* 💡 Only show these if we are NOT on a hidden route (Signup/Login) */}
               {shouldShowLayout && (
@@ -213,6 +268,8 @@ const App = () => {
           </CompareProvider>
         </WishlistProvider>
       </CartProvider>
+      {/* Render Login Prompt Modal Globally */}
+      <LoginPromptModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </>
   );
 };

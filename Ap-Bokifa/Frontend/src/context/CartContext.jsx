@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { FORMAT_MULTIPLIERS } from "../constants";
+import { useAuth } from "./AuthContext";
+import { syncUserData } from "../api/authService";
 
 const CartContext = createContext();
 
@@ -11,11 +13,53 @@ export const CartProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  // Sync with Backend
+  const { user, openLoginModal } = useAuth();
+
+  // Actually better to import at top.
+
+  // 1. Initial Load from User
+  useEffect(() => {
+    if (user && user.cart) {
+      // Merge strategy or Replace? User asked for restore.
+      // We will REPLACE local with backend if backend has data.
+      if (user.cart.length > 0) {
+        setCart(user.cart);
+      }
+    }
+  }, [user]);
+
+  // 2. Sync changes to Backend
+  useEffect(() => {
+    if (user) {
+      const timeoutId = setTimeout(() => {
+        syncUserData({ cart });
+      }, 1000); // 1s debounce
+      return () => clearTimeout(timeoutId);
+    }
+  }, [cart, user]);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  // Listen for logout event to clear cart
+  useEffect(() => {
+    const handleLogout = () => {
+      setCart([]);
+    };
+    window.addEventListener("auth:logout", handleLogout);
+    return () => window.removeEventListener("auth:logout", handleLogout);
+  }, []);
+
+  // ... (existing code)
+
   const addToCart = (product, quantity = 1, format = "Paperback") => {
+    // ALLOW GUEST CART: Removed user check here.
+    // if (!user) {
+    //   openLoginModal();
+    //   return;
+    // }
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
         (item) => item.id === product.id && item.format === format
@@ -42,7 +86,7 @@ export const CartProvider = ({ children }) => {
             title: product.title,
             author: product.author,
             price: finalPrice,
-            image: product.imageUrl,
+            imageUrl: product.imageUrl,
             quantity,
             format,
             discount: product.discount || 0,

@@ -1,2 +1,2 @@
 export { default as StatMarquee } from "./StatMarquee";
-export { HeaderCorousel, default as Header } from "./HeaderCorousel";
+export { HeaderCarousel, default as Header } from "./HeaderCarousel";

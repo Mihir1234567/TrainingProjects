@@ -3,7 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import ProductCarousel from "/src/components/product/ProductCorousel";
-import ALL_PRODUCTS from "/src/components/productsData";
+import { useProducts } from "/src/hooks/useProducts"; // ADDED
+// import ALL_PRODUCTS from "/src/components/productsData"; // REMOVED
 import { Link } from "react-router-dom";
 import useRecentlyViewed from "/src/hooks/useRecentlyViwed";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,9 +48,7 @@ const CustomAnimatedDropdown = ({
     setIsOpen(false);
   };
 
-  if (!mainProduct) {
-    return <div className="text-center py-20">Product not found.</div>;
-  }
+  // Removed global mainProduct dependency check here. Parent handles loading/error.
 
   return (
     <div ref={dropdownRef} className="relative w-full md:w-auto">
@@ -118,31 +117,7 @@ const CustomAnimatedDropdown = ({
     </div>
   );
 };
-// --- Data Setup ---
-const mainProductId = 12; // "Redemption Echo" - matching user's visual example
-const mainProduct = ALL_PRODUCTS.find((p) => p.id === mainProductId);
-
-// Image URLs for the thumbnail gallery (6 items)
-const thumbnailUrls = [
-  mainProduct?.imageUrl || "", // ABSOLUTION or fallback
-  "/src/assets/BLACK_SHEEP.webp", // Black Sheep
-  "/src/assets/THE_WOMEN.webp", // The Women
-  "/src/assets/Playground.webp", // Playground
-  "/src/assets/James.webp", // James
-  "/src/assets/AnotherGreatBook.webp", // Redemption Echo
-];
-
-const relatedProductIds = ALL_PRODUCTS.filter(
-  (p) => p.isHighlight === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
-
-const youMayAlsoLikeIds = ALL_PRODUCTS.filter(
-  (p) => p.currentBestselling === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
+// Data setup moved inside component
 
 // handleViewProduct will be defined inside the component so it can use hooks (e.g., addRecentlyViewed)
 
@@ -934,6 +909,46 @@ const DeliveryInfo = () => (
 // --- Component Definition ---
 
 export const ProductLayoutRightThumbs = () => {
+  // 🚀 Dynamic Data Logic
+  const { products: allProducts, loading: productsLoading } = useProducts({
+    limit: 50,
+  });
+  const [mainProduct, setMainProduct] = useState(null);
+
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      // Try to match ID 12 for consistency with demo or default to first
+      const found =
+        allProducts.find((p) => p.id == 12 || p._id == 12) || allProducts[0];
+      setMainProduct(found);
+    }
+  }, [allProducts]);
+
+  const mainProductId = mainProduct?.id || "default";
+
+  // Derived Data
+  const thumbnailUrls = mainProduct
+    ? [
+        mainProduct.imageUrl || "",
+        "/src/assets/BLACK_SHEEP.webp",
+        "/src/assets/THE_WOMEN.webp",
+        "/src/assets/Playground.webp",
+        "/src/assets/James.webp",
+        "/src/assets/AnotherGreatBook.webp",
+      ]
+    : [];
+
+  const relatedProductIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .slice(0, 4)
+    .map((p) => p.id);
+
+  const youMayAlsoLikeIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .reverse()
+    .slice(0, 4)
+    .map((p) => p.id);
+
   // 🚀 --- NEW: Local Storage Key for Reviews ---
   const LOCAL_STORAGE_KEY = `productReviews_${mainProductId}`;
 
@@ -968,7 +983,7 @@ export const ProductLayoutRightThumbs = () => {
     } catch {
       console.error("Failed to add recently viewed");
     }
-    console.log("Viewing product:", product.title);
+
     // Full reload to product page (include product id)
     try {
       window.location.href = `/productPageClassic?productId=${product.id}`;
@@ -1192,6 +1207,15 @@ export const ProductLayoutRightThumbs = () => {
   };
 
   const modalData = enlargedImageUrl ? getModalImages() : null;
+
+  // 🚀 Loading State Check (Moved here to prevent Hook error)
+  if (productsLoading || (!mainProduct && productsLoading)) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   // 🚀 FIX: Add a guard clause to handle cases where the product is not found.
   if (!mainProduct) {
@@ -1786,11 +1810,13 @@ export const ProductLayoutRightThumbs = () => {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <ProductCarousel
           title="Related Products"
-          productIds={relatedProductIds}
+          products={allProducts
+            .filter((p) => p.id !== mainProductId)
+            .slice(0, 4)}
           onViewProduct={handleViewProduct}
           showBrowseButton={false}
           titleCenter={true}
-          onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
+          onQuickView={(product) => setQuickViewProduct(product)}
           slidesToShowCount={4}
         />
       </div>
@@ -1798,8 +1824,11 @@ export const ProductLayoutRightThumbs = () => {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <ProductCarousel
           title="You may also like"
-          onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
-          productIds={youMayAlsoLikeIds}
+          onQuickView={(product) => setQuickViewProduct(product)}
+          products={allProducts
+            .filter((p) => p.id !== mainProductId)
+            .reverse()
+            .slice(0, 4)}
           onViewProduct={handleViewProduct}
           showBrowseButton={false}
           titleCenter={true}

@@ -3,7 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import ProductCarousel from "/src/components/product/ProductCorousel";
-import ALL_PRODUCTS from "/src/components/productsData";
+import { useProducts } from "/src/hooks/useProducts"; // ADDED
+// import ALL_PRODUCTS from "/src/components/productsData"; // REMOVED
 import { Link } from "react-router-dom";
 import useRecentlyViewed from "/src/hooks/useRecentlyViwed";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -114,38 +115,7 @@ const CustomAnimatedDropdown = ({
   );
 };
 // --- Data Setup ---
-const mainProductId = 23;
-const mainProduct = ALL_PRODUCTS.find((p) => p.id === mainProductId);
-
-// Image URLs for the thumbnail gallery (6 items)
-const thumbnailUrls = [
-  mainProduct?.imageUrl || "", // ABSOLUTION
-  "/src/assets/TheMightyRed.webp", // Harry Potter and the Sorcerer's Stone
-  "/src/assets/The_City_And_Its_Uncertain_Walls.webp", // The City and Its Uncertain Walls
-  "/src/assets/The_House_Of_The_Spirits.webp", // The House of the Spirits
-];
-
-// Video URLs corresponding to images (null for first image, video URLs for the rest)
-const videoUrls = [
-  null, // First image - no video
-  "https://www.youtube.com/embed/dQw4w9WgXcQ", // Black Sheep video
-  "https://www.youtube.com/embed/dQw4w9WgXcQ", // The Women video
-  "https://www.youtube.com/embed/dQw4w9WgXcQ", // Playground video
-];
-
-const relatedProductIds = ALL_PRODUCTS.filter(
-  (p) => p.isHighlight === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
-
-const youMayAlsoLikeIds = ALL_PRODUCTS.filter(
-  (p) => p.currentBestselling === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
-
-// handleViewProduct will be defined inside the component so it can use hooks (e.g., addRecentlyViewed)
+// Data setup moved inside component
 
 // 🚀 --- YouTube Video Modal Component ---
 const YouTubeModal = ({ videoUrl, onClose }) => {
@@ -986,6 +956,52 @@ const DeliveryInfo = () => (
 // --- Component Definition ---
 
 export const TypeWithVideo = () => {
+  // 🚀 Dynamic Data Logic
+  const { products: allProducts, loading: productsLoading } = useProducts({
+    limit: 50,
+  });
+  const [mainProduct, setMainProduct] = useState(null);
+
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      // Try to match ID 23 for consistency with demo or default to first
+      const found =
+        allProducts.find((p) => p.id == 23 || p._id == 23) || allProducts[0];
+      setMainProduct(found);
+    }
+  }, [allProducts]);
+
+  const mainProductId = mainProduct?.id || "default";
+
+  // Derived Data
+  const thumbnailUrls = mainProduct
+    ? [
+        mainProduct.imageUrl || "",
+        "/src/assets/TheMightyRed.webp",
+        "/src/assets/The_City_And_Its_Uncertain_Walls.webp",
+        "/src/assets/The_House_Of_The_Spirits.webp",
+      ]
+    : [];
+
+  // Video URLs corresponding to images (null for first image, video URLs for the rest)
+  const videoUrls = [
+    null, // First image - no video
+    "https://www.youtube.com/embed/dQw4w9WgXcQ", // Black Sheep video
+    "https://www.youtube.com/embed/dQw4w9WgXcQ", // The Women video
+    "https://www.youtube.com/embed/dQw4w9WgXcQ", // Playground video
+  ];
+
+  const relatedProductIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .slice(0, 4)
+    .map((p) => p.id);
+
+  const youMayAlsoLikeIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .reverse()
+    .slice(0, 4)
+    .map((p) => p.id);
+
   // 🚀 --- NEW: Local Storage Key for Reviews ---
   const LOCAL_STORAGE_KEY = `productReviews_${mainProductId}`;
 
@@ -994,6 +1010,13 @@ export const TypeWithVideo = () => {
   // State to manage the selected image index and selected format
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedFormat, setSelectedFormat] = useState("Audio cd");
+
+  // 🚀 Update format when mainProduct loads
+  useEffect(() => {
+    if (mainProduct?.format) {
+      setSelectedFormat(mainProduct.format);
+    }
+  }, [mainProduct]);
   const [activeTab, setActiveTab] = useState("Description");
 
   // 🚀 --- NEW: State to manage review form visibility and success message ---
@@ -1023,7 +1046,7 @@ export const TypeWithVideo = () => {
     } catch {
       console.error("Failed to add recently viewed");
     }
-    console.log("Viewing product:", product.title);
+
     // Full reload to product page (include product id)
     try {
       window.location.href = `/productPageClassic?productId=${product.id}`;
@@ -1245,6 +1268,15 @@ export const TypeWithVideo = () => {
   };
 
   const modalData = enlargedImageUrl ? getModalImages() : null;
+
+  // 🚀 Loading State Check (Moved here to prevent Hook error)
+  if (productsLoading || (!mainProduct && productsLoading)) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -1529,7 +1561,7 @@ export const TypeWithVideo = () => {
                     <button
                       // ⭐️ HOVER CHANGE: from hover:bg-green-800 to hover:bg-green-600
                       className="flex-1 bg-green-700 text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-md text-lg"
-                      onClick={() => console.log("Added set to cart")}
+                      onClick={() => {}}
                     >
                       Add to Cart
                     </button>
@@ -1537,7 +1569,7 @@ export const TypeWithVideo = () => {
                     <button
                       // ⭐️ HOVER CHANGE: from hover:bg-green-800 to hover:bg-green-600
                       className="flex-1 bg-green-700 text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-md text-lg"
-                      onClick={() => console.log("Buy It Now")}
+                      onClick={() => {}}
                     >
                       Buy It Now
                     </button>
@@ -1870,20 +1902,25 @@ export const TypeWithVideo = () => {
           <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <ProductCarousel
               title="Related Products"
-              productIds={relatedProductIds}
+              products={allProducts
+                .filter((p) => p.id !== mainProductId)
+                .slice(0, 4)}
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}
-              onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
+              onQuickView={(product) => setQuickViewProduct(product)}
               slidesToShowCount={4}
             />
           </div>
           <hr className="my-3 max-w-8xl mx-auto border-gray-200" />
           <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <ProductCarousel
-              onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
+              onQuickView={(product) => setQuickViewProduct(product)}
               title="You may also like"
-              productIds={youMayAlsoLikeIds}
+              products={allProducts
+                .filter((p) => p.id !== mainProductId)
+                .reverse()
+                .slice(0, 4)}
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}

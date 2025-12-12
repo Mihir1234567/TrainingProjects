@@ -1,10 +1,14 @@
 import React from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { blogData } from "../BlogData";
+// import { blogData } from "../BlogData"; // REMOVED
+import { useBlogs } from "../../hooks/useBlogs"; // ADDED
 
 // Component for the News & Events Carousel
 export default function NewsAndEvents() {
+  // Fetch blogs dynamically
+  const { blogs, loading, error } = useBlogs();
+
   // Carousel settings
   const settings = {
     dots: false,
@@ -31,14 +35,15 @@ export default function NewsAndEvents() {
     ],
   };
 
-  const posts = blogData.map((post) => ({
+  // If loading or error, handle gracefully (e.g., empty array or skeleton)
+  const posts = (blogs || []).map((post) => ({
     id: post.id,
     category: post.category ? post.category.toUpperCase() : "NEWS",
-    date: post.date,
+    date: post.dateString || new Date(post.createdAt).toLocaleDateString(), // Use dateString from model if available, else date
     author: post.author,
     title: post.title,
     imageUrl: post.image,
-    link: `/blog/post/${post.id}`,
+    link: `/blog/post/${post.slug || post.id}`, // Use slug if available
   }));
 
   return (

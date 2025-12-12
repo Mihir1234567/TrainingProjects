@@ -109,6 +109,9 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        cart: user.cart,
+        wishlist: user.wishlist,
+        compare: user.compare,
         token,
       },
     });
@@ -121,7 +124,56 @@ const login = async (req, res) => {
   }
 };
 
+// ================================
+// SYNC USER DATA
+// ================================
+const syncUserData = async (req, res) => {
+  try {
+    const userId = req.user._id; // from protect middleware
+    const { cart, wishlist, compare } = req.body;
+
+    const updates = {};
+    if (cart) updates.cart = cart;
+    if (wishlist) updates.wishlist = wishlist;
+    if (compare) updates.compare = compare;
+
+    const user = await userModel.findByIdAndUpdate(userId, updates, {
+      new: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        cart: user.cart,
+        wishlist: user.wishlist,
+        compare: user.compare,
+      },
+    });
+  } catch (error) {
+    console.error("Sync error:", error);
+    res.status(500).json({ success: false, message: "Sync failed" });
+  }
+};
+
+const getUserData = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+    res.status(200).json({
+      success: true,
+      data: {
+        cart: user.cart,
+        wishlist: user.wishlist,
+        compare: user.compare,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Fetch failed" });
+  }
+};
+
 export default {
   register,
   login,
+  syncUserData,
+  getUserData,
 };

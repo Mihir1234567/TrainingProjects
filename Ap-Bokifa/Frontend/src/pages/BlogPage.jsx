@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { MemoryRouter, Routes, Route, useParams, Link } from "react-router-dom";
-import { sidebarData, blogData } from "/src/components/blogData.js";
+import { useBlogs } from "../hooks/useBlogs"; // ADDED
+// import { sidebarData, blogData } from "/src/components/blogData.js"; // REMOVED
+
+// Dummy sidebarData for now
+const sidebarData = {
+  about: {
+    text: "We are a team of passionate book lovers sharing our thoughts and reviews on the latest releases.",
+  },
+  categories: [
+    { name: "Fiction" },
+    { name: "Non-Fiction" },
+    { name: "Mystery" },
+    { name: "Sci-Fi" },
+  ],
+};
 
 // --- Sidebar Component (Unchanged) ---
 const Sidebar = ({ onSearchClick }) => {
-  const recentPosts = blogData.slice(1, 4);
+  // 🚀 Dynamic Data Logic
+  const { blogs } = useBlogs();
+  const blogData = blogs || [];
+  const recentPosts = blogData.slice(0, 3);
   return (
     <aside className="space-y-10">
       {/* Search */}
@@ -162,9 +179,14 @@ const BlogPostDetailWithSidebar = ({ onSearchClick }) => {
   const { postId } = useParams();
   const [showBottomBar, setShowBottomBar] = useState(false);
 
-  // Default to post 1 if no postId is found
-  const post = blogData.find((p) => p.id === parseInt(postId || 1));
-  const postIndex = blogData.findIndex((p) => p.id === parseInt(postId || 1));
+  // 🚀 Dynamic Data Logic
+  const { blogs, loading } = useBlogs();
+  const blogData = blogs || [];
+
+  // Default to first post if no postId is found or while loading
+  // Try to find by ID or Slug (assuming ID for now based on existing code)
+  const post = blogData.find((p) => p.id == postId) || blogData[0];
+  const postIndex = blogData.findIndex((p) => p.id == postId);
 
   const prevPost = postIndex > 0 ? blogData[postIndex - 1] : null;
   const nextPost =
@@ -236,6 +258,14 @@ const BlogPostDetailWithSidebar = ({ onSearchClick }) => {
         return null;
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-700"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white font-inter relative">

@@ -357,15 +357,31 @@ const UserDropdown = ({ items }) => {
             className={`absolute top-full right-0 mt-4 
                                         bg-white shadow-lg rounded-md py-2 z-50 w-40`}
           >
-            {items.map((item) => (
-              <Link // Use Link
-                key={item.title}
-                to={item.path || "#"} // Use 'to' and 'path'
-                className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 text-sm whitespace-nowrap"
-              >
-                {item.title}
-              </Link>
-            ))}
+            {items.map((item) => {
+              if (item.action) {
+                return (
+                  <button
+                    key={item.title}
+                    onClick={() => {
+                      item.action();
+                      setIsOpen(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 text-sm whitespace-nowrap"
+                  >
+                    {item.title}
+                  </button>
+                );
+              }
+              return (
+                <Link // Use Link
+                  key={item.title}
+                  to={item.path || "#"} // Use 'to' and 'path'
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 text-sm whitespace-nowrap"
+                >
+                  {item.title}
+                </Link>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
@@ -532,10 +548,11 @@ const MobileNavItem = ({ title, items }) => {
 
 // --- SearchDrawer Component - FIXED ---
 // --- SearchDrawer Component - FIXED ---
-const SearchDrawer = ({ isOpen, onClose, products }) => {
+const SearchDrawer = ({ isOpen, onClose }) => {
   const isDesktop = useIsDesktop();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("PRODUCTS");
+  const { products } = useProducts({ limit: 1000 }); // Fetch all products for client-side search
 
   // Filter Logic
   const filteredProducts = (products || []).filter(
@@ -924,8 +941,8 @@ import { useCurrency } from "../context/CurrencyContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useCompare } from "../context/CompareContext";
 import { useCart } from "../context/CartContext";
-import ALL_PRODUCTS from "./productsData";
-import { blogData } from "./BlogData";
+import { useAuth } from "../context/AuthContext";
+import { useProducts } from "../hooks/useProducts"; // ADDED
 import CartDrawer from "./CartDrawer";
 
 // --- Navbar (Main Component) ---
@@ -948,7 +965,23 @@ const Navbar = ({
   const [isBannerOpen, setIsBannerOpen] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  // const [isSearchOpen, setIsSearchOpen] = useState(false); // Removed local state
+
+  // --- Sticky Navbar Logic ---
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show fixed navbar after scrolling down 300px
+      if (window.scrollY > 300) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const nextQuote = () => setCurrentIndex((prev) => (prev + 1) % quotes.length);
   const prevQuote = () =>
@@ -1068,13 +1101,37 @@ const Navbar = ({
     { title: "404", path: "/PageNotFound" },
   ];
 
-  const userMenuItems = [
-    { title: "Login", path: "/login" },
-    { title: "Sign Up", path: "/signup" },
-    { title: "Check out", path: "/cart" },
-    { title: `Wishlist (${wishlist.length})`, path: "/wishlist" },
-    { title: `Compare (${compareList.length})`, path: "/compare" },
-  ];
+  // 🚀 Dynamic User Menu Logic
+  const { user, logout, isAuthenticated } = useAuth();
+
+  const userMenuItems = isAuthenticated
+    ? [
+        { title: `Hello, ${user?.name || "User"}`, path: "#" },
+        { title: "My Orders", path: "/my-orders" },
+        {
+          title: `Wishlist (${wishlist.filter((i) => i.imageUrl).length})`,
+          path: "/wishlist",
+        },
+        {
+          title: `Compare (${compareList.filter((i) => i.imageUrl).length})`,
+          path: "/compare",
+        },
+        { title: "Check out", path: "/cart" },
+        { title: "Logout", action: logout },
+      ]
+    : [
+        { title: "Login", path: "/login" },
+        { title: "Sign Up", path: "/signup" },
+        { title: "Check out", path: "/cart" },
+        {
+          title: `Wishlist (${wishlist.filter((i) => i.imageUrl).length})`,
+          path: "/wishlist",
+        },
+        {
+          title: `Compare (${compareList.filter((i) => i.imageUrl).length})`,
+          path: "/compare",
+        },
+      ];
 
   // Reusable Logo Component
   const Logo = () => (
@@ -1123,7 +1180,14 @@ const Navbar = ({
       )}
 
       {/* Z-INDEX FIX: Changed z-50 to z-30 */}
-      <header className="sticky top-0 z-30 bg-white bg-black/75 shadow-sm">
+      {/* Z-INDEX FIX: Changed z-50 to z-30 */}
+      <header
+        className={`transition-all duration-300 ${
+          isScrolled
+            ? "fixed top-0 left-0 right-0 z-50 bg-white shadow-md animate-slideDown"
+            : "relative z-30 bg-white shadow-sm"
+        }`}
+      >
         {/* Main Navigation */}
         <div className="py-6">
           <div className="flex justify-between items-center gap-4 px-4">
@@ -1204,7 +1268,7 @@ const Navbar = ({
               >
                 <HeartIcon />
                 <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs text-white bg-[#3AB757] rounded-full">
-                  {wishlist.length}
+                  {wishlist.filter((item) => item.imageUrl).length}
                 </span>
               </Link>
               {/* Cart Icon - UPDATED to open Drawer */}
@@ -1323,11 +1387,7 @@ const Navbar = ({
 
       {/* Search Drawer */}
       {isSearchOpen && (
-        <SearchDrawer
-          isOpen={isSearchOpen}
-          onClose={onSearchClose}
-          products={[]} // TODO: Connect to backend search
-        />
+        <SearchDrawer isOpen={isSearchOpen} onClose={onSearchClose} />
       )}
     </>
   );

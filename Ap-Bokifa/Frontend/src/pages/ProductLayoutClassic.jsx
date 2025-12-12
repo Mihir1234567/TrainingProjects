@@ -3,7 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import ProductCarousel from "/src/components/product/ProductCorousel";
-import ALL_PRODUCTS from "/src/components/productsData";
+// import ALL_PRODUCTS from "/src/components/productsData"; // REMOVED
+import { useProducts } from "/src/hooks/useProducts"; // ADDED
 import { Link, useNavigate } from "react-router-dom";
 import useRecentlyViewed from "/src/hooks/useRecentlyViwed";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +20,7 @@ import {
 // Import react-slick styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 const CustomAnimatedDropdown = ({
   formatOptions,
   selectedFormat,
@@ -113,31 +115,6 @@ const CustomAnimatedDropdown = ({
     </div>
   );
 };
-// --- Data Setup ---
-const mainProductId = 12; // "ABSOLUTION"
-const mainProduct = ALL_PRODUCTS.find((p) => p.id === mainProductId);
-
-// Image URLs for the thumbnail gallery (6 items)
-const thumbnailUrls = [
-  mainProduct?.imageUrl || "", // ABSOLUTION
-  "/src/assets/BLACK_SHEEP.webp", // Black Sheep
-  "/src/assets/THE_WOMEN.webp", // The Women
-  "/src/assets/Playground.webp", // Playground
-  "/src/assets/James.webp", // James
-  "/src/assets/AnotherGreatBook.webp", // Redemption Echo
-];
-
-const relatedProductIds = ALL_PRODUCTS.filter(
-  (p) => p.isHighlight === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
-
-const youMayAlsoLikeIds = ALL_PRODUCTS.filter(
-  (p) => p.currentBestselling === true && p.id !== mainProductId
-)
-  .slice(0, 4)
-  .map((p) => p.id);
 
 // handleViewProduct will be defined inside the component so it can use hooks (e.g., addRecentlyViewed)
 
@@ -929,6 +906,46 @@ const DeliveryInfo = () => (
 // --- Component Definition ---
 
 export const ProductLayoutClassic = () => {
+  // 🚀 Dynamic Data Logic
+  const { products: allProducts, loading: productsLoading } = useProducts({
+    limit: 50,
+  });
+  const [mainProduct, setMainProduct] = useState(null);
+
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      // Try to match ID 12 for consistency with demo or default to first
+      const found =
+        allProducts.find((p) => p.id == 12 || p._id == 12) || allProducts[0];
+      setMainProduct(found);
+    }
+  }, [allProducts]);
+
+  const mainProductId = mainProduct?.id || "default";
+
+  // Derived Data (Moved from global scope)
+  const thumbnailUrls = mainProduct
+    ? [
+        mainProduct.imageUrl || "",
+        "/src/assets/BLACK_SHEEP.webp",
+        "/src/assets/THE_WOMEN.webp",
+        "/src/assets/Playground.webp",
+        "/src/assets/James.webp",
+        "/src/assets/AnotherGreatBook.webp",
+      ]
+    : [];
+
+  const relatedProductIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .slice(0, 4)
+    .map((p) => p.id);
+
+  const youMayAlsoLikeIds = allProducts
+    .filter((p) => p.id !== mainProductId)
+    .reverse()
+    .slice(0, 4)
+    .map((p) => p.id);
+
   // 🚀 --- NEW: Local Storage Key for Reviews ---
   const LOCAL_STORAGE_KEY = `productReviews_${mainProductId}`;
 
@@ -936,7 +953,7 @@ export const ProductLayoutClassic = () => {
 
   // State to manage the selected image index and selected format
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [selectedFormat, setSelectedFormat] = useState("Audio cd");
+  const [selectedFormat, setSelectedFormat] = useState("Hardcover");
   const [activeTab, setActiveTab] = useState("Description");
 
   // 🚀 --- NEW: State to manage review form visibility and success message ---
@@ -1188,6 +1205,15 @@ export const ProductLayoutClassic = () => {
   };
 
   const modalData = enlargedImageUrl ? getModalImages() : null;
+
+  // 🚀 Loading State Check (Moved here to prevent Hook error)
+  if (productsLoading || !mainProduct) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-700"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -1452,7 +1478,7 @@ export const ProductLayoutClassic = () => {
                     <button
                       // ⭐️ HOVER CHANGE: from hover:bg-green-800 to hover:bg-green-600
                       className="flex-1 bg-green-700 text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-md text-lg"
-                      onClick={() => console.log("Buy It Now")}
+                      onClick={() => {}}
                     >
                       Buy It Now
                     </button>
@@ -1785,20 +1811,25 @@ export const ProductLayoutClassic = () => {
           <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <ProductCarousel
               title="Related Products"
-              productIds={relatedProductIds}
+              products={allProducts
+                .filter((p) => p.id !== mainProductId)
+                .slice(0, 4)}
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}
               slidesToShowCount={4}
-              onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
+              onQuickView={(product) => setQuickViewProduct(product)}
             />
           </div>
           <hr className="my-3 max-w-8xl mx-auto border-gray-200" />
           <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <ProductCarousel
-              onQuickView={(product) => setQuickViewProduct(product)} // <--- ADD THIS LINE
+              onQuickView={(product) => setQuickViewProduct(product)}
               title="You may also like"
-              productIds={youMayAlsoLikeIds}
+              products={allProducts
+                .filter((p) => p.id !== mainProductId)
+                .reverse()
+                .slice(0, 4)}
               onViewProduct={handleViewProduct}
               showBrowseButton={false}
               titleCenter={true}

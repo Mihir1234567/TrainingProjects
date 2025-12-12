@@ -24,9 +24,11 @@ const Compare = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {compareList.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {compareList
+              .filter((product) => product.imageUrl)
+              .map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
           </div>
         )}
       </div>

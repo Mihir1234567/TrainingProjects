@@ -19,3 +19,12 @@ export const fetchProductById = async (id) => {
     throw error.response?.data || error.message;
   }
 };
+// Fetch product filters (facets)
+export const fetchProductFilters = async (params) => {
+  try {
+    const response = await api.get("/products/filters", { params });
+    return response.data; // Expected { success: true, data: { categories: [], formats: [] } }
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
