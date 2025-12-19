@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 425px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px; /* Transition point for Navbar collapse and Hero stack */
+  --breakpoint-xl: 1200px; /* Transition point for Search row layout */
+  --breakpoint-2xl: 1440px;
+
   --color-torado-green-500: #34d399;
   --color-torado-green-600: #10b981;
   --color-torado-brand-primary: #5b6cf6;
@@ -27,5 +34,18 @@
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='10' viewBox='0 0 40 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 Q 10 0, 20 5 T 40 5' stroke='%2334d399' fill='none' stroke-width='2' /%3E%3C/svg%3E");
     background-repeat: repeat-x;
     background-size: 40px 10px;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.35s ease-in-out forwards;
   }
 }
