@@ -19,12 +19,12 @@ import HomeBg4 from "../../assets/Home/HomeBg/Homebg4.png";
 import Badge from "../../assets/Home/badge.svg";
 
 const styles = {
-  section: `relative w-full bg-slate-50 overflow-hidden pb-16 lg:pb-32`,
+  section: `relative w-full bg-slate-50 overflow-hidden`,
   bgDecoration: `absolute top-0 right-0 h-full bg-slate-100/50 -skew-x-12 translate-x-1/4 z-0`,
   bgImage1: `absolute top-0 left-50 w-270 h-270 z-0 pointer-events-none hidden lg:block`,
   bgImage2: `absolute top-25 right-0 w-100 h-100 z-0 pointer-events-none hidden lg:block`,
   bgImage3: `absolute top-2 left-170 w-20 h-20 z-0 pointer-events-none hidden lg:block`,
-  bgImage4: `absolute top-200 left-150 w-auto h-8 z-0 pointer-events-none hidden lg:block`,
+  bgImage4: `absolute top-180 left-180 w-auto h-8 z-0 pointer-events-none hidden lg:block`,
 
   container: `mx-auto relative z-10 px-4 md:px-6 lg:px-12`,
   contentWrapper: `flex items-center flex-col gap-12 lg:flex-row xl:gap-20`,
@@ -240,29 +240,6 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className={styles.sidebar}>
-        <div className={styles.sidebarItem}>
-          <Layers size={22} strokeWidth={1.5} className={styles.sidebarIcon} />
-          <span className={styles.sidebarText}>Demos</span>
-        </div>
-        <div className={styles.sidebarItem}>
-          <FileText
-            size={22}
-            strokeWidth={1.5}
-            className={styles.sidebarIcon}
-          />
-          <span className={styles.sidebarText}>Docs</span>
-        </div>
-        <div className={styles.sidebarItem}>
-          <ShoppingBag
-            size={22}
-            strokeWidth={1.5}
-            className={styles.sidebarIcon}
-          />
-          <span className={styles.sidebarText}>Buy Now</span>
         </div>
       </div>
     </section>
