@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Chelsea Parisian",
+    "category": "Creative",
+    "image": "/src/assets/Home/Freelancers/Freelancer1.jpg",
+    "location": "New York",
+    "specialization": "Development",
+    "tags": ["PSD", "Figma", "Adobe XD"],
+    "rating": 4.0,
+    "reviews": 1,
+    "rate": "$600"
+  },
+  {
+    "id": 2,
+    "name": "Bertrand Proffer",
+    "category": "Creative",
+    "image": "/src/assets/Home/Freelancers/Freelancer2.jpg",
+    "location": "New York",
+    "specialization": "UI/UX Designer",
+    "tags": ["PSD", "Figma", "Adobe XD"],
+    "rating": 4.0,
+    "reviews": 1,
+    "rate": "$900"
+  },
+  {
+    "id": 3,
+    "name": "Madison Kohler",
+    "category": "Creative",
+    "image": "/src/assets/Home/Freelancers/Freelancer3.jpg",
+    "location": "New York",
+    "specialization": "Design Sketch",
+    "tags": ["PSD", "Figma", "Adobe XD"],
+    "rating": 4.0,
+    "reviews": 1,
+    "rate": "$300"
+  },
+  {
+    "id": 4,
+    "name": "Wilford Johns",
+    "category": "Creative",
+    "image": "/src/assets/Home/Freelancers/Freelancer4.jpg",
+    "location": "New York",
+    "specialization": "UI/UX Designer",
+    "tags": ["PSD", "Figma", "Adobe XD"],
+    "rating": 4.0,
+    "reviews": 1,
+    "rate": "$700"
+  }
+]
