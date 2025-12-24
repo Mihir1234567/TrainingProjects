@@ -5,6 +5,9 @@ import TrendingJobs from "../components/common/TrendingJobs";
 import StatsSection from "../components/common/StatsSection";
 import FreelancerSection from "../components/common/FreelancerSection";
 import JobSearchSection from "../components/common/JobSearchSection";
+import MobileAppSection from "../components/common/MobileAppSection";
+import TestimonialSection from "../components/common/TestimonialSection";
+import BlogSection from "../components/common/BlogSection";
 
 const Home = () => {
   return (
@@ -16,6 +19,9 @@ const Home = () => {
       <StatsSection />
       <FreelancerSection />
       <JobSearchSection />
+      <MobileAppSection />
+      <TestimonialSection />
+      <BlogSection />
     </main>
   );
 };
