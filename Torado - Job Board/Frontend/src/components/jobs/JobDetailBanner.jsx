@@ -1,0 +1,134 @@
+import React from "react";
+import {
+  Clock,
+  MapPin,
+  Coffee,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Grid,
+  Banknote,
+  Calendar,
+} from "lucide-react";
+
+/**
+ * JobDetailBanner Component
+ * Renders the main floating card with job title, metadata, and action buttons.
+ */
+const JobDetailBanner = ({ job }) => {
+  // Consolidating display data with fallbacks
+  const displayData = {
+    title: job?.title || "The Complete Bookkeeping & Bank Economic Job 2025",
+    date: job?.postedAt || "4 months ago",
+    company: job?.company || "Anibal Crist",
+    location: job?.location || "London, UK",
+    salary: job?.salaryRange || job?.salary || "$35k - $45k",
+    bannerImage:
+      job?.bannerImage ||
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1470&auto=format&fit=crop",
+  };
+
+  return (
+    <section className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 -mt-16 relative z-10 pb-20">
+      <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row">
+        {/* Left Side: Image */}
+        <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto shrink-0 relative bg-slate-100">
+          <img
+            src={displayData.bannerImage}
+            alt="Job Context"
+            className="w-full h-full object-cover object-top"
+          />
+        </div>
+
+        {/* Right Side: Content */}
+        <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
+          {/* Top Row: Title & Action Buttons */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-4">
+            <h2 className="text-xl md:text-[22px] font-bold text-[#004A61] leading-tight max-w-2xl">
+              {displayData.title}
+            </h2>
+
+            {/* Action Buttons (Apply & Icon) */}
+            <div className="flex items-center gap-4 shrink-0">
+              {/* Cup/Save Icon with Center Expansion Effect */}
+              <button className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:text-white transition-all duration-500 overflow-hidden">
+                <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
+                <span className="relative z-10">
+                  <Coffee size={20} strokeWidth={2} />
+                </span>
+              </button>
+              {/* Apply Button with Center Expansion Effect */}
+              <button className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm">
+                <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
+                <span className="relative z-10">Apply Now</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Middle Row: Meta Data */}
+          <div className="flex flex-wrap items-center gap-y-3 gap-x-6 text-[#A0ABB8] text-[15px] mb-6 font-medium">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 flex items-center justify-center border-2 border-[#5BBB7B]/40 rounded-sm">
+                <div className="w-1.5 h-1.5 bg-[#5BBB7B]" />
+              </div>
+              <span className="text-[#A0ABB8]">{displayData.date}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Grid size={18} className="text-[#5BBB7B]/60" strokeWidth={2.5} />
+              <span className="text-[#A0ABB8]">{displayData.company}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin size={18} className="text-[#5BBB7B]" strokeWidth={2.5} />
+              <span className="text-[#A0ABB8]">{displayData.location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Banknote
+                size={18}
+                className="text-[#5BBB7B]"
+                strokeWidth={2.5}
+              />
+              <span className="text-[#A0ABB8]">{displayData.salary}</span>
+            </div>
+          </div>
+
+          {/* Bottom Row: Tags & Social Share */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+            {/* Tags */}
+            <div className="flex flex-wrap gap-4">
+              <span className="px-6 py-2 rounded-md bg-[#EFF2FC] text-[#5569CC] text-sm font-semibold">
+                Full Time
+              </span>
+              <span className="px-6 py-2 rounded-md bg-[#EBF9F1] text-[#5BBB7B] text-sm font-semibold">
+                Private
+              </span>
+              <span className="px-6 py-2 rounded-md bg-[#F2F5F7] text-[#7F8B99] text-sm font-semibold">
+                Urgent
+              </span>
+            </div>
+
+            {/* Social Share */}
+            <div className="flex items-center gap-5">
+              <span className="text-[#002333] font-bold text-[15px]">
+                Share With Us
+              </span>
+              <div className="flex gap-2.5">
+                {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                  <a
+                    key={idx}
+                    href="#"
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-[#f0f5fa] text-[#002333] hover:bg-[#5BBB7B] hover:text-white transition-all duration-300"
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default JobDetailBanner;

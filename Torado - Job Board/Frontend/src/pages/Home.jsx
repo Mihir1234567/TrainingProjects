@@ -8,6 +8,7 @@ import JobSearchSection from "../components/common/JobSearchSection";
 import MobileAppSection from "../components/common/MobileAppSection";
 import TestimonialSection from "../components/common/TestimonialSection";
 import BlogSection from "../components/common/BlogSection";
+import MattersToUs from "../components/common/MattersToUs";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <MobileAppSection />
       <TestimonialSection />
       <BlogSection />
+      <MattersToUs />
     </main>
   );
 };

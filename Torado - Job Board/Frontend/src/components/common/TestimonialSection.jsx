@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -61,106 +61,137 @@ const testimonials = [
 
 const TestimonialSection = () => {
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const [isCarousel, setIsCarousel] = useState(false);
+  const containerRef = React.useRef(null);
+
+  useEffect(() => {
+    const checkSpace = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.offsetWidth;
+        // Switch to carousel if we have less than 1100px (4 cards * ~250px + gaps)
+        setIsCarousel(width < 1100);
+      }
+    };
+
+    const observer = new ResizeObserver(checkSpace);
+    if (containerRef.current) observer.observe(containerRef.current);
+
+    checkSpace();
+    return () => observer.disconnect();
+  }, []);
+
+  const renderCard = (testimonial) => (
+    <div
+      key={testimonial.id}
+      className="group bg-white p-8 rounded-xl text-left flex flex-col justify-between min-h-[400px] border border-gray-100 h-full hover:border-[#5BBB7B]/30 hover:shadow-xl hover:shadow-slate-100 transition-all duration-300"
+    >
+      <div className="flex flex-col h-full">
+        {/* Top Row: Quote Icon & Stars */}
+        <div className="flex justify-between items-start mb-8">
+          <img
+            src={quoteIcon}
+            alt="Quote"
+            className="w-14 h-14 object-contain"
+          />
+          <div className="flex gap-1 pt-2">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 fill-[#F59E0B] text-[#F59E0B]" />
+            ))}
+          </div>
+        </div>
+
+        {/* Review Text */}
+        <p className="text-[#6C757D] text-[15px] leading-[1.8] mb-8 font-medium">
+          {testimonial.text}
+        </p>
+
+        {/* Footer: User & Brand */}
+        <div className="flex items-center justify-between mt-auto">
+          <div className="flex items-center gap-4">
+            <img
+              src={testimonial.image}
+              alt={testimonial.name}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div className="flex flex-col">
+              <h4 className="font-bold text-[#003B3C] text-[15px] leading-tight">
+                {testimonial.name}
+              </h4>
+              <p className="text-xs text-gray-500 font-medium mt-1">
+                {testimonial.role}
+              </p>
+            </div>
+          </div>
+          <img
+            src={testimonial.brand}
+            alt="Brand"
+            className="h-7 object-contain max-w-[90px] opacity-80"
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section className="py-16 bg-white overflow-hidden">
-      <div className="container mx-auto px-4 relative">
+      <div ref={containerRef} className="container mx-auto px-4 relative">
         {/* Header */}
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#003B3C] mb-12">
           What People Say About Us
         </h2>
 
-        {/* Carousel */}
-        <Swiper
-          onSwiper={setSwiperInstance}
-          modules={[Autoplay, Navigation]}
-          spaceBetween={30}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-            },
-            1024: {
-              slidesPerView: 4,
-            },
-          }}
-          className="testimonial-swiper"
-        >
-          {testimonials.map((testimonial) => (
-            <SwiperSlide key={testimonial.id}>
-              <div className="group bg-white p-8 rounded-xl text-left flex flex-col justify-between min-h-[400px] border border-gray-100 mb-4 h-full">
-                <div className="flex flex-col h-full">
-                  {/* Top Row: Quote Icon & Stars */}
-                  <div className="flex justify-between items-start mb-8">
-                    <img
-                      src={quoteIcon}
-                      alt="Quote"
-                      className="w-14 h-14 object-contain"
-                    />
-                    <div className="flex gap-1 pt-2">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-[#F59E0B] text-[#F59E0B]"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-[#6C757D] text-[15px] leading-[1.8] mb-8 font-medium">
-                    {testimonial.text}
-                  </p>
-
-                  {/* Footer: User & Brand */}
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                      <div className="flex flex-col">
-                        <h4 className="font-bold text-[#003B3C] text-[15px] leading-tight">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-xs text-gray-500 font-medium mt-1">
-                          {testimonial.role}
-                        </p>
-                      </div>
-                    </div>
-                    <img
-                      src={testimonial.brand}
-                      alt="Brand"
-                      className="h-7 object-contain max-w-[90px] opacity-80"
-                    />
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        {/* Custom Navigation Arrows Under Carousel */}
-        <div className="flex justify-center gap-4 mt-8 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500">
-          <button
-            onClick={() => swiperInstance?.slidePrev()}
-            className="testimonial-prev w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-[#5BBB7B] hover:text-white hover:border-[#5BBB7B] transition-all cursor-pointer"
+        {!isCarousel ? (
+          /* Desktop Grid Mode */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((testimonial) => renderCard(testimonial))}
+          </div>
+        ) : (
+          /* Carousel Mode */
+          <Swiper
+            onSwiper={setSwiperInstance}
+            modules={[Autoplay, Navigation]}
+            spaceBetween={30}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+            className="testimonial-swiper"
           >
-            <ChevronLeft size={24} />
-          </button>
-          <button
-            onClick={() => swiperInstance?.slideNext()}
-            className="testimonial-next w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-[#5BBB7B] hover:text-white hover:border-[#5BBB7B] transition-all cursor-pointer"
-          >
-            <ChevronRight size={24} />
-          </button>
-        </div>
+            {testimonials.map((testimonial) => (
+              <SwiperSlide key={testimonial.id}>
+                {renderCard(testimonial)}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+
+        {/* Custom Navigation Arrows Under Carousel - Only visible in Carousel mode */}
+        {isCarousel && (
+          <div className="flex justify-center gap-4 mt-8">
+            <button
+              onClick={() => swiperInstance?.slidePrev()}
+              className="testimonial-prev w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-[#5BBB7B] hover:text-white hover:border-[#5BBB7B] transition-all cursor-pointer"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={() => swiperInstance?.slideNext()}
+              className="testimonial-next w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-[#5BBB7B] hover:text-white hover:border-[#5BBB7B] transition-all cursor-pointer"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
