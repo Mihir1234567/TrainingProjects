@@ -5,10 +5,12 @@ import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
 import JobListing from "./pages/JobListing";
 import JobDetail from "./pages/JobDetail";
+import ApplyJob from "./pages/ApplyJob";
+import PostJob from "./pages/PostJob";
 import FloatingActions from "./components/common/FloatingActions";
 import DemoModal from "./components/common/DemoModal";
 import ScrollToTop from "./components/common/ScrollToTop";
-
+import Recruiters from "./pages/Recruiters";
 function App() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
@@ -20,12 +22,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<JobListing />} />
           <Route path="/job/:id" element={<JobDetail />} />
-          <Route
-            path="/post-job"
-            element={
-              <div className="p-20 text-center">Post a Job (Coming Soon)</div>
-            }
-          />
+          <Route path="/apply-job" element={<ApplyJob />} />
+          <Route path="/post-job" element={<PostJob />} />
+          <Route path="/recruiters" element={<Recruiters />} />
           <Route
             path="/login"
             element={

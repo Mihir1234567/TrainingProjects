@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
 
-/**
- * ScrollToTop component with a circular progress indicator.
- */
-const ScrollToTop = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
+const ScrollToTop = ({
+  threshold = 300,
+  baseColor = "#002333",
+  accentColor = "#5BBB7B",
+  className = "",
+}) => {
+  const [scrollState, setScrollState] = useState({
+    progress: 0,
+    isVisible: false,
+  });
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress =
-        totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-      setScrollProgress(progress);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+
+          // Calculate 0-100 scale
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+          setScrollState({
+            progress,
+            isVisible: scrollTop > threshold,
+          });
+
+          ticking = false;
+        });
+
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [threshold]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -27,43 +48,68 @@ const ScrollToTop = () => {
     });
   };
 
+  // SVG Configuration
+  const size = 56; // Button size in px (w-14)
+  const strokeWidth = 3;
+  const radius = (size - strokeWidth * 2) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDashoffset =
+    circumference - (scrollState.progress / 100) * circumference;
+
   return (
     <div
       className={`fixed right-8 bottom-8 z-[60] transition-all duration-500 transform ${
-        scrollProgress > 2
+        scrollState.isVisible
           ? "translate-y-0 opacity-100"
           : "translate-y-10 opacity-0 pointer-events-none"
-      }`}
+      } ${className}`}
     >
       <button
         onClick={scrollToTop}
-        className="relative w-14 h-14 bg-[#004e59] rounded-full shadow-2xl flex items-center justify-center group hover:scale-110 transition-all duration-300 border border-white/10"
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        style={{
+          backgroundColor: baseColor,
+          "--accent-color": accentColor,
+          "--base-color": baseColor,
+        }}
         aria-label="Scroll to top"
       >
         {/* Progress Circle SVG */}
-        <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
+        <svg
+          className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none z-10"
+          viewBox={`0 0 ${size} ${size}`}
+        >
+          {/* Background Track */}
           <circle
-            cx="28"
-            cy="28"
-            r="24"
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
             fill="transparent"
             stroke="rgba(255,255,255,0.1)"
-            strokeWidth="3"
+            strokeWidth={strokeWidth}
           />
+          {/* Progress Indicator */}
           <circle
-            cx="28"
-            cy="28"
-            r="24"
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
             fill="transparent"
-            stroke="#00D1FF"
-            strokeWidth="3"
-            strokeDasharray="150.8"
-            strokeDashoffset={150.8 - (150.8 * scrollProgress) / 100}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
-            className="transition-all duration-300 ease-out"
+            className="transition-all duration-100 ease-out stroke-[var(--accent-color)] group-hover:stroke-[var(--base-color)]"
           />
         </svg>
-        <ArrowUp className="w-5 h-5 text-white transition-transform group-hover:-translate-y-1 z-10" />
+
+        {/* Arrow Icon */}
+        <ArrowUp className="w-5 h-5 text-white z-20 transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[var(--base-color)]" />
+
+        {/* Hover Fill Effect (Optional: Fills button with accent color on hover) */}
+        <div
+          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ backgroundColor: accentColor }}
+        />
       </button>
     </div>
   );

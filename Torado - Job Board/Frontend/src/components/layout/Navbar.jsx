@@ -62,16 +62,16 @@ const Navbar = () => {
               to="/jobs"
               items={[
                 { label: "Job ", to: "/jobs" },
-                { label: "Job Detail", to: "/jobs" },
-                { label: "Apply For A Job", to: "/jobs" },
-                { label: "Post A Job", to: "/jobs" },
+                { label: "Job Detail", to: "/job/1" },
+                { label: "Apply For A Job", to: "/apply-job" },
+                { label: "Post A Job", to: "/post-job" },
               ]}
             />
             <NavDropdown
               title="Recruiters"
               to="/recruiters"
               items={[
-                { label: "recruiters", to: "/recruiters" },
+                { label: "Recruiters", to: "/recruiters" },
                 { label: "Freelancer", to: "/recruiters" },
                 { label: "Freelancer Details", to: "/recruiters" },
               ]}

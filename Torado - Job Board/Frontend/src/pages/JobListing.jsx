@@ -64,7 +64,7 @@ const JobListing = () => {
 
   // --- Filtering & Sorting Logic ---
   const processedJobs = useMemo(() => {
-    let result = [...jobsData];
+    let result = [...jobsData.jobs];
 
     // 1. Searching by Keywords
     if (filters.searchQuery) {
@@ -177,7 +177,7 @@ const JobListing = () => {
       Contract: 0,
       Training: 0,
     };
-    jobsData.forEach((job) => {
+    jobsData.jobs.forEach((job) => {
       if (counts.hasOwnProperty(job.type)) {
         counts[job.type]++;
       }

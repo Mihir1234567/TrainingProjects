@@ -19,7 +19,7 @@ const JobCard = ({ job }) => {
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden p-3">
             <img
-              src={job.logo.startsWith("h") ? job.logo : `/${job.logo}`}
+              src={job.logo}
               alt={job.company}
               className="w-full h-full object-contain"
               onError={(e) => {

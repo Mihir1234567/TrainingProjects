@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Clock,
   MapPin,
@@ -30,7 +31,7 @@ const JobDetailBanner = ({ job }) => {
   };
 
   return (
-    <section className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 -mt-16 relative z-10 pb-20">
+    <section className="max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 mt-12 relative z-10 pb-20">
       <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row">
         {/* Left Side: Image */}
         <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto shrink-0 relative bg-slate-100">
@@ -38,6 +39,10 @@ const JobDetailBanner = ({ job }) => {
             src={displayData.bannerImage}
             alt="Job Context"
             className="w-full h-full object-cover object-top"
+            onError={(e) => {
+              e.target.src =
+                "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1471&auto=format&fit=crop"; // Default fallback
+            }}
           />
         </div>
 
@@ -59,10 +64,13 @@ const JobDetailBanner = ({ job }) => {
                 </span>
               </button>
               {/* Apply Button with Center Expansion Effect */}
-              <button className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm">
+              <Link
+                to="/apply-job"
+                className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center"
+              >
                 <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
                 <span className="relative z-10">Apply Now</span>
-              </button>
+              </Link>
             </div>
           </div>
 
