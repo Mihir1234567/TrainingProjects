@@ -1,11 +1,64 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, ChevronDown, UserPlus, FileText } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  UserPlus,
+  FileText,
+  ChevronRight,
+} from "lucide-react";
 import logo from "../../assets/Logo/logoMain.svg";
+import blogsData from "../../data/blogs.json";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+
+  // Extract unique Authors
+  const authors = useMemo(() => {
+    const unique = new Map();
+    blogsData.forEach((blog) => {
+      if (blog.authorId && !unique.has(blog.authorId)) {
+        unique.set(blog.authorId, {
+          label: blog.author,
+          to: `/blog/author/${blog.authorId}`,
+        });
+      }
+    });
+    return Array.from(unique.values());
+  }, []);
+
+  // Extract unique Categories
+  const categories = useMemo(() => {
+    const unique = new Map();
+    blogsData.forEach((blog) => {
+      if (blog.categoryId && !unique.has(blog.categoryId)) {
+        unique.set(blog.categoryId, {
+          label: blog.category,
+          to: `/blog/category/${blog.categoryId}`,
+        });
+      }
+    });
+    return Array.from(unique.values());
+  }, []);
+
+  // Extract unique Tags
+  const tags = useMemo(() => {
+    const unique = new Set();
+    const tagItems = [];
+    blogsData.forEach((blog) => {
+      if (blog.tags) {
+        blog.tags.forEach((tag) => {
+          if (!unique.has(tag)) {
+            unique.add(tag);
+            tagItems.push({ label: tag, to: `/blog/tag/${tag}` });
+          }
+        });
+      }
+    });
+    return tagItems;
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,8 +125,8 @@ const Navbar = () => {
               to="/recruiters"
               items={[
                 { label: "Recruiters", to: "/recruiters" },
-                { label: "Freelancer", to: "/recruiters" },
-                { label: "Freelancer Details", to: "/recruiters" },
+                { label: "Freelancer", to: "/freelancers" },
+                { label: "Freelancer Details", to: "/freelancers" },
               ]}
             />
             <NavDropdown
@@ -82,9 +135,9 @@ const Navbar = () => {
               items={[
                 { label: "Candidate", to: "/candidates" },
                 { label: "Candidate Details", to: "/candidates" },
-                { label: "Company Listing", to: "/candidates" },
-                { label: "Company Details", to: "/candidates" },
-                { label: "User Dashboard", to: "/candidates" },
+                { label: "Company Listing", to: "/company-listing" },
+                { label: "Company Details", to: "/company-details" },
+                { label: "User Dashboard", to: "/user-dashboard" },
               ]}
             />
             <NavDropdown
@@ -92,18 +145,18 @@ const Navbar = () => {
               to="/blog"
               items={[
                 { label: "Blog", to: "/blog" },
-                { label: "Author", to: "/blog" },
-                { label: "Categories", to: "/blog" },
-                { label: "Tags", to: "/blog" },
-                { label: "Blog Details", to: "/blog" },
+                { label: "Author", to: "/blog", subItems: authors },
+                { label: "Categories", to: "/blog", subItems: categories },
+                { label: "Tags", to: "/blog", subItems: tags },
+                { label: "Blog Details", to: "/blog" }, // Removed hardcoded /1 mostly to point to general blog
               ]}
             />
             <NavDropdown
               title="Pages"
               to="/pages"
               items={[
-                { label: "About Us", to: "/about" },
-                { label: "Pricing", to: "/contact" },
+                { label: "About Us", to: "/about-us" },
+                { label: "Pricing", to: "/pricing" },
                 { label: "FAQ's", to: "/contact" },
                 { label: "Login / Register  ", to: "/contact" },
                 { label: "Contact Us", to: "/contact" },
@@ -287,15 +340,37 @@ const NavDropdown = ({ title, to, items = [] }) => (
     {/* Dropdown Menu */}
     {items.length > 0 && (
       <div className="absolute top-[80%] left-0 pt-4 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 min-w-50">
-        <div className="bg-white rounded-lg shadow-xl border border-slate-100 py-2 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-xl border border-slate-100 py-2 overflow-visible relative">
           {items.map((item, index) => (
-            <Link
-              key={index}
-              to={item.to}
-              className="block w-60 px-6 py-3 m-auto text-[11px] xl:text-sm font-semibold text-slate-600 hover:text-torado-green-600"
-            >
-              {item.label}
-            </Link>
+            <div key={index} className="relative group/sub">
+              <Link
+                to={item.to}
+                className="flex items-center justify-between w-60 px-6 py-3 text-[11px] xl:text-sm font-semibold text-slate-600 hover:text-torado-green-600 hover:bg-slate-50 transition-colors"
+                onClick={(e) => {
+                  if (item.subItems) e.preventDefault();
+                }}
+              >
+                {item.label}
+                {item.subItems && <ChevronRight size={14} />}
+              </Link>
+
+              {/* Nested Sub-Dropdown */}
+              {item.subItems && (
+                <div className="absolute top-0 left-full pl-2 invisible group-hover/sub:visible opacity-0 group-hover/sub:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover/sub:translate-x-0 z-50">
+                  <div className="bg-white rounded-lg shadow-xl border border-slate-100 py-2 w-56 max-h-[400px] overflow-y-auto">
+                    {item.subItems.map((sub, idx) => (
+                      <Link
+                        key={idx}
+                        to={sub.to}
+                        className="block px-5 py-2.5 text-[11px] xl:text-sm font-medium text-slate-600 hover:text-torado-green-600 hover:bg-slate-50 transition-colors"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </div>

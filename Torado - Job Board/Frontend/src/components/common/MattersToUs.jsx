@@ -53,7 +53,13 @@ const styles = {
     "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-white/5 rounded-full blur-3xl",
 };
 
-const MattersToUs = () => {
+const MattersToUs = ({
+  title = "What Matters To You?",
+  description = "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day.",
+  ctaTitle = "Go Beyond The Search, Find The Right Community For You.",
+  ctaDescription = "Unlike other job platforms, we never assume your gender, race or ethnicity.",
+  ctaButtonText = "Read Our Story",
+}) => {
   const allTags = [
     { icon: Grid, text: "Frontend Engineer" },
     { icon: Layers, text: "Remote Position" },
@@ -68,37 +74,42 @@ const MattersToUs = () => {
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>What Matters To You?</h2>
+          <h2 className={styles.title}>{title}</h2>
           <div className={styles.subHeaderRow}>
-            <p className={styles.subTitle}>
-              Every month, more than 3 million job seekers visit our website to
-              search for jobs, with more than 130,000 applications per day.
-            </p>
+            <p className={styles.subTitle}>{description}</p>
             <div className={styles.preferenceLink}>
               Tell Us Your Preferences
             </div>
           </div>
         </div>
 
-        <div className={styles.tagsContainer}>
-          {allTags.map((tag, idx) => (
-            <div key={idx} className={styles.tag}>
-              <tag.icon className={styles.tagIcon} />
-              <span className={styles.tagText}>{tag.text}</span>
-            </div>
-          ))}
+        <div className="flex flex-col items-center gap-4 mb-12 md:mb-16">
+          {/* Row 1: First 4 tags */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {allTags.slice(0, 4).map((tag, idx) => (
+              <div key={`row1-${idx}`} className={styles.tag}>
+                <tag.icon className={styles.tagIcon} />
+                <span className={styles.tagText}>{tag.text}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Row 2: Remaining 3 tags */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {allTags.slice(4).map((tag, idx) => (
+              <div key={`row2-${idx}`} className={styles.tag}>
+                <tag.icon className={styles.tagIcon} />
+                <span className={styles.tagText}>{tag.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className={styles.ctaCard}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>
-              Go Beyond The Search, Find The Right Community For You.
-            </h2>
-            <p className={styles.ctaDescription}>
-              Unlike other job platforms, we never assume your gender, race or
-              ethnicity.
-            </p>
-            <div className={styles.ctaLink}>Read Our Story</div>
+            <h2 className={styles.ctaTitle}>{ctaTitle}</h2>
+            <p className={styles.ctaDescription}>{ctaDescription}</p>
+            <div className={styles.ctaLink}>{ctaButtonText}</div>
           </div>
 
           <div className={styles.illustrationWrapper}>

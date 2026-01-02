@@ -1,19 +1,42 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { MapPin, Clock, CircleDollarSign, Bookmark } from "lucide-react";
+import React, { useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { MapPin, Clock, CircleDollarSign, Beer } from "lucide-react";
 import jobsData from "../../data/jobs.json";
 
 const RelatedJobs = ({ currentJobId, category }) => {
-  // Filter jobs by category and exclude current job
-  // Limiting to 4 jobs for display
-  const relatedJobs = jobsData.jobs
-    .filter((job) => job.id !== currentJobId && job.category === category)
-    .slice(0, 4);
+  const [searchParams] = useSearchParams();
+  const relatedBy = searchParams.get("relatedBy");
+  const value = searchParams.get("value");
+
+  // Filter jobs based on router params or fallback to props
+  const displayJobs = useMemo(() => {
+    let filtered = jobsData.jobs.filter((job) => job.id !== currentJobId);
+
+    if (relatedBy === "location" && value) {
+      filtered = filtered.filter(
+        (job) => (job.location || "").includes(value.split(",")[0].trim()) // Loose match for city
+      );
+    } else if (relatedBy === "industry" && value) {
+      filtered = filtered.filter(
+        (job) => (job.industry || job.category) === value
+      );
+    } else if (relatedBy === "title" && value) {
+      // Loose match for title or exact match
+      filtered = filtered.filter((job) =>
+        job.title.toLowerCase().includes(value.toLowerCase())
+      );
+    } else {
+      // Fallback to category prop (default behavior)
+      filtered = filtered.filter((job) => job.category === category);
+    }
+
+    return filtered.slice(0, 4);
+  }, [currentJobId, category, relatedBy, value]);
 
   // Fallback if no related jobs found, show random jobs
-  const displayJobs =
-    relatedJobs.length > 0
-      ? relatedJobs
+  const finalJobs =
+    displayJobs.length > 0
+      ? displayJobs
       : jobsData.jobs.filter((j) => j.id !== currentJobId).slice(0, 4);
 
   return (
@@ -23,7 +46,7 @@ const RelatedJobs = ({ currentJobId, category }) => {
       </h3>
 
       <div className="space-y-6">
-        {displayJobs.map((job) => (
+        {finalJobs.map((job) => (
           <div
             key={job.id}
             className="group flex flex-col md:flex-row gap-6 p-6 border border-slate-100 rounded-lg hover:border-transparent hover:shadow-lg transition-all duration-300 bg-white relative"
@@ -94,9 +117,14 @@ const RelatedJobs = ({ currentJobId, category }) => {
 
             {/* Action Button (Absolute or Flex) */}
             <div className="absolute top-6 right-6 md:static md:self-center">
-              <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:text-white overflow-hidden group transition-all">
-                <span className="absolute inset-0 w-full h-full bg-[#5BBB7B] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-center"></span>
-                <Bookmark size={18} strokeWidth={2} className="relative z-10" />
+              <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white group/btn transition-all duration-300">
+                {/* Tooltip */}
+                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
+                  Bookmark
+                  <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></span>
+                </span>
+
+                <Beer size={18} strokeWidth={2} className="relative z-10" />
               </button>
             </div>
           </div>

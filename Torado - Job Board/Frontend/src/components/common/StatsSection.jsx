@@ -25,26 +25,26 @@ const stats = [
 
 const StatsSection = () => {
   return (
-    <section className="py-12 md:py-24 bg-[#F9FBFC] overflow-hidden">
-      <div className="w-[98%] sm:w-[94%] md:w-[90%] relative bg-[#6170E6] rounded-tr-[30px] sm:rounded-tr-[40px]  px-6 py-10 md:py-16 shadow-xl shadow-indigo-100">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
-          <svg
-            viewBox="0 0 1000 1000"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute -right-20 -top-20 w-[600px] h-[600px] text-white/40"
-          >
-            <path
-              fill="currentColor"
-              d="M1000,0 L1000,1000 L0,1000 C200,800 400,900 600,700 C800,500 700,300 1000,0"
-              className="animate-pulse"
-              style={{ animationDuration: "8s" }}
-            />
-          </svg>
-          <div className="absolute inset-0 bg-[url('https://torado.envytheme.com/job-board/default/assets/images/fun-fact-shape-1.png')] bg-cover opacity-30 mix-blend-overlay"></div>
-        </div>
+    <section className="py-12 md:py-20 bg-[#6170E6] relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
+        <svg
+          viewBox="0 0 1000 1000"
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute -right-20 -top-20 w-[600px] h-[600px] text-white/40"
+        >
+          <path
+            fill="currentColor"
+            d="M1000,0 L1000,1000 L0,1000 C200,800 400,900 600,700 C800,500 700,300 1000,0"
+            className="animate-pulse"
+            style={{ animationDuration: "8s" }}
+          />
+        </svg>
+        <div className="absolute inset-0 bg-[url('https://torado.envytheme.com/job-board/default/assets/images/fun-fact-shape-1.png')] bg-cover opacity-30 mix-blend-overlay"></div>
+      </div>
 
-        <div className="relative z-10 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6 md:gap-4 items-center px-4 sm:px-8 md:px-12 lg:px-16">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6 md:gap-4 items-center">
           {stats.map((stat, index) => (
             <div
               key={index}

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import JobListingHeader from "../components/common/JobListingHeader";
 import JobSortingBar from "../components/common/JobSortingBar";
 import JobSidebar from "../components/common/JobSidebar";
@@ -10,6 +11,12 @@ import { X, Search } from "lucide-react";
 
 const JobListing = () => {
   // --- States ---
+  const [searchParams] = useSearchParams();
+  const recruiterIdParam = searchParams.get("recruiterId");
+  const keywordParam = searchParams.get("keyword");
+  const locationParam = searchParams.get("location");
+  const categoryParam = searchParams.get("category");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
   const [sortBy, setSortBy] = useState("Default");
@@ -18,16 +25,17 @@ const JobListing = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [filters, setFilters] = useState({
-    searchQuery: "",
-    locationQuery: "",
+    searchQuery: keywordParam || "",
+    locationQuery: locationParam || "",
     radius: 50,
-    selectedCategory: "",
+    selectedCategory: categoryParam || "",
     selectedJobTypes: [],
     selectedDatePost: "all",
     selectedEmployment: [],
     selectedExperience: [],
     salary: 10000,
     selectedTags: [],
+    recruiterId: recruiterIdParam ? parseInt(recruiterIdParam) : null,
   });
 
   const clearFilters = () => {
@@ -42,6 +50,7 @@ const JobListing = () => {
       selectedExperience: [],
       salary: 10000,
       selectedTags: [],
+      recruiterId: null,
     });
     setCurrentPage(1);
   };
@@ -65,6 +74,11 @@ const JobListing = () => {
   // --- Filtering & Sorting Logic ---
   const processedJobs = useMemo(() => {
     let result = [...jobsData.jobs];
+
+    // 0. Recruiter Filter (New)
+    if (filters.recruiterId) {
+      result = result.filter((job) => job.recruiterId === filters.recruiterId);
+    }
 
     // 1. Searching by Keywords
     if (filters.searchQuery) {
@@ -198,6 +212,18 @@ const JobListing = () => {
   // --- Active Filter Chips Logic ---
   const activeChips = useMemo(() => {
     const chips = [];
+    if (filters.recruiterId) {
+      // Find recruiter name for chip
+      const job = jobsData.jobs.find(
+        (j) => j.recruiterId === filters.recruiterId
+      );
+      const name = job ? job.recruiterName : "Recruiter";
+      chips.push({
+        label: `Recruiter: ${name}`,
+        key: "recruiterId",
+        value: filters.recruiterId,
+      });
+    }
     if (filters.searchQuery)
       chips.push({
         label: `"${filters.searchQuery}"`,
@@ -242,7 +268,14 @@ const JobListing = () => {
         [chip.key]: prev[chip.key].filter((v) => v !== chip.value),
       }));
     } else {
-      setFilters((prev) => ({ ...prev, [chip.key]: chip.value }));
+      setFilters((prev) => ({
+        ...prev,
+        [chip.key]: chip.value === filters[chip.key] ? "" : chip.value,
+      }));
+      // Special handling for recruiterId: null it out
+      if (chip.key === "recruiterId") {
+        setFilters((prev) => ({ ...prev, recruiterId: null }));
+      }
     }
   };
 

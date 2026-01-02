@@ -4,47 +4,653 @@
     "name": "Chelsea Parisian",
     "category": "Creative",
     "image": "/src/assets/Home/Freelancers/Freelancer1.jpg",
-    "location": "New York",
-    "specialization": "Development",
-    "tags": ["PSD", "Figma", "Adobe XD"],
-    "rating": 4.0,
-    "reviews": 1,
-    "rate": "$600"
+    "location": "New York, USA",
+    "specialization": "Frontend Developer",
+    "tags": ["React", "Vue.js", "Tailwind", "Programming"],
+    "rating": 4.8,
+    "reviews": 12,
+    "rate": "$85",
+    "title": "Senior Frontend Developer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Chelsea is a passionate Frontend Developer with over 5 years of experience in building responsive and accessible web applications. She specializes in the React ecosystem and has a keen eye for design details.",
+    "skillsDescription": [
+      "Deep understanding of JavaScript, HTML5, and CSS3",
+      "Proficiency with React, Redux, and modern hooks",
+      "Experience with responsive design and mobile-first approach",
+      "Knowledge of web accessibility standards (WCAG)"
+    ],
+    "talentAndExperience": [
+      "Lead Frontend Developer at a Fintech Startup",
+      "Contributor to major open-source UI libraries",
+      "Speaker at ReactConf 2023"
+    ],
+    "overview": {
+      "experience": "5 Years",
+      "language": "English, French",
+      "qualification": "Master's Degree in CS",
+      "phone": "+1 202 555 0101",
+      "email": "chelsea.p@example.com"
+    },
+    "reviewsList": [
+      {
+        "name": "Jonathan Dach",
+        "title": "Product Manager",
+        "comment": "Chelsea delivered the project ahead of schedule and the code quality was exceptional.",
+        "image": "/src/assets/Home/Freelancers/Freelancer2.jpg",
+        "date": "2 Days ago"
+      },
+      {
+        "name": "Verner Conroy",
+        "title": "CTO",
+        "comment": "A true professional. Her attention to detail saved us weeks of bug fixing.",
+        "image": "/src/assets/Home/Freelancers/Freelancer3.jpg",
+        "date": "1 Week ago"
+      }
+    ]
   },
   {
     "id": 2,
     "name": "Bertrand Proffer",
-    "category": "Creative",
+    "category": "Design",
     "image": "/src/assets/Home/Freelancers/Freelancer2.jpg",
-    "location": "New York",
+    "location": "London, UK",
     "specialization": "UI/UX Designer",
-    "tags": ["PSD", "Figma", "Adobe XD"],
-    "rating": 4.0,
-    "reviews": 1,
-    "rate": "$900"
+    "tags": ["Figma", "Sketch", "Prototyping", "UX/UI", "Adobe XD", "Design"],
+    "rating": 4.5,
+    "reviews": 8,
+    "rate": "$95",
+    "title": "Lead UI/UX Designer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Bertrand creates intuitive and visually stunning user interfaces. With a background in psychology, he focuses on user-centered design principles to solve complex problems.",
+    "skillsDescription": [
+      "Mastery of Figma and Sketch",
+      "Expertise in user research and usability testing",
+      "Strong understanding of interaction design",
+      "Ability to create high-fidelity prototypes"
+    ],
+    "talentAndExperience": [
+      "Redesigned the mobile app for a major bank",
+      "3 years of agency experience working with Fortune 500 clients",
+      "Award-winning portfolio on Dribbble"
+    ],
+    "overview": {
+      "experience": "4 Years",
+      "language": "English, Spanish",
+      "qualification": "Bachelor's in Design",
+      "phone": "+44 20 7946 0958",
+      "email": "bertrand.ux@example.co.uk"
+    },
+    "reviewsList": [
+      {
+        "name": "Sarah Jenkins",
+        "title": "Marketing Director",
+        "comment": "Bertrand transformed our outdated website into a modern masterpiece.",
+        "image": "/src/assets/Home/Freelancers/Freelancer4.jpg",
+        "date": "3 Weeks ago"
+      },
+      {
+        "name": "David Smith",
+        "title": "Founder",
+        "comment": "Highly recommended for any UI/UX work. He really understands the user journey.",
+        "image": "/src/assets/Home/Freelancers/Freelancer5.jpg",
+        "date": "1 Month ago"
+      }
+    ]
   },
   {
     "id": 3,
     "name": "Madison Kohler",
-    "category": "Creative",
+    "category": "Marketing",
     "image": "/src/assets/Home/Freelancers/Freelancer3.jpg",
-    "location": "New York",
-    "specialization": "Design Sketch",
-    "tags": ["PSD", "Figma", "Adobe XD"],
-    "rating": 4.0,
-    "reviews": 1,
-    "rate": "$300"
+    "location": "Berlin, Germany",
+    "specialization": "SEO Specialist",
+    "tags": ["SEO", "Content Strategy", "Analytics", "Digital"],
+    "rating": 4.9,
+    "reviews": 24,
+    "rate": "$65",
+    "title": "Senior SEO Strategist",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Madison helps businesses grow their organic traffic through data-driven SEO strategies. She has a proven track record of ranking websites on the first page of Google.",
+    "skillsDescription": [
+      "Advanced keyword research and competitor analysis",
+      "Technical SEO auditing and implementation",
+      "Content strategy and optimization",
+      "Proficiency with Google Analytics and Search Console"
+    ],
+    "talentAndExperience": [
+      "Increased organic traffic by 200% for an e-commerce client",
+      "Certified Google Analytics Expert",
+      "Former Head of SEO at a digital agency"
+    ],
+    "overview": {
+      "experience": "6 Years",
+      "language": "English, German",
+      "qualification": "MBA in Marketing",
+      "phone": "+49 30 123456",
+      "email": "madison.seo@example.de"
+    },
+    "reviewsList": [
+      {
+        "name": "Michael Chen",
+        "title": "E-commerce Manager",
+        "comment": "Madison knows her stuff. Our sales doubled thanks to her SEO efforts.",
+        "image": "/src/assets/Home/Freelancers/Freelancer6.jpg",
+        "date": "2 Months ago"
+      },
+      {
+        "name": "Emma Wilson",
+        "title": "Blogger",
+        "comment": "Great communication and even better results. Highly recommended!",
+        "image": "/src/assets/Home/Freelancers/Freelancer7.jpg",
+        "date": "3 Months ago"
+      }
+    ]
   },
   {
     "id": 4,
     "name": "Wilford Johns",
     "category": "Creative",
     "image": "/src/assets/Home/Freelancers/Freelancer4.jpg",
-    "location": "New York",
-    "specialization": "UI/UX Designer",
-    "tags": ["PSD", "Figma", "Adobe XD"],
-    "rating": 4.0,
-    "reviews": 1,
-    "rate": "$700"
+    "location": "Paris, France",
+    "specialization": "Graphic Designer",
+    "tags": ["Illustrator", "Photoshop", "Branding", "Design"],
+    "rating": 4.2,
+    "reviews": 5,
+    "rate": "$55",
+    "title": "Creative Brand Designer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Wilford is a versatile graphic designer with a unique artistic style. He specializes in branding, illustration, and print design, helping startups establish a strong visual identity.",
+    "skillsDescription": [
+      "Expert in Adobe Creative Suite (Illustrator, Photoshop, InDesign)",
+      "Logo design and brand identity development",
+      "Vector illustration and digital art",
+      "Print design and layout"
+    ],
+    "talentAndExperience": [
+      "Designed branding for 20+ startups",
+      "Featured in Behance Graphic Design Gallery",
+      "Freelance illustrator for online magazines"
+    ],
+    "overview": {
+      "experience": "3 Years",
+      "language": "English, French",
+      "qualification": "Diploma in Graphic Design",
+      "phone": "+33 1 23 45 67 89",
+      "email": "wilford.design@example.fr"
+    },
+    "reviewsList": [
+      {
+        "name": "Lana Steiner",
+        "title": "Startup Founder",
+        "comment": "Wilford captured our vision perfectly. The logo is amazing!",
+        "image": "/src/assets/Home/Freelancers/Freelancer8.jpg",
+        "date": "1 Week ago"
+      },
+      {
+        "name": "James Rodriguez",
+        "title": "Art Director",
+        "comment": "A talented designer with a great eye for color and composition.",
+        "image": "/src/assets/Home/Freelancers/Freelancer9.jpg",
+        "date": "3 Weeks ago"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Lana Steiner",
+    "category": "Development",
+    "image": "/src/assets/Home/Freelancers/Freelancer5.jpg",
+    "location": "Toronto, Canada",
+    "specialization": "Full Stack Dev",
+    "tags": ["Node.js", "React", "MongoDB", "APP", "Programming"],
+    "rating": 5.0,
+    "reviews": 31,
+    "rate": "$110",
+    "title": "Principal Software Engineer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Lana is a full-stack wizard capable of building complex web applications from scratch. She writes clean, maintainable code and is an expert in the MERN stack.",
+    "skillsDescription": [
+      "Architecting scalable web applications",
+      "Database design and optimization (SQL & NoSQL)",
+      "API development (REST & GraphQL)",
+      "Cloud deployment (AWS, Azure)"
+    ],
+    "talentAndExperience": [
+      "Built a SaaS platform serving 10k+ users",
+      "Technical lead for a distributed team",
+      "Mentor at local coding bootcamps"
+    ],
+    "overview": {
+      "experience": "8 Years",
+      "language": "English, Russian",
+      "qualification": "B.Sc in Computer Science",
+      "phone": "+1 416 555 0199",
+      "email": "lana.dev@example.ca"
+    },
+    "reviewsList": [
+      {
+        "name": "Daniel Kim",
+        "title": "Engineering Manager",
+        "comment": "Lana is one of the best engineers I've worked with. Simply brilliant.",
+        "image": "/src/assets/Home/Freelancers/Freelancer10.jpg",
+        "date": "1 Day ago"
+      },
+      {
+        "name": "Olivia Thompson",
+        "title": "CEO",
+        "comment": "She solved our scalability issues in a weekend. Worth every penny.",
+        "image": "/src/assets/Home/Freelancers/Freelancer11.jpg",
+        "date": "2 Weeks ago"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "David Smith",
+    "category": "Design",
+    "image": "/src/assets/Home/Freelancers/Freelancer6.jpg",
+    "location": "Austin, USA",
+    "specialization": "Product Designer",
+    "tags": ["UX Research", "Figma", "Design Systems", "UX/UI", "Design"],
+    "rating": 4.7,
+    "reviews": 19,
+    "rate": "$120",
+    "title": "Senior Product Designer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "David bridges the gap between business goals and user needs. He specializes in building comprehensive design systems and conducting in-depth user research.",
+    "skillsDescription": [
+      "Building and maintaining design systems",
+      "Conducting user interviews and testing",
+      "Wireframing and interaction design",
+      "Collaborating with cross-functional teams"
+    ],
+    "talentAndExperience": [
+      "Designed the dashboard for a unicorn startup",
+      "Author of 'Modern Product Design' blog",
+      "Keynote speaker at DesignWeek Austin"
+    ],
+    "overview": {
+      "experience": "6 Years",
+      "language": "English",
+      "qualification": "Master's in HCI",
+      "phone": "+1 512 555 0122",
+      "email": "david.pd@example.com"
+    },
+    "reviewsList": [
+      {
+        "name": "Chelsea Parisian",
+        "title": "Frontend Lead",
+        "comment": "David's handoffs are meticulous. Makes my job so much easier.",
+        "image": "/src/assets/Home/Freelancers/Freelancer1.jpg",
+        "date": "1 Month ago"
+      },
+      {
+        "name": "Wilford Johns",
+        "title": "Designer",
+        "comment": "A true mentor in the design space.",
+        "image": "/src/assets/Home/Freelancers/Freelancer4.jpg",
+        "date": "2 Months ago"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Sarah Jenkins",
+    "category": "Marketing",
+    "image": "/src/assets/Home/Freelancers/Freelancer7.jpg",
+    "location": "Chicago, USA",
+    "specialization": "Social Media Manager",
+    "tags": ["Instagram", "Content Creation", "Strategy", "Digital"],
+    "rating": 4.6,
+    "reviews": 14,
+    "rate": "$50",
+    "title": "Social Media Specialist",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Sarah turns followers into customers. She creates engaging content strategies that resonate with audiences and drive real business results across social platforms.",
+    "skillsDescription": [
+      "Social media strategy and planning",
+      "Community management and engagement",
+      "Video editing for Reels and TikTok",
+      "Paid social advertising (Facebook/Instagram Ads)"
+    ],
+    "talentAndExperience": [
+      "Grew a client's Instagram to 100k followers",
+      "Managed annual ad budgets over $50k",
+      "Viral content creator"
+    ],
+    "overview": {
+      "experience": "4 Years",
+      "language": "English",
+      "qualification": "BA in Communications",
+      "phone": "+1 312 555 0144",
+      "email": "sarah.social@example.com"
+    },
+    "reviewsList": [
+      {
+        "name": "Madison Kohler",
+        "title": "SEO Expert",
+        "comment": "Sarah knows how to create buzz. Our engagement rates skyrocketed.",
+        "image": "/src/assets/Home/Freelancers/Freelancer3.jpg",
+        "date": "3 Days ago"
+      },
+      {
+        "name": "Bertrand Proffer",
+        "title": "Designer",
+        "comment": "Love working with Sarah. She has a great visual eye for content.",
+        "image": "/src/assets/Home/Freelancers/Freelancer2.jpg",
+        "date": "2 Weeks ago"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Michael Chen",
+    "category": "Development",
+    "image": "/src/assets/Home/Freelancers/Freelancer8.jpg",
+    "location": "San Francisco, USA",
+    "specialization": "Mobile Developer",
+    "tags": ["React Native", "iOS", "Android", "APP", "Programming"],
+    "rating": 4.9,
+    "reviews": 42,
+    "rate": "$135",
+    "title": "Senior Mobile Architect",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Michael builds silky smooth mobile experiences. Whether it's native iOS/Android or cross-platform with React Native, he delivers high-performance apps that users love.",
+    "skillsDescription": [
+      "Expert in React Native and Swift/Kotlin",
+      "Mobile performance optimization",
+      "App Store and Play Store deployment",
+      "Offline-first architecture"
+    ],
+    "talentAndExperience": [
+      "Published 15+ apps to App Stores",
+      "Ex-Engineer at a major ride-sharing company",
+      "Maintainer of popular React Native libraries"
+    ],
+    "overview": {
+      "experience": "7 Years",
+      "language": "English, Mandarin",
+      "qualification": "M.Sc in Software Engineering",
+      "phone": "+1 415 555 0188",
+      "email": "michael.mobile@example.com"
+    },
+    "reviewsList": [
+      {
+        "name": "David Smith",
+        "title": "Product Designer",
+        "comment": "Michael implements designs with pixel-perfect precision on mobile.",
+        "image": "/src/assets/Home/Freelancers/Freelancer6.jpg",
+        "date": "5 Days ago"
+      },
+      {
+        "name": "Lana Steiner",
+        "title": "Full Stack Dev",
+        "comment": "His knowledge of native modules is impressive.",
+        "image": "/src/assets/Home/Freelancers/Freelancer5.jpg",
+        "date": "3 Weeks ago"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Emma Wilson",
+    "category": "Creative",
+    "image": "/src/assets/Home/Freelancers/Freelancer9.jpg",
+    "location": "Sydney, Australia",
+    "specialization": "Copywriter",
+    "tags": ["Copywriting", "Editing", "Blogging", "Digital"],
+    "rating": 4.4,
+    "reviews": 9,
+    "rate": "$70",
+    "title": "Creative Copywriter",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Emma crafts compelling narratives that convert. From punchy headlines to in-depth blog posts, she finds the right words to tell your brand's story.",
+    "skillsDescription": [
+      "SEO-optimized content writing",
+      "Brand voice development",
+      "Proofreading and editing",
+      "Scriptwriting for video content"
+    ],
+    "talentAndExperience": [
+      "Written for major lifestyle publications",
+      "Helped a startup raise $2M with a pitch deck script",
+      "Published author"
+    ],
+    "overview": {
+      "experience": "5 Years",
+      "language": "English",
+      "qualification": "BA in English Literature",
+      "phone": "+61 2 9876 5432",
+      "email": "emma.write@example.com.au"
+    },
+    "reviewsList": [
+      {
+        "name": "Sarah Jenkins",
+        "title": "Social Media Manager",
+        "comment": "Emma's captions are always on point. A joy to work with.",
+        "image": "/src/assets/Home/Freelancers/Freelancer7.jpg",
+        "date": "2 Weeks ago"
+      },
+      {
+        "name": "Madison Kohler",
+        "title": "SEO Specialist",
+        "comment": "Her content ranks well and reads beautifully.",
+        "image": "/src/assets/Home/Freelancers/Freelancer3.jpg",
+        "date": "1 Month ago"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "James Rodriguez",
+    "category": "Design",
+    "image": "/src/assets/Home/Freelancers/Freelancer10.jpg",
+    "location": "Barcelona, Spain",
+    "specialization": "Illustrator",
+    "tags": [
+      "Digital Art",
+      "Illustration",
+      "Character Design",
+      "Design",
+      "PSD"
+    ],
+    "rating": 4.8,
+    "reviews": 27,
+    "rate": "$80",
+    "title": "Digital Illustrator",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "James brings ideas to life through vibrant and imaginative illustrations. SPECIALIZING in character design and editorial illustration, his work adds personality to any project.",
+    "skillsDescription": [
+      "Digital painting and vector art",
+      "Concept art and character design",
+      "Storyboarding",
+      "Animation assets creation"
+    ],
+    "talentAndExperience": [
+      "Illustrated a children's book series",
+      "Created assets for an indie game",
+      "Regular contributor to tech blogs"
+    ],
+    "overview": {
+      "experience": "6 Years",
+      "language": "English, Spanish",
+      "qualification": "Fine Arts Degree",
+      "phone": "+34 93 123 4567",
+      "email": "james.art@example.es"
+    },
+    "reviewsList": [
+      {
+        "name": "Wilford Johns",
+        "title": "Graphic Designer",
+        "comment": "James is an incredible artist. His style is unmatched.",
+        "image": "/src/assets/Home/Freelancers/Freelancer4.jpg",
+        "date": "1 Week ago"
+      },
+      {
+        "name": "Chelsea Parisian",
+        "title": "Developer",
+        "comment": "Used his illustrations for a landing page and conversions went up!",
+        "image": "/src/assets/Home/Freelancers/Freelancer1.jpg",
+        "date": "3 Weeks ago"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Olivia Thompson",
+    "category": "Marketing",
+    "image": "/src/assets/Home/Freelancers/Freelancer11.jpg",
+    "location": "London, UK",
+    "specialization": "Email Marketer",
+    "tags": ["Mailchimp", "Automation", "Copywriting", "Digital"],
+    "rating": 4.3,
+    "reviews": 11,
+    "rate": "$60",
+    "title": "Email Lifecycle Expert",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Olivia designs high-converting email flows. From welcome series to retention campaigns, she ensures your message reaches the right inbox at the right time.",
+    "skillsDescription": [
+      "Klaviyo and Mailchimp expert",
+      "Segmentation and personalization",
+      "A/B testing subject lines and content",
+      "Deliverability optimization"
+    ],
+    "talentAndExperience": [
+      "Managed email lists of 500k+ subscribers",
+      "Increased open rates by 40% for a client",
+      "Certified Email Marketing Specialist"
+    ],
+    "overview": {
+      "experience": "4 Years",
+      "language": "English",
+      "qualification": "B.Sc in Marketing",
+      "phone": "+44 20 1234 5678",
+      "email": "olivia.email@example.co.uk"
+    },
+    "reviewsList": [
+      {
+        "name": "Sarah Jenkins",
+        "title": "Social Media Manager",
+        "comment": "Olivia is a wizard with automation flows.",
+        "image": "/src/assets/Home/Freelancers/Freelancer7.jpg",
+        "date": "2 Days ago"
+      },
+      {
+        "name": "Michael Chen",
+        "title": "Developer",
+        "comment": "She understands the technical side of email deliverability perfectly.",
+        "image": "/src/assets/Home/Freelancers/Freelancer8.jpg",
+        "date": "1 Month ago"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Daniel Kim",
+    "category": "Development",
+    "image": "/src/assets/Home/Freelancers/Freelancer12.jpg",
+    "location": "Seoul, South Korea",
+    "specialization": "Backend Engineer",
+    "tags": ["Python", "Django", "PostgreSQL", "Programming", "APP"],
+    "rating": 4.9,
+    "reviews": 36,
+    "rate": "$100",
+    "title": "Senior Backend Developer",
+    "socialLinks": {
+      "facebook": "#",
+      "twitter": "#",
+      "instagram": "#",
+      "linkedin": "#"
+    },
+    "about": "Daniel architects robust backend systems. He loves solving hard algorithmic problems and ensuring APIs are fast, secure, and document-ready.",
+    "skillsDescription": [
+      "API design and development with Django/FastAPI",
+      "Database schema design and query optimization",
+      "Microservices architecture",
+      "Cloud infrastructure (AWS/GCP)"
+    ],
+    "talentAndExperience": [
+      "Scaled a payment processing system",
+      "Contributor to Django framework",
+      "Top 1% on HackerRank"
+    ],
+    "overview": {
+      "experience": "6 Years",
+      "language": "Korean, English",
+      "qualification": "Master's in Computer Science",
+      "phone": "+82 10 1234 5678",
+      "email": "daniel.backend@example.kr"
+    },
+    "reviewsList": [
+      {
+        "name": "Lana Steiner",
+        "title": "Full Stack Dev",
+        "comment": "Daniel writes the cleanest Python code I've ever seen.",
+        "image": "/src/assets/Home/Freelancers/Freelancer5.jpg",
+        "date": "1 Week ago"
+      },
+      {
+        "name": "Michael Chen",
+        "title": "Mobile Dev",
+        "comment": "His APIs are a dream to consume. Fast and well-documented.",
+        "image": "/src/assets/Home/Freelancers/Freelancer8.jpg",
+        "date": "3 Weeks ago"
+      }
+    ]
   }
 ]

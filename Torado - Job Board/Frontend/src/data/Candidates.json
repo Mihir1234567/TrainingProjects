@@ -1,0 +1,441 @@
+[
+  {
+    "id": 1,
+    "name": "Oren Kemmer",
+    "image": "/src/assets/Home/Candidates/Candidate1.png",
+    "specialization": "Content Manager",
+    "rate": "$50 - $100 / week",
+    "location": "London, UK",
+    "tags": [
+      "PSD",
+      "Figma",
+      "UX/UI",
+      "Adobe XD",
+      "APP",
+      "Digital",
+      "Design",
+      "Programming"
+    ],
+    "rating": 4.0,
+    "reviews": 1,
+    "category": "Creative",
+    "aboutMe": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunt explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+    "fundamentalSkills": [
+      "A register demonstrates well-thought-out and polished end-to-end shopper pilgrimages",
+      "10+ years of enterprise knowledge in interactive configuration and/or visual design",
+      "Excellent interpersonal skills Aware of mobile, communication, and collaboration trends",
+      "Capability to construct positively lustrous design prototypes, mockups and other contact prototypes",
+      "History of concerning shipping developments with your work",
+      "Mastership in miscellaneous design tools such as Figma, Photoshop, Illustrator and Sketch"
+    ],
+    "skills": [
+      "Developing user occasions for corporation software/services",
+      "Developing & using selected design principles & interaction patterns",
+      "Aligning or influencing design thinking with teams working in other geographies"
+    ],
+    "workExperience": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunt explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+    "jobOverview": {
+      "experience": "1-2 Years",
+      "location": "New York, USA Street is Here",
+      "offeredSalary": "$50 - $100 / week",
+      "language": "English, German",
+      "qualification": "Associate Degree",
+      "phone": "+21 456 78546",
+      "email": "support@torado.com"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ivan S. Eames",
+    "image": "/src/assets/Home/Candidates/Candidate2.png",
+    "specialization": "UI/UX Designer",
+    "rate": "$65 / hour",
+    "location": "New York, US",
+    "tags": ["Figma", "Sketch", "HTML", "CSS", "React"],
+    "rating": 4.5,
+    "reviews": 1,
+    "category": "Creative",
+    "aboutMe": "Highly creative and multitalented Graphic Designer with extensive experience in multimedia, marketing, and print design. Exceptional collaborative and interpersonal skills; dynamic team player with well-developed written and verbal communication abilities. Highly skilled in client and vendor relations and negotiations; talented at building and maintaining 'win-win' partnerships. Passionate and inventive creator of innovative marketing strategies and campaigns; accustomed to performing in deadline-driven environments with an emphasis on working within budget requirements.",
+    "fundamentalSkills": [
+      "User-centric design approach with a focus on usability and accessibility",
+      "Proficiency in Adobe Creative Suite (Photoshop, Illustrator, InDesign)",
+      "Strong understanding of typography, color theory, and layout principles",
+      "Ability to translate complex requirements into simple, elegant designs",
+      "Experience with responsive design and mobile-first approach",
+      "Knowledge of HTML/CSS and familiarity with front-end frameworks"
+    ],
+    "skills": [
+      "UI Design",
+      "UX Research",
+      "Prototyping",
+      "Wireframing",
+      "Visual Design"
+    ],
+    "workExperience": "Designed and developed user-friendly interfaces for web and mobile applications. Collaborated with cross-functional teams to define, design, and ship new features. Conducted user research and usability testing to gather feedback and improve designs.\n\nCreated and maintained design systems and style guides to ensure consistency across all products. Mentored junior designers and provided constructive feedback on their work.",
+    "jobOverview": {
+      "experience": "4-5 Years",
+      "location": "New York, US",
+      "offeredSalary": "$65 / hour",
+      "language": "English",
+      "qualification": "Bachelor's Degree",
+      "phone": "+1 234 567 8901",
+      "email": "ivan.eames@example.com"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Duy T. Owens",
+    "image": "/src/assets/Home/Candidates/Candidate3.png",
+    "specialization": "Sr. HR Manager",
+    "rate": "$55 / hour",
+    "location": "New York, US",
+    "tags": ["HR", "Management", "Recruitment", "Employee Relations"],
+    "rating": 4.5,
+    "reviews": 1,
+    "category": "Management",
+    "aboutMe": "Senior Human Resources Manager with over 8 years of experience in managing HR operations and driving organizational success. Expertise in talent acquisition, employee relations, performance management, and HR compliance. Proven track record of developing and implementing HR strategies that support business objectives and foster a positive work environment. Strong leader with excellent communication and interpersonal skills.",
+    "fundamentalSkills": [
+      "Strategic HR planning and execution",
+      "Talent acquisition and retention strategies",
+      "Employee relations and conflict resolution",
+      "Performance management and development",
+      "Compensation and benefits administration",
+      "HR compliance and legal knowledge"
+    ],
+    "skills": [
+      "Leadership",
+      "Communication",
+      "Problem Solving",
+      "Negotiation",
+      "Strategic Planning"
+    ],
+    "workExperience": "Led HR department for a mid-sized technology company, overseeing all HR functions. Developed and implemented recruitment strategies to attract top talent. Managed employee relations issues and conducted investigations as needed.\n\nAdministered compensation and benefits programs, ensuring competitiveness and compliance. Partnered with leadership to drive organizational culture and employee engagement initiatives.",
+    "jobOverview": {
+      "experience": "8+ Years",
+      "location": "New York, US",
+      "offeredSalary": "$55 / hour",
+      "language": "English, Spanish",
+      "qualification": "Master's Degree",
+      "phone": "+1 987 654 3210",
+      "email": "duy.owens@example.com"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Lennie S. Ivey",
+    "image": "/src/assets/Home/Candidates/Candidate4.png",
+    "specialization": "Product Designer",
+    "rate": "$45 / hour",
+    "location": "USA",
+    "tags": ["Product Design", "UX/UI", "Prototyping", "User Research"],
+    "rating": 4.0,
+    "reviews": 1,
+    "category": "Creative",
+    "aboutMe": "Passionate Product Designer with a knack for creating intuitive and engaging user experiences. Skilled in user research, wireframing, prototyping, and visual design. Dedicated to solving complex problems through design and delivering high-quality products that meet user needs and business goals. Experienced in working in agile environments and collaborating with cross-functional teams.",
+    "fundamentalSkills": [
+      "End-to-end product design process",
+      "User research and persona development",
+      "Wireframing and interactive prototyping",
+      "Visual design and design systems",
+      "Usability testing and iteration",
+      "Collaboration with engineering and product management"
+    ],
+    "skills": [
+      "Figma",
+      "Sketch",
+      "InVision",
+      "Adobe Creative Suite",
+      "Agile Methodology"
+    ],
+    "workExperience": "Designed and launched multiple successful products for web and mobile platforms. Conducted user research to understand user needs and pain points. Created wireframes, prototypes, and high-fidelity mockups to communicate design concepts.\n\nCollaborated with developers to ensure design feasibility and implementation quality. Participated in design reviews and provided feedback to peers.",
+    "jobOverview": {
+      "experience": "3-4 Years",
+      "location": "USA",
+      "offeredSalary": "$45 / hour",
+      "language": "English",
+      "qualification": "Bachelor's Degree",
+      "phone": "+1 555 123 4567",
+      "email": "lennie.ivey@example.com"
+    }
+  },
+  {
+    "id": 5,
+    "name": "May B. Wright",
+    "image": "/src/assets/Home/Candidates/Candidate5.png",
+    "specialization": "Solution Expert",
+    "rate": "$50 / hour",
+    "location": "USA",
+    "tags": ["Solutions", "Consulting", "Strategy", "Analysis"],
+    "rating": 5.0,
+    "reviews": 2,
+    "category": "Development",
+    "aboutMe": "Experienced Solution Expert with a proven track record of delivering innovative solutions to complex business challenges. specialized in analyzing business requirements, designing technical solutions, and overseeing implementation. Strong analytical and problem-solving skills, with the ability to bridge the gap between business and technology. Excellent communication and stakeholder management abilities.",
+    "fundamentalSkills": [
+      "Requirement analysis and gathering",
+      "Solution architecture and design",
+      "Technical consulting and advisory",
+      "Project management and delivery",
+      "Stakeholder management and communication",
+      "Risk assessment and mitigation"
+    ],
+    "skills": [
+      "Solution Architecture",
+      "Business Analysis",
+      "Technical Leadership",
+      "Cloud Computing",
+      "Integration Patterns"
+    ],
+    "workExperience": "Led the design and implementation of enterprise-grade solutions for Fortune 500 clients. Collaborated with business stakeholders to understand requirements and define solution scope. Worked closely with development teams to ensure successful delivery of solutions.\n\nProvided technical guidance and mentorship to junior team members. Conducted technical assessments and recommended improvements to existing systems.",
+    "jobOverview": {
+      "experience": "6+ Years",
+      "location": "USA",
+      "offeredSalary": "$50 / hour",
+      "language": "English, French",
+      "qualification": "Master's Degree",
+      "phone": "+1 444 555 6666",
+      "email": "may.wright@example.com"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Ray J. Hice",
+    "image": "/src/assets/Home/Candidates/Candidate6.png",
+    "specialization": "PHP Developer",
+    "rate": "$55 / hour",
+    "location": "London, UK",
+    "tags": ["PHP", "Laravel", "MySQL", "Backend", "API"],
+    "rating": 3.5,
+    "reviews": 1,
+    "category": "Development",
+    "aboutMe": "Skilled PHP Developer with over 5 years of experience in building scalable web applications. Proficient in Laravel, Symfony, and other PHP frameworks. Strong understanding of object-oriented programming, design patterns, and database design. Passionate about writing clean, maintainable, and efficient code. Experienced in working in agile environments and using version control systems.",
+    "fundamentalSkills": [
+      "Advanced PHP programming",
+      "MVC frameworks (Laravel, Symfony)",
+      "Database design and optimization (MySQL)",
+      "RESTful API development and integration",
+      "Unit testing and debugging",
+      "Version control (Git)"
+    ],
+    "skills": ["PHP", "Laravel", "JavaScript", "SQL", "Docker"],
+    "workExperience": "Developed and maintained high-traffic web applications using PHP and Laravel. Designed and implemented RESTful APIs for mobile and third-party integrations. Optimized database queries and application performance.\n\nCollaborated with frontend developers to integrate user-facing elements with server-side logic. Troubleshot and resolved production issues in a timely manner.",
+    "jobOverview": {
+      "experience": "5+ Years",
+      "location": "London, UK",
+      "offeredSalary": "$55 / hour",
+      "language": "English",
+      "qualification": "Bachelor's Degree",
+      "phone": "+44 20 7123 4567",
+      "email": "ray.hice@example.com"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Vera J. Hice",
+    "image": "/src/assets/Home/Candidates/Candidate7.png",
+    "specialization": "Senior Manager",
+    "rate": "$40 / hour",
+    "location": "USA",
+    "tags": ["Management", "Operations", "Leadership", "Strategy"],
+    "rating": 5.0,
+    "reviews": 1,
+    "category": "Management",
+    "aboutMe": "Results-oriented Senior Manager with a strong background in operations management and strategic planning. Proven ability to lead cross-functional teams and drive operational excellence. Expertise in process improvement, budget management, and performance analysis. Strong leadership and decision-making skills, with a focus on achieving business goals.",
+    "fundamentalSkills": [
+      "Operational strategy and planning",
+      "Team leadership and development",
+      "Process optimization and efficiency",
+      "Budgeting and financial management",
+      "Performance metrics and analysis",
+      "Change management"
+    ],
+    "skills": [
+      "Operations Management",
+      "Strategic Planning",
+      "Team Building",
+      "Process Improvement",
+      "Data Analysis"
+    ],
+    "workExperience": "Oversaw daily operations of a large department, ensuring efficiency and productivity. Developed and implemented strategic plans to achieve organizational objectives. Managed budgets and allocated resources effectively.\n\nLed and mentored a team of managers and supervisors. Identified areas for improvement and implemented process changes to reduce costs and increase output.",
+    "jobOverview": {
+      "experience": "10+ Years",
+      "location": "USA",
+      "offeredSalary": "$40 / hour",
+      "language": "English",
+      "qualification": "MBA",
+      "phone": "+1 777 888 9999",
+      "email": "vera.hice@example.com"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Kelly R. Arnett",
+    "image": "/src/assets/Home/Candidates/Candidate8.png",
+    "specialization": "UI/UX Designer",
+    "rate": "$20 / hour",
+    "location": "USA",
+    "tags": ["UI/UX", "Design", "Adobe XD", "Figma", "Web Design"],
+    "rating": 3.5,
+    "reviews": 1,
+    "category": "Creative",
+    "aboutMe": "Junior UI/UX Designer with a passion for creating beautiful and functional digital experiences. Recent graduate with a strong portfolio showcasing skills in user interface design, user research, and prototyping. Eager to learn and grow in a fast-paced environment. specific interest in mobile app design and web accessibility.",
+    "fundamentalSkills": [
+      "User interface design principles",
+      "Wireframing and prototyping tools",
+      "Basic understanding of user research methods",
+      "Visual design and typography",
+      "Proficiency in design software (Figma, Adobe XD)",
+      "Attention to detail and creativity"
+    ],
+    "skills": ["Figma", "Adobe XD", "Photoshop", "CSS", "HTML"],
+    "workExperience": "Completed internship at a design agency, assisting senior designers with various projects. Created wireframes and mockups for client websites and mobile apps. Conducted competitive analysis and user research to support design decisions.\n\nCollaborated with developers to ensure design quality during implementation. Updated and maintained design assets and documentation.",
+    "jobOverview": {
+      "experience": "1-2 Years",
+      "location": "USA",
+      "offeredSalary": "$20 / hour",
+      "language": "English",
+      "qualification": "Associate Degree",
+      "phone": "+1 222 333 4444",
+      "email": "kelly.arnett@example.com"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Jacob P. Farris",
+    "image": "/src/assets/Home/Candidates/Candidate9.png",
+    "specialization": "Functional Analyst",
+    "rate": "$60 / hour",
+    "location": "London, UK",
+    "tags": ["Analysis", "Functional Specs", "Requirements", "UML"],
+    "rating": 5.0,
+    "reviews": 1,
+    "category": "Analysis",
+    "aboutMe": "Detailed-oriented Functional Analyst with 7 years of experience in translating business requirements into functional specifications. Expertise in system analysis, process modeling, and data mapping. Strong communication skills, with the ability to facilitate workshops and stakeholder meetings. Proven track record of delivering high-quality functional documentation.",
+    "fundamentalSkills": [
+      "Business requirement gathering and analysis",
+      "Functional specification writing",
+      "Process flow diagramming and modeling",
+      "Data mapping and analysis",
+      "System testing and validation",
+      "Stakeholder communication"
+    ],
+    "skills": ["System Analysis", "UML", "SQL", "Visio", "JIRA"],
+    "workExperience": "Led functional analysis for large-scale system implementation projects. Worked with business users to define requirements and document current and future state processes. Created detailed functional specifications and use cases for development teams.\n\nAssisted with system testing and user acceptance testing (UAT). Provided training and support to end-users during system rollout.",
+    "jobOverview": {
+      "experience": "7+ Years",
+      "location": "London, UK",
+      "offeredSalary": "$60 / hour",
+      "language": "English",
+      "qualification": "Bachelor's Degree",
+      "phone": "+44 20 8888 7777",
+      "email": "jacob.farris@example.com"
+    }
+  },
+  {
+    "id": 10,
+    "name": "A. C. Williams",
+    "image": "/src/assets/Home/Candidates/Candidate10.png",
+    "specialization": "Head of Design",
+    "rate": "$55 / hour",
+    "location": "USA",
+    "tags": ["Design Leadership", "Strategy", "Creative Direction", "Branding"],
+    "rating": 5.0,
+    "reviews": 1,
+    "category": "Management",
+    "aboutMe": "Visionary Head of Design with over 12 years of experience in leading creative teams and shaping brand identities. Proven track record of delivering award-winning design solutions across print, digital, and environmental media. Strong strategic thinker with the ability to align design initiatives with business goals. Passionate about mentoring and developing design talent.",
+    "fundamentalSkills": [
+      "Creative direction and strategy",
+      "Brand identity development",
+      "Team leadership and mentorship",
+      "Design operations and management",
+      "Cross-functional collaboration",
+      "Budget management"
+    ],
+    "skills": [
+      "Creative Direction",
+      "Brand Strategy",
+      "Team Management",
+      "Graphic Design",
+      "User Experience"
+    ],
+    "workExperience": "Led the design department for a major advertising agency. Developed and executed creative strategies for global brands. Managed a team of 20+ designers, copywriters, and art directors.\n\nOversaw all aspects of the design process, from concept to delivery. Collaborated with marketing and sales teams to create impactful campaigns.",
+    "jobOverview": {
+      "experience": "12+ Years",
+      "location": "USA",
+      "offeredSalary": "$55 / hour",
+      "language": "English",
+      "qualification": "Master's Degree",
+      "phone": "+1 666 999 0000",
+      "email": "ac.williams@example.com"
+    }
+  },
+  {
+    "id": 11,
+    "name": "R. J. Inc",
+    "image": "/src/assets/Home/Candidates/Candidate11.png",
+    "specialization": "Visual Designer",
+    "rate": "$70 / hour",
+    "location": "USA",
+    "tags": ["Visual Design", "Branding", "Illustration", "Typography"],
+    "rating": 4.5,
+    "reviews": 1,
+    "category": "Creative",
+    "aboutMe": "Creative Visual Designer with a strong eye for aesthetics and attention to detail. Specializing in branding, illustration, and typography. Passionate about creating visually stunning designs that tell a story and engage audiences. Experienced in working with a variety of clients, from startups to established brands.",
+    "fundamentalSkills": [
+      "Visual identity design",
+      "Illustration and iconography",
+      "Typography and layout",
+      "Color theory and application",
+      "Print and digital design",
+      "Adobe Creative Suite mastery"
+    ],
+    "skills": [
+      "Graphic Design",
+      "Illustration",
+      "Branding",
+      "Photoshop",
+      "Illustrator"
+    ],
+    "workExperience": "Created visual identities for numerous startups and small businesses. Designed marketing collateral, including brochures, flyers, and social media graphics. Illustrated custom assets for websites and mobile apps.\n\nCollaborated with copywriters and marketing teams to develop cohesive brand messages. Managed multiple projects simultaneously and met tight deadlines.",
+    "jobOverview": {
+      "experience": "5-6 Years",
+      "location": "USA",
+      "offeredSalary": "$70 / hour",
+      "language": "English",
+      "qualification": "Bachelor's Degree",
+      "phone": "+1 000 111 2222",
+      "email": "rj.inc@example.com"
+    }
+  },
+  {
+    "id": 12,
+    "name": "M. K. P",
+    "image": "/src/assets/Home/Candidates/Candidate12.png",
+    "specialization": "Project Manager",
+    "rate": "$50 / hour",
+    "location": "USA",
+    "tags": ["Project Management", "Agile", "Scrum", "Risk Management"],
+    "rating": 5.0,
+    "reviews": 1,
+    "category": "Management",
+    "aboutMe": "Certified Project Manager with extensive experience in leading complex projects from initiation to closure. Proficient in Agile and Waterfall methodologies. Strong leadership and communication skills, with the ability to manage cross-functional teams and stakeholders. Dedicated to delivering projects on time, within scope, and within budget.",
+    "fundamentalSkills": [
+      "Project planning and scheduling",
+      "Risk management and mitigation",
+      "Budgeting and cost control",
+      "Stakeholder management",
+      "Agile and Scrum methodologies",
+      "Team leadership and motivation"
+    ],
+    "skills": ["Project Management", "Agile", "Scrum", "JIRA", "MS Project"],
+    "workExperience": "Managed software development projects for a leading financial institution. Facilitated sprint planning, daily stand-ups, and retrospectives. Identified and removed impediments to team progress.\n\n communicated project status and risks to senior management. Ensured adherence to quality standards and project methodologies.",
+    "jobOverview": {
+      "experience": "6-7 Years",
+      "location": "USA",
+      "offeredSalary": "$50 / hour",
+      "language": "English",
+      "qualification": "PMP Certification",
+      "phone": "+1 333 444 5555",
+      "email": "mk.p@example.com"
+    }
+  }
+]

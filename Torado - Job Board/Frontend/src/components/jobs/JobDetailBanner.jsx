@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Clock,
   MapPin,
-  Coffee,
+  Beer,
   Facebook,
   Twitter,
   Instagram,
@@ -34,11 +34,11 @@ const JobDetailBanner = ({ job }) => {
     <section className="max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 mt-12 relative z-10 pb-20">
       <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row">
         {/* Left Side: Image */}
-        <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto shrink-0 relative bg-slate-100">
+        <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto lg:min-h-[350px] shrink-0 relative bg-slate-100 group">
           <img
             src={displayData.bannerImage}
             alt="Job Context"
-            className="w-full h-full object-cover object-top"
+            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             onError={(e) => {
               e.target.src =
                 "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1471&auto=format&fit=crop"; // Default fallback
@@ -57,10 +57,16 @@ const JobDetailBanner = ({ job }) => {
             {/* Action Buttons (Apply & Icon) */}
             <div className="flex items-center gap-4 shrink-0">
               {/* Cup/Save Icon with Center Expansion Effect */}
-              <button className="group relative w-12 h-12 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:text-white transition-all duration-500 overflow-hidden">
-                <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
+              {/* Beer/Save Icon with Fade Effect */}
+              <button className="group/btn relative w-12 h-12 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white transition-all duration-300">
+                {/* Tooltip */}
+                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
+                  Bookmark
+                  <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></span>
+                </span>
+
                 <span className="relative z-10">
-                  <Coffee size={20} strokeWidth={2} />
+                  <Beer size={20} strokeWidth={2} />
                 </span>
               </button>
               {/* Apply Button with Center Expansion Effect */}

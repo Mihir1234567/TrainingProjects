@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clock, Briefcase, Star, Bookmark, ExternalLink } from "lucide-react";
+import { Clock, Briefcase, Star, Beer, ExternalLink } from "lucide-react";
 
 const JobCard = ({ job }) => {
   const [isPopping, setIsPopping] = useState(false);
@@ -107,19 +107,25 @@ const JobCard = ({ job }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Bookmark Button with Pop Effect */}
+          {/* Bookmark Button with Beer Icon and Tooltip */}
           <button
             onClick={handleBookmark}
-            className={`relative w-11 h-11 flex items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition-all duration-300 group overflow-hidden ${
+            className={`relative w-11 h-11 flex items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition-all duration-300 group/btn ${
               isPopping
                 ? "scale-125 rotate-12"
-                : "hover:bg-torado-green-600 group-hover:text-white"
+                : "hover:bg-[#004658] hover:text-white"
             }`}
           >
-            <span className="absolute inset-0 w-full h-full bg-[#002333] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-center"></span>
-            <Bookmark
+            {/* Tooltip */}
+            <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
+              Bookmark
+              {/* Arrow */}
+              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></span>
+            </span>
+
+            <Beer
               className={`w-5 h-5 relative z-10 transition-all duration-300 ${
-                isPopping ? "text-white fill-white" : "group-hover:text-white"
+                isPopping ? "text-white fill-white" : "text-current"
               }`}
             />
           </button>

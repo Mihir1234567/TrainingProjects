@@ -3,7 +3,7 @@ import mobileImg1 from "../../assets/Home/mobileImg/mobileImg1.png";
 import mobileImg2 from "../../assets/Home/mobileImg/mobileImg2.png";
 import mobileImg3 from "../../assets/Home/mobileImg/mobileImg3.png";
 
-const MobileAppSection = () => {
+const MobileAppSection = ({ customImage }) => {
   return (
     <section className="py-20 md:py-28 bg-[#F0FDF4]/30 relative overflow-hidden">
       {/* Background Decorative patterns */}
@@ -29,11 +29,15 @@ const MobileAppSection = () => {
           {/* Bottom/Right Side: Image (Second on mobile) */}
           <div className="relative flex justify-center lg:justify-end order-2 lg:order-2">
             <div className="relative">
-              <img
-                src={mobileImg1}
-                alt="Torado Mobile App"
-                className="max-w-[80%] md:max-w-full mx-auto h-auto object-contain relative z-10"
-              />
+              {customImage ? (
+                customImage
+              ) : (
+                <img
+                  src={mobileImg1}
+                  alt="Torado Mobile App"
+                  className="max-w-[80%] md:max-w-full mx-auto h-auto object-contain relative z-10"
+                />
+              )}
             </div>
           </div>
 

@@ -1,0 +1,1408 @@
+[
+  {
+    "id": 1,
+    "image": "/src/assets/Blogs/BlogImages1.jpg",
+    "date": "January 22, 2025",
+    "title": "Great New Apartments In The Best Cities",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Real Estate",
+    "categoryId": "real-estate",
+    "tags": [
+      "Living",
+      "City",
+      "Apartment"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Real Estate Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Living engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Living brief & persona.",
+        "How to use premade Real Estate kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Living engineer.",
+        "Downloadable conditioning files",
+        "Construct a Living assignment from commencing to end.",
+        "You will be able to talk accurately with other Real Estate design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 2,
+    "image": "/src/assets/Blogs/BlogImages2.jpg",
+    "date": "January 22, 2025",
+    "title": "From Connecting With Potential Employers Today",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Career Advice",
+    "categoryId": "career-advice",
+    "tags": [
+      "Networking",
+      "Jobs",
+      "Tips"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Career Advice Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Networking engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Networking brief & persona.",
+        "How to use premade Career Advice kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Networking engineer.",
+        "Downloadable conditioning files",
+        "Construct a Networking assignment from commencing to end.",
+        "You will be able to talk accurately with other Career Advice design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 3,
+    "image": "/src/assets/Blogs/BlogImages3.jpg",
+    "date": "January 22, 2025",
+    "title": "How We Choose Our Favorite Employers",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Employer Branding",
+    "categoryId": "employer-branding",
+    "tags": [
+      "Employers",
+      "Culture",
+      "Hiring"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Employer Branding Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Employers engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Employers brief & persona.",
+        "How to use premade Employer Branding kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Employers engineer.",
+        "Downloadable conditioning files",
+        "Construct a Employers assignment from commencing to end.",
+        "You will be able to talk accurately with other Employer Branding design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 4,
+    "image": "/src/assets/Blogs/BlogImages4.jpg",
+    "date": "January 22, 2025",
+    "title": "How To Create A Perfect CV That Grabs Attention",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Resume Tips",
+    "categoryId": "resume-tips",
+    "tags": [
+      "CV",
+      "Resume",
+      "Guide"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Resume Tips Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a CV engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost CV brief & persona.",
+        "How to use premade Resume Tips kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a CV engineer.",
+        "Downloadable conditioning files",
+        "Construct a CV assignment from commencing to end.",
+        "You will be able to talk accurately with other Resume Tips design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 5,
+    "image": "/src/assets/Blogs/BlogImages5.jpg",
+    "date": "January 22, 2025",
+    "title": "Marketing To Get The Job You Rarity In 10 Days",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Job Search",
+    "categoryId": "job-search",
+    "tags": [
+      "Marketing",
+      "Strategy",
+      "Jobs"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Job Search Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Marketing engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Marketing brief & persona.",
+        "How to use premade Job Search kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Marketing engineer.",
+        "Downloadable conditioning files",
+        "Construct a Marketing assignment from commencing to end.",
+        "You will be able to talk accurately with other Job Search design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 6,
+    "image": "/src/assets/Blogs/BlogImages6.jpg",
+    "date": "January 22, 2025",
+    "title": "Hey Job Pleaders, It's Period To Get Up And Get Hiring",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Motivation",
+    "categoryId": "motivation",
+    "tags": [
+      "Hiring",
+      "Action",
+      "Growth"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Motivation Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Hiring engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Hiring brief & persona.",
+        "How to use premade Motivation kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Hiring engineer.",
+        "Downloadable conditioning files",
+        "Construct a Hiring assignment from commencing to end.",
+        "You will be able to talk accurately with other Motivation design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 7,
+    "image": "/src/assets/Blogs/BlogImages7.jpg",
+    "date": "January 22, 2025",
+    "title": "How The Project Catalog Makes It Easy To Get Started",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Freelancing",
+    "categoryId": "freelancing",
+    "tags": [
+      "Projects",
+      "Catalog",
+      "Freelance"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Freelancing Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Projects engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Projects brief & persona.",
+        "How to use premade Freelancing kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Projects engineer.",
+        "Downloadable conditioning files",
+        "Construct a Projects assignment from commencing to end.",
+        "You will be able to talk accurately with other Freelancing design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 8,
+    "image": "/src/assets/Blogs/BlogImages8.jpg",
+    "date": "January 22, 2025",
+    "title": "We Treat All Our Employees In A Friendly Manner",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Workplace Culture",
+    "categoryId": "workplace-culture",
+    "tags": [
+      "Employees",
+      "Friendly",
+      "Workplace"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Workplace Culture Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Employees engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Employees brief & persona.",
+        "How to use premade Workplace Culture kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Employees engineer.",
+        "Downloadable conditioning files",
+        "Construct a Employees assignment from commencing to end.",
+        "You will be able to talk accurately with other Workplace Culture design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 9,
+    "image": "/src/assets/Blogs/BlogImages9.jpg",
+    "date": "January 22, 2025",
+    "title": "20 Jobs That Are Cool At 15 or Even 22",
+    "description": "Visit our website to search for jobs, with more than 130,000 applications per day.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Career Advice",
+    "categoryId": "career-advice",
+    "tags": [
+      "Youth",
+      "Jobs",
+      "Cool"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Career Advice Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Youth engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Youth brief & persona.",
+        "How to use premade Career Advice kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Youth engineer.",
+        "Downloadable conditioning files",
+        "Construct a Youth assignment from commencing to end.",
+        "You will be able to talk accurately with other Career Advice design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 10,
+    "image": "/src/assets/Blogs/BlogImages1.jpg",
+    "date": "February 10, 2025",
+    "title": "Mastering The Art of Salary Negotiation",
+    "description": "Learn how to effectively negotiate your salary and benefits package to get what you deserve.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Career Advice",
+    "categoryId": "career-advice",
+    "tags": [
+      "Jobs",
+      "Tips",
+      "Salary"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Career Advice Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Jobs engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Jobs brief & persona.",
+        "How to use premade Career Advice kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Jobs engineer.",
+        "Downloadable conditioning files",
+        "Construct a Jobs assignment from commencing to end.",
+        "You will be able to talk accurately with other Career Advice design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 11,
+    "image": "/src/assets/Blogs/BlogImages2.jpg",
+    "date": "February 12, 2025",
+    "title": "Top 10 High Paying Freelance Skills in 2025",
+    "description": "Discover which freelance skills are in highest demand and command the best rates this year.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Freelancing",
+    "categoryId": "freelancing",
+    "tags": [
+      "Freelance",
+      "Skills",
+      "Money"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Freelancing Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Freelance engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Freelance brief & persona.",
+        "How to use premade Freelancing kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Freelance engineer.",
+        "Downloadable conditioning files",
+        "Construct a Freelance assignment from commencing to end.",
+        "You will be able to talk accurately with other Freelancing design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 12,
+    "image": "/src/assets/Blogs/BlogImages3.jpg",
+    "date": "February 15, 2025",
+    "title": "How to Ace Your Remote Job Interview",
+    "description": "Remote interviews have their own set of challenges. Here are our top tips to succeed.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Job Search",
+    "categoryId": "job-search",
+    "tags": [
+      "Hiring",
+      "Interview",
+      "Remote"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Job Search Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Hiring engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Hiring brief & persona.",
+        "How to use premade Job Search kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Hiring engineer.",
+        "Downloadable conditioning files",
+        "Construct a Hiring assignment from commencing to end.",
+        "You will be able to talk accurately with other Job Search design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 13,
+    "image": "/src/assets/Blogs/BlogImages4.jpg",
+    "date": "February 18, 2025",
+    "title": "Building a Growth Mindset for Career Success",
+    "description": "Why your attitude matters just as much as your aptitude when climbing the career ladder.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Motivation",
+    "categoryId": "motivation",
+    "tags": [
+      "Growth",
+      "Mindset",
+      "Success"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Motivation Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Growth engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Growth brief & persona.",
+        "How to use premade Motivation kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Growth engineer.",
+        "Downloadable conditioning files",
+        "Construct a Growth assignment from commencing to end.",
+        "You will be able to talk accurately with other Motivation design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 14,
+    "image": "/src/assets/Blogs/BlogImages5.jpg",
+    "date": "February 20, 2025",
+    "title": "Leadership Skills Every Employee Needs",
+    "description": "You don't need to be a manager to be a leader. Here is how to show leadership in any role.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Career Advice",
+    "categoryId": "career-advice",
+    "tags": [
+      "Leadership",
+      "Promotion",
+      "Skills"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Career Advice Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Leadership engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Leadership brief & persona.",
+        "How to use premade Career Advice kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Leadership engineer.",
+        "Downloadable conditioning files",
+        "Construct a Leadership assignment from commencing to end.",
+        "You will be able to talk accurately with other Career Advice design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 15,
+    "image": "/src/assets/Blogs/BlogImages6.jpg",
+    "date": "February 22, 2025",
+    "title": "Why Company Culture Matters More Than Salary",
+    "description": "A deep dive into why a toxic workplace can ruin even the highest paying job.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Workplace Culture",
+    "categoryId": "workplace-culture",
+    "tags": [
+      "Culture",
+      "Workplace",
+      "Tips"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Workplace Culture Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Culture engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Culture brief & persona.",
+        "How to use premade Workplace Culture kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Culture engineer.",
+        "Downloadable conditioning files",
+        "Construct a Culture assignment from commencing to end.",
+        "You will be able to talk accurately with other Workplace Culture design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 16,
+    "image": "/src/assets/Blogs/BlogImages7.jpg",
+    "date": "February 25, 2025",
+    "title": "Top Employee Benefits to Look for in 2025",
+    "description": "Beyond health insurance: what the best employers are offering their teams today.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Employer Branding",
+    "categoryId": "employer-branding",
+    "tags": [
+      "Employees",
+      "Benefits",
+      "Culture"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Employer Branding Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Employees engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Employees brief & persona.",
+        "How to use premade Employer Branding kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Employees engineer.",
+        "Downloadable conditioning files",
+        "Construct a Employees assignment from commencing to end.",
+        "You will be able to talk accurately with other Employer Branding design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 17,
+    "image": "/src/assets/Blogs/BlogImages8.jpg",
+    "date": "February 28, 2025",
+    "title": "How to Spot a Great Employer During the Interview",
+    "description": "Green flags to look out for that indicate a supportive and growing company environment.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Job Search",
+    "categoryId": "job-search",
+    "tags": [
+      "Employers",
+      "Hiring",
+      "Jobs"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Job Search Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Employers engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Employers brief & persona.",
+        "How to use premade Job Search kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Employers engineer.",
+        "Downloadable conditioning files",
+        "Construct a Employers assignment from commencing to end.",
+        "You will be able to talk accurately with other Job Search design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 18,
+    "image": "/src/assets/Blogs/BlogImages9.jpg",
+    "date": "March 1, 2025",
+    "title": "City Living vs Suburbs: What's Best for Your Career?",
+    "description": "weighing the pros and cons of living in a big city versus the quiet suburbs when building your career.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Real Estate",
+    "categoryId": "real-estate",
+    "tags": [
+      "City",
+      "Living",
+      "Jobs"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Real Estate Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a City engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost City brief & persona.",
+        "How to use premade Real Estate kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a City engineer.",
+        "Downloadable conditioning files",
+        "Construct a City assignment from commencing to end.",
+        "You will be able to talk accurately with other Real Estate design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 19,
+    "image": "/src/assets/Blogs/BlogImages1.jpg",
+    "date": "March 3, 2025",
+    "title": "Resume Strategies for 2025",
+    "description": "Update your CV with these modern strategies to get past ATS and impress hiring managers.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Resume Tips",
+    "categoryId": "resume-tips",
+    "tags": [
+      "Resume",
+      "CV",
+      "Strategy",
+      "Guide"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Resume Tips Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Resume engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Resume brief & persona.",
+        "How to use premade Resume Tips kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Resume engineer.",
+        "Downloadable conditioning files",
+        "Construct a Resume assignment from commencing to end.",
+        "You will be able to talk accurately with other Resume Tips design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 20,
+    "image": "/src/assets/Blogs/BlogImages2.jpg",
+    "date": "March 5, 2025",
+    "title": "Actionable Marketing Tips for Freelancers",
+    "description": "Don't just wait for clients. Take action with these marketing tips to grow your freelance business.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Freelancing",
+    "categoryId": "freelancing",
+    "tags": [
+      "Action",
+      "Marketing",
+      "Freelance",
+      "Tips"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Freelancing Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Action engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Action brief & persona.",
+        "How to use premade Freelancing kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Action engineer.",
+        "Downloadable conditioning files",
+        "Construct a Action assignment from commencing to end.",
+        "You will be able to talk accurately with other Freelancing design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  },
+  {
+    "id": 21,
+    "image": "/src/assets/Blogs/BlogImages3.jpg",
+    "date": "March 8, 2025",
+    "title": "Building a Friendly Remote Work Culture",
+    "description": "How to foster connection and a friendly atmosphere even when your team is distributed globally.",
+    "link": "#",
+    "author": "John Doe",
+    "authorId": "john-doe",
+    "category": "Workplace Culture",
+    "categoryId": "workplace-culture",
+    "tags": [
+      "Friendly",
+      "Remote",
+      "Culture",
+      "Workplace"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Workplace Culture Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Friendly engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Friendly brief & persona.",
+        "How to use premade Workplace Culture kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Friendly engineer.",
+        "Downloadable conditioning files",
+        "Construct a Friendly assignment from commencing to end.",
+        "You will be able to talk accurately with other Workplace Culture design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=John%20Doe"
+  },
+  {
+    "id": 22,
+    "image": "/src/assets/Blogs/BlogImages4.jpg",
+    "date": "March 10, 2025",
+    "title": "Cataloging Your Projects for Better Clients",
+    "description": "Organize your portfolio projects effectively to attract higher-paying clients.",
+    "link": "#",
+    "author": "Jane Smith",
+    "authorId": "jane-smith",
+    "category": "Career Advice",
+    "categoryId": "career-advice",
+    "tags": [
+      "Catalog",
+      "Projects",
+      "Growth"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Career Advice Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Catalog engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Catalog brief & persona.",
+        "How to use premade Career Advice kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Catalog engineer.",
+        "Downloadable conditioning files",
+        "Construct a Catalog assignment from commencing to end.",
+        "You will be able to talk accurately with other Career Advice design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Jane%20Smith"
+  },
+  {
+    "id": 23,
+    "image": "/src/assets/Blogs/BlogImages5.jpg",
+    "date": "March 12, 2025",
+    "title": "Benefits of Hiring Youth in Tech",
+    "description": "Why hiring young talent can bring fresh perspectives and energy to your tech team.",
+    "link": "#",
+    "author": "Robert Brown",
+    "authorId": "robert-brown",
+    "category": "Employer Branding",
+    "categoryId": "employer-branding",
+    "tags": [
+      "Youth",
+      "Hiring",
+      "Benefits"
+    ],
+    "content": {
+      "introTitle": "Conveying The Civilisation Of Communicating To Everyone",
+      "intro": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "quote": {
+        "text": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "author": "Alessandra Ebert"
+      },
+      "listHeading": "Fundamental Learning, Skills, & Knowledge",
+      "listItems": [
+        "Evolve a Employer Branding Architect.",
+        "You resolve be competent to add developer to your CV",
+        "Become a Youth engineer.",
+        "Construct & experiment a full website creation.",
+        "History of concerning shipping developments with your work",
+        "Assemble your foremost Youth brief & persona.",
+        "How to use premade Employer Branding kits.",
+        "Assemble instantaneous wireframes.",
+        "Become a Youth engineer.",
+        "Downloadable conditioning files",
+        "Construct a Youth assignment from commencing to end.",
+        "You will be able to talk accurately with other Employer Branding design."
+      ],
+      "conclusionTitle": "Recruitments",
+      "conclusion": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Search all open positions on the web. Get your own personalized salary estimate. Sed ut lpsa quae ab illo inventore veritatis.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam aperiam, eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta sunts explicabo. Neque eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+    },
+    "comments": [
+      {
+        "id": 1,
+        "author": "Jonathan Bach",
+        "role": "Content Manager",
+        "avatar": "https://i.pravatar.cc/150?u=Jonathan%20Bach",
+        "date": "February 20, 2025",
+        "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+      },
+      {
+        "id": 2,
+        "author": "Verner Conroy",
+        "role": "Visual Branding",
+        "avatar": "https://i.pravatar.cc/150?u=Verner%20Conroy",
+        "date": "February 21, 2025",
+        "content": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+      }
+    ],
+    "authorImage": "https://i.pravatar.cc/150?u=Robert%20Brown"
+  }
+]
