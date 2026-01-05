@@ -58,7 +58,7 @@ const ScrollToTop = ({
 
   return (
     <div
-      className={`fixed right-8 bottom-8 z-[60] transition-all duration-500 transform ${
+      className={`fixed right-4 bottom-4 md:right-8 md:bottom-8 z-[60] transition-all duration-500 transform ${
         scrollState.isVisible
           ? "translate-y-0 opacity-100"
           : "translate-y-10 opacity-0 pointer-events-none"
@@ -66,7 +66,7 @@ const ScrollToTop = ({
     >
       <button
         onClick={scrollToTop}
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        className="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full shadow-2xl transition-all duration-300 hover:-translate-y-1 focus:outline-none"
         style={{
           backgroundColor: baseColor,
           "--accent-color": accentColor,

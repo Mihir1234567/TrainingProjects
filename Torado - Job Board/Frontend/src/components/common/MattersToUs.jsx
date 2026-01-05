@@ -75,7 +75,7 @@ const MattersToUs = ({
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
-          <div className={styles.subHeaderRow}>
+          <div className="flex flex-col items-center gap-6 mb-10 text-center">
             <p className={styles.subTitle}>{description}</p>
             <div className={styles.preferenceLink}>
               Tell Us Your Preferences
@@ -83,26 +83,18 @@ const MattersToUs = ({
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 mb-12 md:mb-16">
-          {/* Row 1: First 4 tags */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            {allTags.slice(0, 4).map((tag, idx) => (
-              <div key={`row1-${idx}`} className={styles.tag}>
-                <tag.icon className={styles.tagIcon} />
-                <span className={styles.tagText}>{tag.text}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Row 2: Remaining 3 tags */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            {allTags.slice(4).map((tag, idx) => (
-              <div key={`row2-${idx}`} className={styles.tag}>
-                <tag.icon className={styles.tagIcon} />
-                <span className={styles.tagText}>{tag.text}</span>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-16 max-w-4xl mx-auto">
+          {allTags.map((tag, idx) => (
+            <div
+              key={idx}
+              className={`${styles.tag} ${
+                idx === 2 ? "col-span-2 place-self-center md:col-span-auto" : ""
+              } justify-self-center md:justify-self-auto w-full md:w-auto justify-center`}
+            >
+              <tag.icon className={styles.tagIcon} />
+              <span className={styles.tagText}>{tag.text}</span>
+            </div>
+          ))}
         </div>
 
         <div className={styles.ctaCard}>
