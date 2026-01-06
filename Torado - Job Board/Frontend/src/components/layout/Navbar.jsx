@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   Menu,
@@ -7,11 +7,19 @@ import {
   UserPlus,
   FileText,
   ChevronRight,
+  Settings,
+  LayoutDashboard,
+  Users,
+  Bookmark,
+  Package,
+  LogOut,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import logo from "../../assets/Logo/logoMain.svg";
 import blogsData from "../../data/blogs.json";
 
-const Navbar = () => {
+const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -144,24 +152,24 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`h-18 lg:h-22.5 w-full bg-white border-b border-slate-200 flex items-center transition-all duration-300 ease-in-out ${
+        className={`h-18 lg:h-22.5 w-full bg-white border-b border-slate-200 flex items-center ${
           isSticky
             ? "fixed top-0 left-0 z-[100] shadow-md animate-slideDown"
             : "relative z-[100]"
         }`}
       >
-        <div className="w-full px-6 lg:px-12 flex items-center justify-between transition-all duration-300 ease-in-out">
+        <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center shrink-0">
             <img
               src={logo}
               alt="Torado Logo"
-              className="h-7 lg:h-9 w-auto object-contain transition-all duration-300 ease-in-out"
+              className="h-7 lg:h-9 w-auto object-contain"
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 mx-auto transition-all duration-300 ease-in-out">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 mx-auto">
             {navItems.map((item, index) => (
               <NavDropdown key={index} title={item.title} items={item.items} />
             ))}
@@ -169,56 +177,103 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-6 font-semibold shrink-0">
-            <Link
-              to="/login"
-              className="text-[#083e47] hover:text-torado-green-600 transition-colors text-sm font-normal"
-            >
-              Login / Register
-            </Link>
+            {location.pathname.startsWith("/user-dashboard") ? (
+              // User Profile Section (Dashboard)
+              <UserProfileDropdown />
+            ) : (
+              // Standard Actions (Public)
+              <>
+                <Link
+                  to="/login"
+                  className="text-[#083e47] hover:text-torado-green-600 transition-colors text-sm font-normal"
+                >
+                  Login / Register
+                </Link>
 
-            {/* Post Job - Desktop (XL+) */}
-            <Link
-              to="/post-job"
-              className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap bg-[#5B6CF6] text-white shadow-sm hover:shadow-md transition-all"
-            >
-              <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-              <span className="relative z-10">Post A Job</span>
-            </Link>
+                {/* Post Job - Desktop (XL+) */}
+                <Link
+                  to="/post-job"
+                  className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap bg-[#5B6CF6] text-white shadow-sm hover:shadow-md transition-all"
+                >
+                  <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                  <span className="relative z-10">Post A Job</span>
+                </Link>
 
-            {/* Post Job - Tablet (LG only) */}
-            <Link
-              to="/post-job"
-              className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg bg-[#5B6CF6] text-white hover:bg-torado-brand-hover shadow-sm transition-colors"
-              title="Post A Job"
-            >
-              <UserPlus size={20} />
-            </Link>
+                {/* Post Job - Tablet (LG only) */}
+                <Link
+                  to="/post-job"
+                  className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg bg-[#5B6CF6] text-white hover:bg-torado-brand-hover shadow-sm transition-colors"
+                  title="Post A Job"
+                >
+                  <UserPlus size={20} />
+                </Link>
 
-            {/* Upload CV - Desktop (XL+) */}
-            <button className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap border border-torado-green-600 text-black bg-white shadow-sm hover:shadow-md transition-all">
-              <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-              <span className="relative z-10 group-hover:text-white transition-colors duration-700 ease-in-out">
-                Upload Your CV
-              </span>
-            </button>
+                {/* Upload CV - Desktop (XL+) */}
+                <button className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap border border-torado-green-600 text-black bg-white shadow-sm hover:shadow-md transition-all">
+                  <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                  <span className="relative z-10 group-hover:text-white transition-colors duration-700 ease-in-out">
+                    Upload Your CV
+                  </span>
+                </button>
 
-            {/* Upload CV - Tablet (LG only) */}
-            <button
-              className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg border border-torado-green-600 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
-              title="Upload Your CV"
-            >
-              <FileText size={20} strokeWidth={1.5} />
-            </button>
+                {/* Upload CV - Tablet (LG only) */}
+                <button
+                  className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg border border-torado-green-600 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                  title="Upload Your CV"
+                >
+                  <FileText size={20} strokeWidth={1.5} />
+                </button>
+              </>
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-slate-700 hover:text-torado-green-600 transition-colors"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            {/* Mobile Dashboard Sidebar Toggle */}
+            {location.pathname.startsWith("/user-dashboard") && (
+              <button
+                className="relative h-8 w-8 flex flex-col items-center justify-center gap-1.5 focus:outline-none z-[1001]"
+                onClick={toggleDashboardSidebar}
+                aria-label="Toggle Dashboard Sidebar"
+              >
+                <motion.span
+                  animate={
+                    isDashboardSidebarOpen
+                      ? { rotate: 45, y: 10 }
+                      : { rotate: 0, y: 0 }
+                  }
+                  transition={{ duration: 0.3 }}
+                  className="w-7 h-1 bg-torado-green-600 rounded-full origin-center"
+                />
+                <motion.span
+                  animate={
+                    isDashboardSidebarOpen
+                      ? { opacity: 0, x: -10 }
+                      : { opacity: 1, x: 0 }
+                  }
+                  transition={{ duration: 0.2 }}
+                  className="w-7 h-1 bg-torado-green-600 rounded-full"
+                />
+                <motion.span
+                  animate={
+                    isDashboardSidebarOpen
+                      ? { rotate: -45, y: -10 }
+                      : { rotate: 0, y: 0 }
+                  }
+                  transition={{ duration: 0.3 }}
+                  className="w-7 h-1 bg-torado-green-600 rounded-full origin-center"
+                />
+              </button>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              className="text-slate-700 hover:text-torado-green-600 transition-colors"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -270,30 +325,95 @@ const Navbar = () => {
               />
             ))}
 
-            <div className="mt-6 flex flex-col gap-4">
-              <Link
-                to="/login"
-                className="text-torado-green-600 font-medium text-base"
-                onClick={toggleMenu}
-              >
-                Login / Register
-              </Link>
+            {location.pathname.startsWith("/user-dashboard") ? (
+              // Mobile Dashboard View
+              <div className="mt-6 border-t border-slate-100 pt-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-bold text-torado-blue-900 leading-tight">
+                      Korey Dickens
+                    </h4>
+                    <p className="text-xs text-slate-500">
+                      designer@koreydickens.com
+                    </p>
+                  </div>
+                </div>
 
-              <div className="flex gap-3">
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to="/user-dashboard"
+                    className="flex items-center gap-3 py-2 text-slate-600 hover:text-torado-green-600 transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    <LayoutDashboard size={18} />
+                    <span className="font-medium">Dashboard</span>
+                  </Link>
+                  <Link
+                    to="/manage-applicants"
+                    className="flex items-center gap-3 py-2 text-slate-600 hover:text-torado-green-600 transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    <Users size={18} />
+                    <span className="font-medium">Manage Applicants</span>
+                  </Link>
+                  <Link
+                    to="/bookmark-resumes"
+                    className="flex items-center gap-3 py-2 text-slate-600 hover:text-torado-green-600 transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    <Bookmark size={18} />
+                    <span className="font-medium">Bookmark Resumes</span>
+                  </Link>
+                  <Link
+                    to="/package"
+                    className="flex items-center gap-3 py-2 text-slate-600 hover:text-torado-green-600 transition-colors"
+                    onClick={toggleMenu}
+                  >
+                    <Package size={18} />
+                    <span className="font-medium">Package</span>
+                  </Link>
+                  <Link
+                    to="/logout"
+                    className="flex items-center gap-3 py-2 text-red-500 hover:text-red-600 transition-colors mt-2"
+                    onClick={toggleMenu}
+                  >
+                    <LogOut size={18} />
+                    <span className="font-medium">Log Out</span>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              // Mobile Public View
+              <div className="mt-6 flex flex-col gap-4">
                 <Link
-                  to="/post-job"
-                  className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all"
+                  to="/login"
+                  className="text-torado-green-600 font-medium text-base"
                   onClick={toggleMenu}
                 >
-                  <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-                  <span className="relative z-10">Post A Job</span>
+                  Login / Register
                 </Link>
-                <button className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all">
-                  <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-                  <span className="relative z-10">Upload Your CV</span>
-                </button>
+
+                <div className="flex gap-3">
+                  <Link
+                    to="/post-job"
+                    className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all"
+                    onClick={toggleMenu}
+                  >
+                    <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                    <span className="relative z-10">Post A Job</span>
+                  </Link>
+                  <button className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all">
+                    <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                    <span className="relative z-10">Upload Your CV</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -303,9 +423,119 @@ const Navbar = () => {
   );
 };
 
+const UserProfileDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const menuItems = [
+    { label: "Dashboard", path: "/user-dashboard", icon: LayoutDashboard },
+    { label: "Manage Applicants", path: "/manage-applicants", icon: Users },
+    { label: "Bookmark Resumes", path: "/bookmark-resumes", icon: Bookmark },
+    { label: "Package", path: "/package", icon: Package },
+  ];
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <div
+        className="flex items-center gap-3 cursor-pointer group select-none"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <img
+          src="https://randomuser.me/api/portraits/women/44.jpg"
+          alt="User Avatar"
+          className={`w-10 h-10 rounded-full object-cover border-2 transition-colors ${
+            isOpen
+              ? "border-torado-green-600"
+              : "border-slate-100 group-hover:border-torado-green-600"
+          }`}
+        />
+        <div className="hidden xl:block">
+          <p
+            className={`text-sm font-bold transition-colors ${
+              isOpen
+                ? "text-torado-green-600"
+                : "text-torado-blue-900 group-hover:text-torado-green-600"
+            }`}
+          >
+            My Account
+          </p>
+        </div>
+        <Settings
+          size={20}
+          className={`transition-all duration-300 ${
+            isOpen
+              ? "text-torado-green-600 rotate-90"
+              : "text-slate-400 group-hover:text-torado-green-600"
+          }`}
+        />
+      </div>
+
+      {/* Dropdown Menu */}
+      <div
+        className={`absolute top-[120%] right-0 w-72 bg-white rounded-xl shadow-xl border border-slate-100 py-6 transition-all duration-200 transform origin-top-right z-50 ${
+          isOpen
+            ? "opacity-100 visible scale-100"
+            : "opacity-0 invisible scale-95 pointer-events-none"
+        }`}
+      >
+        {/* Profile Header */}
+        <div className="flex flex-col items-center px-6 pb-6 border-b border-slate-100">
+          <img
+            src="https://randomuser.me/api/portraits/women/44.jpg"
+            alt="User Avatar"
+            className="w-20 h-20 rounded-full object-cover mb-4"
+          />
+          <h4 className="text-lg font-bold text-torado-blue-900 mb-1">
+            Korey Dickens
+          </h4>
+          <p className="text-sm text-slate-500">designer@koreydickens.com</p>
+        </div>
+
+        {/* Menu Items */}
+        <div className="py-2">
+          {menuItems.map((item, index) => (
+            <Link
+              key={index}
+              to={item.path}
+              className="flex items-center gap-3 px-8 py-3 text-slate-500 hover:text-torado-green-600 hover:bg-slate-50 transition-colors bg-white font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              <item.icon size={18} strokeWidth={1.5} />
+              <span className="text-sm">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Logout */}
+        <div className="pt-2 border-t border-slate-100">
+          <Link
+            to="/logout"
+            className="flex items-center gap-3 px-8 py-3 text-slate-500 hover:text-torado-green-600 hover:bg-slate-50 transition-colors font-medium"
+            onClick={() => setIsOpen(false)}
+          >
+            <LogOut size={18} strokeWidth={1.5} />
+            <span className="text-sm">Log Out</span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const NavDropdown = ({ title, items = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useState(null);
+  const dropdownRef = useRef(null);
   const location = useLocation();
 
   // Check if any child item is active

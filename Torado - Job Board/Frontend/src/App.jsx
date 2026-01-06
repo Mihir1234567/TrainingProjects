@@ -26,6 +26,8 @@ import TermsOfServices from "./pages/TermsOfServices";
 import PrivacyPolicy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
+import UserDashboard from "./pages/UserDashboard";
+
 function App() {
   return (
     <Routes>
@@ -54,6 +56,7 @@ function App() {
         <Route path="/blog/category/:categoryId" element={<BlogCategory />} />
         <Route path="/blog/tag/:tagId" element={<BlogTag />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route
           path="/login"
           element={<div className="p-20 text-center">Login (Coming Soon)</div>}

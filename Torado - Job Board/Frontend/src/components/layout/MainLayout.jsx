@@ -8,12 +8,20 @@ import ScrollToTop from "../common/ScrollToTop";
 
 const MainLayout = () => {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+  const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col relative">
-      <Navbar />
+      <Navbar
+        toggleDashboardSidebar={() =>
+          setIsDashboardSidebarOpen(!isDashboardSidebarOpen)
+        }
+        isDashboardSidebarOpen={isDashboardSidebarOpen}
+      />
       <div className="flex-grow">
-        <Outlet />
+        <Outlet
+          context={{ isDashboardSidebarOpen, setIsDashboardSidebarOpen }}
+        />
       </div>
       <Footer />
 

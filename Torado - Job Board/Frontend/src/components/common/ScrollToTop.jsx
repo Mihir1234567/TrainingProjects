@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const ScrollToTop = ({
   threshold = 300,
@@ -7,10 +8,20 @@ const ScrollToTop = ({
   accentColor = "#5BBB7B",
   className = "",
 }) => {
+  const { pathname } = useLocation();
+
   const [scrollState, setScrollState] = useState({
     progress: 0,
     isVisible: false,
   });
+
+  // Automatically scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant", // or "smooth" depending on preference, but "instant" feels more like a reload
+    });
+  }, [pathname]);
 
   useEffect(() => {
     let ticking = false;
