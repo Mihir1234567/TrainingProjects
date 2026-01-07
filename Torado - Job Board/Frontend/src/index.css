@@ -20,7 +20,10 @@
 /* Custom Base Styles override if needed */
 @layer base {
   body {
-    @apply antialiased text-slate-900 bg-slate-50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #0f172a;
+    background-color: #f8fafc;
   }
 }
 
@@ -61,5 +64,34 @@
   }
   .animate-fade-in {
     animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  /* Placeholder fade animation */
+  .animate-placeholder-fade::placeholder {
+    transition: all 0.4s ease-in-out;
+  }
+  .animate-placeholder-fade:focus::placeholder {
+    opacity: 0;
+    transform: translateX(15px);
+  }
+
+  /* Focus Glow */
+  .focus-glow:focus {
+    box-shadow: 0 0 20px rgba(91, 187, 123, 0.2);
+  }
+
+  @keyframes pulseSubtle {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
+  .animate-pulse-subtle {
+    animation: pulseSubtle 2s infinite ease-in-out;
   }
 }

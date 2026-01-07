@@ -26,7 +26,10 @@ import TermsOfServices from "./pages/TermsOfServices";
 import PrivacyPolicy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
-import UserDashboard from "./pages/UserDashboard";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import DashboardPostJob from "./pages/dashboard/DashboardPostJob";
+import ManageJobs from "./pages/dashboard/ManageJobs";
 
 function App() {
   return (
@@ -56,11 +59,11 @@ function App() {
         <Route path="/blog/category/:categoryId" element={<BlogCategory />} />
         <Route path="/blog/tag/:tagId" element={<BlogTag />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route
-          path="/login"
-          element={<div className="p-20 text-center">Login (Coming Soon)</div>}
-        />
+        <Route path="/user-dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="post-job" element={<DashboardPostJob />} />
+          <Route path="manage-jobs" element={<ManageJobs />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

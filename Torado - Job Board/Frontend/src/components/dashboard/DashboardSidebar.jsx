@@ -22,19 +22,51 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
 
   const menuItems = [
     { label: "Dashboard", path: "/user-dashboard", icon: LayoutDashboard },
-    { label: "Post New Job", path: "/post-new-job", icon: FileText },
-    { label: "Manage Jobs", path: "/manage-jobs", icon: Briefcase },
-    { label: "Manage Applicants", path: "/manage-applicants", icon: Users },
-    { label: "Bookmark Resumes", path: "/bookmark-resumes", icon: Bookmark },
-    { label: "Manage Resumes", path: "/manage-resumes", icon: FileCheck },
-    { label: "Create Resumes", path: "/create-resumes", icon: FileText },
-    { label: "Applied Jobs", path: "/applied-jobs", icon: Briefcase },
-    { label: "Alert Jobs", path: "/alert-jobs", icon: Bell },
-    { label: "Package", path: "/package", icon: Package },
-    { label: "Message", path: "/messages", icon: MessageSquare },
-    { label: "My Profile", path: "/my-profile", icon: User },
-    { label: "Change Password", path: "/change-password", icon: Lock },
-    { label: "Delete Profile", path: "/delete-profile", icon: Trash2 },
+    { label: "Post New Job", path: "/user-dashboard/post-job", icon: FileText },
+    {
+      label: "Manage Jobs",
+      path: "/user-dashboard/manage-jobs",
+      icon: Briefcase,
+    },
+    {
+      label: "Manage Applicants",
+      path: "/user-dashboard/manage-applicants",
+      icon: Users,
+    },
+    {
+      label: "Bookmark Resumes",
+      path: "/user-dashboard/bookmark-resumes",
+      icon: Bookmark,
+    },
+    {
+      label: "Manage Resumes",
+      path: "/user-dashboard/manage-resumes",
+      icon: FileCheck,
+    },
+    {
+      label: "Create Resumes",
+      path: "/user-dashboard/create-resumes",
+      icon: FileText,
+    },
+    {
+      label: "Applied Jobs",
+      path: "/user-dashboard/applied-jobs",
+      icon: Briefcase,
+    },
+    { label: "Alert Jobs", path: "/user-dashboard/alert-jobs", icon: Bell },
+    { label: "Package", path: "/user-dashboard/package", icon: Package },
+    { label: "Message", path: "/user-dashboard/messages", icon: MessageSquare },
+    { label: "My Profile", path: "/user-dashboard/my-profile", icon: User },
+    {
+      label: "Change Password",
+      path: "/user-dashboard/change-password",
+      icon: Lock,
+    },
+    {
+      label: "Delete Profile",
+      path: "/user-dashboard/delete-profile",
+      icon: Trash2,
+    },
     { label: "Logout", path: "/logout", icon: LogOut },
   ];
 

@@ -34,7 +34,7 @@ const FloatingActions = ({ onOpenDemos }) => {
   ];
 
   return (
-    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 pointer-events-none">
+    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-3 pointer-events-none">
       {actions.map((action) => (
         <button
           key={action.id}
