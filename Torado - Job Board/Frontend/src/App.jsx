@@ -30,6 +30,8 @@ import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import DashboardPostJob from "./pages/dashboard/DashboardPostJob";
 import ManageJobs from "./pages/dashboard/ManageJobs";
+import ManageApplicants from "./pages/dashboard/ManageApplicants";
+import BookmarkResumes from "./pages/dashboard/BookmarkResumes";
 
 function App() {
   return (
@@ -63,6 +65,8 @@ function App() {
           <Route index element={<DashboardHome />} />
           <Route path="post-job" element={<DashboardPostJob />} />
           <Route path="manage-jobs" element={<ManageJobs />} />
+          <Route path="manage-applicants" element={<ManageApplicants />} />
+          <Route path="bookmark-resumes" element={<BookmarkResumes />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 const Tooltip = ({ children, text }) => (
-  <div className="relative group/tooltip inline-flex">
+  <div className="relative group/tooltip w-fit">
     {children}
     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3.5 py-2 bg-black text-white text-[12px] font-bold rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap z-20 pointer-events-none shadow-[0_4px_25px_rgba(0,0,0,0.4)] transform scale-95 group-hover/tooltip:scale-100 origin-bottom">
       {text}
@@ -106,9 +106,9 @@ const ManageJobs = () => {
   return (
     <div className="space-y-6">
       {/* Header / Breadcrumb */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-1 md:px-0">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl md:text-2xl font-bold text-[#002333] mb-1">
+          <h2 className="text-2xl font-bold text-[#002333] mb-1">
             Manage Jobs
           </h2>
           <div className="text-sm text-slate-500">
@@ -120,7 +120,7 @@ const ManageJobs = () => {
       </div>
 
       {/* Alert Banner */}
-      <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-slate-100 mx-1 md:mx-0">
+      <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-slate-100">
         <p className="text-pink-500 font-medium text-center md:text-left text-sm md:text-base">
           Your listings will be automatically removed after 30 days.
         </p>
@@ -130,28 +130,28 @@ const ManageJobs = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mx-1 md:mx-0"
+        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
       >
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full min-w-[1000px]">
             <thead>
               <tr className="bg-slate-50/50 text-left border-b border-slate-100">
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Title
                 </th>
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Filled
                 </th>
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Posted Date
                 </th>
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Expired
                 </th>
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Applications
                 </th>
-                <th className="px-4 md:px-6 py-4 md:py-5 text-sm font-bold text-[#002333]">
+                <th className="px-6 py-5 text-sm font-bold text-[#002333]">
                   Action
                 </th>
               </tr>
@@ -162,7 +162,7 @@ const ManageJobs = () => {
                   key={job.id}
                   className="hover:bg-slate-50/30 transition-colors"
                 >
-                  <td className="px-4 md:px-6 py-4 md:py-5">
+                  <td className="px-6 py-5">
                     <div className="flex items-center gap-4">
                       <Tooltip text="View">
                         <div
@@ -186,7 +186,7 @@ const ManageJobs = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 md:px-6 py-4 md:py-5">
+                  <td className="px-6 py-5">
                     <div className="flex justify-start">
                       {job.filled ? (
                         <Tooltip text="View">
@@ -203,13 +203,13 @@ const ManageJobs = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 md:px-6 py-4 md:py-5 text-slate-500 text-sm whitespace-nowrap">
+                  <td className="px-6 py-5 text-slate-500 text-sm whitespace-nowrap">
                     {job.postedDate}
                   </td>
-                  <td className="px-4 md:px-6 py-4 md:py-5 text-slate-500 text-sm whitespace-nowrap">
+                  <td className="px-6 py-5 text-slate-500 text-sm whitespace-nowrap">
                     {job.expiredDate}
                   </td>
-                  <td className="px-4 md:px-6 py-4 md:py-5">
+                  <td className="px-6 py-5">
                     {job.applications === 0 ? (
                       <Tooltip text="View">
                         <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center cursor-pointer">
@@ -225,7 +225,7 @@ const ManageJobs = () => {
                       </span>
                     )}
                   </td>
-                  <td className="px-4 md:px-6 py-4 md:py-5">
+                  <td className="px-6 py-5">
                     <div className="flex items-center gap-3 whitespace-nowrap">
                       <Tooltip text="View">
                         <button className="p-2 transition-all">

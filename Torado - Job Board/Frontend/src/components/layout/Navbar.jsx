@@ -169,14 +169,14 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 mx-auto">
+          <nav className="hidden xl:flex items-center gap-5 xl:gap-8 mx-auto">
             {navItems.map((item, index) => (
               <NavDropdown key={index} title={item.title} items={item.items} />
             ))}
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-6 font-semibold shrink-0">
+          <div className="hidden xl:flex items-center gap-6 font-semibold shrink-0">
             {location.pathname.startsWith("/user-dashboard") ? (
               // User Profile Section (Dashboard)
               <UserProfileDropdown />
@@ -199,10 +199,10 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                   <span className="relative z-10">Post A Job</span>
                 </Link>
 
-                {/* Post Job - Tablet (LG only) */}
+                {/* Post Job - Tablet (Under XL) */}
                 <Link
                   to="/post-job"
-                  className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg bg-[#5B6CF6] text-white hover:bg-torado-brand-hover shadow-sm transition-colors"
+                  className="hidden md:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg bg-[#5B6CF6] text-white hover:bg-torado-brand-hover shadow-sm transition-colors"
                   title="Post A Job"
                 >
                   <UserPlus size={20} />
@@ -216,9 +216,9 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                   </span>
                 </button>
 
-                {/* Upload CV - Tablet (LG only) */}
+                {/* Upload CV - Tablet (Under XL) */}
                 <button
-                  className="hidden lg:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg border border-torado-green-600 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+                  className="hidden md:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg border border-torado-green-600 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
                   title="Upload Your CV"
                 >
                   <FileText size={20} strokeWidth={1.5} />
@@ -227,7 +227,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
             )}
           </div>
 
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex items-center gap-4 xl:hidden">
             {/* Mobile Dashboard Sidebar Toggle */}
             {location.pathname.startsWith("/user-dashboard") && (
               <button
@@ -279,7 +279,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
 
       {/* Mobile Menu Overlay & Sidebar */}
       <div
-        className={`fixed inset-0 z-[9999] lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[9999] xl:hidden transition-opacity duration-300 ${
           isMenuOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none"

@@ -74,11 +74,11 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
     <>
       {/* Sidebar Container */}
       <div
-        className={`fixed top-[72px] lg:top-0 left-0 bottom-0 right-0 z-[80] bg-white lg:bg-white overflow-y-auto transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-fit lg:shrink-0 lg:w-80 lg:rounded-lg lg:border lg:border-slate-100 lg:shadow-sm lg:p-6 p-4 ${
+        className={`fixed top-[72px] xl:top-0 left-0 bottom-0 right-0 z-[80] bg-white xl:bg-white overflow-y-auto transform transition-transform duration-300 ease-in-out xl:translate-x-0 xl:static xl:h-fit xl:shrink-0 xl:w-80 xl:rounded-lg xl:border xl:border-slate-100 xl:shadow-sm xl:p-6 p-4 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="hidden lg:flex items-center justify-between mb-6 px-4">
+        <div className="hidden xl:flex items-center justify-between mb-6 px-4">
           <h3 className="text-lg font-bold text-torado-blue-900">Dashboard</h3>
         </div>
 
