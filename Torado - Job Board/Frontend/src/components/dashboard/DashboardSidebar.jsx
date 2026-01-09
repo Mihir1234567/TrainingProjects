@@ -6,7 +6,7 @@ import {
   Briefcase,
   Users,
   Bookmark,
-  FileCheck,
+  Database,
   Bell,
   Package,
   MessageSquare,
@@ -41,7 +41,7 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
     {
       label: "Manage Resumes",
       path: "/user-dashboard/manage-resumes",
-      icon: FileCheck,
+      icon: Database,
     },
     {
       label: "Create Resumes",

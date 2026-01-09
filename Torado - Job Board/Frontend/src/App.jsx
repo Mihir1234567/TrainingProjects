@@ -32,6 +32,7 @@ import DashboardPostJob from "./pages/dashboard/DashboardPostJob";
 import ManageJobs from "./pages/dashboard/ManageJobs";
 import ManageApplicants from "./pages/dashboard/ManageApplicants";
 import BookmarkResumes from "./pages/dashboard/BookmarkResumes";
+import ManageResumes from "./pages/dashboard/ManageResumes";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
           <Route path="manage-jobs" element={<ManageJobs />} />
           <Route path="manage-applicants" element={<ManageApplicants />} />
           <Route path="bookmark-resumes" element={<BookmarkResumes />} />
+          <Route path="manage-resumes" element={<ManageResumes />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
