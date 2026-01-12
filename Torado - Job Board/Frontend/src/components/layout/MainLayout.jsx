@@ -11,14 +11,14 @@ const MainLayout = () => {
   const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col relative">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col relative overflow-x-hidden">
       <Navbar
         toggleDashboardSidebar={() =>
           setIsDashboardSidebarOpen(!isDashboardSidebarOpen)
         }
         isDashboardSidebarOpen={isDashboardSidebarOpen}
       />
-      <div className="flex-grow">
+      <div className="flex-grow min-w-0">
         <Outlet
           context={{ isDashboardSidebarOpen, setIsDashboardSidebarOpen }}
         />

@@ -12,8 +12,8 @@ const DashboardLayout = () => {
 
   return (
     <div className="bg-white min-h-screen pt-20 xl:pt-32 pb-12 xl:pb-20">
-      <div className="w-full px-4 sm:px-6 xl:px-12 mx-auto">
-        <div className="flex flex-col xl:flex-row gap-6 xl:gap-8 text-left">
+      <div className="w-full px-4 sm:px-6 xl:px-8 mx-auto">
+        <div className="flex flex-col xl:flex-row gap-6 xl:gap-6 text-left">
           {/* Sidebar */}
           <DashboardSidebar
             isOpen={isDashboardSidebarOpen}
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
           />
 
           {/* Main Content Area */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <Outlet />
           </div>
         </div>

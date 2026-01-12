@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Briefcase,
   Calendar,
@@ -65,11 +66,15 @@ const ApplicantCard = ({ applicant }) => {
             <div className="flex flex-row items-center justify-center md:justify-start gap-4 md:gap-6">
               <div className="flex items-center gap-1.5 text-[#5BBB7C] text-[13px] md:text-[13px] font-bold">
                 <Globe size={15} strokeWidth={2.5} />
-                <span className="truncate max-w-[100px] md:max-w-none">{applicant.location}</span>
+                <span className="truncate max-w-[100px] md:max-w-none">
+                  {applicant.location}
+                </span>
               </div>
               <div className="flex items-center gap-1.5 text-[#5BBB7C] text-[13px] md:text-[13px] font-bold">
                 <FlaskConical size={15} strokeWidth={2.5} />
-                <span className="truncate max-w-[120px] md:max-w-none">{applicant.jobTitle}</span>
+                <span className="truncate max-w-[120px] md:max-w-none">
+                  {applicant.jobTitle}
+                </span>
               </div>
             </div>
           </div>
@@ -129,8 +134,18 @@ const ApplicantCard = ({ applicant }) => {
             >
               <div className="flex items-center justify-center gap-1.5">
                 <div className="p-0.5 rounded bg-[#8E7E7E]/10">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                   </svg>
                 </div>
                 <span>Edit</span>
@@ -184,8 +199,18 @@ const ApplicantCard = ({ applicant }) => {
               >
                 <div className="flex items-center gap-2">
                   <div className="p-1 rounded bg-[#8E7E7E]/10">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                     </svg>
                   </div>
                   <span>Edit</span>
@@ -223,6 +248,7 @@ const ApplicantCard = ({ applicant }) => {
 
 const ManageApplicants = () => {
   const initialApplicants = [
+    // ... (rest of initialApplicants array remains the same)
     {
       id: 1,
       name: "Maève Parisian",
@@ -309,114 +335,181 @@ const ManageApplicants = () => {
     },
   ];
 
-  const [applicants, setApplicants] = useState(initialApplicants);
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Sort by (Default)");
-  const sortRef = useRef(null);
-
-  const sortOptions = [
-    { label: "Sort by (Default)", value: "Default" },
-    { label: "Newest", value: "Newest" },
-    { label: "Oldest", value: "Oldest" },
-    { label: "Highest Rating", value: "Rating" },
-  ];
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sortRef.current && !sortRef.current.contains(event.target)) {
-        setIsSortOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+  const allApplicants = useMemo(() => {
+    const apps = [...initialApplicants];
+    for (let i = 1; i <= 23; i++) {
+      apps.push({
+        ...initialApplicants[i % initialApplicants.length],
+        id: initialApplicants.length + i,
+        name: `${initialApplicants[i % initialApplicants.length].name} ${i}`,
+      });
+    }
+    return apps;
   }, []);
 
-  const handleSort = (option) => {
-    setSelectedSort(option.label);
-    setIsSortOpen(false);
+  const [selectedSort, setSelectedSort] = useState("Default");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    let sorted = [...applicants];
-    if (option.value === "Newest") {
+  const sortedApplicants = useMemo(() => {
+    let sorted = [...allApplicants];
+    if (selectedSort === "Newest") {
       sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (option.value === "Oldest") {
+    } else if (selectedSort === "Oldest") {
       sorted.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (option.value === "Rating") {
+    } else if (selectedSort === "Rating") {
       sorted.sort((a, b) => b.rating - a.rating);
-    } else {
-      sorted = [...initialApplicants];
     }
-    setApplicants(sorted);
+    return sorted;
+  }, [selectedSort, allApplicants]);
+
+  const totalPages = Math.ceil(sortedApplicants.length / itemsPerPage);
+
+  const currentApplicants = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return sortedApplicants.slice(startIndex, startIndex + itemsPerPage);
+  }, [sortedApplicants, currentPage, itemsPerPage]);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[#002333] mb-1">
+          <h2 className="text-[22px] font-bold text-[#002333]">
             Manage Applicants
           </h2>
-          <div className="text-sm text-slate-500">
-            <span className="font-semibold text-[#002333]">Home</span> /{" "}
-            <span>Dashboard</span> /{" "}
+          <div className="text-[13px] text-slate-400 font-medium">
+            <Link to="/" className="hover:text-[#5BBB7B] transition-colors">
+              Home
+            </Link>
+            <span className="mx-2">/</span>
+            <Link
+              to="/user-dashboard"
+              className="hover:text-[#5BBB7B] transition-colors"
+            >
+              Dashboard
+            </Link>
+            <span className="mx-2">/</span>
             <span className="text-[#5BBB7B]">Manage Applicants</span>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <p className="text-[#1967D2] font-semibold text-sm">
-          {applicants.length} New Applicants Found
-        </p>
-        <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-          <span className="text-sm text-slate-500 font-medium whitespace-nowrap">
-            Sort by:
+      {/* Filter Header */}
+      <div className="bg-white rounded-[20px] p-6 md:p-8 shadow-[0_0_50px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <p className="text-[15px] font-medium text-slate-500">
+          Showing{" "}
+          <span className="text-[#002333] font-bold">
+            {allApplicants.length} applicants
           </span>
-          <div className="relative" ref={sortRef}>
-            <button
-              onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-4 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-[#002333] font-medium hover:border-[#5BBB7B] transition-all min-w-[170px] justify-between shadow-sm"
+        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="relative">
+            <select
+              value={selectedSort}
+              onChange={(e) => {
+                setSelectedSort(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="appearance-none bg-slate-50 border-none rounded-xl px-5 py-2.5 pr-10 text-[14px] font-bold text-[#002333] cursor-pointer focus:ring-2 focus:ring-[#5BBB7B]/20 outline-none w-[180px]"
             >
-              <span className="truncate">{selectedSort}</span>
-              <ChevronDown
-                size={14}
-                className={`text-slate-400 shrink-0 transition-transform ${
-                  isSortOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            <div
-              className={`absolute right-0 top-full mt-2 w-full min-w-[200px] bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-[100] transition-all duration-200 origin-top
-              ${
-                isSortOpen
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-              }`}
+              <option value="Default">Sort by (Default)</option>
+              <option value="Newest">Newest</option>
+              <option value="Oldest">Oldest</option>
+              <option value="Rating">Highest Rating</option>
+            </select>
+            <ChevronDown
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+              size={14}
+            />
+          </div>
+          <div className="relative">
+            <select
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="appearance-none bg-slate-50 border-none rounded-xl px-5 py-2.5 pr-10 text-[14px] font-bold text-[#002333] cursor-pointer focus:ring-2 focus:ring-[#5BBB7B]/20 outline-none w-[120px]"
             >
-              {sortOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleSort(option)}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors
-                    ${
-                      selectedSort === option.label
-                        ? "bg-[#1967D2] text-white font-bold"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-[#5BBB7B]"
-                    }`}
-                >
-                  {option.label}
-                </button>
+              {[20, 30, 50, 100].map((opt) => (
+                <option key={opt} value={opt}>
+                  Show {opt}
+                </option>
               ))}
-            </div>
+            </select>
+            <ChevronDown
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+              size={14}
+            />
           </div>
         </div>
       </div>
 
-      <div className="space-y-6 pb-8">
-        {applicants.map((applicant) => (
-          <ApplicantCard key={applicant.id} applicant={applicant} />
-        ))}
+      <div className="space-y-6 min-h-[400px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${selectedSort}-${currentPage}-${itemsPerPage}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            {currentApplicants.map((applicant) => (
+              <ApplicantCard key={applicant.id} applicant={applicant} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-12">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+            >
+              <ChevronDown
+                className="rotate-90 group-hover:-translate-x-0.5 transition-transform"
+                size={16}
+              />
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+              <button
+                key={num}
+                onClick={() => handlePageChange(num)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-bold transition-all ${
+                  num === currentPage
+                    ? "bg-[#5BBB7B] text-white shadow-lg shadow-[#5BBB7B]/30 scale-110"
+                    : "bg-slate-50 text-slate-400 hover:bg-slate-100"
+                }`}
+              >
+                {num < 10 ? `0${num}` : num}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+            >
+              <ChevronDown
+                className="-rotate-90 group-hover:translate-x-0.5 transition-transform"
+                size={16}
+              />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

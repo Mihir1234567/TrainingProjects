@@ -74,7 +74,7 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
     <>
       {/* Sidebar Container */}
       <div
-        className={`fixed top-[72px] xl:top-0 left-0 bottom-0 right-0 z-[80] bg-white xl:bg-white overflow-y-auto transform transition-transform duration-300 ease-in-out xl:translate-x-0 xl:static xl:h-fit xl:shrink-0 xl:w-80 xl:rounded-lg xl:border xl:border-slate-100 xl:shadow-sm xl:p-6 p-4 ${
+        className={`fixed top-[72px] xl:top-0 left-0 bottom-0 right-0 z-[80] bg-white xl:bg-white overflow-y-auto transform transition-transform duration-300 ease-in-out xl:translate-x-0 xl:static xl:h-fit xl:shrink-0 xl:w-[280px] xl:rounded-lg xl:border xl:border-slate-100 xl:shadow-sm xl:p-6 p-4 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

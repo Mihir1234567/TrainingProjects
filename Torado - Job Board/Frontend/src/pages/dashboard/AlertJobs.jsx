@@ -2,14 +2,14 @@ import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  UserCheck,
-  Database,
-  Meh,
-  Globe,
-  Briefcase,
+  Bell,
   ChevronDown,
+  Briefcase,
+  UserCheck,
+  Meh,
   Search,
   MapPin,
+  Clock,
 } from "lucide-react";
 
 const Tooltip = ({ children, text }) => (
@@ -22,107 +22,98 @@ const Tooltip = ({ children, text }) => (
   </div>
 );
 
-const ManageResumes = () => {
+const AlertJobs = () => {
   const [selectedSort, setSelectedSort] = useState("Default");
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const initialResumes = [
+  const initialAlerts = [
     {
       id: 1,
-      name: "Tyrone Lowe",
-      title: "Software Engineer",
-      location: "United States",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tyrone",
+      title: "Fresher UI/UX Designer",
+      location: "London, UK",
+      type: "Full Time",
+      designation: "Manager",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#F0F5FF]",
     },
     {
       id: 2,
-      name: "Brielle Mante",
-      title: "Web Developer",
-      location: "Denver, USA",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Brielle",
+      title: "Advance Magento Developer",
+      location: "London, UK",
+      type: "Part Time",
+      designation: "Team Leader",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#FDF2F2]",
     },
     {
       id: 3,
-      name: "Ben Hegmann",
-      title: "Technical Architect",
-      location: "Mailbourn, AU",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ben",
+      title: "Senior IOS App Developer",
+      location: "London, UK",
+      type: "Full Time",
+      designation: "CEO.Manager",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#F0FDF4]",
     },
     {
       id: 4,
-      name: "Kristin Haag",
-      title: "Senior Designer",
-      location: "Liverpool, CA",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kristin",
+      title: "Basic WordPress Developer",
+      location: "London, UK",
+      type: "Part Time",
+      designation: "Manager",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#FFF7ED]",
     },
     {
       id: 5,
-      name: "Terrell Nolan",
-      title: "Software Engineer",
-      location: "Mailbourn, AU",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Terrell",
+      title: "Technical Content Writer",
+      location: "London, UK",
+      type: "Full Time",
+      designation: "Founder",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#F5F3FF]",
     },
     {
       id: 6,
-      name: "Bret Okuneva",
-      title: "Android Developer",
-      location: "Barlin Canda",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bret",
+      title: "Senior Product Designer",
+      location: "London, UK",
+      type: "Part Time",
+      designation: "SEO Founders",
+      postedDate: "31 Jan 2025",
       iconBg: "bg-[#FFF1F2]",
-    },
-    {
-      id: 7,
-      name: "Hillary Wisozk",
-      title: "Shopify Develope",
-      location: "United States",
-      date: "31 Jan 2025",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Hillary",
-      iconBg: "bg-[#FDF2F2]",
     },
   ];
 
-  const allResumes = useMemo(() => {
-    const resumes = [...initialResumes];
-    for (let i = 1; i <= 25; i++) {
-      resumes.push({
-        ...initialResumes[i % initialResumes.length],
-        id: initialResumes.length + i,
-        name: `${initialResumes[i % initialResumes.length].name} ${i}`,
+  const allAlerts = useMemo(() => {
+    const alerts = [...initialAlerts];
+    for (let i = 1; i <= 24; i++) {
+      alerts.push({
+        ...initialAlerts[i % initialAlerts.length],
+        id: initialAlerts.length + i,
+        title: `${initialAlerts[i % initialAlerts.length].title} ${i}`,
       });
     }
-    return resumes;
+    return alerts;
   }, []);
 
-  const filteredResumes = useMemo(() => {
-    let result = [...allResumes];
+  const filteredAlerts = useMemo(() => {
+    let result = [...allAlerts];
 
     if (selectedSort === "Newest") {
-      result.sort((a, b) => new Date(b.date) - new Date(a.date));
+      result.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
     } else if (selectedSort === "Oldest") {
-      result.sort((a, b) => new Date(a.date) - new Date(b.date));
+      result.sort((a, b) => new Date(a.postedDate) - new Date(b.postedDate));
     }
 
     return result;
-  }, [allResumes, selectedSort]);
+  }, [allAlerts, selectedSort]);
 
-  const totalPages = Math.ceil(filteredResumes.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredAlerts.length / itemsPerPage);
 
-  const currentResumes = useMemo(() => {
+  const paginatedAlerts = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredResumes.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredResumes, currentPage, itemsPerPage]);
+    return filteredAlerts.slice(startIndex, startIndex + itemsPerPage);
+  }, [itemsPerPage, currentPage, filteredAlerts]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -136,9 +127,9 @@ const ManageResumes = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-[22px] font-bold text-[#002333]">
-            Manage Resumes
+            My Alert Jobs
           </h2>
-          <div className="text-[13px] text-slate-400 font-medium">
+          <div className="text-[13px] text-slate-400 font-medium mt-1">
             <Link to="/" className="hover:text-[#5BBB7B] transition-colors">
               Home
             </Link>
@@ -150,7 +141,7 @@ const ManageResumes = () => {
               Dashboard
             </Link>
             <span className="mx-2">/</span>
-            <span className="text-[#5BBB7B]">Manage Resumes</span>
+            <span className="text-[#5BBB7B]">Alert Jobs</span>
           </div>
         </div>
       </div>
@@ -164,10 +155,11 @@ const ManageResumes = () => {
         {/* Table Filter Header */}
         <div className="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <p className="text-[15px] font-medium text-slate-500">
-            You have{" "}
+            Showing{" "}
             <span className="text-[#002333] font-bold">
-              {allResumes.length} resumes
-            </span>
+              {filteredAlerts.length}
+            </span>{" "}
+            alert jobs
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <div className="relative">
@@ -211,18 +203,19 @@ const ManageResumes = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto custom-scrollbar">
+        {/* Desktop Table View */}
+        <div className="hidden sm:block overflow-x-auto custom-scrollbar">
           <table className="w-full min-w-[650px]">
             <thead>
               <tr className="bg-slate-50/50 text-left border-b border-slate-100">
                 <th className="px-5 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider">
-                  Candidate
+                  Title
                 </th>
                 <th className="px-3 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider">
-                  Job Title
+                  Designation
                 </th>
-                <th className="px-3 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider text-center">
-                  Post Date
+                <th className="px-3 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider">
+                  Posted Date
                 </th>
                 <th className="px-5 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider text-right pr-4">
                   Action
@@ -238,69 +231,86 @@ const ManageResumes = () => {
                 transition={{ duration: 0.2 }}
                 className="divide-y divide-slate-100 min-h-[400px]"
               >
-                {currentResumes.map((resume) => (
-                  <tr
-                    key={resume.id}
-                    className="group hover:bg-slate-50/30 transition-all duration-300"
-                  >
-                    <td className="px-5 py-6">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-12 h-12 rounded-2xl ${resume.iconBg} flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 shadow-sm border border-white overflow-hidden`}
-                        >
-                          <img
-                            src={resume.image}
-                            alt={resume.name}
-                            className="w-8 h-8 rounded-full"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-[16px] font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors leading-snug truncate">
-                            {resume.name}
-                          </h4>
-                          <div className="flex items-center gap-2 text-[13px] text-slate-400 font-medium mt-1">
-                            <MapPin size={12} className="text-[#5BBB7B]" />
-                            {resume.location}
+                {paginatedAlerts.length > 0 ? (
+                  paginatedAlerts.map((alert) => (
+                    <tr
+                      key={alert.id}
+                      className="group hover:bg-slate-50/30 transition-all duration-300"
+                    >
+                      <td className="px-5 py-6">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`w-11 h-11 rounded-xl ${alert.iconBg} flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 shadow-sm border border-white`}
+                          >
+                            <Bell size={18} className="text-[#5BBB7B]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-[16px] font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors leading-snug truncate">
+                              {alert.title}
+                            </h4>
+                            <div className="flex items-center gap-3 text-[13px] text-slate-400 font-medium mt-1">
+                              <span className="flex items-center gap-1.5">
+                                <MapPin size={12} className="text-[#5BBB7B]" />
+                                {alert.location}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <Briefcase
+                                  size={12}
+                                  className="text-[#5BBB7B]"
+                                />
+                                {alert.type}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-3 py-6 text-[14px] text-slate-500 font-medium">
-                      {resume.title}
-                    </td>
-                    <td className="px-3 py-6 text-center text-[14px] font-bold text-[#002333] italic">
-                      {resume.date}
-                    </td>
-                    <td className="px-5 py-6 text-right pr-4">
-                      <div className="flex items-center justify-end gap-2">
-                        <Tooltip text="View Profile">
-                          <button className="w-10 h-10 rounded-xl bg-[#5BBB7B]/10 text-[#5BBB7B] flex items-center justify-center transition-all duration-300 hover:bg-[#5BBB7B] hover:text-white hover:shadow-lg hover:shadow-[#5BBB7B]/30 active:scale-95 group/btn overflow-hidden relative">
-                            <UserCheck
-                              size={18}
-                              className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
-                            />
-                          </button>
-                        </Tooltip>
-                        <Tooltip text="Edit Resume">
-                          <button className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/30 active:scale-95 group/btn overflow-hidden relative">
-                            <Database
-                              size={18}
-                              className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
-                            />
-                          </button>
-                        </Tooltip>
-                        <Tooltip text="Delete Resume">
-                          <button className="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center transition-all duration-300 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 group/btn overflow-hidden relative">
-                            <Meh
-                              size={18}
-                              className="relative z-10 transition-transform duration-500 group-hover/btn:[transform:rotateY(180deg)]"
-                            />
-                          </button>
-                        </Tooltip>
+                      </td>
+                      <td className="px-3 py-6">
+                        <span className="text-[14px] font-bold text-slate-600">
+                          {alert.designation}
+                        </span>
+                      </td>
+                      <td className="px-3 py-6">
+                        <span className="flex items-center gap-2 text-[14px] font-bold text-[#002333] italic">
+                          <Clock size={14} className="text-slate-400" />
+                          {alert.postedDate}
+                        </span>
+                      </td>
+                      <td className="px-5 py-6 text-right pr-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <Tooltip text="View Details">
+                            <button className="w-10 h-10 rounded-xl bg-[#5BBB7B]/10 text-[#5BBB7B] flex items-center justify-center transition-all duration-300 hover:bg-[#5BBB7B] hover:text-white hover:shadow-lg hover:shadow-[#5BBB7B]/30 active:scale-95 group/btn overflow-hidden relative">
+                              <UserCheck
+                                size={18}
+                                className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
+                              />
+                            </button>
+                          </Tooltip>
+                          <Tooltip text="Delete Alert">
+                            <button className="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center transition-all duration-300 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 group/btn overflow-hidden relative">
+                              <Meh
+                                size={18}
+                                className="relative z-10 transition-transform duration-500 group-hover/btn:[transform:rotateY(180deg)]"
+                              />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="py-20 text-center">
+                      <div className="flex flex-col items-center">
+                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mb-4">
+                          <Search size={40} />
+                        </div>
+                        <h5 className="text-[18px] font-bold text-[#002333]">
+                          No alert jobs found
+                        </h5>
                       </div>
                     </td>
                   </tr>
-                ))}
+                )}
               </motion.tbody>
             </AnimatePresence>
           </table>
@@ -308,46 +318,45 @@ const ManageResumes = () => {
 
         {/* Mobile View */}
         <div className="sm:hidden divide-y divide-slate-100">
-          {currentResumes.map((resume) => (
-            <div key={resume.id} className="p-6 space-y-4">
+          {paginatedAlerts.map((alert) => (
+            <div key={alert.id} className="p-6 space-y-4">
               <div className="flex items-center gap-4">
                 <div
-                  className={`w-14 h-14 rounded-2xl ${resume.iconBg} flex items-center justify-center shrink-0 shadow-sm border border-white overflow-hidden`}
+                  className={`w-12 h-12 rounded-xl ${alert.iconBg} flex items-center justify-center shrink-0 shadow-sm border border-white`}
                 >
-                  <img
-                    src={resume.image}
-                    alt={resume.name}
-                    className="w-10 h-10 rounded-full"
-                  />
+                  <Bell size={20} className="text-[#5BBB7B]" />
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-[16px] font-bold text-[#002333] leading-tight truncate">
-                    {resume.name}
+                    {alert.title}
                   </h4>
-                  <p className="text-[#5BBB7B] text-[13px] font-bold mt-1">
-                    {resume.title}
+                  <p className="text-slate-500 text-[13px] font-bold mt-1">
+                    {alert.designation}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-[13px] text-slate-400 font-medium">
-                <MapPin size={12} className="text-[#5BBB7B]" />
-                {resume.location}
+              <div className="grid grid-cols-2 gap-3 text-[13px] text-slate-400 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={12} className="text-[#5BBB7B]" />
+                  {alert.location}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Briefcase size={12} className="text-[#5BBB7B]" />
+                  {alert.type}
+                </span>
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-slate-50">
                 <span className="text-[13px] text-slate-400 font-medium">
                   Posted:{" "}
                   <span className="text-[#002333] font-bold">
-                    {resume.date}
+                    {alert.postedDate}
                   </span>
                 </span>
                 <div className="flex gap-2">
-                  <button className="p-2.5 bg-[#5BBB7B]/10 text-[#5BBB7B] rounded-lg hover:bg-[#5BBB7B] hover:text-white transition-all">
+                  <button className="p-2.5 bg-[#5BBB7B]/10 text-[#5BBB7B] rounded-lg">
                     <UserCheck size={18} />
                   </button>
-                  <button className="p-2.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all">
-                    <Database size={18} />
-                  </button>
-                  <button className="p-2.5 bg-orange-50 text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition-all">
+                  <button className="p-2.5 bg-orange-50 text-orange-500 rounded-lg">
                     <Meh size={18} />
                   </button>
                 </div>
@@ -356,7 +365,7 @@ const ManageResumes = () => {
           ))}
         </div>
 
-        {/* Pagination */}
+        {/* Pagination bar */}
         {totalPages > 1 && (
           <div className="p-8 flex justify-center border-t border-slate-100">
             <div className="flex items-center gap-2">
@@ -405,4 +414,4 @@ const ManageResumes = () => {
   );
 };
 
-export default ManageResumes;
+export default AlertJobs;

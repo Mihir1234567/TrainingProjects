@@ -33,6 +33,11 @@ import ManageJobs from "./pages/dashboard/ManageJobs";
 import ManageApplicants from "./pages/dashboard/ManageApplicants";
 import BookmarkResumes from "./pages/dashboard/BookmarkResumes";
 import ManageResumes from "./pages/dashboard/ManageResumes";
+import CreateResumes from "./pages/dashboard/CreateResumes";
+import AppliedJobs from "./pages/dashboard/AppliedJobs";
+import AlertJobs from "./pages/dashboard/AlertJobs";
+import Package from "./pages/dashboard/Package";
+import Messages from "./pages/dashboard/Messages";
 
 function App() {
   return (
@@ -69,6 +74,11 @@ function App() {
           <Route path="manage-applicants" element={<ManageApplicants />} />
           <Route path="bookmark-resumes" element={<BookmarkResumes />} />
           <Route path="manage-resumes" element={<ManageResumes />} />
+          <Route path="create-resumes" element={<CreateResumes />} />
+          <Route path="applied-jobs" element={<AppliedJobs />} />
+          <Route path="alert-jobs" element={<AlertJobs />} />
+          <Route path="package" element={<Package />} />
+          <Route path="messages" element={<Messages />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Bookmark,
   ChevronDown,
@@ -10,6 +11,7 @@ import {
   Eye,
   Trash2,
   Search,
+  MapPin,
 } from "lucide-react";
 
 const Tooltip = ({ children, text }) => (
@@ -23,14 +25,13 @@ const Tooltip = ({ children, text }) => (
 );
 
 const BookmarkResumes = () => {
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("All Jobs");
-  const [itemsToDisplay, setItemsToDisplay] = useState(20);
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedSort, setSelectedSort] = useState("Default");
+  const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const dropdownRef = useRef(null);
-  const showDropdownRef = useRef(null);
 
-  const initialResumes = [
+  const allResumes = [
+    // ... (rest of initialResumes array remains the same)
     // Development
     {
       id: 1,
@@ -217,7 +218,7 @@ const BookmarkResumes = () => {
       category: "Resources",
     },
 
-    // Financing & Finance (separating them as per user image)
+    // Financing & Finance
     {
       id: 17,
       title: "Credit Risk Analyst",
@@ -379,7 +380,7 @@ const BookmarkResumes = () => {
   ];
 
   const categories = [
-    "All Jobs",
+    "All Categories",
     "Development",
     "Web Design",
     "Multimedia",
@@ -392,37 +393,33 @@ const BookmarkResumes = () => {
     "Finance",
   ];
 
-  const showCounts = [20, 30, 10, 8, 5, 2];
+  const filteredResumes = useMemo(() => {
+    let result =
+      selectedCategory === "All Categories"
+        ? allResumes
+        : allResumes.filter((resume) => resume.category === selectedCategory);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        showDropdownRef.current &&
-        !showDropdownRef.current.contains(event.target)
-      ) {
-        setActiveDropdown(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (selectedSort === "Newest") {
+      result = [...result].sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (selectedSort === "Oldest") {
+      result = [...result].sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
 
-  const filteredResumes = initialResumes.filter(
-    (resume) =>
-      selectedCategory === "All Jobs" || resume.category === selectedCategory
-  );
+    return result;
+  }, [selectedCategory, selectedSort, allResumes]);
 
-  const totalPages = Math.ceil(filteredResumes.length / itemsToDisplay);
-  const paginatedResumes = filteredResumes.slice(
-    (currentPage - 1) * itemsToDisplay,
-    currentPage * itemsToDisplay
-  );
+  const totalPages = Math.ceil(filteredResumes.length / itemsPerPage);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory, itemsToDisplay]);
+  const paginatedResumes = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredResumes.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredResumes, currentPage, itemsPerPage]);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -431,253 +428,222 @@ const BookmarkResumes = () => {
         <h2 className="text-[22px] font-bold text-[#002333]">
           Bookmark Resumes
         </h2>
-        <div className="text-[13px] text-slate-400">
-          <span className="hover:text-[#5BBB7B] cursor-pointer font-medium">
+        <div className="text-[13px] text-slate-400 font-medium">
+          <Link to="/" className="hover:text-[#5BBB7B] transition-colors">
             Home
-          </span>
+          </Link>
           <span className="mx-2">/</span>
-          <span className="hover:text-[#5BBB7B] cursor-pointer font-medium">
+          <Link
+            to="/user-dashboard"
+            className="hover:text-[#5BBB7B] transition-colors"
+          >
             Dashboard
-          </span>
+          </Link>
           <span className="mx-2">/</span>
-          <span className="text-[#5BBB7B] font-medium">Bookmark Resumes</span>
+          <span className="text-[#5BBB7B]">Bookmark Resumes</span>
         </div>
       </div>
 
-      {/* Info & Filters Bar */}
-      <div className="bg-white rounded-xl p-4 md:px-6 md:py-5 shadow-sm border border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative">
-        <div className="flex flex-col gap-1">
-          <p className="text-[#64748B] text-sm font-medium">
-            You have bookmarked{" "}
-            <span className="text-[#1967D2] font-bold">
-              {filteredResumes.length}
-            </span>{" "}
-            resumes
-          </p>
-          {selectedCategory !== "All Jobs" && (
-            <button
-              onClick={() => {
-                setSelectedCategory("All Jobs");
-              }}
-              className="text-[#1967D2] text-[13px] font-bold hover:underline w-fit"
-            >
-              Clear All Filters
-            </button>
-          )}
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          {/* Filter Dropdown */}
-          <div className="relative w-full sm:w-auto" ref={dropdownRef}>
-            <button
-              onClick={() =>
-                setActiveDropdown(activeDropdown === "filter" ? null : "filter")
-              }
-              className="flex items-center gap-6 px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-lg text-sm text-[#002333] font-medium hover:border-[#5BBB7B] transition-all w-full sm:min-w-[200px] justify-between"
-            >
-              <span>{selectedCategory}</span>
-              <ChevronDown
-                size={14}
-                className={`text-slate-400 transition-transform ${
-                  activeDropdown === "filter" ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            <div
-              className={`absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-xl py-1 transform transition-all duration-200 z-[70] ${
-                activeDropdown === "filter"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 -translate-y-2 pointer-events-none"
-              }`}
-            >
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    setSelectedCategory(cat);
-                    setActiveDropdown(null);
-                  }}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                    selectedCategory === cat
-                      ? "bg-[#1967D2] text-white font-bold"
-                      : "text-[#64748B] hover:bg-slate-50 hover:text-[#5BBB7B]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Show Count Dropdown */}
-          <div className="relative w-full sm:w-auto" ref={showDropdownRef}>
-            <button
-              onClick={() =>
-                setActiveDropdown(activeDropdown === "show" ? null : "show")
-              }
-              className="flex items-center gap-6 px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-lg text-sm text-[#002333] font-medium hover:border-[#5BBB7B] transition-all w-full sm:min-w-[140px] justify-between"
-            >
-              <span>Show {itemsToDisplay}</span>
-              <ChevronDown
-                size={14}
-                className={`text-slate-400 transition-transform ${
-                  activeDropdown === "show" ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            <div
-              className={`absolute left-0 top-full mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-xl py-1 transform transition-all duration-200 z-[70] ${
-                activeDropdown === "show"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 -translate-y-2 pointer-events-none"
-              }`}
-            >
-              {showCounts.map((count) => (
-                <button
-                  key={count}
-                  onClick={() => {
-                    setItemsToDisplay(count);
-                    setActiveDropdown(null);
-                  }}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                    itemsToDisplay === count
-                      ? "bg-[#1967D2] text-white font-bold"
-                      : "text-[#64748B] hover:bg-slate-50 hover:text-[#5BBB7B]"
-                  }`}
-                >
-                  Show {count}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Table View (Hidden on Mobile) */}
+      {/* Content Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hidden sm:block"
+        className="bg-white rounded-[20px] shadow-[0_0_50px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden"
       >
-        <div className="overflow-x-auto">
-          {filteredResumes.length > 0 ? (
-            <table className="w-full min-w-[900px]">
-              <thead>
-                <tr className="bg-slate-50/40 text-left border-b border-slate-100">
-                  <th className="px-6 py-5 text-[15px] font-bold text-[#002333]">
-                    Candidate
-                  </th>
-                  <th className="px-6 py-5 text-[15px] font-bold text-[#002333]">
-                    Status
-                  </th>
-                  <th className="px-6 py-5 text-[15px] font-bold text-[#002333]">
-                    Applied Date
-                  </th>
-                  <th className="px-6 py-5 text-[15px] font-bold text-[#002333]">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {paginatedResumes.map((resume) => (
-                  <tr
-                    key={resume.id}
-                    className="hover:bg-slate-50/30 transition-colors group"
-                  >
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        {/* Job Icon/Image */}
-                        <div
-                          className={`w-12 h-12 ${resume.iconBg} rounded-full flex items-center justify-center shrink-0 transition-transform duration-700 ease-in-out group-hover:[transform:rotateY(180deg)] group-hover:delay-100 [perspective:1000px]`}
-                        >
-                          <img
-                            src={resume.image}
-                            alt={resume.title}
-                            className="w-8 h-8 rounded-full"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-[15px] font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors cursor-pointer mb-1 tracking-tight">
-                            {resume.title}
-                          </h4>
-                          <div className="flex items-center gap-4 text-[13px] text-slate-400 font-medium">
-                            <div className="flex items-center gap-1.5">
-                              <Globe size={14} className="text-[#5BBB7B]" />
-                              <span>{resume.location}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                              <Briefcase size={14} className="text-[#5BBB7B]" />
-                              <span>{resume.type}</span>
+        {/* Table Filter Header */}
+        <div className="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <p className="text-[15px] font-medium text-slate-500">
+            You have bookmarked{" "}
+            <span className="text-[#002333] font-bold">
+              {filteredResumes.length} resumes
+            </span>
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="relative">
+              <select
+                value={selectedCategory}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="appearance-none bg-slate-50 border-none rounded-xl px-5 py-2.5 pr-10 text-[14px] font-bold text-[#002333] cursor-pointer focus:ring-2 focus:ring-[#5BBB7B]/20 outline-none w-[160px]"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                size={14}
+              />
+            </div>
+            <div className="relative">
+              <select
+                value={selectedSort}
+                onChange={(e) => {
+                  setSelectedSort(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="appearance-none bg-slate-50 border-none rounded-xl px-5 py-2.5 pr-10 text-[14px] font-bold text-[#002333] cursor-pointer focus:ring-2 focus:ring-[#5BBB7B]/20 outline-none w-[160px]"
+              >
+                <option value="Default">Sort by (Default)</option>
+                <option value="Newest">Newest</option>
+                <option value="Oldest">Oldest</option>
+              </select>
+              <ChevronDown
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                size={14}
+              />
+            </div>
+            <div className="relative">
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  setItemsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
+                className="appearance-none bg-slate-50 border-none rounded-xl px-5 py-2.5 pr-10 text-[14px] font-bold text-[#002333] cursor-pointer focus:ring-2 focus:ring-[#5BBB7B]/20 outline-none w-[120px]"
+              >
+                {[20, 30, 50, 100].map((opt) => (
+                  <option key={opt} value={opt}>
+                    Show {opt}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                size={14}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden sm:block overflow-x-auto custom-scrollbar">
+          <table className="w-full min-w-[650px]">
+            <thead>
+              <tr className="bg-slate-50/50 text-left border-b border-slate-100">
+                <th className="px-5 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider">
+                  Candidate
+                </th>
+                <th className="px-3 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider text-center">
+                  Status
+                </th>
+                <th className="px-3 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider text-center">
+                  Applied Date
+                </th>
+                <th className="px-5 py-5 text-[13px] font-bold text-[#002333] uppercase tracking-wider text-right pr-4">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <AnimatePresence mode="wait">
+              <motion.tbody
+                key={`${selectedCategory}-${currentPage}-${itemsPerPage}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="divide-y divide-slate-100 min-h-[400px]"
+              >
+                {paginatedResumes.length > 0 ? (
+                  paginatedResumes.map((resume) => (
+                    <tr
+                      key={resume.id}
+                      className="group hover:bg-slate-50/30 transition-all duration-300"
+                    >
+                      <td className="px-5 py-6">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`w-12 h-12 rounded-2xl ${resume.iconBg} flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 shadow-sm border border-white overflow-hidden`}
+                          >
+                            <img
+                              src={resume.image}
+                              alt={resume.title}
+                              className="w-8 h-8 rounded-full"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="text-[16px] font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors leading-snug truncate">
+                              {resume.title}
+                            </h4>
+                            <div className="flex items-center gap-3 text-[13px] text-slate-400 font-medium mt-1">
+                              <span className="flex items-center gap-1.5">
+                                <MapPin size={12} className="text-[#5BBB7B]" />
+                                {resume.location}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <Briefcase
+                                  size={12}
+                                  className="text-[#5BBB7B]"
+                                />
+                                {resume.type}
+                              </span>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[14px] text-[#5BBB7B] font-medium">
-                        {resume.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[14px] text-[#64748B] font-medium">
+                      </td>
+                      <td className="px-3 py-6 text-center">
+                        <span className="px-4 py-1.5 bg-green-50 text-[#5BBB7B] text-[13px] font-bold rounded-full border border-green-100 italic">
+                          {resume.status}
+                        </span>
+                      </td>
+                      <td className="px-3 py-6 text-center text-[14px] font-bold text-[#002333] italic">
                         {resume.date}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        <Tooltip text="View">
-                          <button className="text-[#5BBB7B] hover:scale-110 transition-transform">
-                            <UserCheck size={20} strokeWidth={1.8} />
-                          </button>
-                        </Tooltip>
-                        <Tooltip text="Remove">
-                          <button className="text-orange-500 hover:scale-110 transition-transform">
-                            <Meh size={20} strokeWidth={1.8} />
-                          </button>
-                        </Tooltip>
+                      </td>
+                      <td className="px-5 py-6 text-right pr-4">
+                        <div className="flex items-center justify-end gap-2">
+                          <Tooltip text="View Profile">
+                            <button className="w-10 h-10 rounded-xl bg-[#5BBB7B]/10 text-[#5BBB7B] flex items-center justify-center transition-all duration-300 hover:bg-[#5BBB7B] hover:text-white hover:shadow-lg hover:shadow-[#5BBB7B]/30 active:scale-95 group/btn overflow-hidden relative">
+                              <UserCheck
+                                size={18}
+                                className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
+                              />
+                            </button>
+                          </Tooltip>
+                          <Tooltip text="Remove Bookmark">
+                            <button className="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center transition-all duration-300 hover:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/30 active:scale-95 group/btn overflow-hidden relative">
+                              <Meh
+                                size={18}
+                                className="relative z-10 transition-transform duration-500 group-hover/btn:[transform:rotateY(180deg)]"
+                              />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="py-20 text-center">
+                      <div className="flex flex-col items-center">
+                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mb-4">
+                          <Search size={40} />
+                        </div>
+                        <h5 className="text-[18px] font-bold text-[#002333]">
+                          No resumes found
+                        </h5>
+                        <p className="text-slate-400 mt-1">
+                          Try changing your category filter
+                        </p>
                       </div>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-20 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                <Search size={32} className="text-slate-400" />
-              </div>
-              <h3 className="text-lg font-bold text-[#002333] mb-1">
-                No Resumes Found
-              </h3>
-              <p className="text-slate-500 text-sm max-w-xs text-center mb-6">
-                We couldn't find any bookmarks in this category.
-              </p>
-              <button
-                onClick={() => {
-                  setSelectedCategory("All Jobs");
-                }}
-                className="px-6 py-2 bg-[#1967D2] text-white rounded-lg text-sm font-bold hover:bg-[#1967D2]/90 transition-all shadow-md shadow-blue-500/20"
-              >
-                Clear All Filters
-              </button>
-            </div>
-          )}
+                )}
+              </motion.tbody>
+            </AnimatePresence>
+          </table>
         </div>
-      </motion.div>
 
-      {/* Mobile Card View (Hidden on Desktop/Tablet) */}
-      <div className="flex flex-col gap-4 sm:hidden">
-        {filteredResumes.length > 0 ? (
-          paginatedResumes.map((resume) => (
-            <motion.div
-              key={resume.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 space-y-4 group"
-            >
-              <div className="flex items-center gap-4 border-b border-slate-50 pb-4">
+        {/* Mobile View */}
+        <div className="sm:hidden divide-y divide-slate-100">
+          {paginatedResumes.map((resume) => (
+            <div key={resume.id} className="p-6 space-y-4">
+              <div className="flex items-center gap-4">
                 <div
-                  className={`w-14 h-14 ${resume.iconBg} rounded-full flex items-center justify-center shrink-0 transition-transform duration-700 ease-in-out group-hover:[transform:rotateY(180deg)] group-hover:delay-100 [perspective:1000px]`}
+                  className={`w-14 h-14 rounded-2xl ${resume.iconBg} flex items-center justify-center shrink-0 shadow-sm border border-white overflow-hidden`}
                 >
                   <img
                     src={resume.image}
@@ -686,96 +652,89 @@ const BookmarkResumes = () => {
                   />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-[16px] font-bold text-[#002333] mb-1 leading-tight">
+                  <h4 className="text-[16px] font-bold text-[#002333] leading-tight truncate">
                     {resume.title}
                   </h4>
-                  <div className="flex items-center gap-1.5 text-[13px] text-[#5BBB7B] font-medium">
+                  <p className="text-[#5BBB7B] text-[13px] font-bold mt-1">
                     {resume.status}
-                  </div>
+                  </p>
                 </div>
               </div>
-
-              <div className="grid grid-cols-2 gap-4 text-[13px] text-slate-500 font-medium pt-1">
-                <div className="flex items-center gap-2">
-                  <Globe size={14} className="text-[#5BBB7B]" />
-                  <span>{resume.location}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Briefcase size={14} className="text-[#5BBB7B]" />
-                  <span>{resume.type}</span>
-                </div>
-                <div className="flex items-center gap-2 col-span-2">
-                  <span className="text-slate-400">Bookmarked on:</span>
+              <div className="grid grid-cols-2 gap-3 text-[13px] text-slate-400 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={12} className="text-[#5BBB7B]" />
+                  {resume.location}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Briefcase size={12} className="text-[#5BBB7B]" />
+                  {resume.type}
+                </span>
+              </div>
+              <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                <span className="text-[13px] text-slate-400 font-medium">
+                  Applied:{" "}
                   <span className="text-[#002333] font-bold">
                     {resume.date}
                   </span>
+                </span>
+                <div className="flex gap-2">
+                  <button className="p-2.5 bg-[#5BBB7B]/10 text-[#5BBB7B] rounded-lg hover:bg-[#5BBB7B] hover:text-white transition-all">
+                    <UserCheck size={18} />
+                  </button>
+                  <button className="p-2.5 bg-orange-50 text-orange-500 rounded-lg hover:bg-orange-500 hover:text-white transition-all">
+                    <Meh size={18} />
+                  </button>
                 </div>
               </div>
-
-              <div className="flex items-center justify-between pt-4 border-t border-slate-50 gap-3">
-                <button className="flex items-center justify-center gap-2 flex-1 py-2.5 bg-[#5BBB7B]/10 text-[#5BBB7B] rounded-lg font-bold text-sm hover:bg-[#5BBB7B] hover:text-white transition-all">
-                  <UserCheck size={18} />
-                  <span>View</span>
-                </button>
-                <button className="flex items-center justify-center gap-2 flex-1 py-2.5 bg-orange-50 text-orange-500 rounded-lg font-bold text-sm hover:bg-orange-500 hover:text-white transition-all">
-                  <Meh size={18} />
-                  <span>Remove</span>
-                </button>
-              </div>
-            </motion.div>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center py-10 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
-            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-              <Search size={24} className="text-slate-400" />
             </div>
-            <h3 className="text-md font-bold text-[#002333] mb-1">
-              No Results Found
-            </h3>
-            <button
-              onClick={() => {
-                setSelectedCategory("All Jobs");
-              }}
-              className="text-[#1967D2] text-sm font-bold hover:underline"
-            >
-              Reset All Filters
-            </button>
+          ))}
+        </div>
+
+        {/* Pagination bar */}
+        {totalPages > 1 && (
+          <div className="p-8 flex justify-center border-t border-slate-100">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+              >
+                <ChevronDown
+                  className="rotate-90 group-hover:-translate-x-0.5 transition-transform"
+                  size={16}
+                />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (num) => (
+                  <button
+                    key={num}
+                    onClick={() => handlePageChange(num)}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-bold transition-all ${
+                      num === currentPage
+                        ? "bg-[#5BBB7B] text-white shadow-lg shadow-[#5BBB7B]/30 scale-110"
+                        : "bg-slate-50 text-slate-400 hover:bg-slate-100"
+                    }`}
+                  >
+                    {num < 10 ? `0${num}` : num}
+                  </button>
+                )
+              )}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-slate-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+              >
+                <ChevronDown
+                  className="-rotate-90 group-hover:translate-x-0.5 transition-transform"
+                  size={16}
+                />
+              </button>
+            </div>
           </div>
         )}
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 pt-4">
-          {[...Array(totalPages)].map((_, index) => {
-            const pageNum = index + 1;
-            return (
-              <button
-                key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
-                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-[13px] sm:text-sm transition-all ${
-                  currentPage === pageNum
-                    ? "bg-[#5BBB7B] text-white shadow-md shadow-[#5BBB7B]/20"
-                    : "bg-white border border-slate-100 text-slate-600 hover:border-[#5BBB7B] hover:text-[#5BBB7B]"
-                }`}
-              >
-                {pageNum < 10 ? `0${pageNum}` : pageNum}
-              </button>
-            );
-          })}
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-white border border-slate-100 text-slate-600 transition-all hover:border-[#5BBB7B] hover:text-[#5BBB7B] ${
-              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            <ChevronDown size={18} className="-rotate-90" />
-          </button>
-        </div>
-      )}
+      </motion.div>
     </div>
   );
 };

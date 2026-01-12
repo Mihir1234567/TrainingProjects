@@ -3,15 +3,23 @@ import { Briefcase, FileText, MessageSquare, Bookmark } from "lucide-react";
 
 const StatCard = ({ label, count, icon: Icon, colorClass, iconClass }) => (
   <div
-    className={`rounded-lg p-6 relative overflow-hidden flex items-center justify-between ${colorClass} transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:brightness-90 cursor-pointer`}
+    className={`rounded-[20px] p-8 relative overflow-hidden flex items-center justify-between ${colorClass} transition-all duration-300 ease-in-out hover:-translate-y-1.5 hover:shadow-2xl hover:brightness-105 cursor-pointer group`}
   >
     <div className="relative z-10 text-white">
-      <h4 className="text-3xl font-bold mb-1">{count}</h4>
-      <p className="text-sm font-medium opacity-90">{label}</p>
+      <h4 className="text-[32px] font-bold mb-0.5 tracking-tight group-hover:scale-105 transition-transform duration-300 origin-left">
+        {count}
+      </h4>
+      <p className="text-[14px] font-bold opacity-80 uppercase tracking-widest leading-none">
+        {label}
+      </p>
     </div>
-    <div className={`p-3 rounded-lg bg-white/20 backdrop-blur-sm ${iconClass}`}>
-      <Icon size={32} className="text-white" strokeWidth={1.5} />
+    <div
+      className={`p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 ${iconClass}`}
+    >
+      <Icon size={32} className="text-white" strokeWidth={2} />
     </div>
+    {/* Subtle Background Pattern */}
+    <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors"></div>
   </div>
 );
 
