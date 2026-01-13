@@ -17,6 +17,7 @@ import {
 import { motion } from "framer-motion";
 import logo from "../../assets/Logo/logoMain.svg";
 import blogsData from "../../data/blogs.json";
+import { USER_PROFILE } from "../../constants/userProfile";
 
 const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
   const location = useLocation();
@@ -330,16 +331,16 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
               <div className="mt-6 border-t border-slate-100 pt-6">
                 <div className="flex items-center gap-3 mb-6">
                   <img
-                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                    src={USER_PROFILE.avatar}
                     alt="User Avatar"
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
                     <h4 className="font-bold text-torado-blue-900 leading-tight">
-                      Korey Dickens
+                      {USER_PROFILE.name}
                     </h4>
                     <p className="text-xs text-slate-500">
-                      designer@koreydickens.com
+                      {USER_PROFILE.email}
                     </p>
                   </div>
                 </div>
@@ -452,7 +453,7 @@ const UserProfileDropdown = () => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <img
-          src="https://randomuser.me/api/portraits/women/44.jpg"
+          src={USER_PROFILE.avatar}
           alt="User Avatar"
           className={`w-10 h-10 rounded-full object-cover border-2 transition-colors ${
             isOpen
@@ -492,14 +493,14 @@ const UserProfileDropdown = () => {
         {/* Profile Header */}
         <div className="flex flex-col items-center px-6 pb-6 border-b border-slate-100">
           <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
+            src={USER_PROFILE.avatar}
             alt="User Avatar"
             className="w-20 h-20 rounded-full object-cover mb-4"
           />
           <h4 className="text-lg font-bold text-torado-blue-900 mb-1">
-            Korey Dickens
+            {USER_PROFILE.name}
           </h4>
-          <p className="text-sm text-slate-500">designer@koreydickens.com</p>
+          <p className="text-sm text-slate-500">{USER_PROFILE.email}</p>
         </div>
 
         {/* Menu Items */}

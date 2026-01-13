@@ -1,4 +1,3 @@
-import React from "react";
 import { Briefcase, FileText, MessageSquare, Bookmark } from "lucide-react";
 
 const StatCard = ({ label, count, icon: Icon, colorClass, iconClass }) => (
