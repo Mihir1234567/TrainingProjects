@@ -464,7 +464,17 @@ const Messages = () => {
                     {currentChat?.messages.map((msg, index) => {
                       // Date Separator Logic
                       const prevMsg = currentChat.messages[index - 1];
+                      const nextMsg = currentChat.messages[index + 1];
                       const showDate = !prevMsg || prevMsg.date !== msg.date;
+
+                      // Grouping Logic
+                      const isNextMsgSameSender =
+                        nextMsg && nextMsg.sender === msg.sender;
+                      const isPrevMsgSameSender =
+                        prevMsg && prevMsg.sender === msg.sender;
+
+                      // Avatar: Show only if it's the last message of the group (or single message)
+                      const showAvatar = !isNextMsgSameSender;
 
                       return (
                         <motion.div
@@ -473,13 +483,15 @@ const Messages = () => {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.9 }}
-                          className="flex flex-col gap-2"
+                          className={`flex flex-col gap-1 ${
+                            isNextMsgSameSender ? "mb-1" : "mb-4"
+                          }`}
                         >
                           {showDate && (
                             <motion.div
                               initial={{ opacity: 0, scale: 0.9 }}
                               animate={{ opacity: 1, scale: 1 }}
-                              className="flex justify-center my-8"
+                              className="flex justify-center my-6"
                             >
                               <span className="px-4 py-1.5 bg-white border border-slate-100 text-[#002333] text-[10px] xl:text-[11px] font-bold rounded-full uppercase tracking-[1px] shadow-sm">
                                 {msg.date ===
@@ -500,17 +512,25 @@ const Messages = () => {
                             }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ duration: 0.2 }}
-                            className={`flex items-start gap-2 xl:gap-3 group/msg ${
+                            className={`flex items-end gap-2 xl:gap-3 group/msg ${
                               msg.sender === "me"
                                 ? "flex-row-reverse"
                                 : "flex-row"
                             }`}
                           >
-                            <img
-                              src={msg.avatar}
-                              alt="avatar"
-                              className="w-7 h-7 xl:w-9 xl:h-9 rounded-full object-cover shrink-0 mt-1"
-                            />
+                            {/* Avatar Placeholder / Image */}
+                            <div className="w-7 h-7 xl:w-9 xl:h-9 shrink-0 flex items-end">
+                              {showAvatar ? (
+                                <img
+                                  src={msg.avatar}
+                                  alt="avatar"
+                                  className="w-full h-full rounded-full object-cover shadow-sm bg-white"
+                                />
+                              ) : (
+                                <div className="w-full h-full" /> // Spacer
+                              )}
+                            </div>
+
                             <div
                               className={`flex flex-col gap-1.5 max-w-[85%] sm:max-w-[75%] relative ${
                                 msg.sender === "me"
@@ -520,14 +540,30 @@ const Messages = () => {
                             >
                               <div
                                 id={`msg-${msg.id}`}
-                                className={`p-4 xl:p-5 rounded-2xl text-[13px] xl:text-[14px] leading-relaxed font-medium relative transition-all duration-300 ${
+                                className={`p-3.5 xl:p-4 rounded-2xl text-[13px] xl:text-[14px] leading-relaxed font-medium relative transition-all duration-300 shadow-sm ${
                                   highlightedId === msg.id
                                     ? "z-30 ring-4 ring-offset-4 ring-[#5BBB7B] shadow-[0_0_50px_rgba(91,187,123,0.3)] scale-[1.03] brightness-[1.02] bg-white !text-slate-600"
                                     : ""
                                 } ${
                                   msg.sender === "me"
-                                    ? "bg-[#5BBB7B] text-white rounded-tr-none shadow-md shadow-[#5BBB7B]/10"
-                                    : "bg-white border border-slate-100 text-slate-600 rounded-tl-none shadow-sm"
+                                    ? `bg-[#5BBB7B] text-white shadow-[#5BBB7B]/10 ${
+                                        isNextMsgSameSender
+                                          ? "rounded-br-md"
+                                          : "rounded-br-none"
+                                      } ${
+                                        isPrevMsgSameSender
+                                          ? "rounded-tr-md"
+                                          : ""
+                                      }`
+                                    : `bg-white border border-slate-100 text-slate-600 ${
+                                        isNextMsgSameSender
+                                          ? "rounded-bl-md"
+                                          : "rounded-bl-none"
+                                      } ${
+                                        isPrevMsgSameSender
+                                          ? "rounded-tl-md"
+                                          : ""
+                                      }`
                                 }`}
                               >
                                 {msg.replyTo && (

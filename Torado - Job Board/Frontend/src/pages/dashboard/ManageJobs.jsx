@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useMockData } from "../../context/MockDataContext";
 import {
   Eye,
   Trash2,
@@ -35,93 +36,42 @@ const ManageJobs = () => {
   const [selectedSort, setSelectedSort] = useState("Default");
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const initialJobs = [
-    {
-      id: 1,
-      title: "Senior Web Developer",
-      status: "Pending",
-      filled: true,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 0,
-      icon: Layout,
-      iconBg: "bg-green-100/50",
-      iconColor: "text-[#5BBB7B]",
-    },
-    {
-      id: 2,
-      title: "Experienced UI/UX Product Designer",
-      status: "Active",
-      filled: false,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 2,
-      icon: Smartphone,
-      iconBg: "bg-blue-100/50",
-      iconColor: "text-blue-600",
-    },
-    {
-      id: 3,
-      title: "Web developer - Front-End & PHP developer",
-      status: "Active",
-      filled: false,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 8,
-      icon: Globe,
-      iconBg: "bg-slate-100/50",
-      iconColor: "text-slate-600",
-    },
-    {
-      id: 4,
-      title: "WordPress Developer & Database Management System",
-      status: "Active",
-      filled: false,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 15,
-      icon: Database,
-      iconBg: "bg-orange-100/50",
-      iconColor: "text-orange-600",
-    },
-    {
-      id: 5,
-      title: "Senior Web Designer",
-      status: "Pending",
-      filled: false,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 0,
-      icon: Briefcase,
-      iconBg: "bg-slate-100/50",
-      iconColor: "text-slate-600",
-    },
-    {
-      id: 6,
-      title: "Experienced UI/UX Web Designer",
-      status: "Active",
-      filled: false,
-      postedDate: "31 Jan 2025",
-      expiredDate: "31 Jan 2025",
-      applications: 20,
-      icon: Search,
-      iconBg: "bg-green-100/50",
-      iconColor: "text-[#5BBB7B]",
-    },
-  ];
+  const { jobs: contextJobs, deleteJob } = useMockData();
 
   const allJobs = useMemo(() => {
-    const jobs = [...initialJobs];
-    for (let i = 1; i <= 24; i++) {
-      jobs.push({
-        ...initialJobs[i % initialJobs.length],
-        id: initialJobs.length + i,
-        title: `${initialJobs[i % initialJobs.length].title} ${i}`,
-      });
-    }
-    return jobs;
-  }, []);
+    return contextJobs.map((job) => {
+      let Icon = Briefcase;
+      let iconColor = "text-slate-600";
+      let iconBg = "bg-slate-100/50";
+
+      if (job.category === "Design") {
+        Icon = Layout;
+        iconColor = "text-[#5BBB7B]";
+        iconBg = "bg-green-100/50";
+      } else if (job.category === "Technology") {
+        Icon = Smartphone;
+        iconColor = "text-blue-600";
+        iconBg = "bg-blue-100/50";
+      } else if (job.category === "Marketing") {
+        Icon = Search;
+        iconColor = "text-orange-600";
+        iconBg = "bg-orange-100/50";
+      }
+
+      return {
+        id: job.id,
+        title: job.title,
+        status: "Active",
+        filled: false,
+        postedDate: job.postedAt || "Just now",
+        expiredDate: "N/A",
+        applications: 0,
+        icon: Icon,
+        iconBg: iconBg,
+        iconColor: iconColor,
+      };
+    });
+  }, [contextJobs]);
 
   const filteredJobs = useMemo(() => {
     let result =
@@ -131,11 +81,11 @@ const ManageJobs = () => {
 
     if (selectedSort === "Newest") {
       result = [...result].sort(
-        (a, b) => new Date(b.postedDate) - new Date(a.postedDate)
+        (a, b) => new Date(b.postedDate) - new Date(a.postedDate),
       );
     } else if (selectedSort === "Oldest") {
       result = [...result].sort(
-        (a, b) => new Date(a.postedDate) - new Date(b.postedDate)
+        (a, b) => new Date(a.postedDate) - new Date(b.postedDate),
       );
     }
 
@@ -385,10 +335,13 @@ const ManageJobs = () => {
                             </button>
                           </Tooltip>
                           <Tooltip text="Delete Job">
-                            <button className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-500/30 active:scale-95 group/btn overflow-hidden relative">
-                              <Meh
+                            <button
+                              onClick={() => deleteJob(job.id)}
+                              className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-500/30 active:scale-95 group/btn overflow-hidden relative"
+                            >
+                              <Trash2
                                 size={18}
-                                className="relative z-10 transition-transform duration-500 group-hover/btn:[transform:rotateY(180deg)]"
+                                className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
                               />
                             </button>
                           </Tooltip>
@@ -446,7 +399,7 @@ const ManageJobs = () => {
                   >
                     {num < 10 ? `0${num}` : num}
                   </button>
-                )
+                ),
               )}
 
               <button

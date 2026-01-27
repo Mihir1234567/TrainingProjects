@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CustomDropdown = ({
@@ -106,13 +106,16 @@ const CustomDropdown = ({
                 <div
                   key={index}
                   onClick={() => handleSelect(option)}
-                  className={`px-5 py-2.5 text-[15px] cursor-pointer transition-colors hover:text-white hover:bg-[#2D6AD2] ${
+                  className={`px-5 py-3 text-[15px] cursor-pointer transition-colors flex items-center justify-between group ${
                     value === option
-                      ? "text-[#5BBB7B] font-medium"
-                      : "text-slate-600"
+                      ? "text-[#5BBB7B] bg-[#5BBB7B]/5 font-semibold"
+                      : "text-slate-600 hover:text-[#5BBB7B] hover:bg-slate-50"
                   }`}
                 >
-                  {option}
+                  <span className="group-hover:translate-x-1 transition-transform duration-200">
+                    {option}
+                  </span>
+                  {value === option && <Check size={16} strokeWidth={2.5} />}
                 </div>
               ))}
             </div>

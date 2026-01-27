@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import jobsData from "../data/jobs.json";
+import { useMockData } from "../context/MockDataContext";
 import JobDetailHeader from "../components/jobs/JobDetailHeader";
 import JobDetailBanner from "../components/jobs/JobDetailBanner";
 
@@ -12,6 +12,7 @@ import JobMap from "../components/jobs/JobMap";
 
 const JobDetail = () => {
   const { id } = useParams();
+  const { jobs } = useMockData();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,8 +20,8 @@ const JobDetail = () => {
 
   // Fallback to first job if ID not found, just for visualization
   const job = useMemo(() => {
-    return jobsData.jobs.find((j) => j.id === parseInt(id)) || jobsData.jobs[0];
-  }, [id]);
+    return jobs.find((j) => j.id === parseInt(id)) || jobs[0];
+  }, [id, jobs]);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">

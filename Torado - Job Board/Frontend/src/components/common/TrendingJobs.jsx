@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { MapPin, Clock, Briefcase, Star } from "lucide-react";
 import jobsData from "../../data/trendingJobs.json";
 
 // Dynamic asset loading using Vite's glob import
 const jobImages = import.meta.glob(
   "../../assets/Home/JobImgs/*.{jpg,png,jpeg}",
-  { eager: true }
+  { eager: true },
 );
 
 const categories = [
@@ -125,8 +126,8 @@ const TrendingJobs = () => {
                           tag === "PSD"
                             ? "bg-[#F2F1FF] text-[#5D50F1]"
                             : tag === "Figma"
-                            ? "bg-[#EAF9F0] text-[#5BBB7B]"
-                            : "bg-[#F2F2F2] text-[#083e47]"
+                              ? "bg-[#EAF9F0] text-[#5BBB7B]"
+                              : "bg-[#F2F2F2] text-[#083e47]"
                         }`}
                       >
                         {tag}
@@ -181,19 +182,22 @@ const TrendingJobs = () => {
                       </svg>
                     </button>
 
-                    <button className="flex-grow xs:flex-grow-0 group/btn relative px-4 md:px-8 py-2.5 md:py-3.5 bg-white border border-[#5BBB7B] text-[#5BBB7B] rounded-xl text-xs md:text-sm font-bold overflow-hidden transition-all duration-300">
+                    <Link
+                      to={`/apply-job/${job.id}`}
+                      className="flex-grow xs:flex-grow-0 group/btn relative px-4 md:px-8 py-2.5 md:py-3.5 bg-white border border-[#5BBB7B] text-[#5BBB7B] rounded-xl text-xs md:text-sm font-bold overflow-hidden transition-all duration-300 inline-flex items-center justify-center"
+                    >
                       <span className="absolute inset-0 bg-[#5BBB7B] scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-center"></span>
                       <span className="relative z-10 group-hover/btn:text-white transition-colors duration-500">
                         Apply Now
                       </span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </div>x
+      </div>
     </section>
   );
 };

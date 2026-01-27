@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   FileText,
@@ -16,11 +16,16 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import LogoutModal from "../common/LogoutModal";
+import { useAuth } from "../../context/AuthContext";
 
 const DashboardSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isRecruiter, logout, updateUser } = useAuth();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const menuItems = [
+  const recruiterMenuItems = [
     { label: "Dashboard", path: "/user-dashboard", icon: LayoutDashboard },
     { label: "Post New Job", path: "/user-dashboard/post-job", icon: FileText },
     {
@@ -38,22 +43,6 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
       path: "/user-dashboard/bookmark-resumes",
       icon: Bookmark,
     },
-    {
-      label: "Manage Resumes",
-      path: "/user-dashboard/manage-resumes",
-      icon: Database,
-    },
-    {
-      label: "Create Resumes",
-      path: "/user-dashboard/create-resumes",
-      icon: FileText,
-    },
-    {
-      label: "Applied Jobs",
-      path: "/user-dashboard/applied-jobs",
-      icon: Briefcase,
-    },
-    { label: "Alert Jobs", path: "/user-dashboard/alert-jobs", icon: Bell },
     { label: "Package", path: "/user-dashboard/package", icon: Package },
     { label: "Message", path: "/user-dashboard/messages", icon: MessageSquare },
     { label: "My Profile", path: "/user-dashboard/my-profile", icon: User },
@@ -67,8 +56,59 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
       path: "/user-dashboard/delete-profile",
       icon: Trash2,
     },
-    { label: "Logout", path: "/logout", icon: LogOut },
+    {
+      label: "Logout",
+      icon: LogOut,
+      isLogout: true,
+    },
   ];
+
+  const candidateMenuItems = [
+    { label: "Dashboard", path: "/user-dashboard", icon: LayoutDashboard },
+    {
+      label: "Applied Jobs",
+      path: "/user-dashboard/applied-jobs",
+      icon: Briefcase,
+    },
+    { label: "Alert Jobs", path: "/user-dashboard/alert-jobs", icon: Bell },
+    {
+      label: "Manage Resumes",
+      path: "/user-dashboard/manage-resumes",
+      icon: Database,
+    },
+    {
+      label: "Create Resumes",
+      path: "/user-dashboard/create-resumes",
+      icon: FileText,
+    },
+    { label: "Message", path: "/user-dashboard/messages", icon: MessageSquare },
+    { label: "My Profile", path: "/user-dashboard/my-profile", icon: User },
+    {
+      label: "Change Password",
+      path: "/user-dashboard/change-password",
+      icon: Lock,
+    },
+    {
+      label: "Delete Profile",
+      path: "/user-dashboard/delete-profile",
+      icon: Trash2,
+    },
+    {
+      label: "Logout",
+      icon: LogOut,
+      isLogout: true,
+    },
+  ];
+
+  const currentMenuItems = isRecruiter
+    ? recruiterMenuItems
+    : candidateMenuItems;
+
+  const handleLogout = () => {
+    setIsLogoutModalOpen(false);
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
@@ -78,18 +118,64 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="hidden xl:flex items-center justify-between mb-6 px-4">
-          <h3 className="text-lg font-bold text-torado-blue-900">Dashboard</h3>
+        <div className="hidden xl:flex flex-col items-center justify-between mb-6 px-4">
+          <div className="flex items-center justify-between w-full mb-4">
+            <h3 className="text-lg font-bold text-torado-blue-900">
+              Dashboard
+            </h3>
+          </div>
+
+          {/* Role Toggle for Testing */}
+          <div className="bg-slate-100 p-1 rounded-lg w-full flex mb-4">
+            <button
+              onClick={() => updateUser({ role: "candidate" })}
+              className={`flex-1 text-xs py-1.5 rounded-md font-medium transition-all ${
+                !isRecruiter
+                  ? "bg-white text-torado-blue-900 shadow-sm"
+                  : "text-slate-500 hover:text-torado-blue-900"
+              }`}
+            >
+              Candidate
+            </button>
+            <button
+              onClick={() => updateUser({ role: "employer" })}
+              className={`flex-1 text-xs py-1.5 rounded-md font-medium transition-all ${
+                isRecruiter
+                  ? "bg-white text-torado-blue-900 shadow-sm"
+                  : "text-slate-500 hover:text-torado-blue-900"
+              }`}
+            >
+              Employer
+            </button>
+          </div>
         </div>
 
         <nav className="flex flex-col gap-1">
-          {menuItems.map((item, index) => {
+          {currentMenuItems.map((item, index) => {
             const isActive = location.pathname === item.path;
+
+            if (item.isLogout) {
+              return (
+                <button
+                  key={index}
+                  onClick={() => setIsLogoutModalOpen(true)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group text-slate-500 hover:text-red-500 hover:bg-red-50 mt-4 border-t border-slate-50 pt-6"
+                >
+                  <item.icon
+                    size={20}
+                    strokeWidth={1.5}
+                    className="transition-all duration-700 ease-in-out group-hover:[transform:rotateY(180deg)] text-slate-400 group-hover:text-red-500"
+                  />
+                  <span className="text-sm font-bold">Logout</span>
+                </button>
+              );
+            }
+
             return (
               <Link
                 key={index}
                 to={item.path}
-                onClick={onClose} // Close sidebar on mobile when link clicked
+                onClick={onClose}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                   isActive
                     ? "bg-slate-50 text-torado-green-600 font-semibold"
@@ -111,6 +197,12 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
           })}
         </nav>
       </div>
+
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+      />
     </>
   );
 };

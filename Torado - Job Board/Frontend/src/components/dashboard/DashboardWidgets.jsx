@@ -74,8 +74,8 @@ const InvoiceItem = ({ type, id, date, plan, status }) => (
   </div>
 );
 
-const DashboardWidgets = () => {
-  const notifications = [
+const DashboardWidgets = ({ isRecruiter }) => {
+  const employerNotifications = [
     {
       id: 1,
       name: "Emilie Friesen",
@@ -121,16 +121,59 @@ const DashboardWidgets = () => {
       iconBg: "bg-blue-50",
       iconColor: "text-blue-600",
     },
+  ];
+
+  const candidateNotifications = [
     {
-      id: 6,
-      name: "Allie Kulas",
-      action: "Applied For A Job",
-      job: "Android Developer",
+      id: 1,
+      name: "Google Inc",
+      action: "Viewed Your Profile",
+      job: "Software Engineer",
+      icon: Smile,
+      iconBg: "bg-purple-50",
+      iconColor: "text-purple-600",
+    },
+    {
+      id: 2,
+      name: "Microsoft",
+      action: "Shortlisted Research",
+      job: "Web Developer",
+      icon: CheckCircle,
+      iconBg: "bg-green-50",
+      iconColor: "text-green-600",
+    },
+    {
+      id: 3,
+      name: "Amazon",
+      action: "Sent a Message",
+      job: "Cloud Architect",
       icon: Package,
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-600",
+    },
+    {
+      id: 4,
+      name: "Netflix",
+      action: "Viewed Your Resume",
+      job: "UX/UI Designer",
+      icon: Award,
       iconBg: "bg-red-50",
       iconColor: "text-red-600",
     },
+    {
+      id: 5,
+      name: "Tesla",
+      action: "Job Alert Match",
+      job: "Product Designer",
+      icon: Package,
+      iconBg: "bg-orange-50",
+      iconColor: "text-orange-600",
+    },
   ];
+
+  const notifications = isRecruiter
+    ? employerNotifications
+    : candidateNotifications;
 
   const invoices = [
     {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import BlogImg1 from "../../assets/Blogs/BlogImg1.jpg";
 import BlogImg2 from "../../assets/Blogs/BlogImg2.jpg";
 import BlogImg3 from "../../assets/Blogs/BlogImg3.jpg";
@@ -41,10 +42,15 @@ const BlogSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-[#083E47]">
             Some Insight From Us
           </h2>
-          <button className="relative overflow-hidden group/btn bg-[#5BBB7B] text-white px-8 py-3.5 rounded-lg font-bold transition-all text-sm">
+          <Link
+            to="/blog"
+            className="relative overflow-hidden group/btn bg-[#5BBB7B] text-white px-8 py-3.5 rounded-lg font-bold transition-all text-sm inline-block"
+          >
             <span className="absolute inset-0 bg-[#083E47] scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-in-out origin-center"></span>
-            <span className="relative z-10">View All Blogs</span>
-          </button>
+            <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-white">
+              View All Blogs
+            </span>
+          </Link>
         </div>
 
         {/* Blog Posts */}
@@ -59,13 +65,15 @@ const BlogSection = () => {
               >
                 {/* Image */}
                 <div className="w-full lg:w-[45%] cursor-pointer">
-                  <div className="overflow-hidden rounded-xl">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
+                  <Link to={`/blog/${blog.id}`}>
+                    <div className="overflow-hidden rounded-xl">
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                  </Link>
                 </div>
 
                 {/* Content */}
@@ -73,19 +81,24 @@ const BlogSection = () => {
                   <p className="text-gray-400 text-sm font-medium">
                     {blog.date}
                   </p>
-                  <h3 className="text-2xl md:text-[28px] font-bold text-[#083E47] leading-tight cursor-pointer hover:text-[#5BBB7B] transition-colors">
-                    {blog.title}
-                  </h3>
+                  <Link to={`/blog/${blog.id}`}>
+                    <h3 className="text-2xl md:text-[28px] font-bold text-[#083E47] leading-tight cursor-pointer hover:text-[#5BBB7B] transition-colors">
+                      {blog.title}
+                    </h3>
+                  </Link>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
                     {blog.description}
                   </p>
                   <div>
-                    <button className="relative overflow-hidden group/btn px-8 py-3 rounded-lg font-bold transition-all text-sm border border-gray-200 text-[#083E47] group-hover:bg-[#5BBB7B] group-hover:text-white group-hover:border-[#5BBB7B]">
+                    <Link
+                      to={`/blog/${blog.id}`}
+                      className="relative overflow-hidden group/btn px-8 py-3 rounded-lg font-bold transition-all text-sm border border-gray-200 text-[#083E47] inline-block hover:border-[#5BBB7B]"
+                    >
                       <span className="absolute inset-0 bg-[#083E47] scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-in-out origin-center"></span>
-                      <span className="relative z-10 transition-colors duration-300">
+                      <span className="relative z-10 transition-colors duration-300 group-hover/btn:text-white">
                         Learn More
                       </span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

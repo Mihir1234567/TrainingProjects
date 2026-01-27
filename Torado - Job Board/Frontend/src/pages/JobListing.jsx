@@ -6,10 +6,11 @@ import JobSidebar from "../components/common/JobSidebar";
 import JobCard from "../components/common/JobCard";
 import Footer from "../components/layout/Footer";
 import JobCardSkeleton from "../components/common/JobCardSkeleton";
-import jobsData from "../data/jobs.json";
 import { X, Search } from "lucide-react";
+import { useMockData } from "../context/MockDataContext";
 
 const JobListing = () => {
+  const { jobs } = useMockData();
   // --- States ---
   const [searchParams] = useSearchParams();
   const recruiterIdParam = searchParams.get("recruiterId");
@@ -73,7 +74,7 @@ const JobListing = () => {
 
   // --- Filtering & Sorting Logic ---
   const processedJobs = useMemo(() => {
-    let result = [...jobsData.jobs];
+    let result = [...jobs];
 
     // 0. Recruiter Filter (New)
     if (filters.recruiterId) {
@@ -87,7 +88,7 @@ const JobListing = () => {
         (job) =>
           job.title.toLowerCase().includes(q) ||
           job.company.toLowerCase().includes(q) ||
-          job.tags.some((tag) => tag.toLowerCase().includes(q))
+          job.tags.some((tag) => tag.toLowerCase().includes(q)),
       );
     }
 
@@ -100,7 +101,7 @@ const JobListing = () => {
     // 3. Category Filter
     if (filters.selectedCategory) {
       result = result.filter(
-        (job) => job.category === filters.selectedCategory
+        (job) => job.category === filters.selectedCategory,
       );
     }
 
@@ -135,7 +136,7 @@ const JobListing = () => {
     // 6. Experience Level Filter
     if (filters.selectedExperience.length > 0) {
       result = result.filter((job) =>
-        filters.selectedExperience.includes(job.experience)
+        filters.selectedExperience.includes(job.experience),
       );
     }
 
@@ -145,14 +146,14 @@ const JobListing = () => {
     // 8. Tags Filter
     if (filters.selectedTags.length > 0) {
       result = result.filter((job) =>
-        filters.selectedTags.some((tag) => job.tags.includes(tag))
+        filters.selectedTags.some((tag) => job.tags.includes(tag)),
       );
     }
 
     // 9. Employment Type Filter
     if (filters.selectedEmployment.length > 0) {
       result = result.filter((job) =>
-        filters.selectedEmployment.includes(job.employmentType)
+        filters.selectedEmployment.includes(job.employmentType),
       );
     }
 
@@ -175,7 +176,7 @@ const JobListing = () => {
     }
 
     return result;
-  }, [filters, sortBy, jobsData]);
+  }, [filters, sortBy, jobs]);
 
   // --- Pagination Logic ---
   const totalResults = processedJobs.length;
@@ -191,13 +192,13 @@ const JobListing = () => {
       Contract: 0,
       Training: 0,
     };
-    jobsData.jobs.forEach((job) => {
+    jobs.forEach((job) => {
       if (counts.hasOwnProperty(job.type)) {
         counts[job.type]++;
       }
     });
     return counts;
-  }, [jobsData]);
+  }, [jobs]);
 
   const paginatedJobs = useMemo(() => {
     const start = (currentPage - 1) * perPage;
@@ -214,9 +215,7 @@ const JobListing = () => {
     const chips = [];
     if (filters.recruiterId) {
       // Find recruiter name for chip
-      const job = jobsData.jobs.find(
-        (j) => j.recruiterId === filters.recruiterId
-      );
+      const job = jobs.find((j) => j.recruiterId === filters.recruiterId);
       const name = job ? job.recruiterName : "Recruiter";
       chips.push({
         label: `Recruiter: ${name}`,
@@ -241,16 +240,16 @@ const JobListing = () => {
         label: t.replace(" Jobs", ""),
         key: "selectedJobTypes",
         value: t,
-      })
+      }),
     );
     filters.selectedExperience.forEach((e) =>
-      chips.push({ label: e, key: "selectedExperience", value: e })
+      chips.push({ label: e, key: "selectedExperience", value: e }),
     );
     filters.selectedEmployment.forEach((em) =>
-      chips.push({ label: em, key: "selectedEmployment", value: em })
+      chips.push({ label: em, key: "selectedEmployment", value: em }),
     );
     filters.selectedTags.forEach((tag) =>
-      chips.push({ label: tag, key: "selectedTags", value: tag })
+      chips.push({ label: tag, key: "selectedTags", value: tag }),
     );
     if (filters.salary < 10000)
       chips.push({

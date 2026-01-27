@@ -22,33 +22,62 @@ const StatCard = ({ label, count, icon: Icon, colorClass, iconClass }) => (
   </div>
 );
 
-const DashboardStats = () => {
-  const stats = [
+const DashboardStats = ({ isRecruiter }) => {
+  const employerStats = [
     {
-      label: "Submit Jobs",
-      count: "100K",
+      label: "Posted Jobs",
+      count: "12",
       icon: Briefcase,
       colorClass: "bg-[#5BBB7B]", // Custom Green
     },
     {
-      label: "Application",
-      count: "5432+",
+      label: "Applications",
+      count: "154",
       icon: FileText,
       colorClass: "bg-[#003B47]", // Dark Teal
     },
     {
-      label: "Message",
-      count: "241+",
+      label: "Messages",
+      count: "24",
       icon: MessageSquare,
       colorClass: "bg-[#5B6CF6]", // Blue
     },
     {
       label: "Shortlisted",
-      count: "350+",
+      count: "18",
       icon: Bookmark,
       colorClass: "bg-[#002333]", // Dark Blue
     },
   ];
+
+  const candidateStats = [
+    {
+      label: "Applied Jobs",
+      count: "45",
+      icon: Briefcase,
+      colorClass: "bg-[#5B6CF6]", // Blue
+    },
+    {
+      label: "Interviews",
+      count: "3",
+      icon: FileText,
+      colorClass: "bg-[#5BBB7B]", // Green
+    },
+    {
+      label: "Messages",
+      count: "12",
+      icon: MessageSquare,
+      colorClass: "bg-[#002333]", // Dark Blue
+    },
+    {
+      label: "Saved Jobs",
+      count: "15",
+      icon: Bookmark,
+      colorClass: "bg-[#003B47]", // Dark Teal
+    },
+  ];
+
+  const stats = isRecruiter ? employerStats : candidateStats;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

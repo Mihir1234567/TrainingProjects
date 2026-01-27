@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import CustomDropdown from "../common/CustomDropdown";
 import Toast from "../common/Toast";
+import DashboardButton from "../common/DashboardButton";
 
 const CreateResumeForm = () => {
   const [formData, setFormData] = useState({
@@ -77,15 +78,15 @@ const CreateResumeForm = () => {
         "resumeContent",
       ];
       let filledFields = coreFields.filter(
-        (field) => formData[field]?.length > 0
+        (field) => formData[field]?.length > 0,
       ).length;
 
       // Check if at least one entry has some data in arrays
       const hasEdu = formData.education.some(
-        (edu) => edu.schoolName || edu.qualification
+        (edu) => edu.schoolName || edu.qualification,
       );
       const hasExp = formData.experience.some(
-        (exp) => exp.employer || exp.jobTitle
+        (exp) => exp.employer || exp.jobTitle,
       );
       const hasSkills = formData.skills.some((skill) => skill.skillName);
 
@@ -251,7 +252,45 @@ const CreateResumeForm = () => {
       }
     });
 
-    // Check for date errors
+    // Email Check
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Check for date errors (Start Date > End Date)
+    formData.education.forEach((edu) => {
+      if (
+        edu.eduStartDate &&
+        edu.eduEndDate &&
+        new Date(edu.eduStartDate) > new Date(edu.eduEndDate)
+      ) {
+        newErrors[`education-${edu.id}-date`] =
+          "End date cannot be before start date";
+      }
+    });
+
+    formData.experience.forEach((exp) => {
+      if (
+        exp.expStartDate &&
+        exp.expEndDate &&
+        new Date(exp.expStartDate) > new Date(exp.expEndDate)
+      ) {
+        newErrors[`experience-${exp.id}-date`] =
+          "End date cannot be before start date";
+      }
+    });
+
+    // Skill Percentage Check (0-100)
+    formData.skills.forEach((skill) => {
+      if (skill.skillPercentage) {
+        const pct = parseInt(skill.skillPercentage);
+        if (isNaN(pct) || pct < 0 || pct > 100) {
+          newErrors[`skill-${skill.id}-pct`] = "0-100";
+        }
+      }
+    });
+
+    // Check for existing date errors from state
     Object.keys(errors).forEach((errKey) => {
       if (errKey.includes("-date")) {
         newErrors[errKey] = errors[errKey];
@@ -266,11 +305,12 @@ const CreateResumeForm = () => {
     if (status !== "idle") return;
 
     if (!validateForm()) {
-      setToast({
-        isVisible: true,
-        message: "Please correct the errors before saving.",
-        type: "error",
-      });
+      // Auto-scroll to first error
+      const firstErrorField = Object.keys(errors)[0];
+      const element = document.getElementById(firstErrorField);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
 
@@ -312,6 +352,57 @@ const CreateResumeForm = () => {
       "Marketing",
       "Finance",
     ],
+  };
+
+  const renderInput = (id, label, Icon, type = "text", props = {}) => {
+    const { value, onChange, error, ...restProps } = props;
+    const finalValue = value !== undefined ? value : formData[id];
+    const finalError = error !== undefined ? error : errors[id];
+    const finalOnChange = onChange
+      ? onChange
+      : (e) => handleChange(id, e.target.value);
+
+    return (
+      <div className="relative group/field">
+        <input
+          id={id}
+          type={type}
+          placeholder=" "
+          value={finalValue}
+          onChange={finalOnChange}
+          className={`peer w-full h-[60px] pl-16 pr-5 bg-white border ${
+            finalError
+              ? "border-red-500 ring-1 ring-red-500/20"
+              : "border-slate-100 ring-4 ring-transparent"
+          } rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow`}
+          {...restProps}
+        />
+        <div
+          className={`absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+            finalError
+              ? "bg-red-50 text-red-400"
+              : "bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B]"
+          }`}
+        >
+          <Icon size={18} strokeWidth={2.5} />
+        </div>
+        <label
+          htmlFor={id}
+          className={`absolute left-16 top-1/2 -translate-y-1/2 ${
+            finalError ? "text-red-400" : "text-slate-400"
+          } text-[15px] font-bold transition-all pointer-events-none
+                     peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider`}
+        >
+          {label}
+        </label>
+        {finalError && (
+          <p className="text-red-500 text-xs mt-1.5 ml-1 flex items-center gap-1 animate-fade-in">
+            <XCircle size={12} /> {finalError}
+          </p>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -407,76 +498,8 @@ const CreateResumeForm = () => {
 
               {/* Name & Email */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative group/field">
-                  <input
-                    id="name"
-                    type="text"
-                    placeholder=" "
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    className={`peer w-full h-14 pl-14 pr-5 bg-white border ${
-                      errors.name
-                        ? "border-red-500 ring-1 ring-red-500/20"
-                        : "border-slate-200"
-                    } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
-                  />
-                  <User
-                    className={`absolute left-5 top-1/2 -translate-y-1/2 ${
-                      errors.name ? "text-red-400" : "text-slate-400"
-                    } peer-focus:text-[#5BBB7B] transition-colors`}
-                    size={20}
-                  />
-                  <label
-                    htmlFor="name"
-                    className={`absolute left-14 top-1/2 -translate-y-1/2 ${
-                      errors.name ? "text-red-400" : "text-slate-400"
-                    } text-[15px] transition-all pointer-events-none
-                               peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                               peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
-                  >
-                    Your Name
-                  </label>
-                  {errors.name && (
-                    <p className="text-red-500 text-xs mt-1.5 ml-1 flex items-center gap-1 animate-fade-in">
-                      <XCircle size={12} /> {errors.name}
-                    </p>
-                  )}
-                </div>
-                <div className="relative group/field">
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder=" "
-                    value={formData.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    className={`peer w-full h-14 pl-14 pr-5 bg-white border ${
-                      errors.email
-                        ? "border-red-500 ring-1 ring-red-500/20"
-                        : "border-slate-200"
-                    } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
-                  />
-                  <Mail
-                    className={`absolute left-5 top-1/2 -translate-y-1/2 ${
-                      errors.email ? "text-red-400" : "text-slate-400"
-                    } peer-focus:text-[#5BBB7B] transition-colors`}
-                    size={20}
-                  />
-                  <label
-                    htmlFor="email"
-                    className={`absolute left-14 top-1/2 -translate-y-1/2 ${
-                      errors.email ? "text-red-400" : "text-slate-400"
-                    } text-[15px] transition-all pointer-events-none
-                               peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                               peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
-                  >
-                    Email
-                  </label>
-                  {errors.email && (
-                    <p className="text-red-500 text-xs mt-1.5 ml-1 flex items-center gap-1 animate-fade-in">
-                      <XCircle size={12} /> {errors.email}
-                    </p>
-                  )}
-                </div>
+                {renderInput("name", "Your Name", User)}
+                {renderInput("email", "Email", Mail, "email")}
               </div>
 
               {/* Category & Title */}
@@ -496,47 +519,11 @@ const CreateResumeForm = () => {
                     </p>
                   )}
                 </div>
-                <div className="relative group/field">
-                  <input
-                    id="professionalTitle"
-                    type="text"
-                    placeholder=" "
-                    value={formData.professionalTitle}
-                    onChange={(e) =>
-                      handleChange("professionalTitle", e.target.value)
-                    }
-                    className={`peer w-full h-14 pl-14 pr-5 bg-white border ${
-                      errors.professionalTitle
-                        ? "border-red-500 ring-1 ring-red-500/20"
-                        : "border-slate-200"
-                    } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
-                  />
-                  <Briefcase
-                    className={`absolute left-5 top-1/2 -translate-y-1/2 ${
-                      errors.professionalTitle
-                        ? "text-red-400"
-                        : "text-slate-400"
-                    } peer-focus:text-[#5BBB7B] transition-colors`}
-                    size={20}
-                  />
-                  <label
-                    htmlFor="professionalTitle"
-                    className={`absolute left-14 top-1/2 -translate-y-1/2 ${
-                      errors.professionalTitle
-                        ? "text-red-400"
-                        : "text-slate-400"
-                    } text-[15px] transition-all pointer-events-none
-                               peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                               peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
-                  >
-                    Professional Title
-                  </label>
-                  {errors.professionalTitle && (
-                    <p className="text-red-500 text-xs mt-1.5 ml-1 flex items-center gap-1 animate-fade-in">
-                      <XCircle size={12} /> {errors.professionalTitle}
-                    </p>
-                  )}
-                </div>
+                {renderInput(
+                  "professionalTitle",
+                  "Professional Title",
+                  Briefcase,
+                )}
               </div>
 
               {/* Resume Content */}
@@ -549,25 +536,28 @@ const CreateResumeForm = () => {
                   onChange={(e) =>
                     handleChange("resumeContent", e.target.value)
                   }
-                  className={`peer w-full h-40 pl-14 pr-5 py-5 bg-white border ${
+                  className={`peer w-full h-44 pl-16 pr-5 py-6 bg-white border ${
                     errors.resumeContent
                       ? "border-red-500 ring-1 ring-red-500/20"
-                      : "border-slate-200"
-                  } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
+                      : "border-slate-100 ring-4 ring-transparent"
+                  } rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow`}
                 ></textarea>
-                <FileText
-                  className={`absolute left-5 top-6 ${
-                    errors.resumeContent ? "text-red-400" : "text-slate-400"
-                  } peer-focus:text-[#5BBB7B] transition-colors`}
-                  size={20}
-                />
+                <div
+                  className={`absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                    errors.resumeContent
+                      ? "bg-red-50 text-red-400"
+                      : "bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B]"
+                  }`}
+                >
+                  <FileText size={18} strokeWidth={2.5} />
+                </div>
                 <label
                   htmlFor="resumeContent"
-                  className={`absolute left-14 top-6 ${
+                  className={`absolute left-16 top-6 ${
                     errors.resumeContent ? "text-red-400" : "text-slate-400"
-                  } text-[15px] transition-all pointer-events-none
-                             peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                             peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
+                  } text-[15px] font-bold transition-all pointer-events-none
+                             peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                             peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider`}
                 >
                   Resume Content
                 </label>
@@ -613,147 +603,82 @@ const CreateResumeForm = () => {
                       </button>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="relative group/field md:col-span-2">
-                        <input
-                          id={`schoolName-${edu.id}`}
-                          type="text"
-                          placeholder=" "
-                          value={edu.schoolName}
-                          onChange={(e) =>
-                            handleArrayChange(
-                              "education",
-                              edu.id,
-                              "schoolName",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <Building2
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`schoolName-${edu.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          School Name
-                        </label>
+                      <div className="md:col-span-2">
+                        {renderInput(
+                          `schoolName-${edu.id}`,
+                          "School Name",
+                          Building2,
+                          "text",
+                          {
+                            value: edu.schoolName,
+                            onChange: (e) =>
+                              handleArrayChange(
+                                "education",
+                                edu.id,
+                                "schoolName",
+                                e.target.value,
+                              ),
+                          },
+                        )}
                       </div>
 
-                      <div className="relative group/field md:col-span-2">
-                        <input
-                          id={`qualification-${edu.id}`}
-                          type="text"
-                          placeholder=" "
-                          value={edu.qualification}
-                          onChange={(e) =>
-                            handleArrayChange(
-                              "education",
-                              edu.id,
-                              "qualification",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <GraduationCap
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`qualification-${edu.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          Qualification
-                        </label>
+                      <div className="md:col-span-2">
+                        {renderInput(
+                          `qualification-${edu.id}`,
+                          "Qualification",
+                          GraduationCap,
+                          "text",
+                          {
+                            value: edu.qualification,
+                            onChange: (e) =>
+                              handleArrayChange(
+                                "education",
+                                edu.id,
+                                "qualification",
+                                e.target.value,
+                              ),
+                          },
+                        )}
                       </div>
 
-                      <div className="relative group/field">
-                        <input
-                          id={`eduStartDate-${edu.id}`}
-                          type="text"
-                          placeholder=" "
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "text")}
-                          value={edu.eduStartDate}
-                          onChange={(e) =>
+                      {renderInput(
+                        `eduStartDate-${edu.id}`,
+                        "Start Date",
+                        Calendar,
+                        "text",
+                        {
+                          value: edu.eduStartDate,
+                          onChange: (e) =>
                             handleArrayChange(
                               "education",
                               edu.id,
                               "eduStartDate",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <Calendar
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`eduStartDate-${edu.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          Start Date
-                        </label>
-                      </div>
+                              e.target.value,
+                            ),
+                          onFocus: (e) => (e.target.type = "date"),
+                          onBlur: (e) => (e.target.type = "text"),
+                        },
+                      )}
 
-                      <div className="relative group/field">
-                        <input
-                          id={`eduEndDate-${edu.id}`}
-                          type="text"
-                          placeholder=" "
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "text")}
-                          value={edu.eduEndDate}
-                          onChange={(e) =>
+                      {renderInput(
+                        `eduEndDate-${edu.id}`,
+                        "End Date",
+                        Calendar,
+                        "text",
+                        {
+                          value: edu.eduEndDate,
+                          onChange: (e) =>
                             handleArrayChange(
                               "education",
                               edu.id,
                               "eduEndDate",
-                              e.target.value
-                            )
-                          }
-                          className={`peer w-full h-14 pl-14 pr-5 bg-white border ${
-                            errors[`education-${edu.id}-date`]
-                              ? "border-red-500"
-                              : "border-slate-200"
-                          } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
-                        />
-                        <Calendar
-                          className={`absolute left-5 top-1/2 -translate-y-1/2 ${
-                            errors[`education-${edu.id}-date`]
-                              ? "text-red-400"
-                              : "text-slate-400"
-                          } peer-focus:text-[#5BBB7B] transition-colors`}
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`eduEndDate-${edu.id}`}
-                          className={`absolute left-14 top-1/2 -translate-y-1/2 ${
-                            errors[`education-${edu.id}-date`]
-                              ? "text-red-400"
-                              : "text-slate-400"
-                          } text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
-                        >
-                          End Date
-                        </label>
-                        {errors[`education-${edu.id}-date`] && (
-                          <div className="absolute left-1 top-[calc(100%+4px)] flex items-center gap-1 text-red-500 text-[10px] font-bold animate-fade-in">
-                            <AlertCircle size={10} />{" "}
-                            {errors[`education-${edu.id}-date`]}
-                          </div>
-                        )}
-                      </div>
+                              e.target.value,
+                            ),
+                          onFocus: (e) => (e.target.type = "date"),
+                          onBlur: (e) => (e.target.type = "text"),
+                          error: errors[`education-${edu.id}-date`],
+                        },
+                      )}
 
                       <div className="relative group/field md:col-span-2">
                         <textarea
@@ -765,20 +690,19 @@ const CreateResumeForm = () => {
                               "education",
                               edu.id,
                               "eduNotes",
-                              e.target.value
+                              e.target.value,
                             )
                           }
-                          className="peer w-full h-32 pl-14 pr-5 py-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
+                          className="peer w-full h-32 pl-14 pr-5 py-5 bg-white border border-slate-100 ring-4 ring-transparent rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow"
                         ></textarea>
-                        <FileText
-                          className="absolute left-5 top-6 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
+                        <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B] transition-all duration-300">
+                          <FileText size={18} strokeWidth={2.5} />
+                        </div>
                         <label
                           htmlFor={`eduNotes-${edu.id}`}
-                          className="absolute left-14 top-6 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
+                          className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none
+                                     peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider"
                         >
                           Notes (Optional)
                         </label>
@@ -832,147 +756,82 @@ const CreateResumeForm = () => {
                       </button>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="relative group/field md:col-span-2">
-                        <input
-                          id={`employer-${exp.id}`}
-                          type="text"
-                          placeholder=" "
-                          value={exp.employer}
-                          onChange={(e) =>
-                            handleArrayChange(
-                              "experience",
-                              exp.id,
-                              "employer",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <Building2
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`employer-${exp.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          Employer
-                        </label>
+                      <div className="md:col-span-2">
+                        {renderInput(
+                          `employer-${exp.id}`,
+                          "Employer",
+                          Building2,
+                          "text",
+                          {
+                            value: exp.employer,
+                            onChange: (e) =>
+                              handleArrayChange(
+                                "experience",
+                                exp.id,
+                                "employer",
+                                e.target.value,
+                              ),
+                          },
+                        )}
                       </div>
 
-                      <div className="relative group/field md:col-span-2">
-                        <input
-                          id={`jobTitle-${exp.id}`}
-                          type="text"
-                          placeholder=" "
-                          value={exp.jobTitle}
-                          onChange={(e) =>
-                            handleArrayChange(
-                              "experience",
-                              exp.id,
-                              "jobTitle",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <Briefcase
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`jobTitle-${exp.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          Job Title
-                        </label>
+                      <div className="md:col-span-2">
+                        {renderInput(
+                          `jobTitle-${exp.id}`,
+                          "Job Title",
+                          Briefcase,
+                          "text",
+                          {
+                            value: exp.jobTitle,
+                            onChange: (e) =>
+                              handleArrayChange(
+                                "experience",
+                                exp.id,
+                                "jobTitle",
+                                e.target.value,
+                              ),
+                          },
+                        )}
                       </div>
 
-                      <div className="relative group/field">
-                        <input
-                          id={`expStartDate-${exp.id}`}
-                          type="text"
-                          placeholder=" "
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "text")}
-                          value={exp.expStartDate}
-                          onChange={(e) =>
+                      {renderInput(
+                        `expStartDate-${exp.id}`,
+                        "Start Date",
+                        Calendar,
+                        "text",
+                        {
+                          value: exp.expStartDate,
+                          onChange: (e) =>
                             handleArrayChange(
                               "experience",
                               exp.id,
                               "expStartDate",
-                              e.target.value
-                            )
-                          }
-                          className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                        />
-                        <Calendar
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`expStartDate-${exp.id}`}
-                          className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                        >
-                          Start Date
-                        </label>
-                      </div>
+                              e.target.value,
+                            ),
+                          onFocus: (e) => (e.target.type = "date"),
+                          onBlur: (e) => (e.target.type = "text"),
+                        },
+                      )}
 
-                      <div className="relative group/field">
-                        <input
-                          id={`expEndDate-${exp.id}`}
-                          type="text"
-                          placeholder=" "
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "text")}
-                          value={exp.expEndDate}
-                          onChange={(e) =>
+                      {renderInput(
+                        `expEndDate-${exp.id}`,
+                        "End Date",
+                        Calendar,
+                        "text",
+                        {
+                          value: exp.expEndDate,
+                          onChange: (e) =>
                             handleArrayChange(
                               "experience",
                               exp.id,
                               "expEndDate",
-                              e.target.value
-                            )
-                          }
-                          className={`peer w-full h-14 pl-14 pr-5 bg-white border ${
-                            errors[`experience-${exp.id}-date`]
-                              ? "border-red-500"
-                              : "border-slate-200"
-                          } rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow`}
-                        />
-                        <Calendar
-                          className={`absolute left-5 top-1/2 -translate-y-1/2 ${
-                            errors[`experience-${exp.id}-date`]
-                              ? "text-red-400"
-                              : "text-slate-400"
-                          } peer-focus:text-[#5BBB7B] transition-colors`}
-                          size={20}
-                        />
-                        <label
-                          htmlFor={`expEndDate-${exp.id}`}
-                          className={`absolute left-14 top-1/2 -translate-y-1/2 ${
-                            errors[`experience-${exp.id}-date`]
-                              ? "text-red-400"
-                              : "text-slate-400"
-                          } text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2`}
-                        >
-                          End Date
-                        </label>
-                        {errors[`experience-${exp.id}-date`] && (
-                          <div className="absolute left-1 top-[calc(100%+4px)] flex items-center gap-1 text-red-500 text-[10px] font-bold animate-fade-in">
-                            <AlertCircle size={10} />{" "}
-                            {errors[`experience-${exp.id}-date`]}
-                          </div>
-                        )}
-                      </div>
+                              e.target.value,
+                            ),
+                          onFocus: (e) => (e.target.type = "date"),
+                          onBlur: (e) => (e.target.type = "text"),
+                          error: errors[`experience-${exp.id}-date`],
+                        },
+                      )}
 
                       <div className="relative group/field md:col-span-2">
                         <textarea
@@ -984,20 +843,19 @@ const CreateResumeForm = () => {
                               "experience",
                               exp.id,
                               "expNotes",
-                              e.target.value
+                              e.target.value,
                             )
                           }
-                          className="peer w-full h-32 pl-14 pr-5 py-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
+                          className="peer w-full h-32 pl-14 pr-5 py-5 bg-white border border-slate-100 ring-4 ring-transparent rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow"
                         ></textarea>
-                        <FileText
-                          className="absolute left-5 top-6 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
+                        <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B] transition-all duration-300">
+                          <FileText size={18} strokeWidth={2.5} />
+                        </div>
                         <label
                           htmlFor={`expNotes-${exp.id}`}
-                          className="absolute left-14 top-6 text-slate-400 text-[15px] transition-all pointer-events-none
-                                     peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
+                          className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none
+                                     peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                                     peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider"
                         >
                           Notes (Optional)
                         </label>
@@ -1042,64 +900,43 @@ const CreateResumeForm = () => {
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="flex flex-col sm:flex-row gap-6 relative group/skill"
                   >
-                    <div className="relative group/field flex-1">
-                      <input
-                        id={`skillName-${skill.id}`}
-                        type="text"
-                        placeholder=" "
-                        value={skill.skillName}
-                        onChange={(e) =>
-                          handleArrayChange(
-                            "skills",
-                            skill.id,
-                            "skillName",
-                            e.target.value
-                          )
-                        }
-                        className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                      />
-                      <Briefcase
-                        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                        size={20}
-                      />
-                      <label
-                        htmlFor={`skillName-${skill.id}`}
-                        className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                   peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                   peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                      >
-                        Skills Name
-                      </label>
+                    <div className="flex-1">
+                      {renderInput(
+                        `skillName-${skill.id}`,
+                        "Skills Name",
+                        Briefcase,
+                        "text",
+                        {
+                          value: skill.skillName,
+                          onChange: (e) =>
+                            handleArrayChange(
+                              "skills",
+                              skill.id,
+                              "skillName",
+                              e.target.value,
+                            ),
+                        },
+                      )}
                     </div>
 
-                    <div className="relative group/field sm:w-48">
-                      <input
-                        id={`skillPercentage-${skill.id}`}
-                        type="text"
-                        placeholder=" "
-                        value={skill.skillPercentage}
-                        onChange={(e) =>
-                          handleArrayChange(
-                            "skills",
-                            skill.id,
-                            "skillPercentage",
-                            e.target.value
-                          )
-                        }
-                        className="peer w-full h-14 pl-14 pr-5 bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-[#5BBB7B] focus:ring-1 focus:ring-[#5BBB7B] transition-all text-[15px] focus-glow"
-                      />
-                      <Percent
-                        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 peer-focus:text-[#5BBB7B] transition-colors"
-                        size={20}
-                      />
-                      <label
-                        htmlFor={`skillPercentage-${skill.id}`}
-                        className="absolute left-14 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] transition-all pointer-events-none
-                                   peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
-                                   peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2"
-                      >
-                        Percentage
-                      </label>
+                    <div className="sm:w-48">
+                      {renderInput(
+                        `skillPercentage-${skill.id}`,
+                        "Percentage",
+                        Percent,
+                        "text",
+                        {
+                          value: skill.skillPercentage,
+                          onChange: (e) =>
+                            handleArrayChange(
+                              "skills",
+                              skill.id,
+                              "skillPercentage",
+                              e.target.value,
+                            ),
+                          error: errors[`skill-${skill.id}-pct`],
+                        },
+                      )}
                     </div>
 
                     {index > 0 && (
@@ -1129,26 +966,14 @@ const CreateResumeForm = () => {
           </div>
         </motion.div>
 
-        <button
-          onClick={handleSave}
-          disabled={status === "loading" || status === "success"}
-          className={`relative overflow-hidden group w-full sm:w-auto px-10 py-4 rounded-xl font-bold text-[15px] text-white transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-[#5BBB7B]/25
-            ${
-              status === "success"
-                ? "bg-green-500 hover:shadow-green-500/40"
-                : "bg-[#5BBB7B] hover:shadow-green-500/40"
-            }
-          `}
-        >
-          <span className="absolute inset-0 w-full h-full bg-[#002333] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-          <span className="relative z-10">
-            {status === "loading"
-              ? "Saving..."
-              : status === "success"
-              ? "Saved!"
-              : "Save & Preview"}
-          </span>
-        </button>
+        <div className="flex justify-start">
+          <DashboardButton
+            onClick={handleSave}
+            status={status}
+            defaultText="Save & Preview"
+            successText="Saved!"
+          />
+        </div>
       </form>
       <Toast
         message={toast.message}

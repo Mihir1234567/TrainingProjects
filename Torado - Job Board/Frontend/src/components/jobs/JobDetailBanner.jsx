@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import {
   Clock,
   MapPin,
@@ -18,6 +18,8 @@ import {
  * Renders the main floating card with job title, metadata, and action buttons.
  */
 const JobDetailBanner = ({ job }) => {
+  const { isAuthenticated, isRecruiter } = useOutletContext() || {};
+
   // Consolidating display data with fallbacks
   const displayData = {
     title: job?.title || "The Complete Bookkeeping & Bank Economic Job 2025",
@@ -56,8 +58,7 @@ const JobDetailBanner = ({ job }) => {
 
             {/* Action Buttons (Apply & Icon) */}
             <div className="flex items-center gap-4 shrink-0">
-              {/* Cup/Save Icon with Center Expansion Effect */}
-              {/* Beer/Save Icon with Fade Effect */}
+              {/* Bookmark Button */}
               <button className="group/btn relative w-12 h-12 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white transition-all duration-300">
                 {/* Tooltip */}
                 <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
@@ -69,14 +70,31 @@ const JobDetailBanner = ({ job }) => {
                   <Beer size={20} strokeWidth={2} />
                 </span>
               </button>
-              {/* Apply Button with Center Expansion Effect */}
-              <Link
-                to="/apply-job"
-                className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center"
-              >
-                <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
-                <span className="relative z-10">Apply Now</span>
-              </Link>
+
+              {/* Apply Button Logic */}
+              {!isAuthenticated ? (
+                <Link
+                  to="/login"
+                  className="group relative px-10 py-3.5 bg-[#002333] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-blue-900/20 text-sm inline-flex items-center justify-center hover:bg-[#003B47]"
+                >
+                  <span className="relative z-10">Login to Apply</span>
+                </Link>
+              ) : isRecruiter ? (
+                <button
+                  disabled
+                  className="group relative px-10 py-3.5 bg-slate-200 text-slate-500 font-bold rounded-md cursor-not-allowed text-sm inline-flex items-center justify-center"
+                >
+                  <span className="relative z-10">Recruiters Cannot Apply</span>
+                </button>
+              ) : (
+                <Link
+                  to={`/apply-job/${job?.id || 1}`}
+                  className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center"
+                >
+                  <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
+                  <span className="relative z-10">Apply Now</span>
+                </Link>
+              )}
             </div>
           </div>
 

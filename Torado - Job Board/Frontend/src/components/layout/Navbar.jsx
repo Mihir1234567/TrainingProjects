@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Menu,
   X,
@@ -19,10 +19,20 @@ import logo from "../../assets/Logo/logoMain.svg";
 import blogsData from "../../data/blogs.json";
 import { USER_PROFILE } from "../../constants/userProfile";
 
-const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
+const Navbar = ({
+  toggleDashboardSidebar,
+  isDashboardSidebarOpen,
+  isRecruiter,
+  setIsRecruiter,
+  isAuthenticated,
+  setIsAuthenticated,
+}) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+
+  // ... (keeping existing memo logic for authors, categories, tags - omitted for brevity in prompt but tool keeps context)
 
   // Extract unique Authors
   const authors = useMemo(() => {
@@ -84,7 +94,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
     };
   }, []);
 
-  const navItems = [
+  const allNavItems = [
     {
       title: "Home",
       items: [
@@ -93,23 +103,21 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
         { label: "Home Demo - 3", to: "/" },
         { label: "Home Demo - 4", to: "/" },
       ],
+      roles: ["both"],
     },
     {
       title: "Find A Job",
       items: [
         { label: "Job ", to: "/jobs" },
         { label: "Job Detail", to: "/job/1" },
-        { label: "Apply For A Job", to: "/apply-job" },
-        { label: "Post A Job", to: "/post-job" },
+        { label: "Apply For A Job", to: "/apply-job/1" },
       ],
+      roles: ["candidate"], // Only for candidates
     },
     {
       title: "Recruiters",
-      items: [
-        { label: "Recruiters", to: "/recruiters" },
-        { label: "Freelancer", to: "/freelancers" },
-        { label: "Freelancer Details", to: "/freelancers" },
-      ],
+      items: [{ label: "Recruiters", to: "/recruiters" }],
+      roles: ["candidate"], // Candidates looking for recruiters
     },
     {
       title: "Candidates",
@@ -120,6 +128,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
         { label: "Company Details", to: "/company-details" },
         { label: "User Dashboard", to: "/user-dashboard" },
       ],
+      roles: ["recruiter"], // Recruiters looking for candidates
     },
     {
       title: "Blog",
@@ -130,6 +139,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
         { label: "Tags", to: "/blog", subItems: tags },
         { label: "Blog Details", to: "/blog" },
       ],
+      roles: ["both"],
     },
     {
       title: "Pages",
@@ -143,11 +153,25 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
         { label: "Privacy Policy", to: "/privacy-policy" },
         { label: "404 Error", to: "/404" },
       ],
+      roles: ["both"],
     },
   ];
 
+  // Filter items based on role
+  const navItems = allNavItems.filter((item) => {
+    if (item.roles.includes("both")) return true;
+    return isRecruiter
+      ? item.roles.includes("recruiter")
+      : item.roles.includes("candidate");
+  });
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    navigate("/");
   };
 
   return (
@@ -178,11 +202,11 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
 
           {/* Desktop Actions */}
           <div className="hidden xl:flex items-center gap-6 font-semibold shrink-0">
-            {location.pathname.startsWith("/user-dashboard") ? (
-              // User Profile Section (Dashboard)
-              <UserProfileDropdown />
+            {isAuthenticated ? (
+              // User Profile Section (Logged In)
+              <UserProfileDropdown onLogout={handleLogout} />
             ) : (
-              // Standard Actions (Public)
+              // Standard Actions (Public / Guest)
               <>
                 <Link
                   to="/login"
@@ -191,7 +215,8 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                   Login / Register
                 </Link>
 
-                {/* Post Job - Desktop (XL+) */}
+                {/* Post Job Button (Always visible to encourage signup/login, or hide if desired) */}
+                {/* For now, hiding context-specific buttons until login, OR showing general call to action */}
                 <Link
                   to="/post-job"
                   className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap bg-[#5B6CF6] text-white shadow-sm hover:shadow-md transition-all"
@@ -199,31 +224,6 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                   <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
                   <span className="relative z-10">Post A Job</span>
                 </Link>
-
-                {/* Post Job - Tablet (Under XL) */}
-                <Link
-                  to="/post-job"
-                  className="hidden md:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg bg-[#5B6CF6] text-white hover:bg-torado-brand-hover shadow-sm transition-colors"
-                  title="Post A Job"
-                >
-                  <UserPlus size={20} />
-                </Link>
-
-                {/* Upload CV - Desktop (XL+) */}
-                <button className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap border border-torado-green-600 text-black bg-white shadow-sm hover:shadow-md transition-all">
-                  <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-                  <span className="relative z-10 group-hover:text-white transition-colors duration-700 ease-in-out">
-                    Upload Your CV
-                  </span>
-                </button>
-
-                {/* Upload CV - Tablet (Under XL) */}
-                <button
-                  className="hidden md:inline-flex xl:hidden items-center justify-center w-10 h-10 rounded-lg border border-torado-green-600 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
-                  title="Upload Your CV"
-                >
-                  <FileText size={20} strokeWidth={1.5} />
-                </button>
               </>
             )}
           </div>
@@ -400,18 +400,22 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                 </Link>
 
                 <div className="flex gap-3">
-                  <Link
-                    to="/post-job"
-                    className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all"
-                    onClick={toggleMenu}
-                  >
-                    <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-                    <span className="relative z-10">Post A Job</span>
-                  </Link>
-                  <button className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all">
-                    <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
-                    <span className="relative z-10">Upload Your CV</span>
-                  </button>
+                  {isRecruiter && (
+                    <Link
+                      to="/post-job"
+                      className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all"
+                      onClick={toggleMenu}
+                    >
+                      <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                      <span className="relative z-10">Post A Job</span>
+                    </Link>
+                  )}
+                  {!isRecruiter && (
+                    <button className="relative overflow-hidden group flex-1 py-3 rounded-md bg-torado-green-500 text-white font-medium text-sm flex items-center justify-center transition-all">
+                      <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>
+                      <span className="relative z-10">Upload Your CV</span>
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -424,7 +428,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
   );
 };
 
-const UserProfileDropdown = () => {
+const UserProfileDropdown = ({ onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -520,14 +524,16 @@ const UserProfileDropdown = () => {
 
         {/* Logout */}
         <div className="pt-2 border-t border-slate-100">
-          <Link
-            to="/logout"
-            className="flex items-center gap-3 px-8 py-3 text-slate-500 hover:text-torado-green-600 hover:bg-slate-50 transition-colors font-medium"
-            onClick={() => setIsOpen(false)}
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              onLogout();
+            }}
+            className="w-full flex items-center gap-3 px-8 py-3 text-slate-500 hover:text-torado-green-600 hover:bg-slate-50 transition-colors font-medium text-left"
           >
             <LogOut size={18} strokeWidth={1.5} />
             <span className="text-sm">Log Out</span>
-          </Link>
+          </button>
         </div>
       </div>
     </div>

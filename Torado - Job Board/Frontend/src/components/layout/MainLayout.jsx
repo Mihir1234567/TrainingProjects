@@ -5,8 +5,10 @@ import Footer from "./Footer";
 import FloatingActions from "../common/FloatingActions";
 import DemoModal from "../common/DemoModal";
 import ScrollToTop from "../common/ScrollToTop";
+import { useAuth } from "../../context/AuthContext";
 
 const MainLayout = () => {
+  const { isAuthenticated, isRecruiter } = useAuth();
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false);
 
@@ -17,10 +19,17 @@ const MainLayout = () => {
           setIsDashboardSidebarOpen(!isDashboardSidebarOpen)
         }
         isDashboardSidebarOpen={isDashboardSidebarOpen}
+        isRecruiter={isRecruiter}
+        isAuthenticated={isAuthenticated}
       />
       <div className="flex-grow min-w-0">
         <Outlet
-          context={{ isDashboardSidebarOpen, setIsDashboardSidebarOpen }}
+          context={{
+            isDashboardSidebarOpen,
+            setIsDashboardSidebarOpen,
+            isRecruiter,
+            isAuthenticated,
+          }}
         />
       </div>
       <Footer />

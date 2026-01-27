@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import freelancers from "../../data/freelancers.json";
 
 const FreelancerSection = () => {
@@ -37,12 +38,12 @@ const FreelancerSection = () => {
 
                 {/* Overlay: Door Effect */}
                 <div className="absolute inset-0 bg-[#05264e]/60 flex items-center justify-center scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center">
-                  <a
-                    href="#"
+                  <Link
+                    to={`/freelancer/${freelancer.id}`}
                     className="text-white text-lg font-semibold underline decoration-2 underline-offset-8 scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 hover:text-[#56d8b1] transition-colors duration-300"
                   >
                     View Profile
-                  </a>
+                  </Link>
                 </div>
               </div>
 

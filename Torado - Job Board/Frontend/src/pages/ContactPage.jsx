@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail } from "lucide-react";
-import AnimatedButton from "../components/common/AnimatedButton";
+import { MapPin, Phone, Mail, User, Type, FileText } from "lucide-react";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -33,36 +32,51 @@ const ContactPage = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: null }));
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: null }));
     }
   };
 
-  const InfoCard = ({ icon: Icon, title, lines, colorClass }) => (
-    <div className="bg-white p-8 rounded-lg border border-slate-100 hover:shadow-lg transition-shadow duration-300 flex gap-6 items-start group">
+  const renderInput = (id, label, Icon, type = "text", props = {}) => (
+    <div className="relative group/field">
+      <input
+        id={id}
+        name={id}
+        type={type}
+        placeholder=" "
+        value={formData[id]}
+        onChange={(e) => handleChange(id, e.target.value)}
+        className={`peer w-full h-[60px] pl-16 pr-5 bg-white border ${
+          errors[id]
+            ? "border-red-500 ring-1 ring-red-500/20"
+            : "border-slate-100 ring-4 ring-transparent"
+        } rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow`}
+        {...props}
+      />
       <div
-        className={`p-4 rounded-lg ${colorClass} group-hover:scale-110 transition-transform duration-300`}
+        className={`absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+          errors[id]
+            ? "bg-red-50 text-red-400"
+            : "bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B]"
+        }`}
       >
-        <Icon className="w-6 h-6 text-[#5BBB7B]" />{" "}
-        {/* Icon checks out as green in image? Or wrapper is colored? Image shows wrapper light blue/green/gray. Let's use light backgrounds. */}
-        {/* Actually, looking at the screenshot:
-           - Location: Purple tint bg
-           - Phone: Green tint bg
-           - Email: Gray tint bg
-           Let's approximate these pastel backgrounds.
-        */}
+        <Icon size={18} strokeWidth={2.5} />
       </div>
-      <div>
-        <h3 className="text-lg font-bold text-[#05264E] mb-2">{title}</h3>
-        {lines.map((line, idx) => (
-          <p key={idx} className="text-slate-500 text-sm leading-relaxed">
-            {line}
-          </p>
-        ))}
-      </div>
+      <label
+        htmlFor={id}
+        className={`absolute left-16 top-1/2 -translate-y-1/2 ${
+          errors[id] ? "text-red-400" : "text-slate-400"
+        } text-[15px] font-bold transition-all pointer-events-none
+                   peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                   peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider`}
+      >
+        {label}
+      </label>
+      {errors[id] && (
+        <p className="text-red-500 text-xs mt-1.5 ml-1">{errors[id]}</p>
+      )}
     </div>
   );
 
@@ -127,7 +141,7 @@ const ContactPage = () => {
         </div>
 
         {/* Contact Form Section */}
-        <div className="relative z-10 max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-lg shadow-xl mb-0">
+        <div className="relative z-10 max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-[0_0_50px_0_rgba(0,0,0,0.08)] border border-slate-100/50 mb-0">
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold text-[#05264E]">
               Tell Us About Yourself
@@ -136,83 +150,59 @@ const ContactPage = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             <div className="grid grid-cols-1 gap-6">
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`w-full px-5 py-4 bg-[#F5F7FC] border rounded focus:outline-none focus:bg-white transition-colors text-slate-600 ${
-                    errors.name
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-slate-100 focus:border-[#5BBB7B]"
-                  }`}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-xs pl-1">{errors.name}</p>
-                )}
-              </div>
+              {renderInput("name", "Your Name", User)}
+              {renderInput("email", "Email Address", Mail, "email")}
+              {renderInput("subject", "Subject", Type)}
 
-              <div className="space-y-2">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-5 py-4 bg-[#F5F7FC] border rounded focus:outline-none focus:bg-white transition-colors text-slate-600 ${
-                    errors.email
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-slate-100 focus:border-[#5BBB7B]"
-                  }`}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs pl-1">{errors.email}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder="Subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className={`w-full px-5 py-4 bg-[#F5F7FC] border rounded focus:outline-none focus:bg-white transition-colors text-slate-600 ${
-                    errors.subject
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-slate-100 focus:border-[#5BBB7B]"
-                  }`}
-                />
-                {errors.subject && (
-                  <p className="text-red-500 text-xs pl-1">{errors.subject}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
+              <div className="relative group/field">
                 <textarea
+                  id="message"
                   name="message"
-                  placeholder="Message"
+                  placeholder=" "
                   rows="6"
                   value={formData.message}
-                  onChange={handleChange}
-                  className={`w-full px-5 py-4 bg-[#F5F7FC] border rounded focus:outline-none focus:bg-white transition-colors text-slate-600 resize-y ${
+                  onChange={(e) => handleChange("message", e.target.value)}
+                  className={`peer w-full h-44 pl-16 pr-5 py-6 bg-white border ${
                     errors.message
-                      ? "border-red-500 focus:border-red-500"
-                      : "border-slate-100 focus:border-[#5BBB7B]"
-                  }`}
+                      ? "border-red-500 ring-1 ring-red-500/20"
+                      : "border-slate-100 ring-4 ring-transparent"
+                  } rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow resize-none`}
                 ></textarea>
+                <div
+                  className={`absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                    errors.message
+                      ? "bg-red-50 text-red-400"
+                      : "bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B]"
+                  }`}
+                >
+                  <FileText size={18} strokeWidth={2.5} />
+                </div>
+                <label
+                  htmlFor="message"
+                  className={`absolute left-16 top-6 ${
+                    errors.message ? "text-red-400" : "text-slate-400"
+                  } text-[15px] font-bold transition-all pointer-events-none
+                             peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
+                             peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider`}
+                >
+                  Message
+                </label>
                 {errors.message && (
-                  <p className="text-red-500 text-xs pl-1">{errors.message}</p>
+                  <p className="text-red-500 text-xs mt-1.5 ml-1">
+                    {errors.message}
+                  </p>
                 )}
               </div>
             </div>
 
             <div className="pt-4 text-center">
-              <AnimatedButton type="submit" className="w-full md:w-auto px-10">
-                Send Message
-              </AnimatedButton>
+              <button
+                type="submit"
+                className="relative px-10 py-4 bg-[#5BBB7B] text-white font-bold rounded-xl overflow-hidden shadow-lg shadow-[#5BBB7B]/30 text-[15px] group w-full sm:w-auto"
+              >
+                <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
+                <span className="relative z-10">Send Message</span>
+              </button>
             </div>
           </form>
         </div>

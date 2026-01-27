@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useMockData } from "../../context/MockDataContext";
 import {
   MapPin,
   Briefcase,
@@ -31,153 +32,50 @@ const AppliedJobs = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const initialJobs = [
-    {
-      id: 1,
-      title: "Fresher UI/UX Designer",
-      location: "London, UK",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Web Design",
-      icon: Layout,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-500",
-    },
-    {
-      id: 2,
-      title: "Advance Magento Developer",
-      location: "London, UK",
-      type: "Part Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Development",
-      icon: Zap,
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-500",
-    },
-    {
-      id: 3,
-      title: "Senior IOS App Developer",
-      location: "London, UK",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Programming",
-      icon: Smartphone,
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-500",
-    },
-    {
-      id: 4,
-      title: "Basic WordPress Developer",
-      location: "London, UK",
-      type: "Part Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Software",
-      icon: Globe,
-      iconBg: "bg-green-50",
-      iconColor: "text-green-500",
-    },
-    {
-      id: 5,
-      title: "Technical Content Writer",
-      location: "London, UK",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Multimedia",
-      icon: Smartphone,
-      iconBg: "bg-indigo-50",
-      iconColor: "text-indigo-500",
-    },
-    {
-      id: 6,
-      title: "Senior Product Designer",
-      location: "London, UK",
-      type: "Part Time",
-      status: "Active",
-      appliedDate: "31 Jan 2025",
-      category: "Web Design",
-      icon: Database,
-      iconBg: "bg-pink-50",
-      iconColor: "text-pink-500",
-    },
-    {
-      id: 7,
-      title: "Marketing Specialist",
-      location: "New York, US",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "30 Jan 2025",
-      category: "Marketing",
-      icon: Layout,
-      iconBg: "bg-yellow-50",
-      iconColor: "text-yellow-600",
-    },
-    {
-      id: 8,
-      title: "Financial Analyst",
-      location: "London, UK",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "29 Jan 2025",
-      category: "Finance",
-      icon: Database,
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-600",
-    },
-    {
-      id: 9,
-      title: "Human Resources Manager",
-      location: "Paris, FR",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "28 Jan 2025",
-      category: "Resources",
-      icon: UserCheck,
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-600",
-    },
-    {
-      id: 10,
-      title: "Investment Consultant",
-      location: "Dubai, UAE",
-      type: "Part Time",
-      status: "Active",
-      appliedDate: "27 Jan 2025",
-      category: "Financing",
-      icon: Briefcase,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-    },
-    {
-      id: 11,
-      title: "Senior Accountant",
-      location: "Berlin, DE",
-      type: "Full Time",
-      status: "Active",
-      appliedDate: "26 Jan 2025",
-      category: "Accounting",
-      icon: Database,
-      iconBg: "bg-slate-50",
-      iconColor: "text-slate-600",
-    },
-  ];
+  const { applications, jobs } = useMockData();
 
-  // Mock more data to show pagination
   const allJobs = useMemo(() => {
-    const jobs = [...initialJobs];
-    for (let i = 1; i <= 24; i++) {
-      jobs.push({
-        ...initialJobs[i % initialJobs.length],
-        id: initialJobs.length + i,
-        title: `${initialJobs[i % initialJobs.length].title} ${i}`,
-      });
-    }
-    return jobs;
-  }, []);
+    return applications.map((app) => {
+      const job = jobs.find((j) => j.id === app.jobId);
+
+      let Icon = Briefcase;
+      let iconColor = "text-slate-600";
+      let iconBg = "bg-slate-100/50";
+
+      if (job?.category === "Design") {
+        Icon = Layout;
+        iconColor = "text-blue-500";
+        iconBg = "bg-blue-50";
+      } else if (job?.category === "Technology") {
+        Icon = Smartphone;
+        iconColor = "text-purple-500";
+        iconBg = "bg-purple-50";
+      } else if (job?.category === "Marketing") {
+        Icon = Zap;
+        iconColor = "text-yellow-600";
+        iconBg = "bg-yellow-50";
+      }
+
+      return {
+        id: app.id,
+        title: job?.title || "Unknown Job",
+        location: job?.location || "Remote",
+        type: job?.type || "Full Time",
+        status: app.status || "Active",
+        appliedDate: app.date
+          ? new Date(app.date).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })
+          : "N/A",
+        category: job?.category || "General",
+        icon: Icon,
+        iconBg: iconBg,
+        iconColor: iconColor,
+      };
+    });
+  }, [applications, jobs]);
 
   const categories = [
     "All Jobs",
@@ -203,11 +101,11 @@ const AppliedJobs = () => {
 
     if (selectedSort === "Newest") {
       result = [...result].sort(
-        (a, b) => new Date(b.appliedDate) - new Date(a.appliedDate)
+        (a, b) => new Date(b.appliedDate) - new Date(a.appliedDate),
       );
     } else if (selectedSort === "Oldest") {
       result = [...result].sort(
-        (a, b) => new Date(a.appliedDate) - new Date(b.appliedDate)
+        (a, b) => new Date(a.appliedDate) - new Date(b.appliedDate),
       );
     }
 
@@ -459,7 +357,7 @@ const AppliedJobs = () => {
                   >
                     {num < 10 ? `0${num}` : num}
                   </button>
-                )
+                ),
               )}
 
               <button

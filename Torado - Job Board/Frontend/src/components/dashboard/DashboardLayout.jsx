@@ -3,8 +3,12 @@ import { Outlet, useOutletContext } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 
 const DashboardLayout = () => {
-  const { isDashboardSidebarOpen, setIsDashboardSidebarOpen } =
-    useOutletContext() || {};
+  const {
+    isDashboardSidebarOpen,
+    setIsDashboardSidebarOpen,
+    isRecruiter,
+    setIsRecruiter,
+  } = useOutletContext() || {};
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,11 +22,13 @@ const DashboardLayout = () => {
           <DashboardSidebar
             isOpen={isDashboardSidebarOpen}
             onClose={() => setIsDashboardSidebarOpen(false)}
+            isRecruiter={isRecruiter}
+            setIsRecruiter={setIsRecruiter}
           />
 
           {/* Main Content Area */}
           <div className="flex-1 min-w-0">
-            <Outlet />
+            <Outlet context={{ isRecruiter }} />
           </div>
         </div>
       </div>

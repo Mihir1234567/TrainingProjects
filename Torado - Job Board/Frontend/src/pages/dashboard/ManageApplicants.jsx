@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useMockData } from "../../context/MockDataContext";
 import {
   Briefcase,
   Calendar,
@@ -247,105 +248,26 @@ const ApplicantCard = ({ applicant }) => {
 };
 
 const ManageApplicants = () => {
-  const initialApplicants = [
-    // ... (rest of initialApplicants array remains the same)
-    {
-      id: 1,
-      name: "Maève Parisian",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "Web Designer",
-      date: "31-Jan-2025",
-      rating: 4.8,
-      reviews: 12,
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 2,
-      name: "Bernardo Hermiston",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "Web Developer",
-      date: "15-Jan-2025",
-      rating: 4.5,
-      reviews: 8,
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 3,
-      name: "Lindsay Schiller",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "Marketing Manager",
-      date: "20-Jan-2025",
-      rating: 4.2,
-      reviews: 5,
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 4,
-      name: "Bernita Mitchell",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "Web Designer",
-      date: "05-Jan-2025",
-      rating: 4.9,
-      reviews: 15,
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 5,
-      name: "Vernice Reinger",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "Software Engineer",
-      date: "10-Jan-2025",
-      rating: 4.0,
-      reviews: 3,
-      image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 6,
-      name: "Esteban Bednar",
-      category: "UI/UX Designer",
-      location: "London, UK",
-      jobTitle: "Technical Architect",
-      date: "25-Jan-2025",
-      rating: 4.7,
-      reviews: 10,
-      image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-    {
-      id: 7,
-      name: "Lillie Goodwin",
-      category: "Creative",
-      location: "London, UK",
-      jobTitle: "UX/UI Designer",
-      date: "28-Jan-2025",
-      rating: 4.6,
-      reviews: 7,
-      image:
-        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=200&h=200&auto=format&fit=crop",
-    },
-  ];
+  const { applications } = useMockData();
 
   const allApplicants = useMemo(() => {
-    const apps = [...initialApplicants];
-    for (let i = 1; i <= 23; i++) {
-      apps.push({
-        ...initialApplicants[i % initialApplicants.length],
-        id: initialApplicants.length + i,
-        name: `${initialApplicants[i % initialApplicants.length].name} ${i}`,
-      });
-    }
-    return apps;
-  }, []);
+    return applications.map((app) => ({
+      ...app,
+      date: app.date
+        ? new Date(app.date).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })
+        : "Recently",
+      rating: app.rating || 0,
+      reviews: app.reviews || 0,
+      image: app.image || "https://via.placeholder.com/150",
+      category: app.category || "General",
+      location: app.location || "Remote",
+      jobTitle: app.jobTitle || "Candidate",
+    }));
+  }, [applications]);
 
   const [selectedSort, setSelectedSort] = useState("Default");
   const [itemsPerPage, setItemsPerPage] = useState(20);

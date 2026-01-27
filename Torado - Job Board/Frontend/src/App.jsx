@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import Home from "./pages/Home";
@@ -27,6 +28,7 @@ import PrivacyPolicy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
 import DashboardLayout from "./components/dashboard/DashboardLayout";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import DashboardPostJob from "./pages/dashboard/DashboardPostJob";
 import ManageJobs from "./pages/dashboard/ManageJobs";
@@ -38,51 +40,86 @@ import AppliedJobs from "./pages/dashboard/AppliedJobs";
 import AlertJobs from "./pages/dashboard/AlertJobs";
 import Package from "./pages/dashboard/Package";
 import Messages from "./pages/dashboard/Messages";
+import MyProfile from "./pages/dashboard/MyProfile";
+import ChangePassword from "./pages/dashboard/ChangePassword";
+import DeleteProfile from "./pages/dashboard/DeleteProfile";
+
+import { MockDataProvider } from "./context/MockDataContext";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) setGreeting("Good Morning");
+    else if (hour < 17) setGreeting("Good Afternoon");
+    else setGreeting("Good Evening");
+  }, []);
+
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/faq" element={<FaqPage />} />
-        <Route path="/login" element={<MyAccountPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/terms-of-services" element={<TermsOfServices />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/jobs" element={<JobListing />} />
-        <Route path="/job/:id" element={<JobDetail />} />
-        <Route path="/apply-job" element={<ApplyJob />} />
-        <Route path="/post-job" element={<PostJob />} />
-        <Route path="/recruiters" element={<Recruiters />} />
-        <Route path="/freelancers" element={<Freelancers />} />
-        <Route path="/freelancer/:id" element={<FreelancerDetails />} />
-        <Route path="/candidates" element={<Candidates />} />
-        <Route path="/candidate-details/:id" element={<CandidateDetails />} />
-        <Route path="/company-listing" element={<CompanyListing />} />
-        <Route path="/company-details/:id" element={<CompanyDetails />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/author/:authorId" element={<BlogAuthor />} />
-        <Route path="/blog/category/:categoryId" element={<BlogCategory />} />
-        <Route path="/blog/tag/:tagId" element={<BlogTag />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/user-dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome />} />
-          <Route path="post-job" element={<DashboardPostJob />} />
-          <Route path="manage-jobs" element={<ManageJobs />} />
-          <Route path="manage-applicants" element={<ManageApplicants />} />
-          <Route path="bookmark-resumes" element={<BookmarkResumes />} />
-          <Route path="manage-resumes" element={<ManageResumes />} />
-          <Route path="create-resumes" element={<CreateResumes />} />
-          <Route path="applied-jobs" element={<AppliedJobs />} />
-          <Route path="alert-jobs" element={<AlertJobs />} />
-          <Route path="package" element={<Package />} />
-          <Route path="messages" element={<Messages />} />
-        </Route>
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <AuthProvider>
+      <MockDataProvider>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/login" element={<MyAccountPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/terms-of-services" element={<TermsOfServices />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/jobs" element={<JobListing />} />
+            <Route path="/job/:id" element={<JobDetail />} />
+            <Route path="/apply-job/:id" element={<ApplyJob />} />
+            <Route path="/post-job" element={<PostJob />} />
+            <Route path="/recruiters" element={<Recruiters />} />
+            <Route path="/freelancers" element={<Freelancers />} />
+            <Route path="/freelancer/:id" element={<FreelancerDetails />} />
+            <Route path="/candidates" element={<Candidates />} />
+            <Route
+              path="/candidate-details/:id"
+              element={<CandidateDetails />}
+            />
+            <Route path="/company-listing" element={<CompanyListing />} />
+            <Route path="/company-details/:id" element={<CompanyDetails />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/author/:authorId" element={<BlogAuthor />} />
+            <Route
+              path="/blog/category/:categoryId"
+              element={<BlogCategory />}
+            />
+            <Route path="/blog/tag/:tagId" element={<BlogTag />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
+
+            {/* Protected Dashboard Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/user-dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashboardHome />} />
+                <Route path="post-job" element={<DashboardPostJob />} />
+                <Route path="manage-jobs" element={<ManageJobs />} />
+                <Route
+                  path="manage-applicants"
+                  element={<ManageApplicants />}
+                />
+                <Route path="bookmark-resumes" element={<BookmarkResumes />} />
+                <Route path="manage-resumes" element={<ManageResumes />} />
+                <Route path="create-resumes" element={<CreateResumes />} />
+                <Route path="applied-jobs" element={<AppliedJobs />} />
+                <Route path="alert-jobs" element={<AlertJobs />} />
+                <Route path="package" element={<Package />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="my-profile" element={<MyProfile />} />
+                <Route path="change-password" element={<ChangePassword />} />
+                <Route path="delete-profile" element={<DeleteProfile />} />
+              </Route>
+            </Route>
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </MockDataProvider>
+    </AuthProvider>
   );
 }
 
