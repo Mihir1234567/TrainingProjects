@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useMockData } from "../../context/MockDataContext";
+import { applicationsAPI } from "../../services/api";
 import {
   Briefcase,
   Calendar,
@@ -248,24 +248,40 @@ const ApplicantCard = ({ applicant }) => {
 };
 
 const ManageApplicants = () => {
-  const { applications } = useMockData();
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch Applications on Mount
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const data = await applicationsAPI.getRecruiterApplications();
+        setApplications(data);
+      } catch (error) {
+        console.error("Failed to fetch applications", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchApplications();
+  }, []);
 
   const allApplicants = useMemo(() => {
     return applications.map((app) => ({
-      ...app,
-      date: app.date
-        ? new Date(app.date).toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          })
-        : "Recently",
-      rating: app.rating || 0,
-      reviews: app.reviews || 0,
-      image: app.image || "https://via.placeholder.com/150",
-      category: app.category || "General",
-      location: app.location || "Remote",
-      jobTitle: app.jobTitle || "Candidate",
+      id: app._id,
+      name: app.candidateId?.name || "Unknown Candidate",
+      email: app.candidateId?.email,
+      date: new Date(app.createdAt).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      rating: 0, // No ratings yet
+      reviews: 0,
+      image: "https://via.placeholder.com/150", // Placeholder for now
+      category: app.jobId?.title || "General Application", // Show Job Title as category context
+      location: "London, UK", // Mock location or fetch from profile
+      jobTitle: app.candidateId?.jobTitle || "Candidate",
     }));
   }, [applications]);
 

@@ -7,11 +7,11 @@ import JobCard from "../components/common/JobCard";
 import Footer from "../components/layout/Footer";
 import JobCardSkeleton from "../components/common/JobCardSkeleton";
 import { X, Search } from "lucide-react";
-import { useMockData } from "../context/MockDataContext";
+import { jobsAPI } from "../services/api";
 
 const JobListing = () => {
-  const { jobs } = useMockData();
   // --- States ---
+  const [jobs, setJobs] = useState([]);
   const [searchParams] = useSearchParams();
   const recruiterIdParam = searchParams.get("recruiterId");
   const keywordParam = searchParams.get("keyword");
@@ -24,6 +24,7 @@ const JobListing = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSortBarOpen, setIsSortBarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalResults, setTotalResults] = useState(0);
 
   const [filters, setFilters] = useState({
     searchQuery: keywordParam || "",
@@ -56,12 +57,57 @@ const JobListing = () => {
     setCurrentPage(1);
   };
 
-  // Trigger loading state for better UX
+  // Fetch Jobs from API based on Filters
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 400);
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        // Map state filters to API params
+        const apiParams = {
+          page: currentPage,
+          limit: perPage,
+        };
+        if (filters.searchQuery) apiParams.keyword = filters.searchQuery;
+        if (filters.locationQuery) apiParams.location = filters.locationQuery;
+        if (filters.selectedCategory)
+          apiParams.category = filters.selectedCategory;
+        if (filters.recruiterId) apiParams.recruiterId = filters.recruiterId;
+        if (filters.selectedJobTypes.length > 0)
+          apiParams.type = filters.selectedJobTypes.join(",");
+
+        if (filters.salary < 10000) {
+          apiParams.minSalary = filters.salary;
+        }
+        if (filters.selectedTags.length > 0) {
+          apiParams.tags = filters.selectedTags.join(",");
+        }
+
+        const response = await jobsAPI.getAll(apiParams);
+
+        // Handle Paginated Response
+        if (response.jobs) {
+          setJobs(response.jobs);
+          setTotalResults(response.total);
+          // If current page > total pages (e.g. filtered result shrinks), reset to 1
+          if (response.pages < currentPage && response.pages > 0) {
+            setCurrentPage(1);
+          }
+        } else {
+          // Fallback for array response if API mismatch
+          setJobs(response);
+          setTotalResults(response.length);
+        }
+      } catch (error) {
+        console.error("Failed to fetch jobs", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Debounce
+    const timer = setTimeout(() => fetchJobs(), 500);
     return () => clearTimeout(timer);
-  }, [filters, sortBy, perPage]);
+  }, [filters, sortBy, currentPage, perPage]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -72,119 +118,17 @@ const JobListing = () => {
     }
   }, [isSidebarOpen, isSortBarOpen]);
 
-  // --- Filtering & Sorting Logic ---
-  const processedJobs = useMemo(() => {
-    let result = [...jobs];
-
-    // 0. Recruiter Filter (New)
-    if (filters.recruiterId) {
-      result = result.filter((job) => job.recruiterId === filters.recruiterId);
-    }
-
-    // 1. Searching by Keywords
-    if (filters.searchQuery) {
-      const q = filters.searchQuery.toLowerCase();
-      result = result.filter(
-        (job) =>
-          job.title.toLowerCase().includes(q) ||
-          job.company.toLowerCase().includes(q) ||
-          job.tags.some((tag) => tag.toLowerCase().includes(q)),
-      );
-    }
-
-    // 2. Searching by Location
-    if (filters.locationQuery) {
-      const q = filters.locationQuery.toLowerCase();
-      result = result.filter((job) => job.location.toLowerCase().includes(q));
-    }
-
-    // 3. Category Filter
-    if (filters.selectedCategory) {
-      result = result.filter(
-        (job) => job.category === filters.selectedCategory,
-      );
-    }
-
-    // 4. Job Type Filter
-    if (filters.selectedJobTypes.length > 0) {
-      result = result.filter((job) => {
-        const jobType = job.type.toLowerCase();
-        return filters.selectedJobTypes.some((selected) => {
-          const s = selected.toLowerCase().replace(" jobs", "");
-          return jobType.includes(s) || s.includes(jobType);
-        });
-      });
-    }
-
-    // 5. Date Posted Filter
-    if (filters.selectedDatePost !== "all") {
-      const q = filters.selectedDatePost.toLowerCase();
-      result = result.filter((job) => {
-        const posted = job.postedAt.toLowerCase();
-        if (q === "hour") return posted.includes("hour");
-        if (q === "24h")
-          return (
-            posted.includes("hour") ||
-            (posted.includes("day") && posted.includes("1 "))
-          );
-        if (q === "7d")
-          return !posted.includes("month") && !posted.includes("year");
-        return posted.includes(q) || posted.includes("hour"); // Default/Fallback
-      });
-    }
-
-    // 6. Experience Level Filter
-    if (filters.selectedExperience.length > 0) {
-      result = result.filter((job) =>
-        filters.selectedExperience.includes(job.experience),
-      );
-    }
-
-    // 7. Salary Filter
-    result = result.filter((job) => job.salary <= filters.salary);
-
-    // 8. Tags Filter
-    if (filters.selectedTags.length > 0) {
-      result = result.filter((job) =>
-        filters.selectedTags.some((tag) => job.tags.includes(tag)),
-      );
-    }
-
-    // 9. Employment Type Filter
-    if (filters.selectedEmployment.length > 0) {
-      result = result.filter((job) =>
-        filters.selectedEmployment.includes(job.employmentType),
-      );
-    }
-
-    // --- Sorting ---
-    switch (sortBy) {
-      case "Highest Salary": // Salary High to Low
-        result.sort((a, b) => b.salary - a.salary);
-        break;
-      case "Newest": // Newest First (Mock based on parsing strings like "4 months ago")
-        // Lexicographical/simple mock sort for now
-        result.sort((a, b) => a.postedAt.localeCompare(b.postedAt));
-        break;
-      case "Top Rated": // Best Rated
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case "Default":
-      default:
-        // Already in default order
-        break;
-    }
-
-    return result;
-  }, [filters, sortBy, jobs]);
-
-  // --- Pagination Logic ---
-  const totalResults = processedJobs.length;
+  // --- Server Side Pagination ---
+  // jobs is now the current page chunk
+  const paginatedJobs = jobs;
   const totalPages = Math.ceil(totalResults / perPage);
 
-  // Calculate dynamic counts for Job Types
+  // Calculate dynamic counts?
+  // With server pagination, we can't easily count ALL types client side without a separate stats API.
+  // We will memoize existing jobs type counts just for the *visible* page, which isn't great but safe fallback.
   const jobTypeCounts = useMemo(() => {
-    const counts = {
+    // Ideally we fetch stats from backend. For now, zero out or use minimal.
+    return {
       "Full Time": 0,
       "Part Time": 0,
       Remote: 0,
@@ -192,23 +136,31 @@ const JobListing = () => {
       Contract: 0,
       Training: 0,
     };
-    jobs.forEach((job) => {
-      if (counts.hasOwnProperty(job.type)) {
-        counts[job.type]++;
-      }
-    });
-    return counts;
-  }, [jobs]);
+  }, []);
 
+  /*
   const paginatedJobs = useMemo(() => {
-    const start = (currentPage - 1) * perPage;
-    return processedJobs.slice(start, start + perPage);
-  }, [processedJobs, currentPage, perPage]);
+     // No slicing needed
+     return jobs;
+  }, [jobs]);
+  */
 
-  // Reset page when filters change
+  // NOTE: removeResetEffect as it's now in dependency
+  // useEffect(() => { setCurrentPage(1); }, [filters, ...]); // Handled in main effect dependency or separate?
+  // We should reset page to 1 when FILTERS change, but NOT when currentPage changes.
+
   useEffect(() => {
+    // When filters change (excluding page), reset to page 1
     setCurrentPage(1);
-  }, [filters, sortBy, perPage]);
+  }, [
+    filters.searchQuery,
+    filters.locationQuery,
+    filters.selectedCategory,
+    filters.selectedJobTypes,
+    filters.salary,
+    filters.selectedTags,
+    filters.recruiterId,
+  ]);
 
   // --- Active Filter Chips Logic ---
   const activeChips = useMemo(() => {

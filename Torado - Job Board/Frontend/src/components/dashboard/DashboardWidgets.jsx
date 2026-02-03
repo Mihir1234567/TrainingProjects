@@ -74,183 +74,50 @@ const InvoiceItem = ({ type, id, date, plan, status }) => (
   </div>
 );
 
-const DashboardWidgets = ({ isRecruiter }) => {
-  const employerNotifications = [
-    {
-      id: 1,
-      name: "Emilie Friesen",
-      action: "Applied For A Job",
-      job: "Software Engineer",
-      icon: Award,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-    },
-    {
-      id: 2,
-      name: "Herminio",
-      action: "Applied For A Job",
-      job: "Web Developer",
-      icon: CheckCircle,
-      iconBg: "bg-green-50",
-      iconColor: "text-green-600",
-    },
-    {
-      id: 3,
-      name: "Neal Harvey",
-      action: "Applied For A Job",
-      job: "Technical Architect",
-      icon: Package,
-      iconBg: "bg-red-50",
-      iconColor: "text-red-600",
-    },
-    {
-      id: 4,
-      name: "Virgie Kohler",
-      action: "Applied For A Job",
-      job: "UX/UI Designer",
-      icon: Package,
-      iconBg: "bg-red-50",
-      iconColor: "text-red-600",
-    },
-    {
-      id: 5,
-      name: "Tyson Kozey",
-      action: "Applied For A Job",
-      job: "Senior Product Designer",
-      icon: Award,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-    },
-  ];
-
-  const candidateNotifications = [
-    {
-      id: 1,
-      name: "Google Inc",
-      action: "Viewed Your Profile",
-      job: "Software Engineer",
-      icon: Smile,
-      iconBg: "bg-purple-50",
-      iconColor: "text-purple-600",
-    },
-    {
-      id: 2,
-      name: "Microsoft",
-      action: "Shortlisted Research",
-      job: "Web Developer",
-      icon: CheckCircle,
-      iconBg: "bg-green-50",
-      iconColor: "text-green-600",
-    },
-    {
-      id: 3,
-      name: "Amazon",
-      action: "Sent a Message",
-      job: "Cloud Architect",
-      icon: Package,
-      iconBg: "bg-blue-50",
-      iconColor: "text-blue-600",
-    },
-    {
-      id: 4,
-      name: "Netflix",
-      action: "Viewed Your Resume",
-      job: "UX/UI Designer",
-      icon: Award,
-      iconBg: "bg-red-50",
-      iconColor: "text-red-600",
-    },
-    {
-      id: 5,
-      name: "Tesla",
-      action: "Job Alert Match",
-      job: "Product Designer",
-      icon: Package,
-      iconBg: "bg-orange-50",
-      iconColor: "text-orange-600",
-    },
-  ];
-
-  const notifications = isRecruiter
-    ? employerNotifications
-    : candidateNotifications;
-
-  const invoices = [
-    {
-      id: 1818,
-      status: "Paid",
-      date: "30-Jan-23",
-      plan: "Premium Plan",
-    },
-    {
-      id: 1818,
-      status: "Unpaid",
-      date: "30-Jan-23",
-      plan: "Advance Plan",
-    },
-    {
-      id: 1818,
-      status: "Paid",
-      date: "30-Jan-23",
-      plan: "Starter Plan",
-    },
-    {
-      id: 1818,
-      status: "Unpaid",
-      date: "30-Jan-23",
-      plan: "Basic Plan",
-    },
-    {
-      id: 1818,
-      status: "Paid",
-      date: "30-Jan-23",
-      plan: "Senior Product Designer",
-    },
-    {
-      id: 1818,
-      status: "Unpaid",
-      date: "30-Jan-23",
-      plan: "Premium Plan",
-    },
-  ];
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {/* Notifications */}
-      <div className="bg-white rounded-[20px] shadow-[0_0_50px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
-        <div className="px-8 py-6 border-b border-slate-50">
-          <h4 className="text-[18px] font-bold text-[#002333]">
-            Recent Notifications
-          </h4>
-        </div>
-        <div className="p-8">
-          <div className="space-y-1">
-            {notifications.map((notif) => (
-              <NotificationItem
-                key={notif.id}
-                icon={notif.icon}
-                message={`${notif.name} / ${notif.action}`}
-                time={notif.job}
-                type={notif.action}
-                iconColor={notif.iconColor}
-                iconBg={notif.iconBg}
-              />
-            ))}
-          </div>
+const DashboardWidgets = ({ isRecruiter, recentActivity, loading }) => {
+  if (loading) {
+    return (
+      <div className="bg-white rounded-[20px] shadow-sm border border-slate-100 p-8">
+        <div className="h-6 w-48 bg-slate-100 rounded mb-6 animate-pulse"></div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="h-20 bg-slate-50 rounded-xl animate-pulse"
+            ></div>
+          ))}
         </div>
       </div>
+    );
+  }
 
-      {/* Invoices */}
-      <div className="bg-white rounded-[20px] shadow-[0_0_50px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
-        <div className="px-8 py-6 border-b border-slate-50">
-          <h4 className="text-[18px] font-bold text-[#002333]">Invoices</h4>
-        </div>
-        <div className="p-8">
-          <div className="space-y-1">
-            {invoices.map((inv, idx) => (
-              <InvoiceItem key={idx} {...inv} />
-            ))}
-          </div>
+  const title = isRecruiter ? "Recent Applications" : "Recent Activity";
+
+  return (
+    <div className="bg-white rounded-[20px] shadow-[0_0_50px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden">
+      <div className="px-8 py-6 border-b border-slate-50">
+        <h4 className="text-[18px] font-bold text-[#002333]">{title}</h4>
+      </div>
+      <div className="p-8">
+        <div className="space-y-1">
+          {!recentActivity || recentActivity.length === 0 ? (
+            <div className="text-center py-8 text-slate-400">
+              <Package size={48} className="mx-auto mb-3 opacity-20" />
+              <p>No recent activity found.</p>
+            </div>
+          ) : (
+            recentActivity.map((item) => (
+              <NotificationItem
+                key={item.id}
+                icon={isRecruiter ? Award : Smile} // Default icons for now
+                message={`${item.title} / ${item.subtitle}`}
+                time={item.time}
+                type={item.type}
+                iconColor={isRecruiter ? "text-blue-600" : "text-green-600"}
+                iconBg={isRecruiter ? "bg-blue-50" : "bg-green-50"}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

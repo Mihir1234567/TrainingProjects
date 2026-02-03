@@ -4,6 +4,7 @@ import { Lock, Eye, EyeOff, XCircle, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import DashboardButton from "../../components/common/DashboardButton";
 import Toast from "../../components/common/Toast";
+import { authAPI } from "../../services/api";
 
 const ChangePassword = () => {
   const [formData, setFormData] = useState({
@@ -86,13 +87,16 @@ const ChangePassword = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (status !== "idle") return;
     if (!validateForm()) return;
 
     setStatus("loading");
-    // Mock API call
-    setTimeout(() => {
+    try {
+      await authAPI.changePassword(
+        formData.currentPassword,
+        formData.newPassword,
+      );
       setStatus("success");
       setToast({
         isVisible: true,
@@ -105,7 +109,14 @@ const ChangePassword = () => {
         confirmPassword: "",
       });
       setTimeout(() => setStatus("idle"), 3000);
-    }, 2000);
+    } catch (error) {
+      setStatus("idle");
+      setToast({
+        isVisible: true,
+        message: error.message || "Failed to change password",
+        type: "error",
+      });
+    }
   };
 
   const renderInput = (id, label, fieldType) => {
@@ -216,7 +227,7 @@ const ChangePassword = () => {
                     { key: "special", label: "Special character" },
                   ].map((rule) => {
                     const isMet = validatePasswordComplexity(
-                      formData.newPassword
+                      formData.newPassword,
                     )[rule.key];
                     return (
                       <div key={rule.key} className="flex items-center gap-2">

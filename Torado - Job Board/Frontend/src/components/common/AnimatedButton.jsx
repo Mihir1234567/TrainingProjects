@@ -7,9 +7,10 @@ const AnimatedButton = ({
   type = "button",
   className = "",
   variant = "primary", // primary, outline
+  ...props
 }) => {
   const baseStyles =
-    "relative overflow-hidden group flex items-center justify-center py-4 px-6 rounded font-bold transition-all duration-300";
+    "relative overflow-hidden group flex items-center justify-center py-4 px-6 rounded font-bold transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed";
 
   // Default to the green theme used in My Account, but support the blue one if needed
   const variants = {
@@ -26,6 +27,7 @@ const AnimatedButton = ({
       className={`${baseStyles} ${
         variants[variant] || variants.primary
       } ${className}`}
+      {...props}
     >
       {/* The Door Animation Overlay */}
       <span className="absolute inset-0 w-full h-full bg-[#083E47] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-in-out origin-center"></span>

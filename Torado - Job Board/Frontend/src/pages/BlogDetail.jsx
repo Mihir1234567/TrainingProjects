@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import blogsData from "../data/blogs.json";
+import { blogAPI } from "../services/api";
 import {
   Calendar,
   MessageCircle,
@@ -14,11 +14,39 @@ import {
 
 const BlogDetail = () => {
   const { id } = useParams();
-  const blog = blogsData.find((b) => b.id === parseInt(id));
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const data = await blogAPI.getById(id);
+        // Parse content if it's a string (from seed)
+        if (typeof data.content === "string") {
+          try {
+            data.content = JSON.parse(data.content);
+          } catch (e) {
+            console.error("Content parse error, using as raw string", e);
+            // Handle raw string content if necessary, or mock structure
+          }
+        }
+        setBlog(data);
+      } catch (error) {
+        console.error("Failed to fetch blog:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlog();
     window.scrollTo(0, 0);
   }, [id]);
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
 
   if (!blog) {
     return (

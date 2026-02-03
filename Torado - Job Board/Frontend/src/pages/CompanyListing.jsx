@@ -1,36 +1,32 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import jobsData from "../data/jobs.json";
+import jobsData from "../data/jobs.json"; // Keeping for "Browse Your Jobs" mock data for now
 import { MapPin, Briefcase, Layers, Globe, Star, Search } from "lucide-react";
+import { companiesAPI, jobsAPI } from "../services/api";
 
 const CompanyListing = () => {
-  // Derive unique company data
-  const companies = useMemo(() => {
-    const jobs = jobsData.jobs;
-    const companyMap = new Map();
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    jobs.forEach((job) => {
-      // Use company name as key to aggregate jobs for the SAME company
-      const companyName = job.company;
-
-      if (!companyMap.has(companyName)) {
-        companyMap.set(companyName, {
-          id: job.id, // Using first job ID as a proxy for company link for now, ideally strictly recruiterId
-          name: companyName,
-          logo: job.logo,
-          location: job.companyDetails?.location || job.location,
-          openJobs: 0,
-        });
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const data = await companiesAPI.getAll();
+        // Determine open jobs count - efficiently this should be from backend aggregator
+        // For now, we'll just display the company info.
+        // If we want job counts, we'd need to fetch jobs or have the API return it.
+        // Let's assume 0 for now or "N/A" to avoid N+1 queries.
+        setCompanies(data);
+      } catch (error) {
+        console.error("Failed to fetch companies:", error); 
+      } finally {
+        setLoading(false);
       }
-
-      const company = companyMap.get(companyName);
-      company.openJobs += 1;
-    });
-
-    return Array.from(companyMap.values());
+    };
+    fetchCompanies();
   }, []);
 
-  // Derive data for "Browse Your Jobs Area"
+  // Derive data for "Browse Your Jobs Area" - keeping this mock for now as requested focus is on Company Detail link
   const browseData = useMemo(() => {
     const jobs = jobsData.jobs;
     // Helper to find job ID by criteria
@@ -50,7 +46,7 @@ const CompanyListing = () => {
     const titles = [...new Set(jobs.map((j) => j.title))].slice(0, 5);
     const locations = [
       ...new Set(
-        jobs.map((j) => j.location?.split(",").pop().trim() || j.location)
+        jobs.map((j) => j.location?.split(",").pop().trim() || j.location),
       ),
     ].slice(0, 5);
 
@@ -97,73 +93,80 @@ const CompanyListing = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {companies.map((company, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-lg shadow-slate-200/50 border border-transparent hover:border-[#5BBB7B] transition-all duration-300 group/card"
-            >
-              {/* Logo - Linked to Company Details */}
-              <Link
-                to={`/company-details/${company.id}`}
-                className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5 group-hover/card:[transform:rotateY(180deg)] transition-transform duration-700 ease-in-out cursor-pointer block"
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="w-12 h-12 border-4 border-[#5BBB7B] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {companies.map((company, idx) => (
+              <div
+                key={company._id || idx}
+                className="bg-white rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-lg shadow-slate-200/50 border border-transparent hover:border-[#5BBB7B] transition-all duration-300 group/card"
               >
-                <img
-                  src={company.logo}
-                  alt={company.name}
-                  className="w-12 h-12 object-contain"
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/50?text=Logo";
-                  }}
-                />
-              </Link>
-
-              {/* Company Name */}
-              <h3 className="text-lg font-bold text-[#002333] mb-2 hover:text-[#5BBB7B] transition-colors">
-                <Link to={`/company-details/${company.id}`}>
-                  {company.name}
+                {/* Logo - Linked to Company Details */}
+                <Link
+                  to={`/company-details/${company._id}`}
+                  className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5 group-hover/card:[transform:rotateY(180deg)] transition-transform duration-700 ease-in-out cursor-pointer block overflow-hidden"
+                >
+                  <img
+                    src={company.logo}
+                    alt={company.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/50?text=Logo";
+                    }}
+                  />
                 </Link>
-              </h3>
 
-              {/* Location */}
-              <div className="flex items-center gap-2 text-slate-400 text-sm mb-8">
-                <MapPin size={14} className="text-[#5BBB7B]" />
-                {company.location}
-              </div>
+                {/* Company Name */}
+                <h3 className="text-lg font-bold text-[#002333] mb-2 hover:text-[#5BBB7B] transition-colors">
+                  <Link to={`/company-details/${company._id}`}>
+                    {company.name}
+                  </Link>
+                </h3>
 
-              {/* Open Jobs Button */}
-              <button className="group/btn relative bg-[#eefcf5] text-[#5BBB7B] text-sm font-semibold px-6 py-2.5 rounded-md hover:text-white transition-all duration-300 overflow-hidden">
-                <span className="absolute inset-0 bg-[#004658] transition-transform duration-500 ease-out scale-x-0 group-hover/btn:scale-x-100 origin-center"></span>
-                <span className="relative z-10">
-                  Open Jobs ({company.openJobs})
-                </span>
-              </button>
-            </div>
-          ))}
+                {/* Location */}
+                <div className="flex items-center gap-2 text-slate-400 text-sm mb-8">
+                  <MapPin size={14} className="text-[#5BBB7B]" />
+                  {company.location || "Location N/A"}
+                </div>
 
-          {/* Placeholder cards if fewer than 8 to match design density */}
-          {[...Array(Math.max(0, 8 - companies.length))].map((_, i) => (
-            <div
-              key={`placeholder-${i}`}
-              className="bg-white rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-lg shadow-slate-200/50 border border-transparent hover:border-[#5BBB7B] transition-all duration-300 group/card"
-            >
-              <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5">
-                <div className="w-8 h-8 rounded bg-slate-200 animate-pulse"></div>
+                {/* Open Jobs Button - functionality limited without aggregation */}
+                <Link
+                  to={`/company-details/${company._id}`}
+                  className="group/btn relative bg-[#eefcf5] text-[#5BBB7B] text-sm font-semibold px-6 py-2.5 rounded-md hover:text-white transition-all duration-300 overflow-hidden inline-block"
+                >
+                  <span className="absolute inset-0 bg-[#004658] transition-transform duration-500 ease-out scale-x-0 group-hover/btn:scale-x-100 origin-center"></span>
+                  <span className="relative z-10">View Profile</span>
+                </Link>
               </div>
-              <h3 className="text-lg font-bold text-[#002333] mb-2">
-                Example Inc.
-              </h3>
-              <div className="flex items-center gap-2 text-slate-400 text-sm mb-8">
-                <MapPin size={14} className="text-[#5BBB7B]" />
-                New York, USA
+            ))}
+
+            {/* Placeholder cards if fewer than 8 to match design density */}
+            {[...Array(Math.max(0, 8 - companies.length))].map((_, i) => (
+              <div
+                key={`placeholder-${i}`}
+                className="bg-white rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-lg shadow-slate-200/50 border border-transparent hover:border-[#5BBB7B] transition-all duration-300 group/card"
+              >
+                <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5">
+                  <div className="w-8 h-8 rounded bg-slate-200 animate-pulse"></div>
+                </div>
+                <h3 className="text-lg font-bold text-[#002333] mb-2">
+                  Example Inc.
+                </h3>
+                <div className="flex items-center gap-2 text-slate-400 text-sm mb-8">
+                  <MapPin size={14} className="text-[#5BBB7B]" />
+                  New York, USA
+                </div>
+                <button className="group/btn relative bg-[#eefcf5] text-[#5BBB7B] text-sm font-semibold px-6 py-2.5 rounded-md hover:text-white transition-all duration-300 overflow-hidden">
+                  <span className="absolute inset-0 bg-[#004658] transition-transform duration-500 ease-out scale-x-0 group-hover/btn:scale-x-100 origin-center"></span>
+                  <span className="relative z-10">Open Jobs (0)</span>
+                </button>
               </div>
-              <button className="group/btn relative bg-[#eefcf5] text-[#5BBB7B] text-sm font-semibold px-6 py-2.5 rounded-md hover:text-white transition-all duration-300 overflow-hidden">
-                <span className="absolute inset-0 bg-[#004658] transition-transform duration-500 ease-out scale-x-0 group-hover/btn:scale-x-100 origin-center"></span>
-                <span className="relative z-10">Open Jobs (0)</span>
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* 3. Browse Your Jobs Area */}
@@ -196,7 +199,7 @@ const CompanyListing = () => {
                       to={`/job/${
                         item.jobId
                       }?relatedBy=industry&value=${encodeURIComponent(
-                        item.text
+                        item.text,
                       )}`}
                       className="text-slate-500 hover:text-[#5BBB7B] transition-all duration-500 ease-in-out text-sm block relative pl-0 hover:pl-6 group"
                     >
@@ -252,7 +255,7 @@ const CompanyListing = () => {
                       to={`/job/${
                         item.jobId
                       }?relatedBy=location&value=${encodeURIComponent(
-                        item.text
+                        item.text,
                       )}`}
                       className="text-slate-500 hover:text-[#5BBB7B] transition-all duration-500 ease-in-out text-sm block relative pl-0 hover:pl-6 group"
                     >

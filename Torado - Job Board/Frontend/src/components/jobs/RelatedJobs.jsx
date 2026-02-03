@@ -14,16 +14,16 @@ const RelatedJobs = ({ currentJobId, category }) => {
 
     if (relatedBy === "location" && value) {
       filtered = filtered.filter(
-        (job) => (job.location || "").includes(value.split(",")[0].trim()) // Loose match for city
+        (job) => (job.location || "").includes(value.split(",")[0].trim()), // Loose match for city
       );
     } else if (relatedBy === "industry" && value) {
       filtered = filtered.filter(
-        (job) => (job.industry || job.category) === value
+        (job) => (job.industry || job.category) === value,
       );
     } else if (relatedBy === "title" && value) {
       // Loose match for title or exact match
       filtered = filtered.filter((job) =>
-        job.title.toLowerCase().includes(value.toLowerCase())
+        job.title.toLowerCase().includes(value.toLowerCase()),
       );
     } else {
       // Fallback to category prop (default behavior)
@@ -84,7 +84,9 @@ const RelatedJobs = ({ currentJobId, category }) => {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CircleDollarSign size={16} className="text-[#5BBB7B]" />
-                  {job.salaryRange || "$35k - $45k"}
+                  {typeof job.salaryRange === "object"
+                    ? `$${job.salaryRange.min} - $${job.salaryRange.max}`
+                    : job.salaryRange || "$35k - $45k"}
                 </span>
               </div>
 
@@ -103,10 +105,10 @@ const RelatedJobs = ({ currentJobId, category }) => {
                              tag === "Full Time"
                                ? "bg-[#EFF2FC] text-[#5569CC]"
                                : tag === "Private"
-                               ? "bg-[#EBF9F1] text-[#5BBB7B]"
-                               : tag === "Urgent"
-                               ? "bg-[#EBF1F5] text-[#002333]"
-                               : "bg-slate-100 text-slate-500"
+                                 ? "bg-[#EBF9F1] text-[#5BBB7B]"
+                                 : tag === "Urgent"
+                                   ? "bg-[#EBF1F5] text-[#002333]"
+                                   : "bg-slate-100 text-slate-500"
                            }`}
                   >
                     {tag}

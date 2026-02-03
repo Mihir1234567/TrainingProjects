@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   MapPin,
   Star,
   Download,
-  Share2,
   Facebook,
   Twitter,
   Instagram,
@@ -16,31 +15,55 @@ import {
   Phone,
   Mail,
   CheckCircle,
-  Briefcase,
-  Layers,
-  User,
-  FileText,
-  Calendar,
-  Grid,
   Banknote,
 } from "lucide-react";
-import candidates from "../data/Candidates.json";
+import { userAPI } from "../services/api";
 import candidateDetailsImg from "../assets/candidate-details-img.jpg";
 
 const CandidateDetails = () => {
   const { id } = useParams();
-  const candidate = candidates.find((c) => c.id === parseInt(id));
+  const [candidate, setCandidate] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchCandidate = async () => {
+      try {
+        const data = await userAPI.getById(id);
+        // Transform data if necessary to match UI structure
+        // The UI uses some specific fields like fundamentalSkills, etc.
+        // Our seed data has these, but fallback handling is good.
+        setCandidate(data);
+      } catch (err) {
+        console.error("Failed to fetch candidate details:", err);
+        setError("Candidate not found or error loading details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCandidate();
   }, [id]);
 
-  if (!candidate) {
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F9FBFC]">
+        <div className="flex flex-col items-center">
+          <div className="w-12 h-12 border-4 border-[#5BBB7B] border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-slate-500 font-medium">
+            Loading candidate details...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !candidate) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F9FBFC]">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#002333] mb-2">
-            Candidate Not Found
+            {error || "Candidate Not Found"}
           </h2>
           <Link
             to="/candidates"
@@ -74,11 +97,11 @@ const CandidateDetails = () => {
 
       {/* 2. Banner Section */}
       <section className="max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 mt-12 relative z-10 pb-20">
-        <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row">
+        <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row lg:items-start">
           {/* Left Side: Image */}
-          <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto shrink-0 relative bg-slate-100">
+          <div className="w-full lg:w-[260px] xl:w-[300px] h-[300px] lg:h-[260px] shrink-0 relative bg-slate-100">
             <img
-              src={candidateDetailsImg}
+              src={candidate.image || candidateDetailsImg}
               alt={candidate.name}
               className="w-full h-full object-cover object-top"
               onError={(e) => {
@@ -97,7 +120,7 @@ const CandidateDetails = () => {
                   {candidate.name}
                 </h2>
                 <p className="text-[#5BBB7B] font-medium mt-1">
-                  {candidate.specialization}
+                  {candidate.jobTitle || candidate.specialization}
                 </p>
               </div>
 
@@ -120,14 +143,14 @@ const CandidateDetails = () => {
                     key={i}
                     size={16}
                     className={
-                      i < Math.floor(candidate.rating)
+                      i < Math.floor(candidate.rating || 0)
                         ? "text-[#FFB800] fill-[#FFB800]"
                         : "text-slate-200 fill-none"
                     }
                   />
                 ))}
                 <span className="ml-1 text-slate-500">
-                  {candidate.rating.toFixed(1)}
+                  {(candidate.rating || 0).toFixed(1)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -136,7 +159,9 @@ const CandidateDetails = () => {
                   className="text-[#5BBB7B]"
                   strokeWidth={2.5}
                 />
-                <span className="text-[#A0ABB8]">{candidate.location}</span>
+                <span className="text-[#A0ABB8]">
+                  {candidate.location || "Location N/A"}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Banknote
@@ -144,7 +169,9 @@ const CandidateDetails = () => {
                   className="text-[#5BBB7B]"
                   strokeWidth={2.5}
                 />
-                <span className="text-[#A0ABB8]">{candidate.rate}</span>
+                <span className="text-[#A0ABB8]">
+                  {candidate.rate || "Negotiable"}
+                </span>
               </div>
             </div>
 
@@ -152,8 +179,8 @@ const CandidateDetails = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
-                {candidate.tags &&
-                  candidate.tags.slice(0, 3).map((tag, idx) => (
+                {candidate.skills &&
+                  candidate.skills.slice(0, 3).map((tag, idx) => (
                     <span
                       key={idx}
                       className="px-4 py-2 rounded-md bg-[#EFF2FC] text-[#5569CC] text-sm font-semibold"
@@ -194,32 +221,38 @@ const CandidateDetails = () => {
             <div className="space-y-6">
               <h3 className="text-[24px] font-bold text-[#002333]">About Me</h3>
               <div className="space-y-6 text-[16px] leading-loose text-slate-600 font-light whitespace-pre-line">
-                {candidate.aboutMe || "No description provided."}
+                {candidate.bio ||
+                  candidate.aboutMe ||
+                  "No description provided."}
               </div>
             </div>
 
             {/* Fundamental Skills */}
-            <div className="space-y-6">
-              <h3 className="text-[22px] font-bold text-[#002333]">
-                Fundamental Learning, Skills, & Knowledge
-              </h3>
-              <ul className="space-y-4">
-                {candidate.fundamentalSkills &&
-                  candidate.fundamentalSkills.map((skill, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-4 text-[15px] group"
-                    >
-                      <CheckCircle
-                        size={20}
-                        className="text-[#5BBB7B] mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
-                        strokeWidth={2.5}
-                      />
-                      <span className="text-slate-600 leading-6">{skill}</span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {candidate.fundamentalSkills &&
+              candidate.fundamentalSkills.length > 0 && (
+                <div className="space-y-6">
+                  <h3 className="text-[22px] font-bold text-[#002333]">
+                    Fundamental Learning, Skills, & Knowledge
+                  </h3>
+                  <ul className="space-y-4">
+                    {candidate.fundamentalSkills.map((skill, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-4 text-[15px] group"
+                      >
+                        <CheckCircle
+                          size={20}
+                          className="text-[#5BBB7B] mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
+                          strokeWidth={2.5}
+                        />
+                        <span className="text-slate-600 leading-6">
+                          {skill}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
             {/* Skills */}
             <div className="space-y-6">
@@ -248,7 +281,12 @@ const CandidateDetails = () => {
                 Work Experiences
               </h3>
               <div className="space-y-6 text-[16px] leading-loose text-slate-600 font-light whitespace-pre-line">
-                {candidate.workExperience || "No experience listed."}
+                {candidate.experience
+                  ? `${candidate.experience} of experience in the field.`
+                  : "No experience listed."}
+                {candidate.workExperience && (
+                  <div className="mt-4">{candidate.workExperience}</div>
+                )}
               </div>
             </div>
           </div>
@@ -275,7 +313,7 @@ const CandidateDetails = () => {
                       Experience
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.experience || "Not specified"}
+                      {candidate.experience || "Not specified"}
                     </p>
                   </div>
                 </div>
@@ -294,7 +332,7 @@ const CandidateDetails = () => {
                       Location
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.location || candidate.location}
+                      {candidate.location || "Remote"}
                     </p>
                   </div>
                 </div>
@@ -313,7 +351,7 @@ const CandidateDetails = () => {
                       Offered Salary
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.offeredSalary || candidate.rate}
+                      {candidate.rate || "Negotiable"}
                     </p>
                   </div>
                 </div>
@@ -332,7 +370,9 @@ const CandidateDetails = () => {
                       Language
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.language || "English"}
+                      {candidate.languages
+                        ? candidate.languages.join(", ")
+                        : "English"}
                     </p>
                   </div>
                 </div>
@@ -351,8 +391,7 @@ const CandidateDetails = () => {
                       Qualification
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.qualification ||
-                        "Associate Degree"}
+                      {candidate.qualification || "Degree"}
                     </p>
                   </div>
                 </div>
@@ -371,7 +410,7 @@ const CandidateDetails = () => {
                       Phone
                     </h5>
                     <p className="text-slate-500 text-[14px]">
-                      {candidate.jobOverview?.phone || "Not available"}
+                      {candidate.phone || "Not available"}
                     </p>
                   </div>
                 </div>
@@ -390,7 +429,7 @@ const CandidateDetails = () => {
                       Email
                     </h5>
                     <p className="text-slate-500 text-[14px] text-xs break-all">
-                      {candidate.jobOverview?.email || "Not available"}
+                      {candidate.email || "Not available"}
                     </p>
                   </div>
                 </div>

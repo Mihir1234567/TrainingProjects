@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import freelancers from "../../data/freelancers.json";
+import { userAPI } from "../../services/api";
 
 const FreelancerSection = () => {
+  const [freelancers, setFreelancers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFreelancers = async () => {
+      try {
+        const data = await userAPI.getFreelancers();
+        // Map DB fields to match component expectations
+        const mapped = data.map((f) => ({
+          id: f._id,
+          name: f.name,
+          image: f.image || "https://via.placeholder.com/200",
+          specialization: f.jobTitle || f.specialization,
+          location: f.location?.split(",")[0] || "Remote",
+          rate: f.rate?.replace("/hr", "") || "$50",
+          rating: f.rating || 4.5,
+          reviews: f.reviews || 0,
+          tags: f.skills || [],
+          category: f.specialization,
+        }));
+        setFreelancers(mapped);
+      } catch (error) {
+        console.error("Failed to fetch freelancers:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFreelancers();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-24 bg-[#F9FBFC]">
+        <div className="w-[95%] max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-slate-500">Loading freelancers...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 md:py-24 bg-[#F9FBFC]">
       <div className="w-[95%] max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +53,7 @@ const FreelancerSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-          {freelancers.map((freelancer) => (
+          {freelancers.slice(0, 8).map((freelancer) => (
             <div
               key={freelancer.id}
               className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 flex flex-col group"

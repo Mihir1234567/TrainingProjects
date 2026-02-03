@@ -1,9 +1,38 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Filter, ChevronDown, Check, X, Search, MapPin } from "lucide-react";
-import freelancers from "../data/freelancers.json";
+import { userAPI } from "../services/api";
 
 const Freelancers = () => {
+  const [freelancers, setFreelancers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFreelancers = async () => {
+      try {
+        const data = await userAPI.getFreelancers();
+        // Map DB fields to match component expectations
+        const mapped = data.map((f) => ({
+          id: f._id,
+          name: f.name,
+          image: f.image || "https://via.placeholder.com/200",
+          specialization: f.jobTitle || f.specialization,
+          location: f.location || "Remote",
+          rate: f.rate?.replace("/hr", "") || "$50",
+          rating: f.rating || 4.5,
+          reviews: f.reviews || 0,
+          tags: f.skills || [],
+          category: f.specialization,
+        }));
+        setFreelancers(mapped);
+      } catch (error) {
+        console.error("Failed to fetch freelancers:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFreelancers();
+  }, []);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
   const [sortBy, setSortBy] = useState("default");
@@ -15,10 +44,15 @@ const Freelancers = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   // Derived Data for Filter Options
-  const categories = [...new Set(freelancers.map((f) => f.category))];
-  // Extract just the city/country for cleaner location filtering if needed, keeping it simple for now
+  const categories = [
+    ...new Set(freelancers.map((f) => f.category).filter(Boolean)),
+  ];
   const locations = [
-    ...new Set(freelancers.map((f) => f.location.split(",")[0].trim())),
+    ...new Set(
+      freelancers
+        .map((f) => (f.location ? f.location.split(",")[0].trim() : ""))
+        .filter(Boolean),
+    ),
   ];
 
   // Filtering & Sorting Logic
@@ -31,8 +65,9 @@ const Freelancers = () => {
       result = result.filter(
         (f) =>
           f.name.toLowerCase().includes(query) ||
-          f.specialization.toLowerCase().includes(query) ||
-          f.tags.some((tag) => tag.toLowerCase().includes(query))
+          (f.specialization &&
+            f.specialization.toLowerCase().includes(query)) ||
+          f.tags.some((tag) => tag.toLowerCase().includes(query)),
       );
     }
 
@@ -43,8 +78,10 @@ const Freelancers = () => {
 
     // 3. Filter by Location
     if (selectedLocation) {
-      result = result.filter((f) =>
-        f.location.toLowerCase().includes(selectedLocation.toLowerCase())
+      result = result.filter(
+        (f) =>
+          f.location &&
+          f.location.toLowerCase().includes(selectedLocation.toLowerCase()),
       );
     }
 
@@ -56,14 +93,14 @@ const Freelancers = () => {
     } else if (sortBy === "rate_low") {
       result.sort(
         (a, b) =>
-          parseFloat(a.rate.replace("$", "")) -
-          parseFloat(b.rate.replace("$", ""))
+          parseFloat((a.rate || "0").replace("$", "")) -
+          parseFloat((b.rate || "0").replace("$", "")),
       );
     } else if (sortBy === "rate_high") {
       result.sort(
         (a, b) =>
-          parseFloat(b.rate.replace("$", "")) -
-          parseFloat(a.rate.replace("$", ""))
+          parseFloat((b.rate || "0").replace("$", "")) -
+          parseFloat((a.rate || "0").replace("$", "")),
       );
     }
 
@@ -75,7 +112,7 @@ const Freelancers = () => {
   const indexOfFirstRecruiter = indexOfLastRecruiter - perPage;
   const currentFreelancers = processedFreelancers.slice(
     indexOfFirstRecruiter,
-    indexOfLastRecruiter
+    indexOfLastRecruiter,
   );
   const totalPages = Math.ceil(processedFreelancers.length / perPage);
 

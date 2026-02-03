@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Filter,
@@ -11,9 +11,42 @@ import {
   Star,
   ArrowRight,
 } from "lucide-react";
-import candidates from "../data/Candidates.json";
+import { userAPI } from "../services/api";
 
 const Candidates = () => {
+  const [candidates, setCandidates] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch candidates from API
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const data = await userAPI.getCandidates(); // Fetches all for client-side filtering for now
+        // Map DB fields to Component expectations if needed
+        // DB: skills -> Component: tags
+        // DB: jobTitle -> Component: specialization
+        const mapped = data.map((c) => ({
+          id: c._id,
+          name: c.name,
+          image: c.image || "https://randomuser.me/api/portraits/men/1.jpg", // Fallback
+          specialization: c.jobTitle || c.specialization,
+          location: c.location,
+          rate: c.rate,
+          rating: c.rating,
+          reviews: c.reviews,
+          tags: c.skills || [],
+          category: c.specialization, // Using specialization as category for filter
+        }));
+        setCandidates(mapped);
+      } catch (error) {
+        console.error("Failed to fetch candidates:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCandidates();
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
   const [sortBy, setSortBy] = useState("default");
@@ -25,9 +58,15 @@ const Candidates = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   // Derived Data for Filter Options
-  const categories = [...new Set(candidates.map((c) => c.category))];
+  const categories = [
+    ...new Set(candidates.map((c) => c.category).filter(Boolean)),
+  ];
   const locations = [
-    ...new Set(candidates.map((c) => c.location.split(",")[0].trim())),
+    ...new Set(
+      candidates
+        .map((c) => (c.location ? c.location.split(",")[0].trim() : ""))
+        .filter(Boolean),
+    ),
   ];
 
   // Tag Styling
@@ -92,7 +131,7 @@ const Candidates = () => {
         (c) =>
           c.name.toLowerCase().includes(query) ||
           c.specialization.toLowerCase().includes(query) ||
-          c.tags.some((tag) => tag.toLowerCase().includes(query))
+          c.tags.some((tag) => tag.toLowerCase().includes(query)),
       );
     }
 
@@ -104,7 +143,7 @@ const Candidates = () => {
     // Filter by Location
     if (selectedLocation) {
       result = result.filter((c) =>
-        c.location.toLowerCase().includes(selectedLocation.toLowerCase())
+        c.location.toLowerCase().includes(selectedLocation.toLowerCase()),
       );
     }
 
@@ -117,13 +156,13 @@ const Candidates = () => {
       result.sort(
         (a, b) =>
           parseFloat(a.rate.replace("$", "")) -
-          parseFloat(b.rate.replace("$", ""))
+          parseFloat(b.rate.replace("$", "")),
       );
     } else if (sortBy === "rate_high") {
       result.sort(
         (a, b) =>
           parseFloat(b.rate.replace("$", "")) -
-          parseFloat(a.rate.replace("$", ""))
+          parseFloat(a.rate.replace("$", "")),
       );
     }
 
@@ -135,7 +174,7 @@ const Candidates = () => {
   const indexOfFirstCandidate = indexOfLastCandidate - perPage;
   const currentCandidates = processedCandidates.slice(
     indexOfFirstCandidate,
-    indexOfLastCandidate
+    indexOfLastCandidate,
   );
   const totalPages = Math.ceil(processedCandidates.length / perPage);
 

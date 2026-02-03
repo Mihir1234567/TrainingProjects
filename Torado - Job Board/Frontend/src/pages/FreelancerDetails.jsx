@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   MapPin,
@@ -15,26 +15,82 @@ import {
   Mail,
   GraduationCap,
 } from "lucide-react";
-import freelancers from "../data/freelancers.json";
+import { userAPI } from "../services/api";
 
 const FreelancerDetails = () => {
   const { id } = useParams();
-  const freelancer = freelancers.find((f) => f.id === parseInt(id));
+  const [freelancer, setFreelancer] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
 
-  if (!freelancer) {
+    const fetchFreelancer = async () => {
+      try {
+        setLoading(true);
+        const data = await userAPI.getById(id);
+
+        // Map DB fields to component expectations
+        const mapped = {
+          ...data,
+          id: data._id,
+          title: data.jobTitle,
+          tags: data.skills || [],
+          about: data.bio || "No bio available.",
+          overview: {
+            experience: data.experience || "N/A",
+            language: data.languages?.join(", ") || "English",
+            qualification: data.qualification || "N/A",
+            phone: data.phone || "N/A",
+            email: data.email,
+          },
+          // Generate sample skills description if not available
+          skillsDescription:
+            data.skills?.map((skill) => `Proficient in ${skill}`) || [],
+          talentAndExperience: [
+            `${data.experience || "Several years"} of professional experience`,
+            `Specialized in ${data.specialization || "various fields"}`,
+            `Based in ${data.location || "Remote"}`,
+          ],
+          reviewsList: [], // Reviews would come from a separate collection
+        };
+        setFreelancer(mapped);
+      } catch (err) {
+        console.error("Failed to fetch freelancer:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchFreelancer();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#5BBB7B] mx-auto mb-4"></div>
+          <p className="text-slate-500">Loading freelancer details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !freelancer) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#002333]">
             Freelancer Not Found
           </h2>
+          <p className="text-slate-500 mt-2">{error}</p>
           <Link
             to="/freelancers"
-            className="text-[#5BBB7B] hover:underline mt-2 inline-block"
+            className="text-[#5BBB7B] hover:underline mt-4 inline-block"
           >
             Back to Freelancers
           </Link>
@@ -73,7 +129,7 @@ const FreelancerDetails = () => {
       <section className="max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 mt-12 relative z-10 pb-20">
         <div className="bg-white rounded-lg shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col lg:flex-row">
           {/* Left Side: Image */}
-          <div className="w-full lg:w-[350px] xl:w-[400px] h-[300px] lg:h-auto shrink-0 relative bg-slate-100">
+          <div className="w-full lg:w-[280px] xl:w-[320px] h-[250px] lg:h-auto shrink-0 relative bg-slate-100">
             <img
               src={freelancer.image}
               alt={freelancer.name}

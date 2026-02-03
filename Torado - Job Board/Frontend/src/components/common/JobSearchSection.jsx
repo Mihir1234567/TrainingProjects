@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import people1 from "../../assets/Home/peopleimg/peopleimg1.png";
 import people2 from "../../assets/Home/peopleimg/peopleimg2.png";
 import people3 from "../../assets/Home/peopleimg/peopleimg3.png";
 import people4 from "../../assets/Home/peopleimg/peopleimg4.png";
 import millionImg from "../../assets/Home/millionImg.png";
+import { dashboardAPI } from "../../services/api";
 
 const JobSearchSection = () => {
+  const [stats, setStats] = useState({
+    liveJobs: "3 Million", // Fallback
+    applications: "130k",
+    freelancers: "3500K",
+  });
+
   const features = [
     "Best for every budget",
     "Proof of quality",
@@ -15,6 +22,26 @@ const JobSearchSection = () => {
     "Safe and secure",
     "Secure payments, every time",
   ];
+
+  useEffect(() => {
+    // Fetch real stats if possible.
+    // Note: dashboardAPI.getStats might be protected.
+    // We will try, if fails (401), keep default.
+    // Ideally we need a public stats endpoint.
+    const getStats = async () => {
+      try {
+        const data = await dashboardAPI.getPublicStats();
+        setStats({
+          liveJobs: data.liveJobs || "3 Million",
+          applications: data.applications || "130k", // Formatter for 'k' needed if number is large
+          freelancers: data.freelancers || "3500K",
+        });
+      } catch (e) {
+        console.error("Failed to fetch public stats", e);
+      }
+    };
+    getStats();
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden">
@@ -88,7 +115,7 @@ const JobSearchSection = () => {
                 </div>
                 <div>
                   <div className="font-bold text-[#002B44] text-lg leading-tight">
-                    3500K
+                    {stats.freelancers}
                   </div>
                   <div className="text-[#6170E6] text-sm font-semibold italic">
                     Freelancers Get Results

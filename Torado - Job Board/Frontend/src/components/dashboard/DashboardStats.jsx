@@ -1,4 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { Briefcase, FileText, MessageSquare, Bookmark } from "lucide-react";
+import { dashboardAPI } from "../../services/api";
 
 const StatCard = ({ label, count, icon: Icon, colorClass, iconClass }) => (
   <div
@@ -22,29 +24,29 @@ const StatCard = ({ label, count, icon: Icon, colorClass, iconClass }) => (
   </div>
 );
 
-const DashboardStats = ({ isRecruiter }) => {
+const DashboardStats = ({ isRecruiter, stats, loading }) => {
   const employerStats = [
     {
       label: "Posted Jobs",
-      count: "12",
+      count: stats?.postedJobs || 0,
       icon: Briefcase,
       colorClass: "bg-[#5BBB7B]", // Custom Green
     },
     {
       label: "Applications",
-      count: "154",
+      count: stats?.applications || 0,
       icon: FileText,
       colorClass: "bg-[#003B47]", // Dark Teal
     },
     {
       label: "Messages",
-      count: "24",
+      count: stats?.messages || 0,
       icon: MessageSquare,
       colorClass: "bg-[#5B6CF6]", // Blue
     },
     {
       label: "Shortlisted",
-      count: "18",
+      count: stats?.shortlisted || 0,
       icon: Bookmark,
       colorClass: "bg-[#002333]", // Dark Blue
     },
@@ -53,35 +55,48 @@ const DashboardStats = ({ isRecruiter }) => {
   const candidateStats = [
     {
       label: "Applied Jobs",
-      count: "45",
+      count: stats?.appliedJobs || 0,
       icon: Briefcase,
       colorClass: "bg-[#5B6CF6]", // Blue
     },
     {
       label: "Interviews",
-      count: "3",
+      count: stats?.interviews || 0,
       icon: FileText,
       colorClass: "bg-[#5BBB7B]", // Green
     },
     {
       label: "Messages",
-      count: "12",
+      count: stats?.messages || 0,
       icon: MessageSquare,
       colorClass: "bg-[#002333]", // Dark Blue
     },
     {
       label: "Saved Jobs",
-      count: "15",
+      count: stats?.savedJobs || 0,
       icon: Bookmark,
       colorClass: "bg-[#003B47]", // Dark Teal
     },
   ];
 
-  const stats = isRecruiter ? employerStats : candidateStats;
+  const currentStats = isRecruiter ? employerStats : candidateStats;
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="h-32 bg-slate-100 rounded-[20px] animate-pulse"
+          ></div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {stats.map((stat, index) => (
+      {currentStats.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}
     </div>

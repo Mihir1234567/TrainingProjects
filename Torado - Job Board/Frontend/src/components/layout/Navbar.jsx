@@ -18,15 +18,10 @@ import { motion } from "framer-motion";
 import logo from "../../assets/Logo/logoMain.svg";
 import blogsData from "../../data/blogs.json";
 import { USER_PROFILE } from "../../constants/userProfile";
+import { useAuth } from "../../context/AuthContext";
 
-const Navbar = ({
-  toggleDashboardSidebar,
-  isDashboardSidebarOpen,
-  isRecruiter,
-  setIsRecruiter,
-  isAuthenticated,
-  setIsAuthenticated,
-}) => {
+const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
+  const { isAuthenticated, isRecruiter, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -122,10 +117,9 @@ const Navbar = ({
     {
       title: "Candidates",
       items: [
-        { label: "Candidate", to: "/candidates" },
-        { label: "Candidate Details", to: "/candidates" },
-        { label: "Company Listing", to: "/company-listing" },
-        { label: "Company Details", to: "/company-details" },
+        { label: "Candidates", to: "/candidates" },
+        { label: "Freelancers", to: "/freelancers" },
+
         { label: "User Dashboard", to: "/user-dashboard" },
       ],
       roles: ["recruiter"], // Recruiters looking for candidates
@@ -170,7 +164,7 @@ const Navbar = ({
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    logout();
     navigate("/");
   };
 

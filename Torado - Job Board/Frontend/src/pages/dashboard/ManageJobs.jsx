@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useMockData } from "../../context/MockDataContext";
+import { jobsAPI } from "../../services/api";
 import {
   Eye,
   Trash2,
@@ -36,10 +36,39 @@ const ManageJobs = () => {
   const [selectedSort, setSelectedSort] = useState("Default");
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const { jobs: contextJobs, deleteJob } = useMockData();
+
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch Jobs on Mount
+  useEffect(() => {
+    const fetchMyJobs = async () => {
+      try {
+        const data = await jobsAPI.getMyJobs();
+        setJobs(data);
+      } catch (error) {
+        console.error("Failed to fetch jobs", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMyJobs();
+  }, []);
+
+  const handleDeleteJob = async (id) => {
+    if (window.confirm("Are you sure you want to delete this job?")) {
+      try {
+        await jobsAPI.deleteJob(id);
+        setJobs((prev) => prev.filter((job) => job._id !== id));
+      } catch (error) {
+        console.error("Failed to delete job", error);
+        alert("Failed to delete job");
+      }
+    }
+  };
 
   const allJobs = useMemo(() => {
-    return contextJobs.map((job) => {
+    return jobs.map((job) => {
       let Icon = Briefcase;
       let iconColor = "text-slate-600";
       let iconBg = "bg-slate-100/50";
@@ -59,19 +88,19 @@ const ManageJobs = () => {
       }
 
       return {
-        id: job.id,
+        id: job._id,
         title: job.title,
-        status: "Active",
-        filled: false,
-        postedDate: job.postedAt || "Just now",
-        expiredDate: "N/A",
-        applications: 0,
+        status: job.status || "Active",
+        filled: job.status === "Closed",
+        postedDate: new Date(job.createdAt).toLocaleDateString(),
+        expiredDate: "N/A", // We don't have expiration yet
+        applications: job.applicationsCount || 0, // Using real count from DB
         icon: Icon,
         iconBg: iconBg,
         iconColor: iconColor,
       };
     });
-  }, [contextJobs]);
+  }, [jobs]);
 
   const filteredJobs = useMemo(() => {
     let result =
@@ -336,7 +365,7 @@ const ManageJobs = () => {
                           </Tooltip>
                           <Tooltip text="Delete Job">
                             <button
-                              onClick={() => deleteJob(job.id)}
+                              onClick={() => handleDeleteJob(job.id)}
                               className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center transition-all duration-300 hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-500/30 active:scale-95 group/btn overflow-hidden relative"
                             >
                               <Trash2

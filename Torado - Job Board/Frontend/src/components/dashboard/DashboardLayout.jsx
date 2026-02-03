@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
+import { useAuth } from "../../context/AuthContext";
 
 const DashboardLayout = () => {
-  const {
-    isDashboardSidebarOpen,
-    setIsDashboardSidebarOpen,
-    isRecruiter,
-    setIsRecruiter,
-  } = useOutletContext() || {};
+  const { isDashboardSidebarOpen, setIsDashboardSidebarOpen } =
+    useOutletContext() || {};
+
+  // Use AuthContext directly for accurate role detection
+  const { isRecruiter } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -21,9 +21,8 @@ const DashboardLayout = () => {
           {/* Sidebar */}
           <DashboardSidebar
             isOpen={isDashboardSidebarOpen}
-            onClose={() => setIsDashboardSidebarOpen(false)}
+            onClose={() => setIsDashboardSidebarOpen?.(false)}
             isRecruiter={isRecruiter}
-            setIsRecruiter={setIsRecruiter}
           />
 
           {/* Main Content Area */}

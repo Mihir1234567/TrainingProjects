@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Trash2, AlertTriangle, XCircle, CheckCircle2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Trash2,
+  AlertTriangle,
+  XCircle,
+  CheckCircle2,
+  Lock,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardButton from "../../components/common/DashboardButton";
 import Toast from "../../components/common/Toast";
+import { authAPI } from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const DeleteProfile = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [confirmText, setConfirmText] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [reason, setReason] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [status, setStatus] = useState("idle");
@@ -17,7 +31,7 @@ const DeleteProfile = () => {
     type: "success",
   });
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (status !== "idle") return;
 
     if (!isChecked) {
@@ -30,19 +44,36 @@ const DeleteProfile = () => {
       return;
     }
 
+    if (!password) {
+      setError("Please enter your password to confirm deletion.");
+      return;
+    }
+
     setError("");
     setStatus("loading");
 
-    // Mock API call
-    setTimeout(() => {
+    try {
+      await authAPI.deleteAccount(password);
       setStatus("success");
       setToast({
         isVisible: true,
-        message: "Request submitted. Your account will be deleted shortly.",
+        message: "Account deleted successfully. Redirecting...",
         type: "success",
       });
-      setTimeout(() => setStatus("idle"), 3000);
-    }, 2000);
+      // Logout and redirect after short delay
+      setTimeout(async () => {
+        await logout();
+        navigate("/");
+      }, 2000);
+    } catch (err) {
+      setStatus("idle");
+      setError(err.message || "Failed to delete account");
+      setToast({
+        isVisible: true,
+        message: err.message || "Failed to delete account",
+        type: "error",
+      });
+    }
   };
 
   return (
@@ -127,6 +158,34 @@ const DeleteProfile = () => {
                 Type <span className="text-red-500 font-extrabold">DELETE</span>{" "}
                 to confirm
               </label>
+            </div>
+
+            {/* Password Confirmation */}
+            <div className="relative group/field">
+              <div className="absolute left-5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center bg-red-50 text-red-400">
+                <Lock size={18} />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder=" "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="peer w-full h-[60px] pl-16 pr-14 bg-white border border-slate-100 ring-4 ring-transparent rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-red-500/50 focus:ring-red-500/5 transition-all focus-glow"
+              />
+              <label
+                className="absolute left-16 top-1/2 -translate-y-1/2 text-slate-400 text-[15px] font-bold transition-all pointer-events-none
+                           peer-focus:top-0 peer-focus:left-5 peer-focus:text-[11px] peer-focus:text-red-500 peer-focus:bg-white peer-focus:px-2
+                           peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:left-5 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider"
+              >
+                Enter Password to Confirm
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 transition-colors"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
 
             {/* Checkbox */}

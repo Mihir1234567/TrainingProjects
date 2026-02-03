@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Upload,
@@ -21,6 +21,7 @@ import {
   Globe,
   Building2,
   XCircle,
+  Wand2,
 } from "lucide-react";
 import { USER_PROFILE } from "../../constants/userProfile";
 import CustomDropdown from "../../components/common/CustomDropdown";
@@ -76,6 +77,8 @@ const dropdownOptions = {
   cities: ["London", "New York", "Paris"],
 };
 
+import { userAPI, uploadAPI } from "../../services/api"; // Added API imports
+
 const MyProfile = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -91,12 +94,12 @@ const MyProfile = () => {
     jobType: "",
     jobCategory: "",
     experience: "",
-    education: "",
+    education: "", // qualification
     currentSalary: "",
     expectedSalary: "",
-    age: "",
-    language: "",
-    about: "",
+    age: "", // Not in backend yet, maybe ignored or store in bio/extra?
+    language: "", // languages array in backend
+    about: "", // bio
     facebook: "",
     twitter: "",
     linkedin: "",
@@ -108,12 +111,115 @@ const MyProfile = () => {
     address: "",
   });
 
+  // Fetch Profile on Mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const user = await userAPI.getProfile();
+        setFormData({
+          fullName: user.name || "",
+          email: user.email || "",
+          phone: user.phone || "",
+          jobTitle: user.jobTitle || "",
+          jobType: user.jobType || "",
+          jobCategory: user.specialization || "",
+          experience: user.experience || "",
+          education: user.qualification || "",
+          currentSalary: user.rate || "", // Mapping rate to currentSalary approx
+          expectedSalary: user.expectedSalary || "",
+          age: user.age || "",
+          language: user.languages?.[0] || "",
+          about: user.bio || "",
+          facebook: user.socialLinks?.facebook || "",
+          twitter: user.socialLinks?.twitter || "",
+          linkedin: user.socialLinks?.linkedin || "",
+          instagram: user.socialLinks?.instagram || "",
+          country: user.country || "",
+          city: user.city || "",
+          latitude: user.latitude || "",
+          longitude: user.longitude || "",
+          address: user.location || "",
+        });
+        if (user.image) setProfileImage(user.image);
+      } catch (err) {
+        console.error("Failed to fetch profile", err);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   /* State for Toast */
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
     type: "success",
   });
+
+  // Auto-fill test data for development
+  const autoFillTestData = () => {
+    const firstNames = [
+      "John",
+      "Jane",
+      "Michael",
+      "Sarah",
+      "David",
+      "Emily",
+      "Chris",
+      "Amanda",
+    ];
+    const lastNames = [
+      "Smith",
+      "Johnson",
+      "Williams",
+      "Brown",
+      "Davis",
+      "Miller",
+      "Wilson",
+      "Taylor",
+    ];
+    const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+    const firstName = random(firstNames);
+    const lastName = random(lastNames);
+    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
+
+    setFormData({
+      fullName: `${firstName} ${lastName}`,
+      email: email,
+      phone: `+1 ${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
+      jobTitle: random([
+        "Senior Developer",
+        "UI Designer",
+        "Product Manager",
+        "Data Analyst",
+        "DevOps Engineer",
+      ]),
+      jobType: random(dropdownOptions.jobTypes),
+      jobCategory: random(dropdownOptions.categories),
+      experience: random(dropdownOptions.experience),
+      education: random(dropdownOptions.education),
+      currentSalary: random(dropdownOptions.salary),
+      expectedSalary: random(dropdownOptions.salary),
+      age: random(dropdownOptions.age),
+      language: random(dropdownOptions.languages),
+      about: `Passionate professional with ${Math.floor(Math.random() * 10 + 2)}+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.`,
+      facebook: `https://facebook.com/${firstName.toLowerCase()}${lastName.toLowerCase()}`,
+      twitter: `https://twitter.com/${firstName.toLowerCase()}_${lastName.toLowerCase()}`,
+      linkedin: `https://linkedin.com/in/${firstName.toLowerCase()}-${lastName.toLowerCase()}`,
+      instagram: `https://instagram.com/${firstName.toLowerCase()}${lastName.toLowerCase()}`,
+      country: random(dropdownOptions.countries),
+      city: random(dropdownOptions.cities),
+      latitude: (40 + Math.random() * 10).toFixed(6),
+      longitude: (-74 + Math.random() * 10).toFixed(6),
+      address: `${Math.floor(Math.random() * 9000 + 1000)} ${random(["Main St", "Oak Ave", "Tech Blvd", "Innovation Way"])}, Suite ${Math.floor(Math.random() * 900 + 100)}`,
+    });
+
+    setToast({
+      isVisible: true,
+      message: "Profile auto-filled with test data!",
+      type: "success",
+    });
+  };
 
   const handleImageClick = () => {
     setUploadError(""); // Reset error on open
@@ -135,7 +241,7 @@ const MyProfile = () => {
     }
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -154,22 +260,23 @@ const MyProfile = () => {
       return;
     }
 
-    // 3. Dimension Check
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      if (img.width < 330 || img.height < 300) {
-        setUploadError("Image dimensions must be at least 330x300 pixels.");
-      } else {
-        // Success!
-        setProfileImage(URL.createObjectURL(file));
-        setIsUploadModalOpen(false);
-      }
-      URL.revokeObjectURL(img.src);
-    };
+    try {
+      const serverPath = await uploadAPI.uploadFile(file);
+      // Prepend server URL if needed, or store relative path.
+      // Frontend usually needs full URL to display.
+      // "http://localhost:5001" + serverPath
+      // Ideally API returns full URL or we handle it.
+      // For now, assuming serverPath is "/uploads/filename.jpg"
+      const fullUrl = `http://localhost:5001${serverPath}`;
+
+      setProfileImage(fullUrl);
+      setIsUploadModalOpen(false);
+    } catch (err) {
+      setUploadError("Upload failed: " + err.message);
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (status !== "idle") return;
 
     // Validation
@@ -184,23 +291,8 @@ const MyProfile = () => {
       }
     });
 
-    // Email Check
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-      isValid = false;
-    }
-
-    // Phone Check (Basic 10-15 digits)
-    if (formData.phone && !/^\+?[\d\s-]{10,15}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid phone number";
-      isValid = false;
-    }
-
     if (!isValid) {
       setErrors(newErrors);
-      // specific error toast removed as per user request ("remove this model")
-
-      // Auto-scroll to first error
       const firstErrorField = Object.keys(newErrors)[0];
       const element = document.getElementById(firstErrorField);
       if (element) {
@@ -210,7 +302,37 @@ const MyProfile = () => {
     }
 
     setStatus("loading");
-    setTimeout(() => {
+    try {
+      const payload = {
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        jobTitle: formData.jobTitle,
+        jobType: formData.jobType,
+        specialization: formData.jobCategory,
+        experience: formData.experience,
+        qualification: formData.education,
+        rate: formData.currentSalary,
+        expectedSalary: formData.expectedSalary,
+        age: formData.age,
+        languages: [formData.language], // Array in backend
+        bio: formData.about,
+        location: formData.address, // Simplifying address/location
+        country: formData.country,
+        city: formData.city,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        image: profileImage,
+        socialLinks: {
+          facebook: formData.facebook,
+          twitter: formData.twitter,
+          linkedin: formData.linkedin,
+          instagram: formData.instagram,
+        },
+      };
+
+      await userAPI.updateProfile(payload);
+
       setStatus("success");
       setToast({
         isVisible: true,
@@ -218,7 +340,11 @@ const MyProfile = () => {
         type: "success",
       });
       setTimeout(() => setStatus("idle"), 3000);
-    }, 2000);
+    } catch (err) {
+      console.error("Update failed", err);
+      setStatus("idle");
+      // Show error toast?
+    }
   };
 
   const renderInput = (id, label, Icon, type = "text") => (
@@ -283,22 +409,33 @@ const MyProfile = () => {
   return (
     <div className="flex flex-col gap-6 md:gap-8 w-full max-w-5xl mx-auto px-4 md:px-0">
       {/* Header / Breadcrumb */}
-      <div className="flex flex-col gap-1">
-        <h2 className="text-[22px] font-bold text-[#002333]">My Profile</h2>
-        <div className="flex items-center gap-2 text-[13px] text-slate-500 font-medium">
-          <Link to="/" className="hover:text-[#5BBB7B] transition-colors">
-            Home
-          </Link>
-          <span>/</span>
-          <Link
-            to="/user-dashboard"
-            className="hover:text-[#5BBB7B] transition-colors"
-          >
-            Dashboard
-          </Link>
-          <span>/</span>
-          <span className="text-[#5BBB7B]">My Profile</span>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-[22px] font-bold text-[#002333]">My Profile</h2>
+          <div className="flex items-center gap-2 text-[13px] text-slate-500 font-medium">
+            <Link to="/" className="hover:text-[#5BBB7B] transition-colors">
+              Home
+            </Link>
+            <span>/</span>
+            <Link
+              to="/user-dashboard"
+              className="hover:text-[#5BBB7B] transition-colors"
+            >
+              Dashboard
+            </Link>
+            <span>/</span>
+            <span className="text-[#5BBB7B]">My Profile</span>
+          </div>
         </div>
+        {/* Auto-Fill Button for Development */}
+        <button
+          type="button"
+          onClick={autoFillTestData}
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-sm font-bold rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
+        >
+          <Wand2 size={16} />
+          Auto-Fill Test Data
+        </button>
       </div>
 
       {/* Section 1: My Account */}
@@ -338,42 +475,42 @@ const MyProfile = () => {
               "jobType",
               "Job Type",
               Briefcase,
-              dropdownOptions.jobTypes
+              dropdownOptions.jobTypes,
             )}
 
             {renderDropdown(
               "jobCategory",
               "Job Category",
               Layout,
-              dropdownOptions.categories
+              dropdownOptions.categories,
             )}
 
             {renderDropdown(
               "experience",
               "Experience",
               Star,
-              dropdownOptions.experience
+              dropdownOptions.experience,
             )}
 
             {renderDropdown(
               "education",
               "Education",
               GraduationCap,
-              dropdownOptions.education
+              dropdownOptions.education,
             )}
 
             {renderDropdown(
               "currentSalary",
               "Current Salary",
               DollarSign,
-              dropdownOptions.salary
+              dropdownOptions.salary,
             )}
 
             {renderDropdown(
               "expectedSalary",
               "Expected Salary",
               DollarSign,
-              dropdownOptions.salary
+              dropdownOptions.salary,
             )}
 
             {renderDropdown("age", "Age", Calendar, dropdownOptions.age)}
@@ -382,7 +519,7 @@ const MyProfile = () => {
               "language",
               "Language",
               Languages,
-              dropdownOptions.languages
+              dropdownOptions.languages,
             )}
 
             <div className="md:col-span-2 relative group/field">
@@ -440,7 +577,7 @@ const MyProfile = () => {
             "country",
             "Country",
             Globe,
-            dropdownOptions.countries
+            dropdownOptions.countries,
           )}
 
           {renderDropdown("city", "City", Building2, dropdownOptions.cities)}

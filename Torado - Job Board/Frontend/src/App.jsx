@@ -41,6 +41,7 @@ import AlertJobs from "./pages/dashboard/AlertJobs";
 import Package from "./pages/dashboard/Package";
 import Messages from "./pages/dashboard/Messages";
 import MyProfile from "./pages/dashboard/MyProfile";
+import CompanyProfile from "./pages/dashboard/CompanyProfile";
 import ChangePassword from "./pages/dashboard/ChangePassword";
 import DeleteProfile from "./pages/dashboard/DeleteProfile";
 
@@ -99,6 +100,7 @@ function App() {
                 <Route index element={<DashboardHome />} />
                 <Route path="post-job" element={<DashboardPostJob />} />
                 <Route path="manage-jobs" element={<ManageJobs />} />
+                <Route path="company-profile" element={<CompanyProfile />} />
                 <Route
                   path="manage-applicants"
                   element={<ManageApplicants />}

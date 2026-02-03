@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useMockData } from "../context/MockDataContext";
+import { jobsAPI } from "../services/api"; // Updated import
 import JobDetailHeader from "../components/jobs/JobDetailHeader";
 import JobDetailBanner from "../components/jobs/JobDetailBanner";
 
@@ -12,16 +12,36 @@ import JobMap from "../components/jobs/JobMap";
 
 const JobDetail = () => {
   const { id } = useParams();
-  const { jobs } = useMockData();
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const data = await jobsAPI.getById(id);
+        setJob(data);
+      } catch (error) {
+        console.error("Failed to fetch job", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJob();
     window.scrollTo(0, 0);
   }, [id]);
 
-  // Fallback to first job if ID not found, just for visualization
-  const job = useMemo(() => {
-    return jobs.find((j) => j.id === parseInt(id)) || jobs[0];
-  }, [id, jobs]);
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  if (!job)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Job not found
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">

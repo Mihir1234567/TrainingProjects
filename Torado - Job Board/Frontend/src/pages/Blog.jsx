@@ -1,17 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import blogsData from "../data/blogs.json";
+import { blogAPI } from "../services/api";
 
 const Blog = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [visibleBlogs, setVisibleBlogs] = useState(6);
 
   useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const data = await blogAPI.getAll();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
     window.scrollTo(0, 0);
   }, []);
 
   const handleLoadMore = () => {
     setVisibleBlogs((prev) => prev + 3);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
@@ -35,9 +57,9 @@ const Blog = () => {
       {/* 2. Blog Grid Section */}
       <section className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {blogsData.slice(0, visibleBlogs).map((blog) => (
+          {blogs.slice(0, visibleBlogs).map((blog) => (
             <div
-              key={blog.id}
+              key={blog._id || blog.id}
               className="group bg-white rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
             >
               {/* Image */}
@@ -46,6 +68,9 @@ const Blog = () => {
                   src={blog.image}
                   alt={blog.title}
                   className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                  onError={(e) => {
+                    e.target.src = "https://via.placeholder.com/600x400";
+                  }}
                 />
               </div>
 
@@ -55,9 +80,9 @@ const Blog = () => {
                   {blog.date}
                 </div>
                 <h3 className="text-xl font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors">
-                  <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
+                  <Link to={`/blog/${blog._id || blog.id}`}>{blog.title}</Link>
                 </h3>
-                <p className="text-slate-500 text-[15px] leading-relaxed">
+                <p className="text-slate-500 text-[15px] leading-relaxed line-clamp-3">
                   {blog.description}
                 </p>
               </div>
@@ -66,7 +91,7 @@ const Blog = () => {
         </div>
 
         {/* Load More Button */}
-        {visibleBlogs < blogsData.length && (
+        {visibleBlogs < blogs.length && (
           <div className="text-center">
             <button
               onClick={handleLoadMore}

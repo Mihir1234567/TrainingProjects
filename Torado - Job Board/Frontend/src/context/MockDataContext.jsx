@@ -14,53 +14,21 @@ export const MockDataProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const jobsData = await jobsAPI.getAll();
-        setJobs(jobsData || []);
+        const jobsList = Array.isArray(jobsData)
+          ? jobsData
+          : jobsData.jobs || [];
 
-        // Mock initial applications for demo
-        setApplications([
-          {
-            id: 1,
-            jobId: 1,
-            date: "2025-01-20T10:00:00Z",
-            status: "Active",
-            name: "Maève Parisian",
-            category: "Creative",
-            location: "London, UK",
-            jobTitle: "Web Designer",
-            rating: 4.8,
-            reviews: 12,
-            image:
-              "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop",
-          },
-          {
-            id: 2,
-            jobId: 3,
-            date: "2025-01-22T14:30:00Z",
-            status: "Interview",
-            name: "Bernardo Hermiston",
-            category: "Technology",
-            location: "New York, USA",
-            jobTitle: "React Developer",
-            rating: 4.5,
-            reviews: 8,
-            image:
-              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
-          },
-          {
-            id: 3,
-            jobId: 5,
-            date: "2025-01-25T09:15:00Z",
-            status: "Pending",
-            name: "Lindsay Schiller",
-            category: "Marketing",
-            location: "Berlin, DE",
-            jobTitle: "Marketing Manager",
-            rating: 4.2,
-            reviews: 5,
-            image:
-              "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop",
-          },
-        ]);
+        // Map _id to id for frontend compatibility
+        const mappedJobs = jobsList.map((job) => ({
+          ...job,
+          id: job._id,
+        }));
+        setJobs(mappedJobs);
+
+        // Fetch applications if user is logged in?
+        // For now, start empty or maybe fetch if token exists
+        // simplified: use empty array, components should fetch their own specific data or we expand this later
+        setApplications([]);
 
         setIsLoading(false);
       } catch (err) {
@@ -73,24 +41,24 @@ export const MockDataProvider = ({ children }) => {
   const addJob = async (newJob) => {
     const createdJob = await jobsAPI.create({
       ...newJob,
-      postedAt: "Just now",
-      recruiterId: 101,
-      recruiterName: "Demo Recruiter",
-      logo: "https://via.placeholder.com/50",
+      // postedAt etc handled by backend defaults
     });
-    setJobs((prev) => [createdJob, ...prev]);
-    return createdJob;
+    const mappedJob = { ...createdJob, id: createdJob._id };
+    setJobs((prev) => [mappedJob, ...prev]);
+    return mappedJob;
   };
 
   const deleteJob = async (jobId) => {
-    await jobsAPI.delete(jobId);
+    await jobsAPI.delete(jobId); // API expects _id, but frontend passes what it has.
+    // If frontend items have id=_id (string), then jobId is string.
     setJobs((prev) => prev.filter((job) => job.id !== jobId));
   };
 
   const applyToJob = async (jobId, candidateData) => {
     const newApp = await applicationsAPI.apply(jobId, candidateData);
-    setApplications((prev) => [...prev, newApp]);
-    return newApp;
+    const mappedApp = { ...newApp, id: newApp._id };
+    setApplications((prev) => [...prev, mappedApp]);
+    return mappedApp;
   };
 
   const value = {

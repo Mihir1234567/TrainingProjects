@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { authAPI } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -28,24 +29,28 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
-  const login = (userData) => {
-    // Simulate API response
-    const userWithToken = { ...userData, token: "mock-jwt-token" };
-    setUser(userWithToken);
-    localStorage.setItem("torado_user", JSON.stringify(userWithToken));
-    return Promise.resolve(userWithToken);
+  const login = async (userData) => {
+    try {
+      const userWithToken = await authAPI.login(userData);
+      setUser(userWithToken);
+      localStorage.setItem("torado_user", JSON.stringify(userWithToken));
+      return userWithToken;
+    } catch (error) {
+      console.error("Login failed", error);
+      throw error;
+    }
   };
 
-  const register = (userData) => {
-    // Simulate API Call
-    const newUser = {
-      id: Math.floor(Math.random() * 10000),
-      ...userData,
-      token: "mock-jwt-token",
-    };
-    setUser(newUser);
-    localStorage.setItem("torado_user", JSON.stringify(newUser));
-    return Promise.resolve(newUser);
+  const register = async (userData) => {
+    try {
+      const newUser = await authAPI.register(userData);
+      setUser(newUser);
+      localStorage.setItem("torado_user", JSON.stringify(newUser));
+      return newUser;
+    } catch (error) {
+      console.error("Registration failed", error);
+      throw error;
+    }
   };
 
   const logout = () => {

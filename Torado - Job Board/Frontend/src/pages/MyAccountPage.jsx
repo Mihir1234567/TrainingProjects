@@ -4,11 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Lock, Mail, Briefcase } from "lucide-react";
 import MattersToUs from "../components/common/MattersToUs";
 import AnimatedButton from "../components/common/AnimatedButton";
+import { useAuth } from "../context/AuthContext";
 
 const MyAccountPage = () => {
   const [activeTab, setActiveTab] = useState("login"); // 'login' | 'register' | 'reset'
   const navigate = useNavigate();
-  const { setIsAuthenticated, setIsRecruiter } = useOutletContext() || {};
+  const { login, register, isLoading } = useAuth();
 
   // Form States
   const [loginData, setLoginData] = useState({
@@ -17,9 +18,11 @@ const MyAccountPage = () => {
     remember: false,
   });
   const [registerData, setRegisterData] = useState({
+    name: "",
     email: "",
     password: "",
     repeatPassword: "",
+    role: "candidate",
     terms: false,
   });
   const [resetData, setResetData] = useState({
@@ -79,10 +82,17 @@ const MyAccountPage = () => {
     navigate("/user-dashboard");
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    // Default fallback if someone hits enter
-    handleCandidateLogin();
+    try {
+      await login({
+        email: loginData.username, // mapping username field to email
+        password: loginData.password,
+      });
+      navigate("/user-dashboard");
+    } catch (error) {
+      setErrors({ login_password: "Login failed. Check credentials." });
+    }
   };
 
   const handleRegisterSubmit = async (e) => {
@@ -100,13 +110,23 @@ const MyAccountPage = () => {
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      // Register with actual form data
-      await register({
-        name: registerData.name,
-        email: registerData.email,
-        role: registerData.role,
-      });
-      navigate("/user-dashboard");
+      try {
+        // Register with actual form data
+        await register({
+          name: registerData.name,
+          email: registerData.email,
+          password: registerData.password,
+          role: registerData.role,
+        });
+        navigate("/user-dashboard");
+      } catch (error) {
+        console.error("Registration Error:", error);
+        setErrors({
+          ...newErrors,
+          register_general:
+            error.message || "Registration failed. Please try again.",
+        });
+      }
     }
   };
 
@@ -282,7 +302,8 @@ const MyAccountPage = () => {
                         <button
                           type="button"
                           onClick={handleCandidateLogin}
-                          className="w-full py-4 px-6 bg-[#5BBB7B] hover:bg-torado-green-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-[#5BBB7B]/20 flex items-center justify-center gap-2 group active:scale-95"
+                          disabled={isLoading}
+                          className="w-full py-4 px-6 bg-[#5BBB7B] hover:bg-torado-green-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-[#5BBB7B]/20 flex items-center justify-center gap-2 group active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                           <User size={20} />
                           Candidate Login
@@ -290,7 +311,8 @@ const MyAccountPage = () => {
                         <button
                           type="button"
                           onClick={handleEmployerLogin}
-                          className="w-full py-4 px-6 bg-[#002333] hover:bg-[#003B47] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#002333]/20 flex items-center justify-center gap-2 group active:scale-95"
+                          disabled={isLoading}
+                          className="w-full py-4 px-6 bg-[#002333] hover:bg-[#003B47] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#002333]/20 flex items-center justify-center gap-2 group active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                           <Briefcase size={20} />
                           Employer Login
@@ -414,8 +436,18 @@ const MyAccountPage = () => {
                         )}
                       </div>
 
-                      <AnimatedButton type="submit" className="w-full">
-                        Register Now
+                      {errors.register_general && (
+                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm text-center">
+                          {errors.register_general}
+                        </div>
+                      )}
+
+                      <AnimatedButton
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Registering..." : "Register Now"}
                       </AnimatedButton>
                     </form>
                   )}

@@ -15,6 +15,7 @@ import {
   LogOut,
   Trash2,
   X,
+  Building,
 } from "lucide-react";
 import LogoutModal from "../common/LogoutModal";
 import { useAuth } from "../../context/AuthContext";
@@ -22,7 +23,7 @@ import { useAuth } from "../../context/AuthContext";
 const DashboardSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isRecruiter, logout, updateUser } = useAuth();
+  const { isRecruiter, logout } = useAuth();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const recruiterMenuItems = [
@@ -43,7 +44,11 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
       path: "/user-dashboard/bookmark-resumes",
       icon: Bookmark,
     },
-    { label: "Package", path: "/user-dashboard/package", icon: Package },
+    {
+      label: "Company Profile",
+      path: "/user-dashboard/company-profile",
+      icon: Building,
+    },
     { label: "Message", path: "/user-dashboard/messages", icon: MessageSquare },
     { label: "My Profile", path: "/user-dashboard/my-profile", icon: User },
     {
@@ -123,30 +128,6 @@ const DashboardSidebar = ({ isOpen, onClose }) => {
             <h3 className="text-lg font-bold text-torado-blue-900">
               Dashboard
             </h3>
-          </div>
-
-          {/* Role Toggle for Testing */}
-          <div className="bg-slate-100 p-1 rounded-lg w-full flex mb-4">
-            <button
-              onClick={() => updateUser({ role: "candidate" })}
-              className={`flex-1 text-xs py-1.5 rounded-md font-medium transition-all ${
-                !isRecruiter
-                  ? "bg-white text-torado-blue-900 shadow-sm"
-                  : "text-slate-500 hover:text-torado-blue-900"
-              }`}
-            >
-              Candidate
-            </button>
-            <button
-              onClick={() => updateUser({ role: "employer" })}
-              className={`flex-1 text-xs py-1.5 rounded-md font-medium transition-all ${
-                isRecruiter
-                  ? "bg-white text-torado-blue-900 shadow-sm"
-                  : "text-slate-500 hover:text-torado-blue-900"
-              }`}
-            >
-              Employer
-            </button>
           </div>
         </div>
 

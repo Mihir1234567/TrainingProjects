@@ -26,7 +26,10 @@ const JobDetailBanner = ({ job }) => {
     date: job?.postedAt || "4 months ago",
     company: job?.company || "Anibal Crist",
     location: job?.location || "London, UK",
-    salary: job?.salaryRange || job?.salary || "$35k - $45k",
+    salary:
+      job?.salaryRange && typeof job.salaryRange === "object"
+        ? `$${job.salaryRange.min} - $${job.salaryRange.max}`
+        : job?.salaryRange || job?.salary || "$35k - $45k",
     bannerImage:
       job?.bannerImage ||
       "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1470&auto=format&fit=crop",

@@ -26,16 +26,17 @@ import {
   XCircle,
   ArrowLeft,
   ArrowRight,
+  Wand2,
 } from "lucide-react";
 import CustomDropdown from "../common/CustomDropdown";
+import DashboardButton from "../common/DashboardButton";
 import Toast from "../common/Toast";
 import { useNavigate } from "react-router-dom";
-import { useMockData } from "../../context/MockDataContext";
-import DashboardButton from "../common/DashboardButton";
+import { jobsAPI } from "../../services/api";
 
 const PostJobForm = () => {
   const navigate = useNavigate();
-  const { addJob } = useMockData();
+  // const { addJob } = useMockData(); // Removed mock data usage
 
   const [formData, setFormData] = useState({
     jobTitle: "",
@@ -73,6 +74,134 @@ const PostJobForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [fileError, setFileError] = useState("");
+
+  // Auto-fill test data for development
+  const autoFillTestData = () => {
+    const jobTitles = [
+      "Senior React Developer",
+      "Full Stack Engineer",
+      "UI/UX Designer",
+      "Product Manager",
+      "DevOps Engineer",
+      "Data Scientist",
+      "Mobile App Developer",
+      "Backend Developer",
+    ];
+    const categories = [
+      "Technology",
+      "Design",
+      "Marketing",
+      "Finance",
+      "Healthcare",
+      "Education",
+    ];
+    const jobTypes = ["Full Time", "Part Time", "Contract", "Remote", "Hybrid"];
+    const companies = [
+      "TechCorp Inc",
+      "InnovateTech",
+      "Digital Solutions",
+      "CloudBase Systems",
+      "DataFlow Analytics",
+    ];
+    const locations = [
+      "New York, USA",
+      "San Francisco, USA",
+      "London, UK",
+      "Berlin, Germany",
+      "Remote",
+      "Singapore",
+    ];
+    const experiences = ["Fresh", "1 Year", "2 Years", "3 Years", "5+ Years"];
+    const qualifications = [
+      "Bachelor's Degree",
+      "Master's Degree",
+      "PhD",
+      "High School",
+    ];
+    const careerLevels = [
+      "Entry Level",
+      "Mid Level",
+      "Senior",
+      "Manager",
+      "Executive",
+    ];
+    const industries = [
+      "Information Technology",
+      "Finance",
+      "Healthcare",
+      "E-commerce",
+      "Education",
+    ];
+    const tagOptions = [
+      "React",
+      "JavaScript",
+      "Node.js",
+      "Python",
+      "AWS",
+      "Docker",
+      "MongoDB",
+      "SQL",
+      "TypeScript",
+      "GraphQL",
+    ];
+
+    const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const randomTags = tagOptions
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3 + Math.floor(Math.random() * 3));
+    const minSal = (40 + Math.floor(Math.random() * 60)) * 1000;
+    const maxSal = minSal + (20 + Math.floor(Math.random() * 40)) * 1000;
+
+    // Generate future deadline date
+    const futureDate = new Date();
+    futureDate.setDate(
+      futureDate.getDate() + 14 + Math.floor(Math.random() * 30),
+    );
+    const deadlineStr = futureDate.toISOString().split("T")[0];
+
+    setFormData({
+      jobTitle: random(jobTitles),
+      category: random(categories),
+      jobTypes: random(jobTypes),
+      deadline: deadlineStr,
+      salaryCurrency: "USD",
+      description: `We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.
+
+Key Responsibilities:
+• Design and develop high-quality software solutions
+• Collaborate with cross-functional teams
+• Participate in code reviews and mentor junior developers
+• Stay updated with the latest industry trends
+
+Requirements:
+• Strong problem-solving abilities
+• Excellent communication skills
+• Team player with a positive attitude`,
+      companyName: random(companies),
+      companyCategory: random(categories),
+      companyType: "Private",
+      tags: randomTags,
+      gender: random(["Male", "Female", "Both"]),
+      jobApplyType: random(["Internal", "External"]),
+      salaryType: "Monthly",
+      minSalary: minSal.toString(),
+      maxSalary: maxSal.toString(),
+      experience: random(experiences),
+      careerLevel: random(careerLevels),
+      qualification: random(qualifications),
+      videoUrl: "",
+      deadlineDate: deadlineStr,
+      address: "123 Business Center, Tech Park",
+      location: random(locations),
+      industry: random(industries),
+    });
+
+    setToast({
+      isVisible: true,
+      message: "Form auto-filled with test data!",
+      type: "success",
+    });
+  };
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -189,7 +318,7 @@ const PostJobForm = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     if (status !== "idle") return;
 
     if (!validateStep(3)) {
@@ -197,9 +326,44 @@ const PostJobForm = () => {
     }
 
     setStatus("loading");
-    setTimeout(() => {
-      // Mock Data Save
-      addJob(formData);
+    try {
+      // Map form data to backend schema if needed
+      // Currently backend expects: title, description, category, tags, type, etc.
+      // Frontend uses: jobTitle, jobTypes etc.
+
+      const payload = {
+        title: formData.jobTitle,
+        description: formData.description,
+        category: formData.category,
+        type: formData.jobTypes,
+        // New Fields
+        tags: formData.tags,
+        location: formData.location,
+        address: formData.address,
+        salaryRange: {
+          min: formData.minSalary,
+          max: formData.maxSalary,
+        },
+        salaryCurrency: formData.salaryCurrency,
+        salaryType: formData.salaryType,
+        gender: formData.gender,
+        applyType: formData.jobApplyType,
+        experience: formData.experience,
+        careerLevel: formData.careerLevel,
+        qualification: formData.qualification,
+        videoUrl: formData.videoUrl,
+        industry: formData.industry,
+        deadline: formData.deadline,
+
+        company: formData.companyName,
+        // company object logic handled in backend if name passed?
+        // Backend expects 'companyId' usually, but logic in controller tries to find company by User ID.
+        // It uses `req.user.companyName` fallback.
+        // If we want to support dynamic company name per job for same recruiter, backend needs update.
+        // For now, adhering to existing backend logic which associates job with Recruiter's linked Company.
+      };
+
+      await jobsAPI.create(payload);
 
       setStatus("success");
       setToast({
@@ -211,7 +375,15 @@ const PostJobForm = () => {
         setStatus("idle");
         navigate("/jobs"); // Redirect to Job Listing
       }, 2000);
-    }, 1500);
+    } catch (error) {
+      console.error("Failed to post job", error);
+      setStatus("idle"); // or error status
+      setToast({
+        isVisible: true,
+        message: "Failed to publish job. Please try again.",
+        type: "error",
+      });
+    }
   };
 
   const handleFileChange = (e) => {
@@ -318,6 +490,18 @@ const PostJobForm = () => {
 
   return (
     <div className="bg-transparent p-0 border-none max-w-5xl mx-auto">
+      {/* Auto-Fill Button for Development */}
+      <div className="mb-6 flex justify-end">
+        <button
+          type="button"
+          onClick={autoFillTestData}
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-sm font-bold rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30"
+        >
+          <Wand2 size={16} />
+          Auto-Fill Test Data
+        </button>
+      </div>
+
       {/* Step Indicator */}
       <div className="mb-12 relative">
         <div className="flex justify-between items-center relative z-10">

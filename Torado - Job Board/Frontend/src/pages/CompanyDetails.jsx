@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import jobsData from "../data/jobs.json";
+import { jobsAPI, companiesAPI } from "../services/api";
 import JobMap from "../components/jobs/JobMap";
 import {
   MapPin,
@@ -23,53 +23,71 @@ import {
 
 const CompanyDetails = () => {
   const { id } = useParams();
+  const [company, setCompany] = useState(null);
+  const [companyJobs, setCompanyJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 1. Find the specific job/company based on ID
-  // In a real app, we'd fetch company by companyId. Here we use job.id as a proxy or find by company name if we passed that.
-  // Since we linked by job ID in CompanyListing, we find that job first to get the company info.
-  const initialJob = useMemo(() => {
-    return jobsData.jobs.find((j) => j.id === parseInt(id));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // 1. Fetch Company Details
+        const companyData = await companiesAPI.getById(id);
+        setCompany(companyData);
+
+        // 2. Fetch Jobs by Company ID
+        if (companyData) {
+          const jobsData = await jobsAPI.getAll({ companyId: id });
+          // Handle response structure (obj.jobs or array)
+          setCompanyJobs(jobsData.jobs || jobsData || []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch company details", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchData();
+    }
   }, [id]);
 
-  // 2. Get all jobs for this company
-  const companyJobs = useMemo(() => {
-    if (!initialJob) return [];
-    return jobsData.jobs.filter((j) => j.company === initialJob.company);
-  }, [initialJob]);
-
-  if (!initialJob) {
+  if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Company not found
+        <div className="flex flex-col items-center">
+          <div className="w-12 h-12 border-4 border-[#5BBB7B] border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-slate-500 font-medium">Loading company...</p>
+        </div>
+      </div>
+    );
+
+  if (!company) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-[#002333] mb-2">
+            Company Not Found
+          </h2>
+          <Link
+            to="/company-listing"
+            className="text-[#5BBB7B] hover:underline font-medium"
+          >
+            Back to Companies
+          </Link>
+        </div>
       </div>
     );
   }
 
-  // Derived Company Data (Mocking what's missing)
-  const company = {
-    name: initialJob.company,
-    logo: initialJob.logo,
-    location: initialJob.companyDetails?.location || initialJob.location,
-    website:
-      initialJob.companyDetails?.website ||
-      `www.${initialJob.company.replace(/\s+/g, "").toLowerCase()}.com`,
-    phone: "+1 234 567 890",
-    email: `info@${initialJob.company.replace(/\s+/g, "").toLowerCase()}.com`,
-    established: "2025",
-    employees: "50-100",
-    banner:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop", // Generic office banner
-    description:
-      initialJob.description ||
-      "We are a leading company in our industry, dedicated to innovation and excellence.",
-    mission: "Our Mission Is To Make Working Life Simple",
-    socials: [
-      { icon: Facebook, link: "#" },
-      { icon: Twitter, link: "#" },
-      { icon: Instagram, link: "#" },
-      { icon: Linkedin, link: "#" },
-    ],
-  };
+  // Ensure socials is an array (fallback)
+  const socials = company.socials || [
+    { icon: Facebook, link: "#" },
+    { icon: Twitter, link: "#" },
+    { icon: Instagram, link: "#" },
+    { icon: Linkedin, link: "#" },
+  ];
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-[#002333]">
@@ -289,52 +307,64 @@ const CompanyDetails = () => {
               <div className="space-y-6">
                 {companyJobs.slice(0, 3).map((job) => (
                   <div
-                    key={job.id}
+                    key={job._id || job.id}
                     className="bg-white p-6 rounded-xl border border-slate-100 flex flex-col md:flex-row gap-6 hover:shadow-lg hover:border-transparent transition-all duration-300 group"
                   >
                     {/* Job Image */}
                     <div className="w-full md:w-48 h-32 rounded-lg overflow-hidden shrink-0 relative">
                       <img
-                        src={job.bannerImage}
+                        src={
+                          job.bannerImage ||
+                          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&auto=format&fit=crop&q=60"
+                        }
                         alt={job.title}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src =
+                            "https://via.placeholder.com/300x200?text=Job";
+                        }}
                       />
                     </div>
 
                     <div className="flex-1">
                       <div className="flex flex-wrap gap-4 text-xs text-slate-400 mb-2">
                         <span className="flex items-center gap-1">
-                          <Clock size={14} /> {job.postedAt}
+                          <Clock size={14} />{" "}
+                          {new Date(job.createdAt).toLocaleDateString()}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Briefcase size={14} /> {job.company}
+                          <Briefcase size={14} />{" "}
+                          {job.companyId?.name || company.name}
                         </span>
                         <span className="flex items-center gap-1">
                           <MapPin size={14} /> {job.location}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Share2 size={14} /> {job.salaryRange}
+                          <Share2 size={14} />{" "}
+                          {typeof job.salaryRange === "object"
+                            ? `${job.salaryCurrency || "$"} ${job.salaryRange.min} - ${job.salaryRange.max}`
+                            : job.salaryRange}
                         </span>
                       </div>
 
                       <h4 className="text-lg font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors mb-4">
-                        <Link to={`/job/${job.id}`}>{job.title}</Link>
+                        <Link to={`/job/${job._id || job.id}`}>
+                          {job.title}
+                        </Link>
                       </h4>
 
                       <div className="flex gap-2">
                         <span className="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full">
-                          Full Time
+                          {job.type || "Full Time"}
                         </span>
-                        <span className="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full">
-                          Private
-                        </span>
-                        <span className="text-xs bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full">
-                          Urgent
-                        </span>
+                        {/* 
+                           Private/Urgent tags might not be in our basic job model yet, 
+                           can conditionally render if properties exist or remove static ones 
+                        */}
                       </div>
                     </div>
 
-                    {/* Action - Beer Icon */}
+                    {/* Action - Beer Icon (Bookmark placeholder) */}
                     <div className="self-start md:self-center mt-2 md:mt-0">
                       <button className="group/btn relative w-10 h-10 flex items-center justify-center rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white transition-all duration-300">
                         {/* Tooltip */}
@@ -362,7 +392,9 @@ const CompanyDetails = () => {
               <ul className="space-y-4 text-sm">
                 <li className="flex justify-between items-center">
                   <span className="font-bold text-[#002333]">Categories:</span>
-                  <span className="text-slate-500">{initialJob.category}</span>
+                  <span className="text-slate-500">
+                    {companyJobs[0]?.category || "Various"}
+                  </span>
                 </li>
                 <li className="flex justify-between items-center">
                   <span className="font-bold text-[#002333]">Established:</span>

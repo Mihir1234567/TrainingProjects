@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useMockData } from "../../context/MockDataContext";
+import { applicationsAPI } from "../../services/api";
 import {
   MapPin,
   Briefcase,
@@ -32,50 +32,68 @@ const AppliedJobs = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { applications, jobs } = useMockData();
+  const [applications, setApplications] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const data = await applicationsAPI.getAll(); // Calls /applications/me
+        setApplications(data);
+      } catch (error) {
+        console.error("Failed to fetch applications", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchApplications();
+  }, []);
 
   const allJobs = useMemo(() => {
     return applications.map((app) => {
-      const job = jobs.find((j) => j.id === app.jobId);
+      const job = app.jobId || {}; // Handle deleted jobs
+      const company = job.companyId || {};
 
       let Icon = Briefcase;
       let iconColor = "text-slate-600";
       let iconBg = "bg-slate-100/50";
 
-      if (job?.category === "Design") {
+      // Simple category logic or default
+      if (job.category === "Design") {
         Icon = Layout;
         iconColor = "text-blue-500";
         iconBg = "bg-blue-50";
-      } else if (job?.category === "Technology") {
+      } else if (
+        job.category === "Technology" ||
+        job.category === "Development"
+      ) {
         Icon = Smartphone;
         iconColor = "text-purple-500";
         iconBg = "bg-purple-50";
-      } else if (job?.category === "Marketing") {
+      } else if (job.category === "Marketing") {
         Icon = Zap;
         iconColor = "text-yellow-600";
         iconBg = "bg-yellow-50";
       }
 
       return {
-        id: app.id,
-        title: job?.title || "Unknown Job",
-        location: job?.location || "Remote",
-        type: job?.type || "Full Time",
-        status: app.status || "Active",
-        appliedDate: app.date
-          ? new Date(app.date).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })
-          : "N/A",
-        category: job?.category || "General",
+        id: app._id,
+        title: job.title || "Unknown Job (Deleted)",
+        location: job.location || "Remote",
+        type: job.type || "Full Time",
+        status: app.status || "Pending",
+        appliedDate: new Date(app.createdAt).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
+        category: job.category || "General",
         icon: Icon,
         iconBg: iconBg,
         iconColor: iconColor,
       };
     });
-  }, [applications, jobs]);
+  }, [applications]);
 
   const categories = [
     "All Jobs",

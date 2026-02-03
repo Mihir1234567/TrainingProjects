@@ -15,63 +15,33 @@ import {
 const categories = [
   {
     id: 1,
-    title: "Web Development & Design",
-    count: "20 Job positions",
+    title: "Technology",
+    count: "4 Job positions",
     icon: Monitor,
   },
   {
     id: 2,
-    title: "Market Research Company",
-    count: "15 Job positions",
+    title: "Marketing",
+    count: "5 Job positions",
     icon: BarChart3,
   },
   {
     id: 3,
-    title: "Content Writer & Manager",
-    count: "25 Job positions",
-    icon: PenTool,
-  },
-  {
-    id: 4,
-    title: "Project Manager Assistant",
-    count: "10 Job positions",
+    title: "Management",
+    count: "2 Job positions",
     icon: Briefcase,
   },
   {
-    id: 5,
-    title: "Design, Art And Multimedia",
-    count: "30 Job positions",
-    icon: Layout,
-  },
-  {
-    id: 6,
-    title: "Marketing And Sale Manager",
-    count: "28 Job positions",
-    icon: Target,
-  },
-  {
-    id: 7,
-    title: "Human Resources Manager",
-    count: "15 Job positions",
-    icon: Dna,
-  },
-  {
-    id: 8,
-    title: "Software And Financing",
-    count: "17 Job positions",
-    icon: Instagram,
-  },
-  {
-    id: 9,
-    title: "Programming And Technology",
-    count: "13 Job positions",
-    icon: Phone,
-  },
-  {
-    id: 10,
-    title: "Accounting And Finance",
-    count: "11 Job positions",
+    id: 4,
+    title: "Finance",
+    count: "1 Job positions",
     icon: Database,
+  },
+  {
+    id: 5,
+    title: "Design",
+    count: "2 Job positions",
+    icon: PenTool,
   },
 ];
 

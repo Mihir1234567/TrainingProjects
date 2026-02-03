@@ -1,28 +1,22 @@
 import React, { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import {
-  User,
-  Mail,
-  FileText,
-  Upload,
-  CheckCircle,
-  XCircle,
-} from "lucide-react";
-import { useMockData } from "../context/MockDataContext";
+import { User, Mail, FileText } from "lucide-react";
+import { applicationsAPI } from "../services/api";
+import FileUploader from "../components/common/FileUploader";
 import Toast from "../components/common/Toast";
 
 const ApplyJob = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { applyToJob } = useMockData();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: "",
+    coverLetter: "",
+    resume: "",
   });
 
-  const [status, setStatus] = useState("idle"); // idle, loading, success
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
@@ -33,15 +27,21 @@ const ApplyJob = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleResumeUpload = (path) => {
+    setFormData((prev) => ({ ...prev, resume: path }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "loading") return;
 
-    // Simple validation
-    if (!formData.name || !formData.email) {
+    // Validation
+    if (!formData.name || !formData.email || !formData.resume) {
       setToast({
         isVisible: true,
-        message: "Please fill in all required fields.",
+        message: !formData.resume
+          ? "Please upload your resume."
+          : "Please fill in all required fields.",
         type: "error",
       });
       return;
@@ -49,9 +49,12 @@ const ApplyJob = () => {
 
     setStatus("loading");
 
-    // Simulate API call
-    setTimeout(() => {
-      applyToJob(parseInt(id), formData);
+    try {
+      await applicationsAPI.apply(id, {
+        ...formData, // email/name might satisfy backend if it expects them in body, though typically it uses req.user
+        jobId: id,
+      });
+
       setStatus("success");
       setToast({
         isVisible: true,
@@ -61,9 +64,17 @@ const ApplyJob = () => {
 
       // Redirect after success
       setTimeout(() => {
-        navigate("/user-dashboard");
+        navigate("/user-dashboard/applied-jobs");
       }, 2000);
-    }, 1500);
+    } catch (error) {
+      console.error("Application failed", error);
+      setStatus("error");
+      setToast({
+        isVisible: true,
+        message: error.message || "Failed to submit application.",
+        type: "error",
+      });
+    }
   };
 
   const renderInput = (id, label, Icon, type = "text", props = {}) => (
@@ -120,25 +131,25 @@ const ApplyJob = () => {
             {/* Email Input */}
             {renderInput("email", "Email Address", Mail, "email")}
 
-            {/* Message Textarea */}
+            {/* Message Textarea - Mapped to coverLetter */}
             <div className="relative group/field">
               <textarea
-                id="message"
+                id="coverLetter"
                 placeholder=" "
-                value={formData.message}
-                onChange={(e) => handleChange("message", e.target.value)}
+                value={formData.coverLetter}
+                onChange={(e) => handleChange("coverLetter", e.target.value)}
                 className="peer w-full h-44 pl-16 pr-5 py-6 bg-white border border-slate-100 ring-4 ring-transparent rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all focus-glow resize-none"
               ></textarea>
               <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400 group-focus-within/field:bg-[#5BBB7B]/10 group-focus-within/field:text-[#5BBB7B] transition-all duration-300">
                 <FileText size={18} strokeWidth={2.5} />
               </div>
               <label
-                htmlFor="message"
+                htmlFor="coverLetter"
                 className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none
                            peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2
                            peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider"
               >
-                Message
+                Cover Letter / Message
               </label>
             </div>
 
@@ -147,17 +158,14 @@ const ApplyJob = () => {
               <h4 className="text-[16px] font-bold text-[#002333] mb-4">
                 Upload Resume
               </h4>
-              <div className="border-2 border-dashed border-[#5BBB7B]/30 bg-[#5BBB7B]/5 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-[#5BBB7B] hover:bg-[#5BBB7B]/10 transition-all group/upload relative overflow-hidden">
-                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-4 group-hover/upload:scale-110 transition-transform">
-                  <Upload className="text-[#5BBB7B]" size={28} />
-                </div>
-                <p className="text-[#002333] font-bold text-lg mb-1">
-                  Click to upload or drop files
-                </p>
-                <p className="text-slate-500 text-sm">
-                  Max file size: 2MB (PDF, DOCX)
-                </p>
-              </div>
+              <FileUploader
+                onUploadSuccess={handleResumeUpload}
+                label=""
+                accept=".pdf,.doc,.docx"
+              />
+              {!formData.resume && status !== "success" && (
+                <p className="text-red-400 text-sm mt-2">Resume is required.</p>
+              )}
             </div>
 
             {/* Footer Note */}

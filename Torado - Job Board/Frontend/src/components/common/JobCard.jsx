@@ -19,8 +19,12 @@ const JobCard = ({ job }) => {
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden p-3">
             <img
-              src={job.logo}
-              alt={job.company}
+              src={
+                job.companyId?.logo
+                  ? `http://localhost:5001${job.companyId.logo}`
+                  : job.logo || "https://via.placeholder.com/40?text=Logo"
+              }
+              alt={job.companyId?.name || job.company}
               className="w-full h-full object-contain"
               onError={(e) => {
                 e.target.onerror = null;
@@ -30,11 +34,13 @@ const JobCard = ({ job }) => {
           </div>
           <div>
             <h4 className="text-[#002333] font-bold text-lg leading-tight">
-              {job.company}
+              {job.companyId?.name || job.company || "Unknown Company"}
             </h4>
             <p className="text-slate-400 text-sm">
               by{" "}
-              <span className="text-slate-500 font-medium">{job.postedBy}</span>
+              <span className="text-slate-500 font-medium">
+                {job.postedBy || "Recruiter"}
+              </span>
             </p>
           </div>
         </div>
@@ -73,9 +79,11 @@ const JobCard = ({ job }) => {
         <div className="space-y-1">
           <span className="text-slate-400 text-sm block">Salary</span>
           <p className="text-[#002333] font-bold">
-            ${job.salary}{" "}
+            {job.salaryRange
+              ? `$${job.salaryRange.min} - $${job.salaryRange.max}`
+              : job.salary || "$0"}{" "}
             <span className="text-slate-400 font-medium font-sans">
-              /{job.salaryPeriod.toLowerCase()}
+              /{(job.salaryType || job.salaryPeriod || "Yearly").toLowerCase()}
             </span>
           </p>
         </div>
