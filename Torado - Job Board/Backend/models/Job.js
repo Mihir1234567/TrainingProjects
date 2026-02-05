@@ -12,6 +12,9 @@ const jobSchema = mongoose.Schema(
       ref: "Company",
       // required: true, // Optional for now if we want to allow quick posts
     },
+    company: String, // Allow storing company name directly
+    companyCategory: String,
+    companyType: String,
     title: {
       type: String,
       required: [true, "Please add a job title"],

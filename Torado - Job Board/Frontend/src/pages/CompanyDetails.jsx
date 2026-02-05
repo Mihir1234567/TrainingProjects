@@ -178,126 +178,89 @@ const CompanyDetails = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-10">
             {/* About Us */}
-            <section>
-              <h3 className="text-[22px] font-bold text-[#002333] mb-4">
-                About Us
-              </h3>
-              <p className="text-slate-500 leading-relaxed whitespace-pre-line">
-                Every month, more than 3 million job seekers visit our website
-                to search for jobs, with more than 130,000 applications per day.
-                Search all open positions on the web. Get your own personalized
-                salary estimate. Sed ut ipsa quae ab illo inventore veritatis et
-                quasi architecto beatae vitae dicta sunt explicabo.
-                <br />
-                <br />
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam aperiam, eaque ipsa
-                quae ab illo inventore veritatis quasi architecto beatae vitae
-                dicta sunts explicabo. Neque eius modi tempora incidunt ut
-                labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
-                minima suscipit laboriosam, nisi ut aliquid ex ea commodi
-                consequatur?
-              </p>
-            </section>
+            {(company.aboutUs || company.description) && (
+              <section>
+                <h3 className="text-[22px] font-bold text-[#002333] mb-4">
+                  About Us
+                </h3>
+                <p className="text-slate-500 leading-relaxed whitespace-pre-line">
+                  {company.aboutUs || company.description}
+                </p>
+              </section>
+            )}
 
             {/* Fundamental Learning, Skills, & Knowledge */}
-            <section>
-              <h3 className="text-[22px] font-bold text-[#002333] mb-4">
-                Fundamental Learning, Skills, & Knowledge
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  "A register demonstrates well-thought-out and polished end-to-end shopper pilgrimages",
-                  "10+ years of enterprise knowledge in interactive configuration and/or visual design",
-                  "Excellent interpersonal skills Aware of mobile, communication, and collaboration trends",
-                  "Capability to construct positively lustrous design prototypes, mockups and other contact prototypes",
-                  "History of concerning shipping developments with your work",
-                  "Mastership in miscellaneous design tools such as Figma, Photoshop, Illustrator and Sketch",
-                ].map((skill, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-slate-500"
-                  >
-                    <CheckCircle2
-                      size={18}
-                      className="text-[#5BBB7B] shrink-0 mt-1"
-                    />
-                    <span className="leading-relaxed">{skill}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {company.skills && company.skills.length > 0 && (
+              <section>
+                <div className="bg-red-100 p-2 mb-2 text-xs font-mono">
+                  DEBUG: {JSON.stringify(company.skills)}
+                </div>
+                <h3 className="text-[22px] font-bold text-[#002333] mb-4">
+                  Fundamental Learning, Skills, & Knowledge
+                </h3>
+                <ul className="space-y-3">
+                  {company.skills.map((skill, index) => (
+                    <li
+                      key={index}
+                      className="flex items-start gap-3 text-slate-500"
+                    >
+                      <CheckCircle2
+                        size={18}
+                        className="text-[#5BBB7B] shrink-0 mt-1"
+                      />
+                      <span className="leading-relaxed">{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* Talent & Experience */}
-            <section>
-              <h3 className="text-[22px] font-bold text-[#002333] mb-4">
-                Talent & Experience
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  "Developing user occasions for corporation software/services",
-                  "Developing & using selected design principles & interaction patterns",
-                  "Aligning or influencing design thinking with teams working in other geographies",
-                ].map((exp, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-slate-500"
-                  >
-                    <CheckCircle2
-                      size={18}
-                      className="text-[#5BBB7B] shrink-0 mt-1"
-                    />
-                    <span className="leading-relaxed">{exp}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {company.talent && company.talent.length > 0 && (
+              <section>
+                <h3 className="text-[22px] font-bold text-[#002333] mb-4">
+                  Talent & Experience
+                </h3>
+                <ul className="space-y-3">
+                  {company.talent.map((exp, index) => (
+                    <li
+                      key={index}
+                      className="flex items-start gap-3 text-slate-500"
+                    >
+                      <CheckCircle2
+                        size={18}
+                        className="text-[#5BBB7B] shrink-0 mt-1"
+                      />
+                      <span className="leading-relaxed">{exp}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* Recruitments */}
-            <section>
-              <h3 className="text-[22px] font-bold text-[#002333] mb-4">
-                Recruitments
-              </h3>
-              <p className="text-slate-500 leading-relaxed">
-                Every month, more than 3 million job seekers visit our website
-                to search for jobs, with more than 130,000 applications per day.
-                Search all open positions on the web. Get your own personalized
-                salary estimate. Sed ut ipsa quae ab illo inventore veritatis et
-                quasi architecto beatae vitae dicta sunt explicabo.
-                <br />
-                <br />
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam aperiam, eaque ipsa
-                quae ab illo inventore veritatis quasi architecto beatae vitae
-                dicta sunts explicabo. Neque eius modi tempora incidunt ut
-                labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
-                minima suscipit laboriosam, nisi ut aliquid ex ea commodi
-                consequatur?
-              </p>
-            </section>
+            {company.recruitments && (
+              <section>
+                <h3 className="text-[22px] font-bold text-[#002333] mb-4">
+                  Recruitments
+                </h3>
+                <p className="text-slate-500 leading-relaxed whitespace-pre-line">
+                  {company.recruitments}
+                </p>
+              </section>
+            )}
 
             {/* People */}
-            <section>
-              <h3 className="text-[22px] font-bold text-[#002333] mb-4">
-                People
-              </h3>
-              <p className="text-slate-500 leading-relaxed">
-                Every month, more than 3 million job seekers visit our website
-                to search for jobs, with more than 130,000 applications per day.
-                Search all open positions on the web. Get your own personalized
-                salary estimate. Sed ut ipsa quae ab illo inventore veritatis et
-                quasi architecto beatae vitae dicta sunt explicabo.
-                <br />
-                <br />
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam aperiam, eaque ipsa
-                quae ab illo inventore veritatis quasi architecto beatae vitae
-                dicta sunts explicabo. Neque eius modi tempora incidunt ut
-                labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
-                minima suscipit laboriosam, nisi ut aliquid ex ea commodi
-                consequatur?
-              </p>
-            </section>
+            {company.people && (
+              <section>
+                <h3 className="text-[22px] font-bold text-[#002333] mb-4">
+                  People
+                </h3>
+                <p className="text-slate-500 leading-relaxed whitespace-pre-line">
+                  {company.people}
+                </p>
+              </section>
+            )}
 
             {/* Related Jobs */}
             <section>
@@ -398,7 +361,11 @@ const CompanyDetails = () => {
                 </li>
                 <li className="flex justify-between items-center">
                   <span className="font-bold text-[#002333]">Established:</span>
-                  <span className="text-slate-500">{company.established}</span>
+                  <span className="text-slate-500">
+                    {company.established
+                      ? new Date(company.established).toLocaleDateString()
+                      : "N/A"}
+                  </span>
                 </li>
                 <li className="flex justify-between items-center">
                   <span className="font-bold text-[#002333]">Employees:</span>

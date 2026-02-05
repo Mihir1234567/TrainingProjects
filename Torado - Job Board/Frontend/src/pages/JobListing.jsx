@@ -335,7 +335,7 @@ const JobListing = () => {
             ) : paginatedJobs.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 {paginatedJobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard key={job._id || job.id} job={job} />
                 ))}
               </div>
             ) : (

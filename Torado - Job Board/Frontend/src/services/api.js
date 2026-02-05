@@ -1,7 +1,7 @@
 const API_URL = "http://localhost:5001/api";
 
 const getHeaders = () => {
-  const userStr = localStorage.getItem("torado_user");
+  const userStr = sessionStorage.getItem("torado_user");
   const headers = {
     "Content-Type": "application/json",
   };
@@ -96,10 +96,20 @@ export const jobsAPI = {
     return handleResponse(response);
   },
 
+  update: async (id, jobData) => {
+    const response = await fetch(`${API_URL}/jobs/${id}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(jobData),
+    });
+    return handleResponse(response);
+  },
+
   delete: async (id) => {
     const response = await fetch(`${API_URL}/jobs/${id}`, {
       method: "DELETE",
       headers: getHeaders(),
+      body: JSON.stringify({}),
     });
     return handleResponse(response);
   },

@@ -36,6 +36,12 @@ const companySchema = mongoose.Schema(
         link: String,
       },
     ],
+    mission: String,
+    aboutUs: String,
+    skills: [String], // Fundamental Learning, Skills...
+    talent: [String], // Talent & Experience
+    recruitments: String,
+    people: String,
   },
   {
     timestamps: true,

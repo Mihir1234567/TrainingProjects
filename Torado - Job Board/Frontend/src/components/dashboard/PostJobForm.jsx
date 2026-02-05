@@ -15,6 +15,7 @@ import {
   Clock,
   Layout,
   User,
+  Users,
   Type,
   FileText,
   X,
@@ -27,15 +28,22 @@ import {
   ArrowLeft,
   ArrowRight,
   Wand2,
+  Mail,
+  Phone,
+  Quote,
 } from "lucide-react";
 import CustomDropdown from "../common/CustomDropdown";
 import DashboardButton from "../common/DashboardButton";
 import Toast from "../common/Toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { jobsAPI } from "../../services/api";
+import { useEffect } from "react";
 
 const PostJobForm = () => {
   const navigate = useNavigate();
+  const { id: paramId } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = paramId || searchParams.get("id");
   // const { addJob } = useMockData(); // Removed mock data usage
 
   const [formData, setFormData] = useState({
@@ -48,6 +56,15 @@ const PostJobForm = () => {
     companyName: "",
     companyCategory: "",
     companyType: "",
+    companyMission: "",
+    companyAbout: "",
+    companySkills: [],
+    companyTalent: [],
+    companyRecruitments: "",
+    companyPeople: "",
+    companyEstablished: "",
+    companyPhone: "",
+    companyEmail: "",
     tags: [],
     gender: "",
     jobApplyType: "",
@@ -65,6 +82,8 @@ const PostJobForm = () => {
   });
 
   const [tagInput, setTagInput] = useState("");
+  const [skillsInput, setSkillsInput] = useState("");
+  const [talentInput, setTalentInput] = useState("");
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
@@ -74,6 +93,66 @@ const PostJobForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [fileError, setFileError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      const fetchJob = async () => {
+        try {
+          setLoading(true);
+          const job = await jobsAPI.getById(id);
+          // Map backend data to form state
+          setFormData({
+            jobTitle: job.title || "",
+            category: job.category || "",
+            jobTypes: job.type || "",
+            description: job.description || "",
+            companyName: job.company || job.companyId?.name || "",
+            companyCategory: job.companyCategory || job.category || "",
+            companyType: job.companyType || "Private",
+            companyMission: job.companyId?.mission || "",
+            companyAbout: job.companyId?.aboutUs || "",
+            companySkills: job.companyId?.skills || [],
+            companyTalent: job.companyId?.talent || [],
+            companyRecruitments: job.companyId?.recruitments || "",
+            companyPeople: job.companyId?.people || "",
+            companyEstablished: job.companyId?.established
+              ? new Date(job.companyId.established).toISOString().split("T")[0]
+              : "",
+            companyPhone: job.companyId?.phone || "",
+            companyEmail: job.companyId?.email || "",
+            tags: job.tags || [],
+            gender: job.gender || "",
+            jobApplyType: job.applyType || "",
+            salaryType: job.salaryType || "",
+            minSalary: job.salaryRange?.min || "",
+            maxSalary: job.salaryRange?.max || "",
+            experience: job.experience || "",
+            careerLevel: job.careerLevel || "",
+            qualification: job.qualification || "",
+            videoUrl: job.videoUrl || "",
+            deadline: job.deadline
+              ? new Date(job.deadline).toISOString().split("T")[0]
+              : "",
+            address: job.address || "",
+            location: job.location || "",
+            industry: job.industry || "",
+            salaryCurrency: job.salaryCurrency || "USD",
+          });
+        } catch (error) {
+          console.error("Failed to fetch job", error);
+          setToast({
+            isVisible: true,
+            message: "Failed to load job details",
+            type: "error",
+          });
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchJob();
+    }
+  }, [id]);
 
   // Auto-fill test data for development
   const autoFillTestData = () => {
@@ -145,10 +224,29 @@ const PostJobForm = () => {
       "GraphQL",
     ];
 
+    const companyMissions = [
+      "To accelerate the world's transition to sustainable energy.",
+      "To organize the world's information and make it universally accessible and useful.",
+      "To give people the power to build community and bring the world closer together.",
+      "To empower every person and every organization on the planet to achieve more.",
+    ];
+
     const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const randomTags = tagOptions
       .sort(() => Math.random() - 0.5)
       .slice(0, 3 + Math.floor(Math.random() * 3));
+    const randomSkills = tagOptions
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4 + Math.floor(Math.random() * 2));
+    const randomTalent = [
+      "5+ years experience",
+      "Leadership skills",
+      "Agile methodology",
+      "Team player",
+    ]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3);
+
     const minSal = (40 + Math.floor(Math.random() * 60)) * 1000;
     const maxSal = minSal + (20 + Math.floor(Math.random() * 40)) * 1000;
 
@@ -158,6 +256,13 @@ const PostJobForm = () => {
       futureDate.getDate() + 14 + Math.floor(Math.random() * 30),
     );
     const deadlineStr = futureDate.toISOString().split("T")[0];
+
+    // Generate past established date
+    const pastDate = new Date();
+    pastDate.setFullYear(
+      pastDate.getFullYear() - (5 + Math.floor(Math.random() * 20)),
+    );
+    const establishedStr = pastDate.toISOString().split("T")[0];
 
     setFormData({
       jobTitle: random(jobTitles),
@@ -180,18 +285,30 @@ Requirements:
       companyName: random(companies),
       companyCategory: random(categories),
       companyType: "Private",
+      companyMission: random(companyMissions),
+      companyAbout:
+        "We are a leading technology company dedicated to innovation and excellence. Our team is passionate about building products that make a difference.",
+      companySkills: randomSkills,
+      companyTalent: randomTalent,
+      companyRecruitments:
+        "We are always looking for talented individuals to join our growing team. If you are passionate about technology and want to make an impact, we want to hear from you.",
+      companyPeople:
+        "Our people are our greatest asset. We foster a culture of collaboration, creativity, and continuous learning.",
+      companyEstablished: establishedStr,
+      companyPhone: "+1 (555) 123-4567",
+      companyEmail: "careers@example.com",
       tags: randomTags,
-      gender: random(["Male", "Female", "Both"]),
+      gender: random(["Male", "Female", "Any"]),
       jobApplyType: random(["Internal", "External"]),
-      salaryType: "Monthly",
-      minSalary: minSal.toString(),
-      maxSalary: maxSal.toString(),
+      salaryType: random(["Yearly", "Monthly", "Hourly"]),
+      minSalary: minSal,
+      maxSalary: maxSal,
       experience: random(experiences),
       careerLevel: random(careerLevels),
       qualification: random(qualifications),
-      videoUrl: "",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       deadlineDate: deadlineStr,
-      address: "123 Business Center, Tech Park",
+      address: "123 Tech Street, Silicon Valley, CA",
       location: random(locations),
       industry: random(industries),
     });
@@ -231,6 +348,26 @@ Requirements:
     setFormData((prev) => ({
       ...prev,
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
+
+  const handleAddItem = (e, field, inputValue, setInputValue) => {
+    if (e.key === "Enter" && inputValue.trim()) {
+      e.preventDefault();
+      if (!formData[field].includes(inputValue.trim())) {
+        setFormData((prev) => ({
+          ...prev,
+          [field]: [...(prev[field] || []), inputValue.trim()],
+        }));
+      }
+      setInputValue("");
+    }
+  };
+
+  const handleRemoveItem = (field, itemToRemove) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field].filter((item) => item !== itemToRemove),
     }));
   };
 
@@ -356,6 +493,17 @@ Requirements:
         deadline: formData.deadline,
 
         company: formData.companyName,
+        companyCategory: formData.companyCategory,
+        companyType: formData.companyType,
+        companyMission: formData.companyMission,
+        companyAbout: formData.companyAbout,
+        companySkills: formData.companySkills,
+        companyTalent: formData.companyTalent,
+        companyRecruitments: formData.companyRecruitments,
+        companyPeople: formData.companyPeople,
+        companyEstablished: formData.companyEstablished,
+        companyPhone: formData.companyPhone,
+        companyEmail: formData.companyEmail,
         // company object logic handled in backend if name passed?
         // Backend expects 'companyId' usually, but logic in controller tries to find company by User ID.
         // It uses `req.user.companyName` fallback.
@@ -363,17 +511,23 @@ Requirements:
         // For now, adhering to existing backend logic which associates job with Recruiter's linked Company.
       };
 
-      await jobsAPI.create(payload);
+      if (id) {
+        await jobsAPI.update(id, payload);
+      } else {
+        await jobsAPI.create(payload);
+      }
 
       setStatus("success");
       setToast({
         isVisible: true,
-        message: "Your job has been published successfully!",
+        message: id
+          ? "Job updated successfully!"
+          : "Your job has been published successfully!",
         type: "success",
       });
       setTimeout(() => {
         setStatus("idle");
-        navigate("/jobs"); // Redirect to Job Listing
+        navigate("/user-dashboard/manage-jobs"); // Redirect to Manage Jobs for better flow
       }, 2000);
     } catch (error) {
       console.error("Failed to post job", error);
@@ -712,57 +866,231 @@ Requirements:
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="relative group/tag">
-                        <Tag
-                          className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/tag:text-[#5BBB7B] transition-colors"
-                          size={20}
-                        />
-                        <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
-                          {formData.tags.map((tag, index) => (
+                      {renderInput("companyMission", "Mission / Slogan", Quote)}
+                      {renderInput(
+                        "companyEstablished",
+                        "Founded Date",
+                        Calendar,
+                        "date",
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {renderInput(
+                        "companyPhone",
+                        "Phone Number",
+                        Phone,
+                        "tel",
+                      )}
+                      {renderInput(
+                        "companyEmail",
+                        "Email Address",
+                        Mail,
+                        "email",
+                      )}
+                    </div>
+
+                    {/* About Company */}
+                    <div className="relative group/field">
+                      <textarea
+                        value={formData.companyAbout}
+                        onChange={(e) =>
+                          handleChange("companyAbout", e.target.value)
+                        }
+                        className="peer w-full h-32 pl-16 pr-5 py-6 bg-white border border-slate-100 rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all resize-none"
+                        placeholder=" "
+                      ></textarea>
+                      <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400">
+                        <FileText size={18} strokeWidth={2.5} />
+                      </div>
+                      <label className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider">
+                        About Company
+                      </label>
+                    </div>
+
+                    {/* Fundamental Skills */}
+                    <div className="relative group/tag">
+                      <Tag
+                        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/tag:text-[#5BBB7B] transition-colors"
+                        size={20}
+                      />
+                      <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
+                        {formData.companySkills &&
+                          formData.companySkills.map((tag, index) => (
                             <motion.span
-                              initial={{ scale: 0.8, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
+                              initial={{ scale: 0.8 }}
+                              animate={{ scale: 1 }}
                               key={index}
-                              className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EFF2FC] text-[#5569CC] rounded-full text-[13px] font-semibold border border-[#5569CC]/10 hover:bg-[#5569CC] hover:text-white transition-all cursor-default"
+                              className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EFF2FC] text-[#5569CC] rounded-full text-[13px] font-semibold"
                             >
                               {tag}
                               <X
                                 size={14}
-                                className="cursor-pointer hover:scale-120 transition-transform"
-                                onClick={() => handleRemoveTag(tag)}
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  handleRemoveItem("companySkills", tag)
+                                }
                               />
                             </motion.span>
                           ))}
-                          <input
-                            type="text"
-                            placeholder={
-                              formData.tags.length === 0
-                                ? "Add Tags (Press Enter)"
-                                : ""
-                            }
-                            value={tagInput}
-                            onChange={(e) => setTagInput(e.target.value)}
-                            onKeyDown={handleAddTag}
-                            className="flex-1 min-w-[120px] h-8 bg-transparent text-slate-800 placeholder:text-slate-400 focus:outline-none text-[15px]"
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          placeholder={
+                            formData.companySkills?.length === 0
+                              ? "Fundamental Learning & Skills (Enter to add)"
+                              : ""
+                          }
+                          value={skillsInput}
+                          onChange={(e) => setSkillsInput(e.target.value)}
+                          onKeyDown={(e) =>
+                            handleAddItem(
+                              e,
+                              "companySkills",
+                              skillsInput,
+                              setSkillsInput,
+                            )
+                          }
+                          className="flex-1 min-w-[120px] h-8 bg-transparent text-slate-800 placeholder:text-slate-400 focus:outline-none text-[15px]"
+                        />
                       </div>
+                    </div>
+
+                    {/* Talent & Experience */}
+                    <div className="relative group/tag">
+                      <Tag
+                        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/tag:text-[#5BBB7B] transition-colors"
+                        size={20}
+                      />
+                      <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
+                        {formData.companyTalent &&
+                          formData.companyTalent.map((tag, index) => (
+                            <motion.span
+                              initial={{ scale: 0.8 }}
+                              animate={{ scale: 1 }}
+                              key={index}
+                              className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EFF2FC] text-[#5569CC] rounded-full text-[13px] font-semibold"
+                            >
+                              {tag}
+                              <X
+                                size={14}
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  handleRemoveItem("companyTalent", tag)
+                                }
+                              />
+                            </motion.span>
+                          ))}
+                        <input
+                          type="text"
+                          placeholder={
+                            formData.companyTalent?.length === 0
+                              ? "Talent & Experience (Enter to add)"
+                              : ""
+                          }
+                          value={talentInput}
+                          onChange={(e) => setTalentInput(e.target.value)}
+                          onKeyDown={(e) =>
+                            handleAddItem(
+                              e,
+                              "companyTalent",
+                              talentInput,
+                              setTalentInput,
+                            )
+                          }
+                          className="flex-1 min-w-[120px] h-8 bg-transparent text-slate-800 placeholder:text-slate-400 focus:outline-none text-[15px]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Recruitments */}
+                    <div className="relative group/field">
+                      <textarea
+                        value={formData.companyRecruitments}
+                        onChange={(e) =>
+                          handleChange("companyRecruitments", e.target.value)
+                        }
+                        className="peer w-full h-32 pl-16 pr-5 py-6 bg-white border border-slate-100 rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all resize-none"
+                        placeholder=" "
+                      ></textarea>
+                      <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400">
+                        <FileText size={18} strokeWidth={2.5} />
+                      </div>
+                      <label className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider">
+                        Recruitments Text
+                      </label>
+                    </div>
+
+                    {/* People */}
+                    <div className="relative group/field">
+                      <textarea
+                        value={formData.companyPeople}
+                        onChange={(e) =>
+                          handleChange("companyPeople", e.target.value)
+                        }
+                        className="peer w-full h-32 pl-16 pr-5 py-6 bg-white border border-slate-100 rounded-2xl text-[15px] font-bold text-[#002333] focus:outline-none focus:border-[#5BBB7B] focus:ring-[#5BBB7B]/5 transition-all resize-none"
+                        placeholder=" "
+                      ></textarea>
+                      <div className="absolute left-5 top-6 w-8 h-8 rounded-lg flex items-center justify-center bg-slate-50 text-slate-400">
+                        <Users size={18} strokeWidth={2.5} />
+                      </div>
+                      <label className="absolute left-16 top-6 text-slate-400 text-[15px] font-bold transition-all pointer-events-none peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#5BBB7B] peer-focus:bg-white peer-focus:px-2 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2 uppercase tracking-wider">
+                        People Text
+                      </label>
+                    </div>
+
+                    {/* Job Tags (Original) */}
+                    <div className="relative group/tag">
+                      <Tag
+                        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/tag:text-[#5BBB7B] transition-colors"
+                        size={20}
+                      />
+                      <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
+                        {formData.tags.map((tag, index) => (
+                          <motion.span
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            key={index}
+                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EFF2FC] text-[#5569CC] rounded-full text-[13px] font-semibold border border-[#5569CC]/10 hover:bg-[#5569CC] hover:text-white transition-all cursor-default"
+                          >
+                            {tag}
+                            <X
+                              size={14}
+                              className="cursor-pointer hover:scale-120 transition-transform"
+                              onClick={() => handleRemoveTag(tag)}
+                            />
+                          </motion.span>
+                        ))}
+                        <input
+                          type="text"
+                          placeholder={
+                            formData.tags.length === 0
+                              ? "Add Job Tags (Press Enter)"
+                              : ""
+                          }
+                          value={tagInput}
+                          onChange={(e) => setTagInput(e.target.value)}
+                          onKeyDown={handleAddTag}
+                          className="flex-1 min-w-[120px] h-8 bg-transparent text-slate-800 placeholder:text-slate-400 focus:outline-none text-[15px]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {renderDropdown(
                         "gender",
                         "Gender",
                         User,
                         options.genders,
                       )}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {renderInput("jobApplyType", "Job Apply Type", Globe)}
-                      {renderDropdown(
-                        "salaryType",
-                        "Salary Type",
-                        DollarSign,
-                        options.salaryTypes,
-                      )}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full col-span-1 md:col-span-2 lg:col-span-1">
+                        {renderInput("jobApplyType", "Apply Type", Globe)}
+                        {renderDropdown(
+                          "salaryType",
+                          "Pay Type",
+                          DollarSign,
+                          options.salaryTypes,
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -816,101 +1144,6 @@ Requirements:
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     {renderInput("industry", "Company Industry", Globe)}
-                  </div>
-                </div>
-              </div>
-
-              {/* Upload Section */}
-              <div className="bg-white rounded-[30px] shadow-[0_0_80px_rgba(0,0,0,0.03)] p-6 sm:p-10 md:p-14 border border-slate-50 transition-all hover:shadow-[0_30px_100px_rgba(0,0,0,0.08)] group/section">
-                <div className="text-left">
-                  <h4 className="text-[18px] font-bold text-[#002333] mb-6 md:mb-8 pb-2 border-b-2 border-[#5BBB7B] inline-block">
-                    Upload Resume
-                  </h4>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      id="resume-upload"
-                      className="hidden"
-                      onChange={handleFileChange}
-                      accept=".pdf,.doc,.docx"
-                    />
-                    <AnimatePresence mode="wait">
-                      {!selectedFile ? (
-                        <motion.label
-                          key="upload-label"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          htmlFor="resume-upload"
-                          className={`w-full h-40 md:h-48 border-2 border-dashed ${
-                            fileError
-                              ? "border-red-400 bg-red-50/30"
-                              : "border-slate-200 bg-slate-50"
-                          } rounded-2xl flex flex-col items-center justify-center hover:bg-white hover:border-[#5BBB7B] transition-all cursor-pointer group/upload`}
-                        >
-                          <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full shadow-lg flex items-center justify-center mb-3 md:mb-4 group-hover/upload:scale-110 transition-transform">
-                            <Upload
-                              className={
-                                fileError
-                                  ? "text-red-500"
-                                  : "text-[#5BBB7B] animate-pulse-subtle"
-                              }
-                              size={24}
-                            />
-                          </div>
-                          <div className="text-center px-4">
-                            {fileError ? (
-                              <div className="space-y-1">
-                                <p className="text-red-600 text-sm md:text-[16px] font-bold">
-                                  {fileError}
-                                </p>
-                                <p className="text-red-400 text-xs md:text-sm">
-                                  Please select a smaller file.
-                                </p>
-                              </div>
-                            ) : (
-                              <>
-                                <p className="text-[#002333] text-sm md:text-[16px] font-bold mb-1">
-                                  Click here or drop files to upload
-                                </p>
-                                <p className="text-slate-400 text-xs md:text-sm">
-                                  Support for PDF, DOC, DOCX (Max 2MB)
-                                </p>
-                              </>
-                            )}
-                          </div>
-                        </motion.label>
-                      ) : (
-                        <motion.div
-                          key="file-preview"
-                          initial={{ y: 20, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{ y: -20, opacity: 0 }}
-                          className="w-full p-6 bg-[#F5F7FC] rounded-2xl border border-[#5BBB7B]/20 flex items-center justify-between"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center">
-                              <File className="text-[#5BBB7B]" size={24} />
-                            </div>
-                            <div>
-                              <h5 className="font-bold text-[#002333] text-[15px]">
-                                {selectedFile.name}
-                              </h5>
-                              <p className="text-slate-400 text-xs font-medium">
-                                {selectedFile.size}
-                              </p>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedFile(null)}
-                            className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-lg transition-all"
-                          >
-                            <Trash2 size={20} />
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 </div>
               </div>

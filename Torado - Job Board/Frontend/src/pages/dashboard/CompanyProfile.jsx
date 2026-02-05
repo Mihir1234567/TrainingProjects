@@ -8,6 +8,8 @@ import {
   Loader2,
   CheckCircle,
   AlertCircle,
+  X,
+  Plus,
 } from "lucide-react";
 
 const CompanyProfile = () => {
@@ -22,6 +24,12 @@ const CompanyProfile = () => {
     location: "",
     description: "",
     logo: "",
+    mission: "",
+    aboutUs: "",
+    skills: [],
+    talent: [],
+    recruitments: "",
+    people: "",
   });
 
   useEffect(() => {
@@ -34,6 +42,12 @@ const CompanyProfile = () => {
           location: data.location || "",
           description: data.description || "",
           logo: data.logo || "",
+          mission: data.mission || "",
+          aboutUs: data.aboutUs || "",
+          skills: data.skills || [],
+          talent: data.talent || [],
+          recruitments: data.recruitments || "",
+          people: data.people || "",
           // New Fields
           phone: data.phone || "",
           email: data.email || "",
@@ -59,6 +73,67 @@ const CompanyProfile = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const [skillInput, setSkillInput] = useState("");
+  const [talentInput, setTalentInput] = useState("");
+
+  const handleAddItem = (e, field, inputValue, setInputValue) => {
+    if (e.key === "Enter" && inputValue.trim()) {
+      e.preventDefault();
+      if (!formData[field].includes(inputValue.trim())) {
+        setFormData((prev) => ({
+          ...prev,
+          [field]: [...(prev[field] || []), inputValue.trim()],
+        }));
+      }
+      setInputValue("");
+    }
+  };
+
+  const handleRemoveItem = (field, itemToRemove) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field].filter((item) => item !== itemToRemove),
+    }));
+  };
+
+  const renderTagInput = (label, field, inputValue, setInputValue) => (
+    <div className="mb-6">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        {label}
+      </label>
+      <div className="flex flex-wrap gap-2 mb-3">
+        {formData[field]?.map((item, index) => (
+          <span
+            key={index}
+            className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1"
+          >
+            {item}
+            <button
+              type="button"
+              onClick={() => handleRemoveItem(field, item)}
+              className="hover:text-blue-800"
+            >
+              <X size={14} />
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="relative">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => handleAddItem(e, field, inputValue, setInputValue)}
+          placeholder="Type and press Enter to add..."
+          className="w-full h-[50px] px-4 bg-white border border-slate-200 rounded-xl text-slate-600 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+        />
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+          <Plus size={18} />
+        </div>
+      </div>
+    </div>
+  );
 
   const handleLogoUpload = async (file) => {
     // FileUploader component likely passes the file object or path?
@@ -197,6 +272,69 @@ const CompanyProfile = () => {
           <MapPin className="w-5 h-5" />,
           "e.g. San Francisco, CA",
         )}
+
+        {renderInput(
+          "Mission / Slogan",
+          "mission",
+          "text",
+          null,
+          "e.g. To organize the world's information...",
+        )}
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            About Company (Detailed)
+          </label>
+          <textarea
+            name="aboutUs"
+            value={formData.aboutUs}
+            onChange={handleChange}
+            rows="5"
+            className="w-full p-4 bg-white border border-slate-200 rounded-xl text-slate-600 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
+            placeholder="Detailed description about your company..."
+          ></textarea>
+        </div>
+
+        {renderTagInput(
+          "Fundamental Learning & Skills",
+          "skills",
+          skillInput,
+          setSkillInput,
+        )}
+        {renderTagInput(
+          "Talent & Experience",
+          "talent",
+          talentInput,
+          setTalentInput,
+        )}
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Recruitments
+          </label>
+          <textarea
+            name="recruitments"
+            value={formData.recruitments}
+            onChange={handleChange}
+            rows="4"
+            className="w-full p-4 bg-white border border-slate-200 rounded-xl text-slate-600 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
+            placeholder="Describe your recruitment process..."
+          ></textarea>
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            People
+          </label>
+          <textarea
+            name="people"
+            value={formData.people}
+            onChange={handleChange}
+            rows="4"
+            className="w-full p-4 bg-white border border-slate-200 rounded-xl text-slate-600 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
+            placeholder="Describe your team and culture..."
+          ></textarea>
+        </div>
 
         <div className="mb-6">
           <label className="block text-sm font-medium text-slate-700 mb-2">

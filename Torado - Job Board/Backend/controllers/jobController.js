@@ -121,6 +121,27 @@ const getJobById = async (req, res) => {
   }
 };
 
+// Helper to update company fields
+const updateCompanyDetails = (company, data) => {
+  if (data.companyMission) company.mission = data.companyMission;
+  if (data.companyAbout) company.aboutUs = data.companyAbout;
+  // Ensure array handling for skills and talent
+  if (data.companySkills)
+    company.skills = Array.isArray(data.companySkills)
+      ? data.companySkills
+      : [data.companySkills];
+  if (data.companyTalent)
+    company.talent = Array.isArray(data.companyTalent)
+      ? data.companyTalent
+      : [data.companyTalent];
+  if (data.companyRecruitments) company.recruitments = data.companyRecruitments;
+  if (data.companyPeople) company.people = data.companyPeople;
+  if (data.companyEstablished) company.established = data.companyEstablished;
+  if (data.companyPhone) company.phone = data.companyPhone;
+  if (data.companyEmail) company.email = data.companyEmail;
+  if (data.companyLocation) company.location = data.companyLocation;
+};
+
 // @desc    Create a job
 // @route   POST /api/jobs
 // @access  Private (Employer)
@@ -132,10 +153,6 @@ const createJob = async (req, res) => {
 
   try {
     // Check if company exists for this user, if not create one or use details
-    // For simplicity, we assume companyName is on User or we might implement Company creation later
-    // Let's create a Company dummy if needed or just use User data.
-
-    // Simplification for now: Link to a dummy company if not exists or create one based on User profile
     let company = await Company.findOne({ userId: req.user.id });
     if (!company) {
       company = await Company.create({
@@ -144,6 +161,18 @@ const createJob = async (req, res) => {
         description: "Auto-generated company profile",
       });
     }
+
+    console.log("DEBUG: createJob received body keys:", Object.keys(req.body));
+    console.log("DEBUG: Updating company details for companyId:", company._id);
+    console.log("DEBUG: companyMission before:", company.mission);
+
+    // Update Company Details
+    updateCompanyDetails(company, req.body);
+
+    console.log("DEBUG: companyMission after:", company.mission);
+
+    await company.save();
+    console.log("DEBUG: Company saved successfully.");
 
     const job = await Job.create({
       recruiterId: req.user.id,
@@ -168,12 +197,6 @@ const deleteJob = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    // DEBUG LOGGING
-    console.log("Debug Delete Auth Check:");
-    console.log("User ID:", req.user.id);
-    console.log("User Role:", req.user.role);
-    console.log("Job Recruiter ID:", job.recruiterId.toString());
-
     // Check user
     if (
       job.recruiterId.toString() !== req.user.id &&
@@ -191,10 +214,49 @@ const deleteJob = async (req, res) => {
   }
 };
 
+// @desc    Update job
+// @route   PUT /api/jobs/:id
+// @access  Private (Owner)
+const updateJob = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    // Check user
+    if (
+      job.recruiterId.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(401).json({ message: "User not authorized" });
+    }
+
+    // Update Company Details
+    if (job.companyId) {
+      const company = await Company.findById(job.companyId);
+      if (company) {
+        updateCompanyDetails(company, req.body);
+        await company.save();
+      }
+    }
+
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(updatedJob);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getJobs,
   getMyJobs,
   getJobById,
   createJob,
   deleteJob,
+  updateJob,
 };

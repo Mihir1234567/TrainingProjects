@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { applicationsAPI } from "../../services/api";
 import {
   Briefcase,
@@ -248,6 +248,7 @@ const ApplicantCard = ({ applicant }) => {
 };
 
 const ManageApplicants = () => {
+  const { id } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -255,7 +256,12 @@ const ManageApplicants = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const data = await applicationsAPI.getRecruiterApplications();
+        let data;
+        if (id) {
+          data = await applicationsAPI.getByJobId(id);
+        } else {
+          data = await applicationsAPI.getRecruiterApplications();
+        }
         setApplications(data);
       } catch (error) {
         console.error("Failed to fetch applications", error);
@@ -264,7 +270,7 @@ const ManageApplicants = () => {
       }
     };
     fetchApplications();
-  }, []);
+  }, [id]);
 
   const allApplicants = useMemo(() => {
     return applications.map((app) => ({

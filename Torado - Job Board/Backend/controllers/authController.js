@@ -46,6 +46,7 @@ const registerUser = async (req, res) => {
         token: generateToken(user._id),
         companyName: user.companyName,
         jobTitle: user.jobTitle,
+        isProfileComplete: user.isProfileComplete,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -74,6 +75,7 @@ const loginUser = async (req, res) => {
       token: generateToken(user._id),
       companyName: user.companyName,
       jobTitle: user.jobTitle,
+      isProfileComplete: user.isProfileComplete,
     });
   } else {
     res.status(400).json({ message: "Invalid credentials" });

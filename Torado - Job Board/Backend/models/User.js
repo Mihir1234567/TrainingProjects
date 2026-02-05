@@ -95,6 +95,12 @@ const userSchema = mongoose.Schema(
       instagram: String,
     },
 
+    // Profile Completion Status
+    isProfileComplete: {
+      type: Boolean,
+      default: false,
+    },
+
     createdAt: {
       type: Date,
       default: Date.now,

@@ -15,15 +15,20 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize from localStorage on mount
+  // Initialize from sessionStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem("torado_user");
+    // Check for legacy localStorage and clear it
+    if (localStorage.getItem("torado_user")) {
+      localStorage.removeItem("torado_user");
+    }
+
+    const storedUser = sessionStorage.getItem("torado_user");
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error("Failed to parse user from local storage", error);
-        localStorage.removeItem("torado_user");
+        console.error("Failed to parse user from session storage", error);
+        sessionStorage.removeItem("torado_user");
       }
     }
     setIsLoading(false);
@@ -33,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const userWithToken = await authAPI.login(userData);
       setUser(userWithToken);
-      localStorage.setItem("torado_user", JSON.stringify(userWithToken));
+      sessionStorage.setItem("torado_user", JSON.stringify(userWithToken));
       return userWithToken;
     } catch (error) {
       console.error("Login failed", error);
@@ -45,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const newUser = await authAPI.register(userData);
       setUser(newUser);
-      localStorage.setItem("torado_user", JSON.stringify(newUser));
+      sessionStorage.setItem("torado_user", JSON.stringify(newUser));
       return newUser;
     } catch (error) {
       console.error("Registration failed", error);
@@ -55,6 +60,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    sessionStorage.removeItem("torado_user");
+    // Also ensure localStorage is clear
     localStorage.removeItem("torado_user");
     return Promise.resolve();
   };
@@ -62,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   const updateUser = (updates) => {
     const updatedUser = { ...user, ...updates };
     setUser(updatedUser);
-    localStorage.setItem("torado_user", JSON.stringify(updatedUser));
+    sessionStorage.setItem("torado_user", JSON.stringify(updatedUser));
   };
 
   const value = {

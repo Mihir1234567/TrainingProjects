@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext, useNavigate } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import { useAuth } from "../../context/AuthContext";
 
@@ -8,7 +8,15 @@ const DashboardLayout = () => {
     useOutletContext() || {};
 
   // Use AuthContext directly for accurate role detection
-  const { isRecruiter } = useAuth();
+  const { user, isRecruiter } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect to profile completion if not completed
+  useEffect(() => {
+    if (user && !user.isProfileComplete) {
+      navigate("/complete-profile");
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

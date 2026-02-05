@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import DashboardStats from "../../components/dashboard/DashboardStats";
 import DashboardWidgets from "../../components/dashboard/DashboardWidgets";
+import { dashboardAPI } from "../../services/api";
 
 const DashboardHome = () => {
   const { isRecruiter } = useOutletContext();
   const [greeting, setGreeting] = useState("");
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -14,6 +17,22 @@ const DashboardHome = () => {
     else if (hour < 17) setGreeting("Good Afternoon");
     else setGreeting("Good Evening");
   }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const data = await dashboardAPI.getStats();
+        setStats(data);
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, [isRecruiter]);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -41,10 +60,18 @@ const DashboardHome = () => {
       </div>
 
       {/* Stats Cards */}
-      <DashboardStats isRecruiter={isRecruiter} />
+      <DashboardStats
+        isRecruiter={isRecruiter}
+        stats={stats}
+        loading={loading}
+      />
 
       {/* Widgets (Notifications & Invoices) */}
-      <DashboardWidgets isRecruiter={isRecruiter} />
+      <DashboardWidgets
+        isRecruiter={isRecruiter}
+        recentActivity={stats?.recentActivity}
+        loading={loading}
+      />
     </div>
   );
 };

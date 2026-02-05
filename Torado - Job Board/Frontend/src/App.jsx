@@ -22,6 +22,7 @@ import AboutUs from "./pages/AboutUs";
 import Pricing from "./pages/Pricing";
 import FaqPage from "./pages/FaqPage";
 import MyAccountPage from "./pages/MyAccountPage";
+import CompleteProfile from "./pages/CompleteProfile";
 import ContactPage from "./pages/ContactPage";
 import TermsOfServices from "./pages/TermsOfServices";
 import PrivacyPolicy from "./pages/Privacy";
@@ -68,6 +69,7 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/faq" element={<FaqPage />} />
             <Route path="/login" element={<MyAccountPage />} />
+            <Route path="/complete-profile" element={<CompleteProfile />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/terms-of-services" element={<TermsOfServices />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -100,11 +102,16 @@ function App() {
                 <Route index element={<DashboardHome />} />
                 <Route path="post-job" element={<DashboardPostJob />} />
                 <Route path="manage-jobs" element={<ManageJobs />} />
+                <Route
+                  path="manage-jobs/:id/applicants"
+                  element={<ManageApplicants />}
+                />
                 <Route path="company-profile" element={<CompanyProfile />} />
                 <Route
                   path="manage-applicants"
                   element={<ManageApplicants />}
                 />
+                <Route path="edit-job/:id" element={<DashboardPostJob />} />
                 <Route path="bookmark-resumes" element={<BookmarkResumes />} />
                 <Route path="manage-resumes" element={<ManageResumes />} />
                 <Route path="create-resumes" element={<CreateResumes />} />

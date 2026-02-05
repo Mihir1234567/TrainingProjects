@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { jobsAPI } from "../../services/api";
 import {
   Eye,
@@ -32,6 +32,7 @@ const Tooltip = ({ children, text }) => (
 );
 
 const ManageJobs = () => {
+  const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState("All Status");
   const [selectedSort, setSelectedSort] = useState("Default");
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -58,12 +59,42 @@ const ManageJobs = () => {
   const handleDeleteJob = async (id) => {
     if (window.confirm("Are you sure you want to delete this job?")) {
       try {
-        await jobsAPI.deleteJob(id);
+        await jobsAPI.delete(id);
         setJobs((prev) => prev.filter((job) => job._id !== id));
       } catch (error) {
         console.error("Failed to delete job", error);
         alert("Failed to delete job");
       }
+    }
+  };
+
+  const handleEditJob = (id) => {
+    navigate(`/user-dashboard/post-job?id=${id}`);
+  };
+
+  const handleViewApplicants = (id) => {
+    navigate(`/job/${id}`);
+  };
+
+  const handleToggleStatus = async (id, currentStatus) => {
+    const newStatus = currentStatus === "Closed" ? "Active" : "Closed";
+    try {
+      // Optimistic update
+      setJobs((prev) =>
+        prev.map((job) =>
+          job._id === id ? { ...job, status: newStatus } : job,
+        ),
+      );
+      await jobsAPI.update(id, { status: newStatus });
+    } catch (error) {
+      console.error("Failed to update status", error);
+      // Revert if failed
+      setJobs((prev) =>
+        prev.map((job) =>
+          job._id === id ? { ...job, status: currentStatus } : job,
+        ),
+      );
+      alert("Failed to update status");
     }
   };
 
@@ -87,14 +118,19 @@ const ManageJobs = () => {
         iconBg = "bg-orange-100/50";
       }
 
+      // Calculate expiry date (30 days from creation)
+      const createdDate = new Date(job.createdAt);
+      const expiryDate = new Date(createdDate);
+      expiryDate.setDate(createdDate.getDate() + 30);
+
       return {
         id: job._id,
         title: job.title,
         status: job.status || "Active",
         filled: job.status === "Closed",
-        postedDate: new Date(job.createdAt).toLocaleDateString(),
-        expiredDate: "N/A", // We don't have expiration yet
-        applications: job.applicationsCount || 0, // Using real count from DB
+        postedDate: createdDate.toLocaleDateString(),
+        expiredDate: expiryDate.toLocaleDateString(),
+        applications: job.applicationsCount || 0,
         icon: Icon,
         iconBg: iconBg,
         iconColor: iconColor,
@@ -284,6 +320,7 @@ const ManageJobs = () => {
                           >
                             <job.icon size={20} />
                           </div>
+
                           <div className="min-w-0">
                             <h4 className="text-[15px] font-bold text-[#002333] group-hover:text-[#5BBB7B] transition-colors leading-snug truncate">
                               {job.title}
@@ -311,16 +348,26 @@ const ManageJobs = () => {
                       <td className="px-6 py-6 text-center">
                         <div className="flex justify-center">
                           {job.filled ? (
-                            <Tooltip text="Filled">
-                              <div className="w-10 h-10 bg-green-50 text-[#5BBB7B] rounded-xl flex items-center justify-center border border-green-100 shadow-sm">
+                            <Tooltip text="Mark as Vacant">
+                              <button
+                                onClick={() =>
+                                  handleToggleStatus(job.id, "Closed")
+                                }
+                                className="w-10 h-10 bg-green-50 text-[#5BBB7B] rounded-xl flex items-center justify-center border border-green-100 shadow-sm hover:scale-110 transition-transform"
+                              >
                                 <CheckCircle size={20} />
-                              </div>
+                              </button>
                             </Tooltip>
                           ) : (
-                            <Tooltip text="Vacant">
-                              <div className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center border border-slate-100">
+                            <Tooltip text="Mark as Filled">
+                              <button
+                                onClick={() =>
+                                  handleToggleStatus(job.id, job.status)
+                                }
+                                className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center border border-slate-100 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                              >
                                 <PhoneCall size={18} />
-                              </div>
+                              </button>
                             </Tooltip>
                           )}
                         </div>
@@ -348,7 +395,10 @@ const ManageJobs = () => {
                       <td className="px-4 py-5 text-right pr-4">
                         <div className="flex items-center justify-end gap-2">
                           <Tooltip text="View Applicants">
-                            <button className="w-10 h-10 rounded-xl bg-[#5BBB7B]/10 text-[#5BBB7B] flex items-center justify-center transition-all duration-300 hover:bg-[#5BBB7B] hover:text-white hover:shadow-lg hover:shadow-[#5BBB7B]/30 active:scale-95 group/btn overflow-hidden relative">
+                            <button
+                              onClick={() => handleViewApplicants(job.id)}
+                              className="w-10 h-10 rounded-xl bg-[#5BBB7B]/10 text-[#5BBB7B] flex items-center justify-center transition-all duration-300 hover:bg-[#5BBB7B] hover:text-white hover:shadow-lg hover:shadow-[#5BBB7B]/30 active:scale-95 group/btn overflow-hidden relative"
+                            >
                               <Users
                                 size={18}
                                 className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"
@@ -356,7 +406,10 @@ const ManageJobs = () => {
                             </button>
                           </Tooltip>
                           <Tooltip text="Edit Job">
-                            <button className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/30 active:scale-95 group/btn overflow-hidden relative">
+                            <button
+                              onClick={() => handleEditJob(job.id)}
+                              className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-600/30 active:scale-95 group/btn overflow-hidden relative"
+                            >
                               <Database
                                 size={18}
                                 className="relative z-10 transition-transform duration-500 group-hover/btn:scale-110"

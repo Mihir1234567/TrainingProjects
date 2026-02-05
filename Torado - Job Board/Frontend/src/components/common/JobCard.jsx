@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Clock, Briefcase, Star, Beer, ExternalLink } from "lucide-react";
 
+const FALLBACK_LOGO =
+  "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3e%3crect width='40' height='40' fill='%23f1f5f9'/%3e%3ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='10' fill='%2364748b'%3eLogo%3c/text%3e%3c/svg%3e";
+
 const JobCard = ({ job }) => {
   const [isPopping, setIsPopping] = useState(false);
 
@@ -12,6 +15,8 @@ const JobCard = ({ job }) => {
     // Logic for saving/unsaving would go here
   };
 
+  const jobId = job._id || job.id;
+
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col gap-6">
       {/* Header */}
@@ -19,16 +24,18 @@ const JobCard = ({ job }) => {
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden p-3">
             <img
-              src={
-                job.companyId?.logo
-                  ? `http://localhost:5001${job.companyId.logo}`
-                  : job.logo || "https://via.placeholder.com/40?text=Logo"
-              }
+              src={(() => {
+                const logoPath = job.companyId?.logo || job.logo;
+                if (!logoPath) return FALLBACK_LOGO;
+                if (logoPath.startsWith("http") || logoPath.startsWith("data:"))
+                  return logoPath;
+                return `http://localhost:5001${logoPath}`;
+              })()}
               alt={job.companyId?.name || job.company}
               className="w-full h-full object-contain"
               onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/40?text=Logo";
+                e.target.onerror = null; // Prevent looping
+                e.target.src = FALLBACK_LOGO;
               }}
             />
           </div>
@@ -45,7 +52,7 @@ const JobCard = ({ job }) => {
           </div>
         </div>
         <Link
-          to={`/job/${job.id}`}
+          to={`/job/${jobId}`}
           className="text-torado-brand-primary font-bold text-sm hover:underline flex items-center gap-1"
         >
           View Job
@@ -65,7 +72,7 @@ const JobCard = ({ job }) => {
       </div>
 
       {/* Title */}
-      <Link to={`/job/${job.id}`}>
+      <Link to={`/job/${jobId}`}>
         <h3 className="text-xl md:text-2xl font-extrabold text-[#002333] hover:text-torado-brand-primary transition-colors cursor-pointer">
           {job.title}
         </h3>
@@ -102,7 +109,7 @@ const JobCard = ({ job }) => {
               <Star
                 key={s}
                 className={`w-3.5 h-3.5 ${
-                  s <= Math.floor(job.rating)
+                  s <= Math.floor(job.rating || 0)
                     ? "text-orange-400 fill-orange-400"
                     : "text-slate-200 fill-slate-200"
                 }`}
@@ -110,7 +117,7 @@ const JobCard = ({ job }) => {
             ))}
           </div>
           <span className="text-slate-400 text-[13px] font-medium">
-            {job.rating.toFixed(1)} ({job.reviewsCount} Review)
+            {(job.rating || 0).toFixed(1)} ({job.reviewsCount || 0} Review)
           </span>
         </div>
 
@@ -140,7 +147,7 @@ const JobCard = ({ job }) => {
 
           {/* Apply Now Button with Door Effect */}
           <Link
-            to={`/job/${job.id}`}
+            to={`/job/${jobId}`}
             className="relative px-8 py-3 bg-torado-green-600 text-white font-bold text-sm rounded-lg overflow-hidden group shadow-sm shadow-green-500/20"
           >
             <span className="absolute inset-0 w-full h-full bg-[#002333] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-center"></span>

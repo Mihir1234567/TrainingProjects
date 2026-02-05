@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Lock, Mail, Briefcase } from "lucide-react";
+import { User, Lock, Mail, Briefcase, LogIn, Eye, EyeOff } from "lucide-react";
 import MattersToUs from "../components/common/MattersToUs";
 import AnimatedButton from "../components/common/AnimatedButton";
 import { useAuth } from "../context/AuthContext";
@@ -35,6 +35,15 @@ const MyAccountPage = () => {
   // Error States
   const [errors, setErrors] = useState({});
 
+  // Password Visibility States
+  const [showPassword, setShowPassword] = useState({
+    login: false,
+    register: false,
+    registerRepeat: false,
+    reset: false,
+    resetConfirm: false,
+  });
+
   const tabs = [
     { id: "login", label: "Login" },
     { id: "register", label: "Register" },
@@ -63,23 +72,54 @@ const MyAccountPage = () => {
   };
 
   const handleCandidateLogin = async () => {
-    await login({
-      id: 1,
-      name: "John Doe",
+    const candidateData = {
       email: "candidate@example.com",
-      role: "candidate",
-    });
-    navigate("/user-dashboard");
+      password: "password123",
+    };
+    try {
+      await login(candidateData);
+      navigate("/user-dashboard");
+    } catch (error) {
+      console.log("Login failed, trying to register demo candidate...");
+      try {
+        await register({
+          name: "John Doe",
+          role: "candidate",
+          ...candidateData,
+        });
+        navigate("/user-dashboard");
+      } catch (regError) {
+        setErrors({
+          login_password: "Demo login failed. Please try manually.",
+        });
+      }
+    }
   };
 
   const handleEmployerLogin = async () => {
-    await login({
-      id: 2,
-      name: "Tech Corp",
+    const employerData = {
       email: "employer@example.com",
-      role: "employer",
-    });
-    navigate("/user-dashboard");
+      password: "password123",
+    };
+    try {
+      await login(employerData);
+      navigate("/user-dashboard");
+    } catch (error) {
+      console.log("Login failed, trying to register demo employer...");
+      try {
+        await register({
+          name: "Tech Corp",
+          role: "employer",
+          companyName: "Tech Corp",
+          ...employerData,
+        });
+        navigate("/user-dashboard");
+      } catch (regError) {
+        setErrors({
+          login_password: "Demo login failed. Please try manually.",
+        });
+      }
+    }
   };
 
   const handleLoginSubmit = async (e) => {
@@ -118,7 +158,7 @@ const MyAccountPage = () => {
           password: registerData.password,
           role: registerData.role,
         });
-        navigate("/user-dashboard");
+        navigate("/complete-profile");
       } catch (error) {
         console.error("Registration Error:", error);
         setErrors({
@@ -163,15 +203,35 @@ const MyAccountPage = () => {
           ? registerData[field]
           : resetData[field];
 
+    // Determine the visibility key for password fields
+    const isPasswordField = type === "password";
+    let visibilityKey = "";
+    if (isPasswordField) {
+      if (formType === "login" && field === "password") visibilityKey = "login";
+      else if (formType === "register" && field === "password")
+        visibilityKey = "register";
+      else if (formType === "register" && field === "repeatPassword")
+        visibilityKey = "registerRepeat";
+      else if (formType === "reset" && field === "newPassword")
+        visibilityKey = "reset";
+      else if (formType === "reset" && field === "confirmPassword")
+        visibilityKey = "resetConfirm";
+    }
+
+    const actualType =
+      isPasswordField && visibilityKey && showPassword[visibilityKey]
+        ? "text"
+        : type;
+
     return (
       <div className="relative group/field">
         <input
           id={`${formType}-${field}`}
-          type={type}
+          type={actualType}
           placeholder=" "
           value={value}
           onChange={(e) => handleInputChange(e, formType, field)}
-          className={`peer w-full h-[60px] pl-16 pr-5 bg-white border ${
+          className={`peer w-full h-[60px] pl-16 ${isPasswordField ? "pr-14" : "pr-5"} bg-white border ${
             errors[errorKey]
               ? "border-red-500 ring-1 ring-red-500/20"
               : "border-slate-100 ring-4 ring-transparent"
@@ -187,6 +247,28 @@ const MyAccountPage = () => {
         >
           <Icon size={18} strokeWidth={2.5} />
         </div>
+
+        {/* Password Visibility Toggle */}
+        {isPasswordField && visibilityKey && (
+          <button
+            type="button"
+            onClick={() =>
+              setShowPassword((prev) => ({
+                ...prev,
+                [visibilityKey]: !prev[visibilityKey],
+              }))
+            }
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#5BBB7B] transition-colors p-1"
+            tabIndex={-1}
+          >
+            {showPassword[visibilityKey] ? (
+              <EyeOff size={18} />
+            ) : (
+              <Eye size={18} />
+            )}
+          </button>
+        )}
+
         <label
           htmlFor={`${formType}-${field}`}
           className={`absolute left-16 top-1/2 -translate-y-1/2 ${
@@ -297,27 +379,24 @@ const MyAccountPage = () => {
                         </a>
                       </div>
 
-                      {/* Login Simulation Buttons */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                        <button
-                          type="button"
-                          onClick={handleCandidateLogin}
-                          disabled={isLoading}
-                          className="w-full py-4 px-6 bg-[#5BBB7B] hover:bg-torado-green-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-[#5BBB7B]/20 flex items-center justify-center gap-2 group active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
-                        >
-                          <User size={20} />
-                          Candidate Login
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleEmployerLogin}
-                          disabled={isLoading}
-                          className="w-full py-4 px-6 bg-[#002333] hover:bg-[#003B47] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#002333]/20 flex items-center justify-center gap-2 group active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
-                        >
-                          <Briefcase size={20} />
-                          Employer Login
-                        </button>
-                      </div>
+                      {/* Main Login Button */}
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full py-4 px-6 bg-[#5BBB7B] hover:bg-torado-green-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-[#5BBB7B]/30 flex items-center justify-center gap-2 group active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed text-lg"
+                      >
+                        {isLoading ? (
+                          <>
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            Logging in...
+                          </>
+                        ) : (
+                          <>
+                            <LogIn size={20} />
+                            Login
+                          </>
+                        )}
+                      </button>
 
                       <div className="relative py-4">
                         <div className="absolute inset-0 flex items-center">
