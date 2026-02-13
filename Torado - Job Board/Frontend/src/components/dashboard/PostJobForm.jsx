@@ -58,8 +58,8 @@ const PostJobForm = () => {
     companyType: "",
     companyMission: "",
     companyAbout: "",
-    companySkills: [],
-    companyTalent: [],
+    fundamentalSkills: [], // Renamed from companySkills
+    talentExperience: [], // Renamed from companyTalent
     companyRecruitments: "",
     companyPeople: "",
     companyEstablished: "",
@@ -112,8 +112,8 @@ const PostJobForm = () => {
             companyType: job.companyType || "Private",
             companyMission: job.companyId?.mission || "",
             companyAbout: job.companyId?.aboutUs || "",
-            companySkills: job.companyId?.skills || [],
-            companyTalent: job.companyId?.talent || [],
+            fundamentalSkills: job.fundamentalSkills || [], // Load from job
+            talentExperience: job.talentExperience || [], // Load from job
             companyRecruitments: job.companyId?.recruitments || "",
             companyPeople: job.companyId?.people || "",
             companyEstablished: job.companyId?.established
@@ -288,8 +288,8 @@ Requirements:
       companyMission: random(companyMissions),
       companyAbout:
         "We are a leading technology company dedicated to innovation and excellence. Our team is passionate about building products that make a difference.",
-      companySkills: randomSkills,
-      companyTalent: randomTalent,
+      fundamentalSkills: randomSkills,
+      talentExperience: randomTalent,
       companyRecruitments:
         "We are always looking for talented individuals to join our growing team. If you are passionate about technology and want to make an impact, we want to hear from you.",
       companyPeople:
@@ -497,8 +497,8 @@ Requirements:
         companyType: formData.companyType,
         companyMission: formData.companyMission,
         companyAbout: formData.companyAbout,
-        companySkills: formData.companySkills,
-        companyTalent: formData.companyTalent,
+        fundamentalSkills: formData.fundamentalSkills, // Send as job fields
+        talentExperience: formData.talentExperience, // Send as job fields
         companyRecruitments: formData.companyRecruitments,
         companyPeople: formData.companyPeople,
         companyEstablished: formData.companyEstablished,
@@ -915,8 +915,8 @@ Requirements:
                         size={20}
                       />
                       <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
-                        {formData.companySkills &&
-                          formData.companySkills.map((tag, index) => (
+                        {formData.fundamentalSkills &&
+                          formData.fundamentalSkills.map((tag, index) => (
                             <motion.span
                               initial={{ scale: 0.8 }}
                               animate={{ scale: 1 }}
@@ -928,7 +928,7 @@ Requirements:
                                 size={14}
                                 className="cursor-pointer"
                                 onClick={() =>
-                                  handleRemoveItem("companySkills", tag)
+                                  handleRemoveItem("fundamentalSkills", tag)
                                 }
                               />
                             </motion.span>
@@ -936,7 +936,7 @@ Requirements:
                         <input
                           type="text"
                           placeholder={
-                            formData.companySkills?.length === 0
+                            formData.fundamentalSkills?.length === 0
                               ? "Fundamental Learning & Skills (Enter to add)"
                               : ""
                           }
@@ -945,7 +945,7 @@ Requirements:
                           onKeyDown={(e) =>
                             handleAddItem(
                               e,
-                              "companySkills",
+                              "fundamentalSkills",
                               skillsInput,
                               setSkillsInput,
                             )
@@ -962,8 +962,8 @@ Requirements:
                         size={20}
                       />
                       <div className="w-full min-h-14 pl-14 pr-5 py-2.5 bg-white border border-slate-200 rounded-xl flex flex-wrap gap-2 items-center focus-within:border-[#5BBB7B] focus-within:ring-1 focus-within:ring-[#5BBB7B] transition-all">
-                        {formData.companyTalent &&
-                          formData.companyTalent.map((tag, index) => (
+                        {formData.talentExperience &&
+                          formData.talentExperience.map((tag, index) => (
                             <motion.span
                               initial={{ scale: 0.8 }}
                               animate={{ scale: 1 }}
@@ -975,7 +975,7 @@ Requirements:
                                 size={14}
                                 className="cursor-pointer"
                                 onClick={() =>
-                                  handleRemoveItem("companyTalent", tag)
+                                  handleRemoveItem("talentExperience", tag)
                                 }
                               />
                             </motion.span>
@@ -983,7 +983,7 @@ Requirements:
                         <input
                           type="text"
                           placeholder={
-                            formData.companyTalent?.length === 0
+                            formData.talentExperience?.length === 0
                               ? "Talent & Experience (Enter to add)"
                               : ""
                           }
@@ -992,7 +992,7 @@ Requirements:
                           onKeyDown={(e) =>
                             handleAddItem(
                               e,
-                              "companyTalent",
+                              "talentExperience",
                               talentInput,
                               setTalentInput,
                             )

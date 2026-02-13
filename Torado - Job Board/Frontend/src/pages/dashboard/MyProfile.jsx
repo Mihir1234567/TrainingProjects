@@ -77,12 +77,14 @@ const dropdownOptions = {
   cities: ["London", "New York", "Paris"],
 };
 
-import { userAPI, uploadAPI } from "../../services/api"; // Added API imports
+import { userAPI, uploadAPI } from "../../services/api";
+import FileUploader from "../../components/common/FileUploader";
+import { useAuth } from "../../context/AuthContext";
 
 const MyProfile = () => {
-  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const [uploadError, setUploadError] = useState("");
+  const { updateUser } = useAuth();
   const [profileImage, setProfileImage] = useState(USER_PROFILE.avatar);
+  const [imageAction, setImageAction] = useState(null); // Local state for crop data
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
 
@@ -139,8 +141,10 @@ const MyProfile = () => {
           latitude: user.latitude || "",
           longitude: user.longitude || "",
           address: user.location || "",
+          isFreelancer: user.isFreelancer || false, // New field
         });
         if (user.image) setProfileImage(user.image);
+        if (user.imageAction) setImageAction(user.imageAction);
       } catch (err) {
         console.error("Failed to fetch profile", err);
       }
@@ -181,11 +185,12 @@ const MyProfile = () => {
 
     const firstName = random(firstNames);
     const lastName = random(lastNames);
-    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
+    // const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`; // Dont overwrite email
 
     setFormData({
+      ...formData, // Keep existing fields (like email)
       fullName: `${firstName} ${lastName}`,
-      email: email,
+      // email: email, // Keep existing email
       phone: `+1 ${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
       jobTitle: random([
         "Senior Developer",
@@ -221,13 +226,9 @@ const MyProfile = () => {
     });
   };
 
-  const handleImageClick = () => {
-    setUploadError(""); // Reset error on open
-    setIsUploadModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsUploadModalOpen(false);
+  const handleImageSuccess = (path, cropData) => {
+    setProfileImage(path);
+    setImageAction(cropData);
   };
 
   const handleChange = (field, value) => {
@@ -238,41 +239,6 @@ const MyProfile = () => {
         delete newErrors[field];
         return newErrors;
       });
-    }
-  };
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setUploadError("");
-
-    // 1. Size Check (1MB = 1048576 bytes)
-    if (file.size > 1048576) {
-      setUploadError("File size exceeds 1MB limit.");
-      return;
-    }
-
-    // 2. Type Check
-    const validTypes = ["image/jpeg", "image/png", "image/gif"];
-    if (!validTypes.includes(file.type)) {
-      setUploadError("Invalid file type. Please upload JPG, PNG, or GIF.");
-      return;
-    }
-
-    try {
-      const serverPath = await uploadAPI.uploadFile(file);
-      // Prepend server URL if needed, or store relative path.
-      // Frontend usually needs full URL to display.
-      // "http://localhost:5001" + serverPath
-      // Ideally API returns full URL or we handle it.
-      // For now, assuming serverPath is "/uploads/filename.jpg"
-      const fullUrl = `http://localhost:5001${serverPath}`;
-
-      setProfileImage(fullUrl);
-      setIsUploadModalOpen(false);
-    } catch (err) {
-      setUploadError("Upload failed: " + err.message);
     }
   };
 
@@ -323,6 +289,8 @@ const MyProfile = () => {
         latitude: formData.latitude,
         longitude: formData.longitude,
         image: profileImage,
+        imageAction: imageAction,
+        isFreelancer: formData.isFreelancer, // Include in update
         socialLinks: {
           facebook: formData.facebook,
           twitter: formData.twitter,
@@ -332,6 +300,12 @@ const MyProfile = () => {
       };
 
       await userAPI.updateProfile(payload);
+
+      // Update global auth state to refresh Navbar
+      updateUser({
+        name: formData.fullName,
+        image: profileImage,
+      });
 
       setStatus("success");
       setToast({
@@ -447,36 +421,81 @@ const MyProfile = () => {
         <div className="flex flex-col lg:flex-row gap-8 md:gap-12">
           {/* Profile Picture Upload */}
           <div className="shrink-0 flex flex-col gap-3">
-            <div
-              onClick={handleImageClick}
-              className="w-28 h-28 md:w-32 md:h-32 xl:w-40 xl:h-40 rounded-3xl overflow-hidden relative group cursor-pointer ring-4 ring-slate-50 shadow-lg mx-auto lg:mx-0"
-            >
-              <img
-                src={profileImage}
-                alt="Profile"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            <div className="w-40 h-40 md:w-52 md:h-52 mx-auto lg:mx-0">
+              <FileUploader
+                initialValue={profileImage}
+                initialCrop={imageAction}
+                onUploadSuccess={handleImageSuccess}
+                label="Profile Photo"
+                accept="image/*"
+                isCircular={true}
               />
-              <div className="absolute inset-0 bg-[#002333]/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                  <Upload size={20} />
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* Form Fields */}
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput("fullName", "Full Name", User)}
-            {renderInput("email", "Email", Mail, "email")}
-            {renderInput("phone", "Phone", Phone)}
-            {renderInput("jobTitle", "Job Title", Briefcase)}
+          {/* Freelancer Toggle Section */}
+          <div className="flex-1 flex flex-col gap-6">
+            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`p-2 rounded-lg ${formData.isFreelancer ? "bg-[#5BBB7B]/10 text-[#5BBB7B]" : "bg-slate-200 text-slate-400"}`}
+                  >
+                    <Briefcase size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-[16px] font-bold text-[#002333]">
+                      Freelance Status
+                    </h4>
+                    <p className="text-[13px] text-slate-500">
+                      Are you open to freelance projects?
+                    </p>
+                  </div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={formData.isFreelancer}
+                    onChange={(e) =>
+                      handleChange("isFreelancer", e.target.checked)
+                    }
+                  />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#5BBB7B]"></div>
+                </label>
+              </div>
 
-            {renderDropdown(
-              "jobType",
-              "Job Type",
-              Briefcase,
-              dropdownOptions.jobTypes,
-            )}
+              {formData.isFreelancer && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 animate-fade-in-up">
+                  {renderDropdown(
+                    "currentSalary",
+                    "Hourly Rate ($/hr)",
+                    DollarSign,
+                    ["$10-$30", "$30-$60", "$60-$100", "$100+"],
+                  )}
+                  {renderDropdown(
+                    "jobCategory",
+                    "Core Service",
+                    Wand2,
+                    dropdownOptions.categories,
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {renderInput("fullName", "Full Name", User)}
+              {renderInput("email", "Email", Mail, "email")}
+              {renderInput("phone", "Phone", Phone)}
+              {renderInput("jobTitle", "Job Title", Briefcase)}
+
+              {renderDropdown(
+                "jobType",
+                "Job Type",
+                Briefcase,
+                dropdownOptions.jobTypes,
+              )}
+            </div>
 
             {renderDropdown(
               "jobCategory",
@@ -601,65 +620,6 @@ const MyProfile = () => {
         type={toast.type}
         onClose={() => setToast((prev) => ({ ...prev, isVisible: false }))}
       />
-
-      {/* Upload Modal */}
-      {isUploadModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative animate-in fade-in zoom-in duration-200">
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <h3 className="text-xl font-bold text-[#002333]">
-                Upload Profile Image
-              </h3>
-              <button
-                onClick={handleCloseModal}
-                className="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-50 rounded-full transition-all"
-              >
-                <X size={24} />
-              </button>
-            </div>
-            <div className="p-8 flex flex-col items-center gap-6">
-              <div className="w-24 h-24 rounded-full bg-[#5BBB7B]/10 flex items-center justify-center text-[#5BBB7B] mb-2 shadow-inner">
-                <Upload size={32} />
-              </div>
-              <div className="text-center space-y-2">
-                <h4 className="text-lg font-bold text-[#002333]">
-                  Upload your photo
-                </h4>
-                <p className="text-sm font-medium text-slate-500">
-                  Supports: JPG, PNG, GIF (Max 1MB)
-                </p>
-                {uploadError && (
-                  <p className="text-sm font-bold text-red-500 animate-in fade-in slide-in-from-top-1">
-                    {uploadError}
-                  </p>
-                )}
-              </div>
-
-              <div className="w-full">
-                <input
-                  type="file"
-                  className="hidden"
-                  id="modal-upload"
-                  accept="image/jpeg, image/png, image/gif"
-                  onChange={handleFileChange}
-                />
-                <label
-                  htmlFor="modal-upload"
-                  className="flex items-center justify-center w-full px-6 py-4 bg-[#5BBB7B] text-white text-base font-bold rounded-xl cursor-pointer hover:bg-[#4a9b65] transition-all shadow-lg shadow-[#5BBB7B]/20 transform active:scale-95"
-                >
-                  Choose File
-                </label>
-              </div>
-              <button
-                onClick={handleCloseModal}
-                className="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

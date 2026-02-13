@@ -41,10 +41,12 @@ import AppliedJobs from "./pages/dashboard/AppliedJobs";
 import AlertJobs from "./pages/dashboard/AlertJobs";
 import Package from "./pages/dashboard/Package";
 import Messages from "./pages/dashboard/Messages";
+import Chat from "./pages/dashboard/Chat";
 import MyProfile from "./pages/dashboard/MyProfile";
 import CompanyProfile from "./pages/dashboard/CompanyProfile";
 import ChangePassword from "./pages/dashboard/ChangePassword";
 import DeleteProfile from "./pages/dashboard/DeleteProfile";
+import ResumeViewer from "./pages/dashboard/ResumeViewer";
 
 import { MockDataProvider } from "./context/MockDataContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -69,7 +71,9 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/faq" element={<FaqPage />} />
             <Route path="/login" element={<MyAccountPage />} />
-            <Route path="/complete-profile" element={<CompleteProfile />} />
+            <Route element={<ProtectedRoute checkCompletion={false} />}>
+              <Route path="/complete-profile" element={<CompleteProfile />} />
+            </Route>
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/terms-of-services" element={<TermsOfServices />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -96,8 +100,9 @@ function App() {
             <Route path="/blog/tag/:tagId" element={<BlogTag />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
 
+            <Route path="/resume-viewer/:id" element={<ResumeViewer />} />
             {/* Protected Dashboard Routes */}
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute checkCompletion={true} />}>
               <Route path="/user-dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />
                 <Route path="post-job" element={<DashboardPostJob />} />
@@ -114,11 +119,16 @@ function App() {
                 <Route path="edit-job/:id" element={<DashboardPostJob />} />
                 <Route path="bookmark-resumes" element={<BookmarkResumes />} />
                 <Route path="manage-resumes" element={<ManageResumes />} />
+                <Route path="manage-resumes" element={<ManageResumes />} />
                 <Route path="create-resumes" element={<CreateResumes />} />
+                <Route path="edit-resume/:id" element={<CreateResumes />} />
                 <Route path="applied-jobs" element={<AppliedJobs />} />
                 <Route path="alert-jobs" element={<AlertJobs />} />
                 <Route path="package" element={<Package />} />
+                import Chat from "./pages/dashboard/Chat"; // ... existing
+                imports ... // Inside Routes
                 <Route path="messages" element={<Messages />} />
+                <Route path="messages/:userId" element={<Chat />} />
                 <Route path="my-profile" element={<MyProfile />} />
                 <Route path="change-password" element={<ChangePassword />} />
                 <Route path="delete-profile" element={<DeleteProfile />} />

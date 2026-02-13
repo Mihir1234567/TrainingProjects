@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Filter,
   ChevronDown,
@@ -10,12 +10,23 @@ import {
   Heart,
   Star,
   ArrowRight,
+  MessageCircle,
+  Download,
+  Send,
+  Briefcase,
 } from "lucide-react";
-import { userAPI } from "../services/api";
+import { userAPI, API_BASE_URL, messageAPI } from "../services/api";
 
 const Candidates = () => {
+  const navigate = useNavigate();
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Message Modal State
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [messageContent, setMessageContent] = useState("");
+  const [sendingMessage, setSendingMessage] = useState(false);
 
   // Fetch candidates from API
   useEffect(() => {
@@ -36,6 +47,8 @@ const Candidates = () => {
           reviews: c.reviews,
           tags: c.skills || [],
           category: c.specialization, // Using specialization as category for filter
+          resumeUrl: c.resumeUrl, // Add resume URL
+          isFreelancer: c.isFreelancer || false,
         }));
         setCandidates(mapped);
       } catch (error) {
@@ -47,6 +60,80 @@ const Candidates = () => {
     fetchCandidates();
   }, []);
 
+  // Handle message candidate - Open modal
+  const handleMessage = (candidate) => {
+    setSelectedCandidate(candidate);
+    setIsMessageModalOpen(true);
+    setMessageContent("");
+  };
+
+  // Handle send message
+  const handleSendMessage = async () => {
+    if (!messageContent.trim()) {
+      alert("Please enter a message");
+      return;
+    }
+
+    setSendingMessage(true);
+    try {
+      await messageAPI.send(selectedCandidate.id, messageContent);
+      alert("Message sent successfully!");
+      setIsMessageModalOpen(false);
+      setMessageContent("");
+      setSelectedCandidate(null);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      alert(error.message || "Failed to send message. Please try again.");
+    } finally {
+      setSendingMessage(false);
+    }
+  };
+
+  // Handle download CV
+  const handleDownloadCV = async (candidate) => {
+    try {
+      // First, check for any resumes (dashboard or uploaded via dashboard)
+      const resumes = await resumeAPI.getAll(candidate.id || candidate._id);
+
+      if (resumes && resumes.length > 0) {
+        // Find default resume or fallback to first
+        const defaultResume = resumes.find((r) => r.isDefault);
+        const resumeToUse = defaultResume || resumes[0];
+
+        if (resumeToUse.type === "Upload" && resumeToUse.fileUrl) {
+          // Open uploaded file in Google Viewer for preview
+          const url = resumeToUse.fileUrl.startsWith("http")
+            ? `https://docs.google.com/viewer?url=${encodeURIComponent(
+                resumeToUse.fileUrl,
+              )}&embedded=false`
+            : `http://localhost:5001${resumeToUse.fileUrl}`;
+          window.open(url, "_blank");
+        } else {
+          // Open resume viewer
+          window.open(`/resume-viewer/${resumeToUse._id}`, "_blank");
+        }
+        return;
+      }
+    } catch (error) {
+      console.error("Error checking for dashboard resumes:", error);
+    }
+
+    // Fall back to uploaded resume file
+    if (!candidate.resumeUrl) {
+      alert("This candidate hasn't uploaded a resume yet.");
+      return;
+    }
+
+    // Create a temporary link and trigger download
+    const link = document.createElement("a");
+    link.href = `${API_BASE_URL}${candidate.resumeUrl}`;
+    link.download = `${candidate.name.replace(/\s+/g, "_")}_Resume.pdf`;
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
   const [sortBy, setSortBy] = useState("default");
@@ -56,6 +143,7 @@ const Candidates = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [showFreelancersOnly, setShowFreelancersOnly] = useState(false);
 
   // Derived Data for Filter Options
   const categories = [
@@ -145,6 +233,11 @@ const Candidates = () => {
       result = result.filter((c) =>
         c.location.toLowerCase().includes(selectedLocation.toLowerCase()),
       );
+    }
+
+    // Filter by Freelancer
+    if (showFreelancersOnly) {
+      result = result.filter((c) => c.isFreelancer);
     }
 
     // Sort
@@ -316,6 +409,29 @@ const Candidates = () => {
                 </div>
               </div>
 
+              {/* Freelancer Toggle */}
+              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`p-2 rounded-lg ${showFreelancersOnly ? "bg-[#5BBB7B]/10 text-[#5BBB7B]" : "bg-white text-slate-400 border border-slate-200"}`}
+                  >
+                    <Briefcase size={18} />
+                  </div>
+                  <span className="text-sm font-bold text-[#002333]">
+                    Freelancers Only
+                  </span>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={showFreelancersOnly}
+                    onChange={(e) => setShowFreelancersOnly(e.target.checked)}
+                  />
+                  <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#5BBB7B]"></div>
+                </label>
+              </div>
+
               {/* Location */}
               <div className="space-y-3">
                 <label className="text-sm font-bold text-[#002333]">
@@ -461,6 +577,11 @@ const Candidates = () => {
                     <p className="text-[#5E6670] text-sm font-medium mt-1 truncate">
                       {candidate.specialization}
                     </p>
+                    {candidate.isFreelancer && (
+                      <span className="inline-block mt-1 px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded border border-blue-100">
+                        Freelancer
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -499,7 +620,7 @@ const Candidates = () => {
               <div className="border-t border-slate-100 mt-auto mb-4 w-full"></div>
 
               {/* Footer: Rating, Location, Rate */}
-              <div className="flex flex-wrap items-center justify-between gap-y-3 gap-x-2">
+              <div className="flex flex-wrap items-center justify-between gap-y-3 gap-x-2 mb-4">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -532,6 +653,24 @@ const Candidates = () => {
                     <span>{candidate.rate} / hour</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleMessage(candidate)}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#5BBB7B] text-white px-4 py-2.5 rounded-md text-sm font-medium transition-all relative overflow-hidden z-10 before:absolute before:inset-0 before:bg-[#002333] before:origin-center before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100 before:-z-10"
+                >
+                  <MessageCircle size={16} />
+                  <span>Message</span>
+                </button>
+                <button
+                  onClick={() => handleDownloadCV(candidate)}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#004D6D] text-white px-4 py-2.5 rounded-md text-sm font-medium transition-all relative overflow-hidden z-10 before:absolute before:inset-0 before:bg-[#5BBB7B] before:origin-center before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100 before:-z-10"
+                >
+                  <Download size={16} />
+                  <span>Download CV</span>
+                </button>
               </div>
             </div>
           ))}
@@ -583,6 +722,93 @@ const Candidates = () => {
           </div>
         )}
       </div>
+
+      {/* Message Modal */}
+      {isMessageModalOpen && selectedCandidate && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50 transition-opacity duration-300"
+            onClick={() => setIsMessageModalOpen(false)}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+            <div
+              className="bg-white rounded-lg shadow-2xl w-full max-w-lg pointer-events-auto transform transition-all duration-300 scale-100"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={selectedCandidate.image}
+                    alt={selectedCandidate.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                  />
+                  <div>
+                    <h3 className="text-lg font-bold text-[#002333]">
+                      Send Message
+                    </h3>
+                    <p className="text-sm text-[#5E6670]">
+                      To: {selectedCandidate.name}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsMessageModalOpen(false)}
+                  className="p-2 bg-slate-50 rounded-full text-slate-500 hover:bg-slate-100 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6">
+                <label className="block text-sm font-bold text-[#002333] mb-3">
+                  Your Message
+                </label>
+                <textarea
+                  value={messageContent}
+                  onChange={(e) => setMessageContent(e.target.value)}
+                  placeholder="Type your message here..."
+                  rows={6}
+                  className="w-full bg-[#F9FBFC] border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#5BBB7B] transition-colors resize-none"
+                  disabled={sendingMessage}
+                />
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex gap-3 p-6 border-t border-slate-100">
+                <button
+                  onClick={() => setIsMessageModalOpen(false)}
+                  className="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-md text-sm font-medium hover:bg-slate-200 transition-colors"
+                  disabled={sendingMessage}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSendMessage}
+                  disabled={sendingMessage || !messageContent.trim()}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#5BBB7B] text-white px-4 py-2.5 rounded-md text-sm font-medium transition-all relative overflow-hidden z-10 before:absolute before:inset-0 before:bg-[#002333] before:origin-center before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100 before:-z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {sendingMessage ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

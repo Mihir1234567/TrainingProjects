@@ -1,6 +1,8 @@
 const Job = require("../models/Job");
 const Application = require("../models/Application");
 const User = require("../models/User");
+const Message = require("../models/Message");
+const Bookmark = require("../models/Bookmark");
 
 // @desc    Get dashboard stats
 // @route   GET /api/dashboard/stats
@@ -30,13 +32,26 @@ const getDashboardStats = async (req, res) => {
         jobId: { $in: jobIds },
       });
 
-      // 3. Shortlisted (Reviewed or Interview)
-      const shortlistedCount = await Application.countDocuments({
-        jobId: { $in: jobIds },
-        status: { $in: ["Reviewed", "Interview", "Hired"] },
+      // 3. Shortlisted (Bookmarked Candidates)
+      const shortlistedCount = await Bookmark.countDocuments({
+        userId: req.user.id,
+        targetModel: "User",
       });
 
-      // 4. Recent Activity (Recent Applications)
+      // 4. Chat Count (Unique Conversations)
+      const sent = await Message.find({ senderId: req.user.id }).distinct(
+        "receiverId",
+      );
+      const received = await Message.find({ receiverId: req.user.id }).distinct(
+        "senderId",
+      );
+      const chatPartners = new Set([
+        ...sent.map((id) => id.toString()),
+        ...received.map((id) => id.toString()),
+      ]);
+      const chatCount = chatPartners.size;
+
+      // 5. Recent Activity (Recent Applications)
       const recentActivity = await Application.find({
         jobId: { $in: jobIds },
       })
@@ -48,7 +63,7 @@ const getDashboardStats = async (req, res) => {
       stats = {
         postedJobs: postedJobsCount,
         applications: totalApplicationsCount,
-        messages: 0,
+        messages: chatCount,
         shortlisted: shortlistedCount,
         recentActivity: recentActivity.map((app) => ({
           id: app._id,
@@ -72,7 +87,26 @@ const getDashboardStats = async (req, res) => {
         status: "Interview",
       });
 
-      // 3. Recent Activity (My Recent Applications)
+      // 3. Chat Count (Unique Conversations)
+      const sent = await Message.find({ senderId: req.user.id }).distinct(
+        "receiverId",
+      );
+      const received = await Message.find({ receiverId: req.user.id }).distinct(
+        "senderId",
+      );
+      const chatPartners = new Set([
+        ...sent.map((id) => id.toString()),
+        ...received.map((id) => id.toString()),
+      ]);
+      const chatCount = chatPartners.size;
+
+      // 4. Saved Jobs (Bookmarks)
+      const savedJobsCount = await Bookmark.countDocuments({
+        userId: req.user.id,
+        targetModel: "Job",
+      });
+
+      // 5. Recent Activity (My Recent Applications)
       const recentActivity = await Application.find({
         candidateId: req.user.id,
       })
@@ -87,8 +121,8 @@ const getDashboardStats = async (req, res) => {
       stats = {
         appliedJobs: appliedJobsCount,
         interviews: interviewsCount,
-        messages: 0,
-        savedJobs: 0,
+        messages: chatCount,
+        savedJobs: savedJobsCount,
         recentActivity: recentActivity.map((app) => ({
           id: app._id,
           title: app.jobId?.title || "Job",

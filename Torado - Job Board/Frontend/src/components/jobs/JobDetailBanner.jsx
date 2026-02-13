@@ -91,7 +91,7 @@ const JobDetailBanner = ({ job }) => {
                 </button>
               ) : (
                 <Link
-                  to={`/apply-job/${job?.id || 1}`}
+                  to={`/apply-job/${job?._id || job?.id}`}
                   className="group relative px-10 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center"
                 >
                   <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />

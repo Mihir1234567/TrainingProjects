@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add an email"],
       unique: true,
+      trim: true, // Auto-trim spaces
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         "Please add a valid email",
@@ -27,19 +28,29 @@ const userSchema = mongoose.Schema(
       enum: ["candidate", "employer", "admin"],
       default: "candidate",
     },
+    isFreelancer: {
+      type: Boolean,
+      default: false,
+    },
     image: {
       type: String,
       default: "https://via.placeholder.com/150",
+    },
+    imageAction: {
+      type: Object, // Store crop data { x, y, width, height, ... }
+      default: null,
     },
 
     // --- Employer Fields ---
     companyName: {
       type: String,
+      trim: true,
     },
 
     // --- Candidate/Freelancer Fields ---
     jobTitle: {
       type: String, // e.g. "Senior UI Designer"
+      trim: true,
     },
     jobType: {
       type: String, // e.g. "Full Time", "Freelance"
@@ -114,11 +125,12 @@ const userSchema = mongoose.Schema(
 // Encrypt password using bcrypt
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 // Match user entered password to hashed password in database

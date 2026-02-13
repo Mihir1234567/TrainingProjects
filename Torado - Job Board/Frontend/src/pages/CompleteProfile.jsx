@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { userAPI } from "../services/api";
+import { userAPI, companiesAPI } from "../services/api";
 import {
   User,
   Briefcase,
@@ -83,7 +83,21 @@ const CompleteProfile = () => {
     setError("");
 
     try {
-      // Prepare update payload
+      // If Employer, Create Company Profile First
+      if (!isCandidate) {
+        const companyPayload = {
+          name: formData.companyName,
+          industry: formData.industry,
+          employees: formData.employees,
+          website: formData.website,
+          description: formData.companyDescription,
+          location: formData.location,
+          phone: formData.phone,
+        };
+        await companiesAPI.createOrUpdate(companyPayload);
+      }
+
+      // Prepare user update payload
       const updatePayload = {
         ...formData,
         isProfileComplete: true,

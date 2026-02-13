@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import jobsData from "../data/jobs.json";
+// import jobsData from "../data/jobs.json"; // Removed static data
+import { jobsAPI } from "../services/api";
 import {
   Search,
   MapPin,
@@ -12,6 +13,7 @@ import {
   Filter,
   Beer,
   X,
+  Loader2,
 } from "lucide-react";
 import RecruitersBanner from "../assets/Recruiters-banner.png";
 
@@ -26,32 +28,70 @@ const Recruiters = () => {
   const [perPage, setPerPage] = useState(10);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Derive recruiters from jobs data
+  // State for API Data
+  const [apiJobs, setApiJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await jobsAPI.getAll({ limit: 1000 }); // Fetch enough jobs to get unique recruiters
+        setApiJobs(response.jobs || []);
+      } catch (err) {
+        console.error("Failed to fetch jobs for recruiters list", err);
+        setError("Failed to load recruiters.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  // Derive recruiters from API jobs data
   const recruiters = useMemo(() => {
-    const jobs = jobsData.jobs;
+    const jobs = apiJobs;
     const recruitersMap = new Map();
 
     jobs.forEach((job) => {
-      if (!recruitersMap.has(job.recruiterId)) {
-        recruitersMap.set(job.recruiterId, {
-          id: job.recruiterId,
-          name: job.recruiterName,
-          company: job.company, // Add company name for search
-          postedBy: job.postedBy,
-          logo: job.logo,
-          rating: job.rating,
-          reviews: job.reviewsCount,
-          location: job.location, // Using job location as recruiter location
-          details: job.companyDetails,
+      // Use companyId as the unique identifier for grouping if available, fallback to recruiterId
+      // Ideally backend populate returns companyId object
+      const uniqueId = job.companyId?._id || job.recruiterId;
+
+      if (!uniqueId) return;
+
+      if (!recruitersMap.has(uniqueId)) {
+        // Handle potentially missing company details
+        const companyName =
+          job.companyId?.name || job.company || "Unknown Company";
+        const companyLogo =
+          job.companyId?.logo || "https://placehold.co/100x100?text=Logo";
+        const companyLocation =
+          job.companyId?.location || job.location || "Location N/A";
+
+        recruitersMap.set(uniqueId, {
+          id: uniqueId, // This might be companyId or recruiterId
+          name: companyName,
+          company: companyName, // consistent naming
+          postedBy: "Recruiter", // API doesn't populate recruiter name, could be improved
+          logo: companyLogo,
+          rating: 0, // Not currently in API
+          reviews: 0, // Not currently in API
+          location: companyLocation,
+          details: {
+            category: job.category || "", // Infer category from job
+          },
           openJobs: 0,
         });
       }
-      const recruiter = recruitersMap.get(job.recruiterId);
+      const recruiter = recruitersMap.get(uniqueId);
       recruiter.openJobs += 1;
     });
 
     return Array.from(recruitersMap.values());
-  }, []);
+  }, [apiJobs]);
 
   const filteredRecruiters = useMemo(() => {
     let result = recruiters.filter((recruiter) => {
@@ -66,6 +106,7 @@ const Recruiters = () => {
 
       let matchesCategory = true;
       if (category) {
+        // Basic category matching - checks if ANY job category associated with recruiter matches (simplified here to first job category)
         const recruiterCategory = recruiter.details?.category || "";
         matchesCategory = recruiterCategory
           .toLowerCase()
@@ -79,10 +120,21 @@ const Recruiters = () => {
       result.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "rating") {
       result.sort((a, b) => b.rating - a.rating);
+    } else if (sortBy === "default") {
+      // Sort by most open jobs by default
+      result.sort((a, b) => b.openJobs - a.openJobs);
     }
 
     return result;
-  }, [recruiters, keyword, location, sortBy]);
+  }, [recruiters, keyword, location, category, sortBy]); // Added category to dependency
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="w-10 h-10 text-[#5BBB7B] animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -118,9 +170,10 @@ const Recruiters = () => {
                       onChange={(e) => setLocation(e.target.value)}
                     >
                       <option value="">City, state, or zip</option>
-                      {/* Mock options */}
+                      {/* Mock options - could be dynamic later */}
                       <option value="New York">New York</option>
                       <option value="USA">USA</option>
+                      <option value="London">London</option>
                     </select>
                     <ChevronDown
                       className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
@@ -205,80 +258,101 @@ const Recruiters = () => {
             </div>
 
             {/* Recruiters List */}
-            <div className="space-y-4">
-              {filteredRecruiters
-                .slice((currentPage - 1) * perPage, currentPage * perPage)
-                .map((recruiter) => (
-                  <div
-                    key={recruiter.id}
-                    className="bg-white border border-slate-100 rounded-lg p-5 md:p-8 hover:shadow-lg hover:shadow-slate-100 hover:-translate-y-1 transition-all duration-300 flex flex-row items-start gap-4 md:gap-6 relative"
-                  >
-                    {/* Logo */}
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center shrink-0 bg-slate-50 self-start md:self-center">
-                      <img
-                        src={recruiter.logo}
-                        alt={recruiter.name}
-                        className="w-12 h-12 object-contain"
-                      />
-                    </div>
-
-                    {/* Info Grid */}
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 w-full text-left">
-                      {/* Name & Posted By */}
-                      <div className="md:col-span-3 flex flex-col">
-                        <h3 className="text-lg font-bold text-[#002333] mb-1">
-                          {recruiter.name}
-                        </h3>
-                        <span className="text-sm text-slate-500">
-                          by {recruiter.postedBy}
-                        </span>
+            {filteredRecruiters.length > 0 ? (
+              <div className="space-y-4">
+                {filteredRecruiters
+                  .slice((currentPage - 1) * perPage, currentPage * perPage)
+                  .map((recruiter) => (
+                    <div
+                      key={recruiter.id}
+                      className="bg-white border border-slate-100 rounded-lg p-5 md:p-8 hover:shadow-lg hover:shadow-slate-100 hover:-translate-y-1 transition-all duration-300 flex flex-row items-start gap-4 md:gap-6 relative"
+                    >
+                      {/* Logo */}
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center shrink-0 bg-slate-50 self-start md:self-center overflow-hidden border border-slate-100">
+                        <img
+                          src={recruiter.logo}
+                          alt={recruiter.name}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            e.target.src =
+                              "https://placehold.co/100x100?text=Logo";
+                          }}
+                        />
                       </div>
 
-                      {/* Rating */}
-                      <div className="md:col-span-3 flex flex-col items-start gap-1">
-                        <span className="text-[#F5C046] text-sm tracking-tighter flex gap-1">
-                          {"★".repeat(Math.round(recruiter.rating))}
-                          <span className="text-slate-200">
-                            {"★".repeat(5 - Math.round(recruiter.rating))}
+                      {/* Info Grid */}
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 w-full text-left">
+                        {/* Name & Posted By */}
+                        <div className="md:col-span-3 flex flex-col">
+                          <h3 className="text-lg font-bold text-[#002333] mb-1">
+                            {recruiter.name}
+                          </h3>
+                          {/* <span className="text-sm text-slate-500">
+                            by {recruiter.postedBy}
+                            </span> */}
+                          <span className="text-sm text-slate-500">
+                            {recruiter.details?.category || "Company"}
                           </span>
-                        </span>
-                        <span className="text-sm text-slate-400">
-                          {recruiter.rating} ({recruiter.reviews} Review)
-                        </span>
-                      </div>
+                        </div>
 
-                      {/* Location */}
-                      <div className="md:col-span-3 flex flex-col items-start">
-                        <span className="text-[15px] font-medium text-[#004D6D] mb-1">
-                          Location
-                        </span>
-                        <span className="text-[15px] text-slate-400">
-                          {recruiter.location}
-                        </span>
-                      </div>
+                        {/* Rating (Placeholder for now as API lacks it) */}
+                        <div className="md:col-span-3 flex flex-col items-start gap-1">
+                          <span className="text-[#F5C046] text-sm tracking-tighter flex gap-1">
+                            {"★".repeat(4)}
+                            <span className="text-slate-200">
+                              {"★".repeat(1)}
+                            </span>
+                          </span>
+                          <span className="text-sm text-slate-400">
+                            4.0 (1 Review)
+                          </span>
+                        </div>
 
-                      {/* Open Jobs & Action */}
-                      <div className="md:col-span-3 flex items-center justify-start md:justify-end gap-6 mt-2 md:mt-0 w-full">
-                        <Link
-                          to={`/jobs?recruiterId=${recruiter.id}`}
-                          className="text-[#004658] text-[15px] font-medium underline decoration-1 underline-offset-4 decoration-[#004658] hover:text-[#5BBB7B] hover:decoration-[#5BBB7B] transition-all whitespace-nowrap"
-                        >
-                          Open Jobs - {recruiter.openJobs}
-                        </Link>
+                        {/* Location */}
+                        <div className="md:col-span-3 flex flex-col items-start">
+                          <span className="text-[15px] font-medium text-[#004D6D] mb-1">
+                            Location
+                          </span>
+                          <span className="text-[15px] text-slate-400">
+                            {recruiter.location}
+                          </span>
+                        </div>
 
-                        <button className="absolute top-5 right-5 md:static w-12 h-12 rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white hover:scale-110 active:scale-95 flex items-center justify-center transition-all duration-300 group/btn shrink-0">
-                          <Beer size={20} strokeWidth={1.5} />
-                          {/* Tooltip */}
-                          <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
-                            Bookmark
-                            <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></span>
-                          </div>
-                        </button>
+                        {/* Open Jobs & Action */}
+                        <div className="md:col-span-3 flex items-center justify-start md:justify-end gap-6 mt-2 md:mt-0 w-full">
+                          <Link
+                            to={`/jobs?companyId=${recruiter.id}`} // Updated to filter by companyId if possible, or handle in backend
+                            className="text-[#004658] text-[15px] font-medium underline decoration-1 underline-offset-4 decoration-[#004658] hover:text-[#5BBB7B] hover:decoration-[#5BBB7B] transition-all whitespace-nowrap"
+                          >
+                            Open Jobs - {recruiter.openJobs}
+                          </Link>
+
+                          <button className="absolute top-5 right-5 md:static w-12 h-12 rounded-full bg-[#EBF1F5] text-[#002333] hover:bg-[#004658] hover:text-white hover:scale-110 active:scale-95 flex items-center justify-center transition-all duration-300 group/btn shrink-0">
+                            <Beer size={20} strokeWidth={1.5} />
+                            {/* Tooltip */}
+                            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-semibold px-2 py-1 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-20">
+                              Bookmark
+                              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black"></span>
+                            </div>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-            </div>
+                  ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg p-12 text-center border border-slate-100 shadow-sm">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="text-slate-400" size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-[#002333] mb-2">
+                  No Recruiters Found
+                </h3>
+                <p className="text-slate-500">
+                  Try adjusting your search criteria or come back later.
+                </p>
+              </div>
+            )}
 
             {/* Pagination Controls */}
             {filteredRecruiters.length > perPage && (
@@ -296,7 +370,7 @@ const Recruiters = () => {
                     >
                       {(idx + 1).toString().padStart(2, "0")}
                     </button>
-                  )
+                  ),
                 )}
 
                 {currentPage <
@@ -421,6 +495,7 @@ const Recruiters = () => {
                     <option value="">Choose a category</option>
                     <option value="Development">Development</option>
                     <option value="Marketing">Marketing</option>
+                    {/* Add more categories dynamically if needed */}
                   </select>
                   <ChevronDown
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"

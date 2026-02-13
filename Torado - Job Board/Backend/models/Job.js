@@ -62,6 +62,8 @@ const jobSchema = mongoose.Schema(
 
     requirements: [String],
     responsibilities: [String],
+    fundamentalSkills: [String], // Added to store job-specific skills
+    talentExperience: [String], // Added to store job-specific experience requirements
     status: {
       type: String,
       enum: ["Active", "Closed", "Draft"],

@@ -17,6 +17,7 @@ const JobListing = () => {
   const keywordParam = searchParams.get("keyword");
   const locationParam = searchParams.get("location");
   const categoryParam = searchParams.get("category");
+  const companyIdParam = searchParams.get("companyId");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6);
@@ -38,6 +39,7 @@ const JobListing = () => {
     salary: 10000,
     selectedTags: [],
     recruiterId: recruiterIdParam ? parseInt(recruiterIdParam) : null,
+    companyId: companyIdParam || null,
   });
 
   const clearFilters = () => {
@@ -53,6 +55,7 @@ const JobListing = () => {
       salary: 10000,
       selectedTags: [],
       recruiterId: null,
+      companyId: null,
     });
     setCurrentPage(1);
   };
@@ -72,6 +75,7 @@ const JobListing = () => {
         if (filters.selectedCategory)
           apiParams.category = filters.selectedCategory;
         if (filters.recruiterId) apiParams.recruiterId = filters.recruiterId;
+        if (filters.companyId) apiParams.companyId = filters.companyId;
         if (filters.selectedJobTypes.length > 0)
           apiParams.type = filters.selectedJobTypes.join(",");
 
@@ -160,6 +164,7 @@ const JobListing = () => {
     filters.salary,
     filters.selectedTags,
     filters.recruiterId,
+    filters.companyId,
   ]);
 
   // --- Active Filter Chips Logic ---
@@ -173,6 +178,20 @@ const JobListing = () => {
         label: `Recruiter: ${name}`,
         key: "recruiterId",
         value: filters.recruiterId,
+      });
+    }
+    if (filters.companyId) {
+      // Ideally fetch company name, but for now generic label or look in jobs if loaded
+      const job = jobs.find(
+        (j) =>
+          j.companyId?._id === filters.companyId ||
+          j.companyId === filters.companyId,
+      );
+      const name = job?.companyId?.name || job?.company || "Company";
+      chips.push({
+        label: `Company: ${name}`,
+        key: "companyId",
+        value: filters.companyId,
       });
     }
     if (filters.searchQuery)
@@ -226,6 +245,9 @@ const JobListing = () => {
       // Special handling for recruiterId: null it out
       if (chip.key === "recruiterId") {
         setFilters((prev) => ({ ...prev, recruiterId: null }));
+      }
+      if (chip.key === "companyId") {
+        setFilters((prev) => ({ ...prev, companyId: null }));
       }
     }
   };

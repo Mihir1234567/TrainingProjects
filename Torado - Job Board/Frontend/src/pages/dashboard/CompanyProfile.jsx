@@ -32,6 +32,36 @@ const CompanyProfile = () => {
     people: "",
   });
 
+  const handleAutoFill = () => {
+    setFormData((prev) => ({
+      ...prev,
+      name: "TechNova Innovations",
+      website: "https://technova.example.com",
+      location: "San Francisco, CA",
+      phone: "+1 (555) 123-4567",
+      email: "contact@technova.example",
+      employees: "50-200",
+      established: "2015-06-15",
+      mission:
+        "To revolutionize the digital landscape through sustainable tech.",
+      description:
+        "TechNova is a leading software solutions provider specializing in cloud computing and AI-driven applications.",
+      aboutUs:
+        "Founded in 2015, TechNova has grown from a small garage startup to a global player in the tech industry. We believe in innovation, integrity, and inclusivity. Our diverse team works tirelessly to solve complex problems and deliver value to our clients worldwide.",
+      recruitments:
+        "We look for passionate individuals who are ready to challenge the status quo. Our interview process involves a technical screening, a culture fit round, and a final discussion with leadership.",
+      people:
+        "Our team is our greatest asset. We foster a culture of continuous learning and open collaboration. We offer flexible work hours, remote options, and regular team retreats.",
+      skills: [
+        "Cloud Computing",
+        "Artificial Intelligence",
+        "React",
+        "Node.js",
+      ],
+      talent: ["Software Engineers", "Product Managers", "UX Designers"],
+    }));
+  };
+
   useEffect(() => {
     const fetchCompany = async () => {
       try {
@@ -55,6 +85,7 @@ const CompanyProfile = () => {
           established: data.established
             ? new Date(data.established).toISOString().split("T")[0]
             : "",
+          logoAction: data.logoAction || null,
         });
       } catch (err) {
         // 404 is fine, means no profile yet
@@ -148,6 +179,27 @@ const CompanyProfile = () => {
     // For now, let's implement the rest of the form fields.
   };
 
+  const handleLogoSuccess = async (path, cropData) => {
+    // 1. Update local state immediately
+    // We set logoAction to null because we are efficiently uploading the CROPPED image now.
+    // If we kept the crop data, the UI would try to crop the *already cropped* image again, causing distortion.
+    const updatedData = { ...formData, logo: path, logoAction: null };
+    setFormData(updatedData);
+
+    // 2. Auto-save to backend
+    setSaving(true);
+    try {
+      await companiesAPI.createOrUpdate(updatedData);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (err) {
+      console.error("Auto-save logo failed", err);
+      setError("Failed to save logo automatically. Please click Save Profile.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -207,11 +259,20 @@ const CompanyProfile = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Company Profile</h1>
-        <p className="text-slate-500 mt-1">
-          Manage your company branding and details.
-        </p>
+      <div className="mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Company Profile</h1>
+          <p className="text-slate-500 mt-1">
+            Manage your company branding and details.
+          </p>
+        </div>
+        <button
+          onClick={handleAutoFill}
+          className="text-sm text-blue-600 font-medium hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors"
+          type="button"
+        >
+          Auto Fill
+        </button>
       </div>
 
       {error && (
@@ -236,11 +297,12 @@ const CompanyProfile = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-slate-900">Company Logo</h3>
           <FileUploader
-            onUploadSuccess={(path) =>
-              setFormData((prev) => ({ ...prev, logo: path }))
-            }
+            initialValue={formData.logo}
+            initialCrop={formData.logoAction}
+            onUploadSuccess={handleLogoSuccess}
             label="Upload Logo"
             accept="image/*"
+            isCircular={true}
           />
         </div>
 

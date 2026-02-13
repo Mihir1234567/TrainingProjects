@@ -57,7 +57,10 @@ const JobDetail = () => {
           {/* Detailed Description Area */}
           <div className="flex-1">
             <JobDescription job={job} />
-            <RelatedJobs currentJobId={job.id} category={job.category} />
+            <RelatedJobs
+              currentJobId={job._id || job.id}
+              category={job.category}
+            />
           </div>
 
           {/* Sidebars Area */}

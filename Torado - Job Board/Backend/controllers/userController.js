@@ -83,6 +83,7 @@ const updateProfile = async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.image = req.body.image || user.image;
+    user.imageAction = req.body.imageAction || user.imageAction;
     user.jobTitle = req.body.jobTitle || user.jobTitle;
     user.jobType = req.body.jobType || user.jobType;
     user.specialization = req.body.specialization || user.specialization;
@@ -112,6 +113,15 @@ const updateProfile = async (req, res) => {
     // Social Links (Merge or Replace)
     if (req.body.socialLinks) {
       user.socialLinks = { ...user.socialLinks, ...req.body.socialLinks };
+    }
+
+    // Profile Completion & Confirmation
+    if (req.body.isProfileComplete !== undefined) {
+      user.isProfileComplete = req.body.isProfileComplete;
+    }
+
+    if (req.body.isFreelancer !== undefined) {
+      user.isFreelancer = req.body.isFreelancer;
     }
 
     // Handle password update if needed

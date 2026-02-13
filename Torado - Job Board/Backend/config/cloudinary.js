@@ -9,9 +9,19 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: "torado-jobs", // Folder in Cloudinary
-    allowed_formats: ["jpg", "png", "jpeg", "webp"],
+  params: async (req, file) => {
+    // Determine resource type based on mimetype
+    const isRaw =
+      file.mimetype.includes("pdf") ||
+      file.mimetype.includes("word") ||
+      file.mimetype.includes("document");
+
+    return {
+      folder: "torado-jobs",
+      resource_type: isRaw ? "raw" : "auto",
+      public_id: file.originalname.split(".")[0] + "-" + Date.now(), // Ensure unique names
+      allowed_formats: ["jpg", "png", "jpeg", "webp", "pdf", "doc", "docx"],
+    };
   },
 });
 

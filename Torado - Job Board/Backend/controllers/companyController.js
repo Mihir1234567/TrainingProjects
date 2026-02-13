@@ -38,6 +38,7 @@ const createOrUpdateCompany = async (req, res) => {
 
   const {
     name,
+    industry,
     logo,
     description,
     location,
@@ -48,11 +49,19 @@ const createOrUpdateCompany = async (req, res) => {
     established,
     banner,
     socials,
+    mission,
+    aboutUs,
+    recruitments,
+    people,
+    skills,
+    talent,
+    logoAction,
   } = req.body;
 
   const companyFields = {
     userId: req.user.id,
     name,
+    industry,
     logo,
     description,
     location,
@@ -63,6 +72,13 @@ const createOrUpdateCompany = async (req, res) => {
     established,
     banner,
     socials,
+    mission,
+    aboutUs,
+    recruitments,
+    people,
+    skills,
+    talent,
+    logoAction,
   };
 
   try {

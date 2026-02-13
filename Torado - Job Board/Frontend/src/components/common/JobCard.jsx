@@ -22,7 +22,7 @@ const JobCard = ({ job }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden p-3">
+          <div className="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden">
             <img
               src={(() => {
                 const logoPath = job.companyId?.logo || job.logo;

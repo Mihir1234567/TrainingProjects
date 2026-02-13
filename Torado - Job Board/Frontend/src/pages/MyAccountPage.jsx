@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Lock, Mail, Briefcase, LogIn, Eye, EyeOff } from "lucide-react";
+import {
+  User,
+  Lock,
+  Mail,
+  Briefcase,
+  LogIn,
+  Eye,
+  EyeOff,
+  Check,
+} from "lucide-react";
 import MattersToUs from "../components/common/MattersToUs";
 import AnimatedButton from "../components/common/AnimatedButton";
 import { useAuth } from "../context/AuthContext";
@@ -141,8 +150,8 @@ const MyAccountPage = () => {
     if (!registerData.name) newErrors.register_name = "Name is required";
     if (!registerData.email || !validateEmail(registerData.email))
       newErrors.register_email = "Please enter a valid email";
-    if (!registerData.password || registerData.password.length < 6)
-      newErrors.register_password = "Password must be at least 6 characters";
+    if (!registerData.password || registerData.password.length < 8)
+      newErrors.register_password = "Password must be at least 8 characters";
     if (registerData.password !== registerData.repeatPassword)
       newErrors.register_repeatPassword = "Passwords do not match";
     if (!registerData.terms)
@@ -351,7 +360,7 @@ const MyAccountPage = () => {
                       onSubmit={handleLoginSubmit}
                       noValidate
                     >
-                      {renderInput("login", "username", "Username", User)}
+                      {renderInput("login", "username", "Email Address", Mail)}
                       {renderInput(
                         "login",
                         "password",
@@ -483,6 +492,59 @@ const MyAccountPage = () => {
                         Lock,
                         "password",
                       )}
+
+                      {/* Password Complexity Checklist */}
+                      {registerData.password && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-4 -mt-2 mb-2">
+                          {[
+                            { key: "length", label: "8+ characters" },
+                            { key: "uppercase", label: "Uppercase letter" },
+                            { key: "lowercase", label: "Lowercase letter" },
+                            { key: "number", label: "Number" },
+                            {
+                              key: "special",
+                              label: "Special character",
+                              test: (p) => /[^A-Za-z0-9]/.test(p),
+                            },
+                          ].map((rule) => {
+                            const checks = {
+                              length: registerData.password.length >= 8,
+                              uppercase: /[A-Z]/.test(registerData.password),
+                              lowercase: /[a-z]/.test(registerData.password),
+                              number: /[0-9]/.test(registerData.password),
+                              special: /[^A-Za-z0-9]/.test(
+                                registerData.password,
+                              ),
+                            };
+                            const isMet = checks[rule.key];
+
+                            return (
+                              <div
+                                key={rule.key}
+                                className="flex items-center gap-2"
+                              >
+                                <div
+                                  className={`w-4 h-4 rounded-full flex items-center justify-center transition-colors ${
+                                    isMet
+                                      ? "bg-[#5BBB7B]/10 text-[#5BBB7B]"
+                                      : "bg-slate-100 text-slate-300"
+                                  }`}
+                                >
+                                  <Check size={10} strokeWidth={4} />
+                                </div>
+                                <span
+                                  className={`text-[12px] font-bold transition-colors ${
+                                    isMet ? "text-slate-600" : "text-slate-400"
+                                  }`}
+                                >
+                                  {rule.label}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+
                       {renderInput(
                         "register",
                         "repeatPassword",

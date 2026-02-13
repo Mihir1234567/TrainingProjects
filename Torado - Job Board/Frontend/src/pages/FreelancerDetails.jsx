@@ -9,19 +9,34 @@ import {
   Linkedin,
   CheckCircle,
   Briefcase,
-  User,
   Globe,
   Phone,
   Mail,
   GraduationCap,
 } from "lucide-react";
-import { userAPI } from "../services/api";
+import { userAPI, messageAPI } from "../services/api";
 
 const FreelancerDetails = () => {
   const { id } = useParams();
   const [freelancer, setFreelancer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [messageContent, setMessageContent] = useState("");
+  const [sendingMessage, setSendingMessage] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Send Message");
+
+  // Booking Form State
+  const [bookingData, setBookingData] = useState({ name: "", email: "" });
+  const [bookingLoading, setBookingLoading] = useState(false);
+
+  // Review Form State
+  const [reviewData, setReviewData] = useState({
+    name: "",
+    email: "",
+    comment: "",
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,6 +83,70 @@ const FreelancerDetails = () => {
       fetchFreelancer();
     }
   }, [id]);
+
+  // Handle Message Modal
+  const handleMessage = () => {
+    setModalTitle("Send Message");
+    setMessageContent("");
+    setIsMessageModalOpen(true);
+  };
+
+  const handleInvite = () => {
+    setModalTitle("Invite to Job");
+    setMessageContent(
+      `Hi ${freelancer.name},\n\nI'd like to invite you to apply for a job position we have open.\n\nBest regards,`,
+    );
+    setIsMessageModalOpen(true);
+  };
+
+  const handleSendMessage = async () => {
+    if (!messageContent.trim()) return;
+    setSendingMessage(true);
+    try {
+      await messageAPI.send(freelancer.id, messageContent);
+      alert("Message sent successfully!");
+      setIsMessageModalOpen(false);
+      setMessageContent("");
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      alert(
+        error.message ||
+          "Failed to send message. Please ensure you are logged in.",
+      );
+    } finally {
+      setSendingMessage(false);
+    }
+  };
+
+  // Handle Booking
+  const handleBookFreelancer = async (e) => {
+    e.preventDefault();
+    if (!bookingData.name || !bookingData.email) {
+      alert("Please fill in all fields");
+      return;
+    }
+    setBookingLoading(true);
+    try {
+      const content = `New Booking Inquiry:\nName: ${bookingData.name}\nEmail: ${bookingData.email}\n\nI am interested in booking your services.`;
+      await messageAPI.send(freelancer.id, content);
+      alert("Booking inquiry sent successfully!");
+      setBookingData({ name: "", email: "" });
+    } catch (error) {
+      console.error("Failed to book:", error);
+      alert(
+        error.message ||
+          "Failed to send booking inquiry. Please ensure you are logged in.",
+      );
+    } finally {
+      setBookingLoading(false);
+    }
+  };
+
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    alert("Review submitted successfully! (Pending approval)");
+    setReviewData({ name: "", email: "", comment: "" });
+  };
 
   if (loading) {
     return (
@@ -156,11 +235,17 @@ const FreelancerDetails = () => {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-4 shrink-0">
-                <button className="px-6 py-3.5 bg-[#5B6CF6] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-blue-500/20 text-sm inline-flex items-center justify-center relative group">
+                <button
+                  onClick={handleInvite}
+                  className="px-6 py-3.5 bg-[#5B6CF6] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-blue-500/20 text-sm inline-flex items-center justify-center relative group"
+                >
                   <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
                   <span className="relative z-10">Invite</span>
                 </button>
-                <button className="px-6 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center relative group">
+                <button
+                  onClick={handleMessage}
+                  className="px-6 py-3.5 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm inline-flex items-center justify-center relative group"
+                >
                   <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
                   <span className="relative z-10">Message</span>
                 </button>
@@ -324,24 +409,42 @@ const FreelancerDetails = () => {
                 ))}
               </div>
 
-              {/* Review Form - Simplified style */}
+              {/* Review Form */}
               <h3 className="text-[20px] font-bold text-[#002333]">
                 Add a Review
               </h3>
-              <form className="space-y-6 bg-[#F5F7FC] p-8 rounded-lg">
+              <form
+                onSubmit={handleReviewSubmit}
+                className="space-y-6 bg-[#F5F7FC] p-8 rounded-lg"
+              >
                 <textarea
                   placeholder="Comment"
+                  required
+                  value={reviewData.comment}
+                  onChange={(e) =>
+                    setReviewData({ ...reviewData, comment: e.target.value })
+                  }
                   className="w-full h-32 bg-white border border-slate-200 rounded-lg p-4 focus:outline-none focus:border-[#5BBB7B] transition-colors resize-none"
                 ></textarea>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <input
                     type="text"
+                    required
                     placeholder="Name"
+                    value={reviewData.name}
+                    onChange={(e) =>
+                      setReviewData({ ...reviewData, name: e.target.value })
+                    }
                     className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-[#5BBB7B] transition-colors"
                   />
                   <input
                     type="email"
+                    required
                     placeholder="Email"
+                    value={reviewData.email}
+                    onChange={(e) =>
+                      setReviewData({ ...reviewData, email: e.target.value })
+                    }
                     className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:border-[#5BBB7B] transition-colors"
                   />
                 </div>
@@ -482,26 +585,128 @@ const FreelancerDetails = () => {
               <h3 className="text-lg font-bold text-[#002333] mb-6">
                 Booking Freelancer
               </h3>
-              <form className="space-y-4">
+              <form onSubmit={handleBookFreelancer} className="space-y-4">
                 <input
                   type="text"
+                  required
                   placeholder="Full Name"
+                  value={bookingData.name}
+                  onChange={(e) =>
+                    setBookingData({ ...bookingData, name: e.target.value })
+                  }
                   className="w-full bg-white border border-[#E0E6F7] rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#5BBB7B] transition-colors"
                 />
                 <input
                   type="email"
+                  required
                   placeholder="Email"
+                  value={bookingData.email}
+                  onChange={(e) =>
+                    setBookingData({ ...bookingData, email: e.target.value })
+                  }
                   className="w-full bg-white border border-[#E0E6F7] rounded-md px-4 py-3 text-sm focus:outline-none focus:border-[#5BBB7B] transition-colors"
                 />
-                <button className="w-full py-3 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm flex items-center justify-center relative group">
+                <button
+                  disabled={bookingLoading}
+                  className="w-full py-3 bg-[#5BBB7B] text-white font-bold rounded-md transition-all duration-500 overflow-hidden shadow-lg shadow-green-500/20 text-sm flex items-center justify-center relative group"
+                >
                   <span className="absolute inset-0 bg-[#002333] transition-transform duration-700 ease-in-out scale-x-0 group-hover:scale-x-100 origin-center" />
-                  <span className="relative z-10">Book Now</span>
+                  <span className="relative z-10">
+                    {bookingLoading ? "Sending..." : "Book Now"}
+                  </span>
                 </button>
               </form>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Message Modal - Reused Style */}
+      {isMessageModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+            onClick={() => setIsMessageModalOpen(false)}
+          />
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-lg z-50 overflow-hidden relative animate-fade-in-up">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <img
+                  src={freelancer.image}
+                  alt={freelancer.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                />
+                <div>
+                  <h3 className="text-lg font-bold text-[#002333]">
+                    {modalTitle}
+                  </h3>
+                  <p className="text-sm text-[#5E6670]">
+                    To: {freelancer.name}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsMessageModalOpen(false)}
+                className="p-2 bg-slate-50 rounded-full text-slate-500 hover:bg-slate-100 transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6">
+              <label className="block text-sm font-bold text-[#002333] mb-3">
+                Your Message
+              </label>
+              <textarea
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                placeholder="Type your message here..."
+                rows={6}
+                className="w-full bg-[#F9FBFC] border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#5BBB7B] transition-colors resize-none"
+                disabled={sendingMessage}
+              />
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex gap-3 p-6 border-t border-slate-100">
+              <button
+                onClick={() => setIsMessageModalOpen(false)}
+                className="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-md text-sm font-medium hover:bg-slate-200 transition-colors"
+                disabled={sendingMessage}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendMessage}
+                disabled={sendingMessage || !messageContent.trim()}
+                className="flex-1 flex items-center justify-center gap-2 bg-[#5BBB7B] text-white px-4 py-2.5 rounded-md text-sm font-medium transition-all relative overflow-hidden z-10 before:absolute before:inset-0 before:bg-[#002333] before:origin-center before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100 before:-z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {sendingMessage ? (
+                  <span>Sending...</span>
+                ) : (
+                  <span>Send Message</span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

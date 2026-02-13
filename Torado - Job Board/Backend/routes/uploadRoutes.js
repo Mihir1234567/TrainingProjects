@@ -10,8 +10,20 @@ function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|gif|pdf|doc|docx|webp/;
   // Check ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
   // Check mime
-  const mimetype = filetypes.test(file.mimetype);
+  const allowedMimes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "application/pdf",
+    "application/msword", // .doc
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+  ];
+
+  const mimetype = allowedMimes.includes(file.mimetype);
 
   if (mimetype && extname) {
     return cb(null, true);

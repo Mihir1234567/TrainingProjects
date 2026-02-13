@@ -1,7 +1,10 @@
-const API_URL = "http://localhost:5001/api";
+export const API_BASE_URL = "http://localhost:5001";
+const API_URL = `${API_BASE_URL}/api`;
 
 const getHeaders = () => {
-  const userStr = sessionStorage.getItem("torado_user");
+  const userStr =
+    localStorage.getItem("torado_user") ||
+    sessionStorage.getItem("torado_user");
   const headers = {
     "Content-Type": "application/json",
   };
@@ -294,11 +297,11 @@ export const bookmarkAPI = {
 };
 
 export const messageAPI = {
-  send: async (receiverId, content) => {
+  send: async (receiverId, content, replyTo = null) => {
     const response = await fetch(`${API_URL}/messages`, {
       method: "POST",
       headers: getHeaders(),
-      body: JSON.stringify({ receiverId, content }),
+      body: JSON.stringify({ receiverId, content, replyTo }),
     });
     return handleResponse(response);
   },
@@ -310,6 +313,62 @@ export const messageAPI = {
   },
   getConversation: async (userId) => {
     const response = await fetch(`${API_URL}/messages/${userId}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  delete: async (messageId) => {
+    const response = await fetch(`${API_URL}/messages/${messageId}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
+
+export const resumeAPI = {
+  create: async (resumeData) => {
+    const response = await fetch(`${API_URL}/resumes`, {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(resumeData),
+    });
+    return handleResponse(response);
+  },
+  getAll: async (userId) => {
+    let url = `${API_URL}/resumes`;
+    if (userId) {
+      url += `?userId=${userId}`;
+    }
+    const response = await fetch(url, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  getById: async (id) => {
+    const response = await fetch(`${API_URL}/resumes/${id}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  update: async (id, resumeData) => {
+    const response = await fetch(`${API_URL}/resumes/${id}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(resumeData),
+    });
+    return handleResponse(response);
+  },
+  delete: async (id) => {
+    const response = await fetch(`${API_URL}/resumes/${id}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  setDefault: async (id) => {
+    const response = await fetch(`${API_URL}/resumes/${id}/default`, {
+      method: "PUT",
       headers: getHeaders(),
     });
     return handleResponse(response);

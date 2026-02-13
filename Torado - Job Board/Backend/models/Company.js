@@ -11,9 +11,16 @@ const companySchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a company name"],
     },
+    industry: {
+      type: String,
+    },
     logo: {
       type: String,
       default: "https://via.placeholder.com/150",
+    },
+    logoAction: {
+      type: Object, // { x: number, y: number, zoom: number }
+      default: null,
     },
     description: {
       type: String,

@@ -75,7 +75,7 @@ const getJobApplications = async (req, res) => {
     }
 
     const applications = await Application.find({ jobId: req.params.jobId })
-      .populate("candidateId", "name email jobTitle") // Populate candidate info
+      .populate("candidateId", "name email jobTitle image location resumeUrl") // Populate candidate info including resumeUrl
       .sort({ createdAt: -1 });
 
     res.status(200).json(applications);
@@ -117,7 +117,7 @@ const getRecruiterApplications = async (req, res) => {
 
     // 2. Find applications for these jobs
     const applications = await Application.find({ jobId: { $in: jobIds } })
-      .populate("candidateId", "name email jobTitle")
+      .populate("candidateId", "name email jobTitle image location resumeUrl")
       .populate("jobId", "title")
       .sort({ createdAt: -1 });
 

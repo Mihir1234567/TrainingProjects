@@ -18,12 +18,40 @@ import {
   Eye,
   FileSearch,
 } from "lucide-react";
+import { bookmarkAPI } from "../../services/api";
+import Toast from "../../components/common/Toast";
+import ResumeDownloader from "../../components/dashboard/ResumeDownloader";
+import ChatModal from "../../components/dashboard/ChatModal";
+
+// Helper for image URLs
+const getImageUrl = (path) => {
+  if (!path) return "https://via.placeholder.com/150";
+  if (path.startsWith("http")) return path;
+  return `http://localhost:5001${path}`;
+};
+
+// Helper for resume URLs
+const getResumeUrl = (path, navigate) => {
+  if (!path) return "#";
+  if (path.startsWith("http")) return path;
+  if (path.startsWith("dashboard-resume://")) {
+    const resumeId = path.split("://")[1];
+    return `/resume-viewer/${resumeId}?download=true`;
+  }
+  return `http://localhost:5001${path}`;
+};
 
 // The "Door" effect button component
-const DoorButton = ({ children, className = "", hoverBg = "bg-[#002333]" }) => {
+const DoorButton = ({
+  children,
+  className = "",
+  hoverBg = "bg-[#002333]",
+  ...props
+}) => {
   return (
     <button
       className={`relative overflow-hidden group/btn transition-all duration-500 ease-in-out ${className}`}
+      {...props}
     >
       <span
         className={`absolute inset-0 w-full h-full ${hoverBg} scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-700 cubic-bezier(0.4, 0, 0.2, 1) origin-center`}
@@ -35,7 +63,15 @@ const DoorButton = ({ children, className = "", hoverBg = "bg-[#002333]" }) => {
   );
 };
 
-const ApplicantCard = ({ applicant }) => {
+const ApplicantCard = ({
+  applicant,
+  onBookmark,
+  onViewNote,
+  onDownloadResume,
+  onOpenChat,
+}) => {
+  const isDashboardResume = applicant.resume?.startsWith("dashboard-resume://");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -46,9 +82,10 @@ const ApplicantCard = ({ applicant }) => {
         {/* Profile Image - Centered on mobile */}
         <div className="relative w-20 h-20 md:w-20 md:h-20 lg:w-24 lg:h-24 shrink-0 self-center md:self-start mb-2 md:mb-0">
           <img
-            src={applicant.image}
+            src={getImageUrl(applicant.image)}
             alt={applicant.name}
             className="w-full h-full rounded-full object-cover ring-4 ring-slate-50 shadow-sm"
+            onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
           />
         </div>
 
@@ -86,14 +123,37 @@ const ApplicantCard = ({ applicant }) => {
               hoverBg="bg-[#6A7BFE]"
               className="flex-1 px-4 py-2 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg text-[12px] font-extrabold shadow-sm whitespace-nowrap"
             >
-              Download CV
+              {isDashboardResume ? (
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDownloadResume(applicant.resume.split("://")[1]);
+                  }}
+                  className="flex items-center justify-center w-full h-full cursor-pointer"
+                >
+                  Download CV
+                </span>
+              ) : (
+                <a
+                  href={getResumeUrl(applicant.resume)}
+                  target="_blank"
+                  rel="noreferrer"
+                  download
+                  className="flex items-center justify-center w-full h-full"
+                >
+                  Download CV
+                </a>
+              )}
             </DoorButton>
-            <DoorButton
-              hoverBg="bg-[#5BBB7B]"
-              className="flex-1 px-4 py-2 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg text-[12px] font-extrabold shadow-sm whitespace-nowrap"
-            >
-              Message
-            </DoorButton>
+            <div className="flex-1">
+              <DoorButton
+                onClick={() => onOpenChat(applicant.candidateId)}
+                hoverBg="bg-[#5BBB7B]"
+                className="w-full px-4 py-2 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg text-[12px] font-extrabold shadow-sm whitespace-nowrap"
+              >
+                Message
+              </DoorButton>
+            </div>
           </div>
 
           {/* Date & Rating Row (Side by side on mobile) */}
@@ -106,6 +166,7 @@ const ApplicantCard = ({ applicant }) => {
             </div>
 
             <div className="flex flex-col items-end md:items-start md:ml-auto">
+              {/* Rating Section - keeping static for now as requested/implemented */}
               <div className="flex text-orange-400 gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -129,51 +190,23 @@ const ApplicantCard = ({ applicant }) => {
 
           {/* Mobile Secondary Actions (Bottom Row) */}
           <div className="flex flex-row gap-2.5 pt-4 border-t border-slate-50 md:hidden">
-            <DoorButton
-              hoverBg="bg-[#8E7E7E]"
-              className="flex-1 px-2 py-2 bg-[#F3EEEE] text-[#8E7E7E] rounded-lg font-bold text-[12px] whitespace-nowrap"
+            {/* Note Button Removed as requested */}
+            <div
+              onClick={() => onBookmark(applicant.candidateId)}
+              className="flex-1"
             >
-              <div className="flex items-center justify-center gap-1.5">
-                <div className="p-0.5 rounded bg-[#8E7E7E]/10">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 20h9" />
-                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                  </svg>
+              <DoorButton
+                hoverBg="bg-[#6A7BFE]"
+                className="w-full px-2 py-2 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg font-bold text-[12px] whitespace-nowrap"
+              >
+                <div className="flex items-center justify-center gap-1.5">
+                  <div className="p-0.5 rounded bg-[#6A7BFE]/10">
+                    <Bookmark size={12} strokeWidth={2.5} />
+                  </div>
+                  <span>Save</span>
                 </div>
-                <span>Edit</span>
-              </div>
-            </DoorButton>
-            <DoorButton
-              hoverBg="bg-[#5BBB7B]"
-              className="flex-1 px-2 py-2 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg font-bold text-[12px] whitespace-nowrap"
-            >
-              <div className="flex items-center justify-center gap-1.5">
-                <div className="p-0.5 rounded bg-[#5BBB7B]/10">
-                  <FileText size={12} strokeWidth={2.5} />
-                </div>
-                <span>Note</span>
-              </div>
-            </DoorButton>
-            <DoorButton
-              hoverBg="bg-[#6A7BFE]"
-              className="flex-1 px-2 py-2 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg font-bold text-[12px] whitespace-nowrap"
-            >
-              <div className="flex items-center justify-center gap-1.5">
-                <div className="p-0.5 rounded bg-[#6A7BFE]/10">
-                  <Bookmark size={12} strokeWidth={2.5} />
-                </div>
-                <span>Save</span>
-              </div>
-            </DoorButton>
+              </DoorButton>
+            </div>
           </div>
 
           {/* Desktop Actions Area (Hidden on mobile) */}
@@ -183,62 +216,54 @@ const ApplicantCard = ({ applicant }) => {
                 hoverBg="bg-[#6A7BFE]"
                 className="px-8 py-2.5 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg text-[13px] font-bold shadow-sm whitespace-nowrap"
               >
-                Download CV
+                {isDashboardResume ? (
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDownloadResume(applicant.resume.split("://")[1]);
+                    }}
+                    className="flex items-center justify-center w-full h-full cursor-pointer"
+                  >
+                    Download CV
+                  </span>
+                ) : (
+                  <a
+                    href={getResumeUrl(applicant.resume)}
+                    target="_blank"
+                    rel="noreferrer"
+                    download
+                    className="flex items-center justify-center w-full h-full"
+                  >
+                    Download CV
+                  </a>
+                )}
               </DoorButton>
-              <DoorButton
-                hoverBg="bg-[#5BBB7B]"
-                className="px-8 py-2.5 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg text-[13px] font-bold shadow-sm whitespace-nowrap"
-              >
-                Message
-              </DoorButton>
+              <div>
+                <DoorButton
+                  onClick={() => onOpenChat(applicant.candidateId)}
+                  hoverBg="bg-[#5BBB7B]"
+                  className="px-8 py-2.5 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg text-[13px] font-bold shadow-sm whitespace-nowrap"
+                >
+                  Message
+                </DoorButton>
+              </div>
             </div>
 
             <div className="flex items-center gap-3 ml-auto">
-              <DoorButton
-                hoverBg="bg-[#8E7E7E]"
-                className="px-4 py-2.5 bg-[#F3EEEE] text-[#8E7E7E] rounded-lg font-bold text-[13px] whitespace-nowrap"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1 rounded bg-[#8E7E7E]/10">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M12 20h9" />
-                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                    </svg>
+              {/* Note Button Removed */}
+              <div onClick={() => onBookmark(applicant.candidateId)}>
+                <DoorButton
+                  hoverBg="bg-[#6A7BFE]"
+                  className="px-4 py-2.5 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg font-bold text-[13px] whitespace-nowrap"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="p-1 rounded bg-[#6A7BFE]/10">
+                      <Bookmark size={14} strokeWidth={2.5} />
+                    </div>
+                    <span>Save</span>
                   </div>
-                  <span>Edit</span>
-                </div>
-              </DoorButton>
-              <DoorButton
-                hoverBg="bg-[#5BBB7B]"
-                className="px-4 py-2.5 bg-[#EAF7ED] text-[#5BBB7B] rounded-lg font-bold text-[13px] whitespace-nowrap"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1 rounded bg-[#5BBB7B]/10">
-                    <FileText size={14} strokeWidth={2.5} />
-                  </div>
-                  <span>Note</span>
-                </div>
-              </DoorButton>
-              <DoorButton
-                hoverBg="bg-[#6A7BFE]"
-                className="px-4 py-2.5 bg-[#F0F5FF] text-[#6A7BFE] rounded-lg font-bold text-[13px] whitespace-nowrap"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1 rounded bg-[#6A7BFE]/10">
-                    <Bookmark size={14} strokeWidth={2.5} />
-                  </div>
-                  <span>Save</span>
-                </div>
-              </DoorButton>
+                </DoorButton>
+              </div>
             </div>
           </div>
         </div>
@@ -251,6 +276,49 @@ const ManageApplicants = () => {
   const { id } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "success",
+  });
+  const [downloadingResumeId, setDownloadingResumeId] = useState(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [selectedChatUser, setSelectedChatUser] = useState(null);
+
+  const handleOpenChat = (userId) => {
+    setSelectedChatUser(userId);
+    setIsChatOpen(true);
+  };
+
+  const handleBookmark = async (candidateId) => {
+    try {
+      await bookmarkAPI.toggle(candidateId, "User");
+      setToast({
+        isVisible: true,
+        message: "Candidate saved successfully!",
+        type: "success",
+      });
+    } catch (error) {
+      console.error(error);
+      setToast({
+        isVisible: true,
+        message: "Failed to save candidate.",
+        type: "error",
+      });
+    }
+  };
+
+  const handleViewNote = (applicant) => {
+    if (applicant.coverLetter) {
+      alert(`Cover Letter/Note:\n\n${applicant.coverLetter}`);
+    } else {
+      setToast({
+        isVisible: true,
+        message: "No cover letter provided.",
+        type: "info",
+      });
+    }
+  };
 
   // Fetch Applications on Mount
   useEffect(() => {
@@ -275,8 +343,11 @@ const ManageApplicants = () => {
   const allApplicants = useMemo(() => {
     return applications.map((app) => ({
       id: app._id,
+      candidateId: app.candidateId?._id,
       name: app.candidateId?.name || "Unknown Candidate",
       email: app.candidateId?.email,
+      resume: app.resume || app.candidateId?.resumeUrl, // Fallback to candidate's profile resume
+      coverLetter: app.coverLetter,
       date: new Date(app.createdAt).toLocaleDateString("en-GB", {
         day: "numeric",
         month: "short",
@@ -284,9 +355,9 @@ const ManageApplicants = () => {
       }),
       rating: 0, // No ratings yet
       reviews: 0,
-      image: "https://via.placeholder.com/150", // Placeholder for now
-      category: app.jobId?.title || "General Application", // Show Job Title as category context
-      location: "London, UK", // Mock location or fetch from profile
+      image: app.candidateId?.image || "https://via.placeholder.com/150",
+      category: app.jobId?.title || "General Application",
+      location: app.candidateId?.location || "London, UK",
       jobTitle: app.candidateId?.jobTitle || "Candidate",
     }));
   }, [applications]);
@@ -322,6 +393,15 @@ const ManageApplicants = () => {
 
   return (
     <div className="space-y-6 pb-20">
+      <ResumeDownloader
+        resumeId={downloadingResumeId}
+        onComplete={() => setDownloadingResumeId(null)}
+      />
+      <ChatModal
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        userId={selectedChatUser}
+      />
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-[22px] font-bold text-[#002333]">
@@ -406,7 +486,14 @@ const ManageApplicants = () => {
             className="space-y-6"
           >
             {currentApplicants.map((applicant) => (
-              <ApplicantCard key={applicant.id} applicant={applicant} />
+              <ApplicantCard
+                key={applicant.id}
+                applicant={applicant}
+                onBookmark={handleBookmark}
+                onViewNote={handleViewNote}
+                onDownloadResume={(id) => setDownloadingResumeId(id)}
+                onOpenChat={handleOpenChat}
+              />
             ))}
           </motion.div>
         </AnimatePresence>
@@ -454,6 +541,13 @@ const ManageApplicants = () => {
           </div>
         </div>
       )}
+
+      <Toast
+        isVisible={toast.isVisible}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast((prev) => ({ ...prev, isVisible: false }))}
+      />
     </div>
   );
 };

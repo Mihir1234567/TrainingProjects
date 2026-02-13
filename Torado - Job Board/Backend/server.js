@@ -7,7 +7,22 @@ const connectDB = require("./config/db");
 const app = express();
 
 // Connect Database
-connectDB();
+// Connect Database and Start Server
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 // Middleware
 app.use(cors());
@@ -31,6 +46,7 @@ app.use("/api/contact", require("./routes/contactRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/bookmarks", require("./routes/bookmarkRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
+app.use("/api/resumes", require("./routes/resumeRoutes"));
 
 // Make uploads folder static
 const path = require("path");
@@ -42,8 +58,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Server Error" });
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+// Server startup logic is now handled in startServer()

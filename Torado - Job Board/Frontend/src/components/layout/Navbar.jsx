@@ -13,21 +13,20 @@ import {
   Bookmark,
   Package,
   LogOut,
+  User,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import logo from "../../assets/Logo/logoMain.svg";
 import blogsData from "../../data/blogs.json";
-import { USER_PROFILE } from "../../constants/userProfile";
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
-  const { isAuthenticated, isRecruiter, logout } = useAuth();
+  const { isAuthenticated, isRecruiter, logout, user } = useAuth(); // Get user
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-
-  // ... (keeping existing memo logic for authors, categories, tags - omitted for brevity in prompt but tool keeps context)
+  const [imgError, setImgError] = useState(false); // Mobile Menu Image Error State
 
   // Extract unique Authors
   const authors = useMemo(() => {
@@ -105,7 +104,6 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
       items: [
         { label: "Job ", to: "/jobs" },
         { label: "Job Detail", to: "/job/1" },
-        { label: "Apply For A Job", to: "/apply-job/1" },
       ],
       roles: ["candidate"], // Only for candidates
     },
@@ -209,8 +207,7 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
                   Login / Register
                 </Link>
 
-                {/* Post Job Button (Always visible to encourage signup/login, or hide if desired) */}
-                {/* For now, hiding context-specific buttons until login, OR showing general call to action */}
+                {/* Post Job Button*/}
                 <Link
                   to="/post-job"
                   className="hidden xl:inline-flex relative overflow-hidden group items-center justify-center py-2 px-6 rounded-lg font-semibold text-sm whitespace-nowrap bg-[#5B6CF6] text-white shadow-sm hover:shadow-md transition-all"
@@ -324,17 +321,24 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
               // Mobile Dashboard View
               <div className="mt-6 border-t border-slate-100 pt-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <img
-                    src={USER_PROFILE.avatar}
-                    alt="User Avatar"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200">
+                    {!imgError && user?.image ? (
+                      <img
+                        src={user.image}
+                        alt="User"
+                        className="w-full h-full object-cover"
+                        onError={() => setImgError(true)}
+                      />
+                    ) : (
+                      <User className="text-slate-400" size={24} />
+                    )}
+                  </div>
                   <div>
                     <h4 className="font-bold text-torado-blue-900 leading-tight">
-                      {USER_PROFILE.name}
+                      {user?.name || "User"}
                     </h4>
                     <p className="text-xs text-slate-500">
-                      {USER_PROFILE.email}
+                      {user?.email || ""}
                     </p>
                   </div>
                 </div>
@@ -420,10 +424,12 @@ const Navbar = ({ toggleDashboardSidebar, isDashboardSidebarOpen }) => {
       {isSticky && <div className="h-18 lg:h-22.5 w-full bg-transparent"></div>}
     </>
   );
-};
+}; // End of Navbar Component
 
 const UserProfileDropdown = ({ onLogout }) => {
+  const { user } = useAuth(); // Use Auth Context
   const [isOpen, setIsOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const dropdownRef = useRef(null);
 
   // Close when clicking outside
@@ -450,15 +456,25 @@ const UserProfileDropdown = ({ onLogout }) => {
         className="flex items-center gap-3 cursor-pointer group select-none"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <img
-          src={USER_PROFILE.avatar}
-          alt="User Avatar"
-          className={`w-10 h-10 rounded-full object-cover border-2 transition-colors ${
+        <div
+          className={`w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 transition-colors ${
             isOpen
               ? "border-torado-green-600"
               : "border-slate-100 group-hover:border-torado-green-600"
           }`}
-        />
+        >
+          {!imgError && user?.image ? (
+            <img
+              src={user.image}
+              alt="User"
+              className="w-full h-full object-cover"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <User className="text-slate-400" size={20} />
+          )}
+        </div>
+
         <div className="hidden xl:block">
           <p
             className={`text-sm font-bold transition-colors ${
@@ -490,15 +506,22 @@ const UserProfileDropdown = ({ onLogout }) => {
       >
         {/* Profile Header */}
         <div className="flex flex-col items-center px-6 pb-6 border-b border-slate-100">
-          <img
-            src={USER_PROFILE.avatar}
-            alt="User Avatar"
-            className="w-20 h-20 rounded-full object-cover mb-4"
-          />
+          <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200 mb-4">
+            {!imgError && user?.image ? (
+              <img
+                src={user.image}
+                alt="User"
+                className="w-full h-full object-cover"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <User className="text-slate-400" size={40} />
+            )}
+          </div>
           <h4 className="text-lg font-bold text-torado-blue-900 mb-1">
-            {USER_PROFILE.name}
+            {user?.name || "User"}
           </h4>
-          <p className="text-sm text-slate-500">{USER_PROFILE.email}</p>
+          <p className="text-sm text-slate-500">{user?.email || ""}</p>
         </div>
 
         {/* Menu Items */}

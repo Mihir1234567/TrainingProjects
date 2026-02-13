@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { authAPI } from "../services/api";
+import { authAPI, userAPI } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -15,30 +15,53 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize from sessionStorage on mount
+  // Initialize from localStorage on mount
   useEffect(() => {
-    // Check for legacy localStorage and clear it
-    if (localStorage.getItem("torado_user")) {
-      localStorage.removeItem("torado_user");
-    }
+    const validateSession = async () => {
+      const storedUser =
+        localStorage.getItem("torado_user") ||
+        sessionStorage.getItem("torado_user");
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser); // Optimistic set
 
-    const storedUser = sessionStorage.getItem("torado_user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Failed to parse user from session storage", error);
-        sessionStorage.removeItem("torado_user");
+          // Verify with backend to ensure token is valid & get fresh data (like isProfileComplete)
+          try {
+            const freshUser = await userAPI.getProfile();
+            // Keep the token from storage (API usually doesn't return it on /me)
+            const mergedUser = { ...parsedUser, ...freshUser };
+            // Ensure token is preserved if /me didn't return it
+            if (!mergedUser.token && parsedUser.token) {
+              mergedUser.token = parsedUser.token;
+            }
+
+            setUser(mergedUser);
+            localStorage.setItem("torado_user", JSON.stringify(mergedUser));
+          } catch (apiError) {
+            console.error("Session validation failed:", apiError);
+            // If 401 or similar, clear session
+            if (apiError.status === 401 || apiError.status === 403) {
+              logout();
+            }
+          }
+        } catch (error) {
+          console.error("Failed to parse user from storage", error);
+          localStorage.removeItem("torado_user");
+          sessionStorage.removeItem("torado_user");
+        }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+
+    validateSession();
   }, []);
 
   const login = async (userData) => {
     try {
       const userWithToken = await authAPI.login(userData);
       setUser(userWithToken);
-      sessionStorage.setItem("torado_user", JSON.stringify(userWithToken));
+      localStorage.setItem("torado_user", JSON.stringify(userWithToken));
       return userWithToken;
     } catch (error) {
       console.error("Login failed", error);
@@ -50,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const newUser = await authAPI.register(userData);
       setUser(newUser);
-      sessionStorage.setItem("torado_user", JSON.stringify(newUser));
+      localStorage.setItem("torado_user", JSON.stringify(newUser));
       return newUser;
     } catch (error) {
       console.error("Registration failed", error);
@@ -60,16 +83,15 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    sessionStorage.removeItem("torado_user");
-    // Also ensure localStorage is clear
     localStorage.removeItem("torado_user");
+    sessionStorage.removeItem("torado_user");
     return Promise.resolve();
   };
 
   const updateUser = (updates) => {
     const updatedUser = { ...user, ...updates };
     setUser(updatedUser);
-    sessionStorage.setItem("torado_user", JSON.stringify(updatedUser));
+    localStorage.setItem("torado_user", JSON.stringify(updatedUser));
   };
 
   const value = {
