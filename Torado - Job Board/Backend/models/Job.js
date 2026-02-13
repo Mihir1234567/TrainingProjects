@@ -66,8 +66,20 @@ const jobSchema = mongoose.Schema(
     talentExperience: [String], // Added to store job-specific experience requirements
     status: {
       type: String,
-      enum: ["Active", "Closed", "Draft"],
-      default: "Active",
+      enum: ["Active", "Closed", "Draft", "Pending", "Rejected", "Expired"],
+      default: "Active", // Or "Pending" if we want approval flow by default later
+    },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
     },
     applicationsCount: {
       type: Number,

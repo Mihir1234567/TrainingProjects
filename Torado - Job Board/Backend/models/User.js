@@ -28,6 +28,12 @@ const userSchema = mongoose.Schema(
       enum: ["candidate", "employer", "admin"],
       default: "candidate",
     },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role",
+      },
+    ],
     isFreelancer: {
       type: Boolean,
       default: false,
@@ -112,6 +118,25 @@ const userSchema = mongoose.Schema(
       default: false,
     },
 
+    // Status & Soft Delete
+    status: {
+      type: String,
+      enum: ["active", "suspended", "banned", "pending"],
+      default: "active",
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+    lastLogin: {
+      type: Date,
+      default: null,
+    },
+
     createdAt: {
       type: Date,
       default: Date.now,
@@ -137,5 +162,13 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+// Indexes
+userSchema.index({ email: 1 });
+userSchema.index({ role: 1 });
+userSchema.index({ roles: 1 });
+userSchema.index({ status: 1 });
+userSchema.index({ isDeleted: 1 });
+userSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model("User", userSchema);

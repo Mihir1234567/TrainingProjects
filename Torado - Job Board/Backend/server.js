@@ -28,6 +28,13 @@ startServer();
 app.use(cors());
 app.use(express.json()); // Body parser
 
+// Rate Limiting
+const { apiLimiter, authLimiter } = require("./middleware/rateLimiters");
+
+// Apply to all requests
+app.use("/api", apiLimiter);
+app.use("/api/auth", authLimiter); // stricter limit for auth
+
 // Routes (Placeholders for now)
 app.get("/", (req, res) => {
   res.send("Torado Job Board API is running...");
@@ -47,6 +54,8 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/bookmarks", require("./routes/bookmarkRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/resumes", require("./routes/resumeRoutes"));
+app.use("/api/roles", require("./routes/roleRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes")); // New Admin Routes
 
 // Make uploads folder static
 const path = require("path");

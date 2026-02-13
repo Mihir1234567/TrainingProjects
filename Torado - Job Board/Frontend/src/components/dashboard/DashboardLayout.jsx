@@ -11,8 +11,17 @@ const DashboardLayout = () => {
   const { user, isRecruiter } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect to profile completion if not completed
+  // Redirect to profile completion if not completed (skip for admins)
   useEffect(() => {
+    // Check if admin
+    const isAdmin =
+      user?.role === "admin" || user?.roles?.some((r) => r.name === "admin");
+
+    if (user && isAdmin) {
+      navigate("/admin");
+      return;
+    }
+
     if (user && !user.isProfileComplete) {
       navigate("/complete-profile");
     }

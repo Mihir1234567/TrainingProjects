@@ -2,10 +2,27 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 // Generate JWT
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
-  });
+// Generate JWT with Role Versions
+const generateToken = (user) => {
+  const roleVersions = {};
+  if (user.roles) {
+    user.roles.forEach((r) => {
+      if (r && r._id) {
+        roleVersions[r._id] = r.version || 0;
+      }
+    });
+  }
+
+  return jwt.sign(
+    {
+      id: user._id,
+      roleVersions,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30d",
+    },
+  );
 };
 
 // @desc    Register new user
@@ -31,11 +48,29 @@ const registerUser = async (req, res) => {
       name,
       email: email.toLowerCase(),
       password,
-      role: role || "candidate",
+      role: role || "candidate", // Legacy
       companyName: role === "employer" ? companyName : undefined,
       jobTitle: role === "candidate" ? jobTitle : undefined,
-      // Temporarily removing required fields check from logic if schema has strict stuff
     });
+
+    // Assign Role Object (RBAC)
+    try {
+      const Role = require("../models/Role");
+      const roleName = role || "candidate";
+      const roleDoc = await Role.findOne({ name: roleName });
+
+      if (roleDoc) {
+        user.roles = [roleDoc._id];
+        await user.save();
+      }
+    } catch (err) {
+      console.error("Failed to assign role object during register", err);
+      // Continue without failing registration
+    }
+
+    // Re-fetch to populate if needed or just construct response
+    // For now we just return what we have, frontend can hit /me for full details if strictly needed
+    // or we can populate manually
 
     if (user) {
       res.status(201).json({
@@ -43,7 +78,10 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        token: generateToken(user._id),
+        roles: user.roles, // Include new roles
+        roles: user.roles, // Include new roles
+        token: generateToken(user),
+        companyName: user.companyName,
         companyName: user.companyName,
         jobTitle: user.jobTitle,
         isProfileComplete: user.isProfileComplete,
@@ -64,17 +102,32 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   // Check for user email
-  const user = await User.findOne({ email: email.toLowerCase() }).select(
-    "+password",
-  );
+  const user = await User.findOne({ email: email.toLowerCase() })
+    .select("+password")
+    .populate("roles");
 
   if (user && (await user.matchPassword(password))) {
+    // Update lastLogin
+    user.lastLogin = new Date();
+    await user.save();
+
+    // Log Login Action
+    const { logAction } = require("../utils/auditLogger");
+    await logAction({
+      action: "USER_LOGIN",
+      performedBy: user._id,
+      targetUser: user._id,
+      details: `User logged in from ${req.ip}`,
+      req,
+    });
+
     res.json({
       _id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
-      token: generateToken(user._id),
+      roles: user.roles, // Return populated roles
+      token: generateToken(user),
       companyName: user.companyName,
       jobTitle: user.jobTitle,
       isProfileComplete: user.isProfileComplete,

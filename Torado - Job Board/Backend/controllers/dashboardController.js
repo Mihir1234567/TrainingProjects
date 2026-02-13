@@ -145,12 +145,14 @@ const getPublicStats = async (req, res) => {
   try {
     const jobsCount = await Job.countDocuments({ status: "Active" });
     const applicationsCount = await Application.countDocuments();
-    const freelancersCount = await User.countDocuments({ role: "candidate" }); // Approximation
+    const candidatesCount = await User.countDocuments({ role: "candidate" });
+    const employersCount = await User.countDocuments({ role: "employer" });
 
     res.status(200).json({
       liveJobs: jobsCount,
       applications: applicationsCount,
-      freelancers: freelancersCount,
+      candidates: candidatesCount,
+      employers: employersCount,
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });

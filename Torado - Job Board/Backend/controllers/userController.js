@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { logAction } = require("../utils/auditLogger");
 
 // @desc    Get all candidates
 // @route   GET /api/users/candidates
@@ -143,9 +144,159 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const { keyword, role } = req.query;
+    let query = { isDeleted: { $ne: true } };
+
+    if (keyword) {
+      query.$or = [
+        { name: { $regex: keyword, $options: "i" } },
+        { email: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    if (role) {
+      query.role = role;
+    }
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await User.countDocuments(query);
+
+    const users = await User.find(query)
+      .select("-password")
+      .populate("roles") // Populate roles for admin view
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      users,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getCandidates,
   getFreelancers,
   getUserById,
   updateProfile,
+  getAllUsers, // Exporting it here now
+};
+
+// @desc    Update user (Admin)
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+const updateUser = async (req, res) => {
+  try {
+    // Populate roles to check hierarchy
+    const targetUser = await User.findById(req.params.id).populate("roles");
+
+    if (!targetUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Role Hierarchy Check
+    const getRank = (u) => {
+      if (u.role === "admin") return 100; // Legacy fallback
+      if (!u.roles || u.roles.length === 0) return 0;
+      return Math.max(...u.roles.map((r) => r.rank || 0));
+    };
+
+    const actorRank = getRank(req.user);
+    const targetRank = getRank(targetUser);
+
+    if (
+      actorRank <= targetRank &&
+      req.user._id.toString() !== targetUser._id.toString()
+    ) {
+      return res.status(403).json({
+        message: "Not authorized to modify this user (insufficient rank)",
+      });
+    }
+
+    // Update fields
+    if (req.body.name) targetUser.name = req.body.name;
+    if (req.body.email) targetUser.email = req.body.email;
+    if (req.body.role) targetUser.role = req.body.role; // Legacy
+    if (req.body.roles) targetUser.roles = req.body.roles; // New RBAC
+
+    const updatedUser = await targetUser.save();
+
+    await logAction({
+      action: "USER_UPDATE",
+      performedBy: req.user._id,
+      targetUser: updatedUser._id,
+      changes: req.body,
+      req,
+    });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Delete user (Admin)
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("roles");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Role Hierarchy Check
+    const getRank = (u) => {
+      if (u.role === "admin") return 100; // Legacy fallback
+      if (!u.roles || u.roles.length === 0) return 0;
+      return Math.max(...u.roles.map((r) => r.rank || 0));
+    };
+
+    const actorRank = getRank(req.user);
+    const targetRank = getRank(user);
+
+    if (actorRank <= targetRank) {
+      return res.status(403).json({
+        message: "Not authorized to delete this user (insufficient rank)",
+      });
+    }
+
+    // Soft Delete
+    user.isDeleted = true;
+    user.deletedAt = new Date();
+    user.status = "suspended"; // Optional: mark as suspended
+    await user.save();
+
+    await logAction({
+      action: "USER_SOFT_DELETE",
+      performedBy: req.user._id,
+      targetUser: user._id,
+      req,
+    });
+
+    res.status(200).json({ message: "User soft deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  getCandidates,
+  getFreelancers,
+  getUserById,
+  updateProfile,
+  getAllUsers,
+  updateUser,
+  deleteUser,
 };

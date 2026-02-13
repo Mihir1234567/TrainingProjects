@@ -94,10 +94,35 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("torado_user", JSON.stringify(updatedUser));
   };
 
+  /* New RBAC Logic */
+  // Flatten permissions from all roles
+  const permissions = React.useMemo(() => {
+    if (!user || !user.roles) return [];
+    const allPerms = user.roles.reduce((acc, role) => {
+      if (role.permissions) return [...acc, ...role.permissions];
+      return acc;
+    }, []);
+    return [...new Set(allPerms)];
+  }, [user]);
+
+  const hasPermission = (requiredPermission) => {
+    if (!user) return false;
+    // Admin Override
+    if (
+      user.role === "admin" ||
+      (user.roles && user.roles.some((r) => r.name === "admin"))
+    ) {
+      return true;
+    }
+    return permissions.includes(requiredPermission);
+  };
+
   const value = {
     user,
     isAuthenticated: !!user,
     isRecruiter: user?.role === "employer",
+    permissions,
+    hasPermission,
     login,
     register,
     logout,

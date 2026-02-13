@@ -13,8 +13,13 @@ const ProtectedRoute = ({
     return <Navigate to={redirectPath} replace />;
   }
 
+  // Admin Check
+  const isAdmin =
+    user?.role === "admin" || user?.roles?.some((r) => r.name === "admin");
+
   // If checkCompletion is true, ensure user has completed profile
-  if (checkCompletion && !user?.isProfileComplete) {
+  // Admins bypass this check
+  if (checkCompletion && !user?.isProfileComplete && !isAdmin) {
     return <Navigate to="/complete-profile" replace />;
   }
 

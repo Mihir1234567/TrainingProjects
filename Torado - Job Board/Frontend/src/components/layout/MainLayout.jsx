@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import FloatingActions from "../common/FloatingActions";
-import DemoModal from "../common/DemoModal";
 import ScrollToTop from "../common/ScrollToTop";
 import { useAuth } from "../../context/AuthContext";
 
 const MainLayout = () => {
   const { isAuthenticated, isRecruiter } = useAuth();
-  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [isDashboardSidebarOpen, setIsDashboardSidebarOpen] = useState(false);
 
   return (
@@ -35,11 +32,7 @@ const MainLayout = () => {
       <Footer />
 
       {/* Global Components */}
-      <FloatingActions onOpenDemos={() => setIsDemoModalOpen(true)} />
-      <DemoModal
-        isOpen={isDemoModalOpen}
-        onClose={() => setIsDemoModalOpen(false)}
-      />
+      {/* FloatingActions and DemoModal removed as per user request */}
       <ScrollToTop />
     </div>
   );

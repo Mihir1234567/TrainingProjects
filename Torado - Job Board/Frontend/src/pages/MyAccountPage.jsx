@@ -134,11 +134,20 @@ const MyAccountPage = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login({
+      const user = await login({
         email: loginData.username, // mapping username field to email
         password: loginData.password,
       });
-      navigate("/user-dashboard");
+
+      // Admin Redirection
+      if (
+        user.role === "admin" ||
+        (user.roles && user.roles.some((r) => r.name === "admin"))
+      ) {
+        navigate("/admin");
+      } else {
+        navigate("/user-dashboard");
+      }
     } catch (error) {
       setErrors({ login_password: "Login failed. Check credentials." });
     }

@@ -25,9 +25,14 @@ const CompleteProfile = () => {
 
   const isCandidate = user?.role === "candidate";
 
-  // Redirect if profile already complete
+  // Redirect if profile already complete or if admin
   React.useEffect(() => {
-    if (user?.isProfileComplete) {
+    const isAdmin =
+      user?.role === "admin" || user?.roles?.some((r) => r.name === "admin");
+
+    if (isAdmin) {
+      navigate("/admin");
+    } else if (user?.isProfileComplete) {
       navigate("/user-dashboard");
     }
   }, [user, navigate]);

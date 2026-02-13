@@ -48,6 +48,15 @@ import ChangePassword from "./pages/dashboard/ChangePassword";
 import DeleteProfile from "./pages/dashboard/DeleteProfile";
 import ResumeViewer from "./pages/dashboard/ResumeViewer";
 
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminHome from "./pages/admin/AdminHome";
+import UserManagement from "./pages/admin/UserManagement";
+import RoleManagement from "./pages/admin/RoleManagement";
+import JobManagement from "./pages/admin/JobManagement";
+import ApplicationManagement from "./pages/admin/ApplicationManagement";
+import EmployerManagement from "./pages/admin/EmployerManagement";
+import AuditLogs from "./pages/admin/AuditLogs";
+
 import { MockDataProvider } from "./context/MockDataContext";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -65,6 +74,17 @@ function App() {
     <AuthProvider>
       <MockDataProvider>
         <Routes>
+          {/* Admin Routes - Standalone Layout */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminHome />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="roles" element={<RoleManagement />} />
+            <Route path="jobs" element={<JobManagement />} />
+            <Route path="applications" element={<ApplicationManagement />} />
+            <Route path="employers" element={<EmployerManagement />} />
+            <Route path="logs" element={<AuditLogs />} />
+          </Route>
+
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<AboutUs />} />
@@ -101,7 +121,7 @@ function App() {
             <Route path="/blog/:id" element={<BlogDetail />} />
 
             <Route path="/resume-viewer/:id" element={<ResumeViewer />} />
-            {/* Protected Dashboard Routes */}
+
             <Route element={<ProtectedRoute checkCompletion={true} />}>
               <Route path="/user-dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />

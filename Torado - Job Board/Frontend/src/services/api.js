@@ -374,3 +374,120 @@ export const resumeAPI = {
     return handleResponse(response);
   },
 };
+export const adminAPI = {
+  // Role Management
+  getRoles: async () => {
+    const response = await fetch(`${API_URL}/roles`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  createRole: async (roleData) => {
+    const response = await fetch(`${API_URL}/roles`, {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(roleData),
+    });
+    return handleResponse(response);
+  },
+  updateRole: async (id, roleData) => {
+    const response = await fetch(`${API_URL}/roles/${id}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(roleData),
+    });
+    return handleResponse(response);
+  },
+  deleteRole: async (id) => {
+    const response = await fetch(`${API_URL}/roles/${id}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  // User Management (Admin specific)
+  getAllUsers: async (filters = {}) => {
+    // We might need to implement this endpoint in backend userController
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_URL}/users/admin/all?${query}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  updateUser: async (id, userData) => {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify(userData),
+    });
+    return handleResponse(response);
+  },
+  deleteUser: async (id) => {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  // --- Extended Admin System ---
+  // Jobs
+  getJobs: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_URL}/admin/jobs?${query}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  updateJobStatus: async (id, status, featured) => {
+    const response = await fetch(`${API_URL}/admin/jobs/${id}/status`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify({ status, featured }),
+    });
+    return handleResponse(response);
+  },
+  deleteJob: async (id) => {
+    const response = await fetch(`${API_URL}/admin/jobs/${id}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  // Applications
+  getApplications: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_URL}/admin/applications?${query}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+  updateApplicationStatus: async (id, status) => {
+    const response = await fetch(`${API_URL}/admin/applications/${id}/status`, {
+      method: "PUT",
+      headers: getHeaders(),
+      body: JSON.stringify({ status }),
+    });
+    return handleResponse(response);
+  },
+
+  // Employers
+  getEmployers: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_URL}/admin/employers?${query}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  // Logs
+  getLogs: async (filters = {}) => {
+    const query = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_URL}/admin/logs?${query}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
