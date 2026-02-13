@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "698eabd6aecb26ae9016c3e3",
+    "name": "admin",
+    "__v": 0,
+    "createdAt": "2026-02-13T04:43:00.883Z",
+    "description": "Administrator with full access",
+    "permissions": [
+      "user.read",
+      "user.create",
+      "user.update",
+      "user.delete",
+      "role.read",
+      "role.create",
+      "role.update",
+      "role.delete",
+      "job.read",
+      "job.create",
+      "job.update",
+      "job.delete",
+      "job.approve",
+      "dashboard.view_stats",
+      "logs.view"
+    ],
+    "updatedAt": "2026-02-13T04:43:00.883Z"
+  },
+  {
+    "_id": "698eabd6aecb26ae9016c3e4",
+    "name": "employer",
+    "__v": 0,
+    "createdAt": "2026-02-13T04:43:01.526Z",
+    "description": "Employer who can post jobs and hire",
+    "permissions": [
+      "job.create",
+      "job.update",
+      "job.delete",
+      "job.read",
+      "application.read",
+      "candidate.read"
+    ],
+    "updatedAt": "2026-02-13T04:43:01.526Z"
+  },
+  {
+    "_id": "698eabd6aecb26ae9016c3e5",
+    "name": "candidate",
+    "__v": 0,
+    "createdAt": "2026-02-13T04:43:01.581Z",
+    "description": "Job seeker",
+    "permissions": [
+      "application.create",
+      "application.read",
+      "job.read"
+    ],
+    "updatedAt": "2026-02-13T04:43:01.581Z"
+  }
+]

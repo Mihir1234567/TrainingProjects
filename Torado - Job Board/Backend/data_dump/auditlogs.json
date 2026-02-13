@@ -1,0 +1,140 @@
+[
+  {
+    "_id": "698eb9fb8461f7a7d5d59202",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "698977583b51c048184efa6d",
+    "targetRole": null,
+    "changes": {
+      "name": "Sarah Smith",
+      "email": "sanji2@gmail.com",
+      "role": "candidate"
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T05:43:23.215Z",
+    "updatedAt": "2026-02-13T05:43:23.215Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ebfd963f3bef6a5830731",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "69857a152c5c17b25c47f2c3",
+    "targetRole": null,
+    "changes": {
+      "name": "Emily Miller211311",
+      "email": "boss1@gmail.com",
+      "role": "employer"
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:08:25.406Z",
+    "updatedAt": "2026-02-13T06:08:25.406Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ec13563f3bef6a5830768",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "698977583b51c048184efa6d",
+    "targetRole": null,
+    "changes": {
+      "name": "Sarah Smith",
+      "email": "sanji2@gmail.com",
+      "role": "candidate"
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:14:13.268Z",
+    "updatedAt": "2026-02-13T06:14:13.268Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ec1a263f3bef6a58307a3",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "69857a152c5c17b25c47f2c3",
+    "targetRole": null,
+    "changes": {
+      "name": "Emily Miller211311",
+      "email": "boss1@gmail.com",
+      "role": "employer"
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:16:02.631Z",
+    "updatedAt": "2026-02-13T06:16:02.631Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ec5084f1616a4c5239f90",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "698977583b51c048184efa6d",
+    "targetRole": null,
+    "changes": {
+      "name": "Sarah Smith",
+      "email": "sanji2@gmail.com",
+      "role": "candidate"
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:30:32.214Z",
+    "updatedAt": "2026-02-13T06:30:32.214Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ec8f1ee35a15472ebda7a",
+    "action": "USER_UPDATE",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "698977583b51c048184efa6d",
+    "targetRole": null,
+    "changes": {
+      "name": "Sarah Smith",
+      "email": "sanji2@gmail.com",
+      "role": "candidate",
+      "roles": [
+        "698eabd6aecb26ae9016c3e5"
+      ]
+    },
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:47:13.822Z",
+    "updatedAt": "2026-02-13T06:47:13.822Z",
+    "__v": 0
+  },
+  {
+    "_id": "698ecbcaee35a15472ebdaea",
+    "action": "USER_LOGIN",
+    "performedBy": "697c3cc4eb7230320467cf06",
+    "targetUser": "697c3cc4eb7230320467cf06",
+    "targetRole": null,
+    "before": null,
+    "after": null,
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+    "status": "success",
+    "createdAt": "2026-02-13T06:59:22.990Z",
+    "updatedAt": "2026-02-13T06:59:22.990Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,1278 @@
+[
+  {
+    "_id": "697c3cc4eb7230320467cf06",
+    "name": "Torado Admin",
+    "email": "admin@torado.com",
+    "password": "$2a$10$DLnTn/ooepqJ./cBZ7jJneiOo/IjW5C3sgGzuy6hblnxr.PuD.qDu",
+    "role": "admin",
+    "image": "https://via.placeholder.com/150",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T05:08:20.615Z",
+    "updatedAt": "2026-02-13T06:59:22.930Z",
+    "__v": 2,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e3"
+    ],
+    "isDeleted": false,
+    "lastLogin": "2026-02-13T06:59:22.928Z",
+    "status": "active"
+  },
+  {
+    "_id": "697c4995df13c3ebe403cd21",
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "password": "$2a$10$8OjSch8gPkk3vHhseAw.QOHSH8mpcVUzQO/kmOaZw06aCc.Iwo7Wq",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/women/44.jpg",
+    "jobTitle": "Senior UI/UX Designer",
+    "specialization": "Design",
+    "skills": [
+      "Figma",
+      "Sketch",
+      "Prototyping",
+      "Adobe XD"
+    ],
+    "bio": "Passionate designer with 5+ years of experience creating user-centered digital products.",
+    "rate": "$60/hr",
+    "location": "New York, USA",
+    "experience": "5 Years",
+    "rating": 4.8,
+    "reviews": 12,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:01.225Z",
+    "updatedAt": "2026-02-13T04:43:01.844Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4995df13c3ebe403cd24",
+    "name": "Michael Chen",
+    "email": "michael@example.com",
+    "password": "$2a$10$w7XdZuukt7oAYLPYFy7WcOlrSHxQyBfaRJU4Uy0YgAbw3MxTnmxIe",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/men/32.jpg",
+    "jobTitle": "Full Stack Developer",
+    "specialization": "Development",
+    "skills": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "TypeScript"
+    ],
+    "bio": "Full stack wizard specializing in MERN stack and scalable web applications.",
+    "rate": "$80/hr",
+    "location": "San Francisco, USA",
+    "experience": "7 Years",
+    "rating": 5,
+    "reviews": 24,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:01.457Z",
+    "updatedAt": "2026-02-13T04:43:01.895Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4995df13c3ebe403cd27",
+    "name": "Sarah Williams",
+    "email": "sarah@example.com",
+    "password": "$2a$10$H0lw2TvVVJ91bIWcyuOhZ.lGAOjZQtHjNlQISxpo9vx0vwjLOWFGi",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/women/68.jpg",
+    "jobTitle": "Digital Marketing Specialist",
+    "specialization": "Marketing",
+    "skills": [
+      "SEO",
+      "Content Strategy",
+      "Google Analytics",
+      "Social Media"
+    ],
+    "bio": "Data-driven marketer helping brands grow their online presence.",
+    "rate": "$45/hr",
+    "location": "London, UK",
+    "experience": "4 Years",
+    "rating": 4.6,
+    "reviews": 8,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:01.658Z",
+    "updatedAt": "2026-02-13T04:43:01.954Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4995df13c3ebe403cd2a",
+    "name": "David Kim",
+    "email": "david@example.com",
+    "password": "$2a$10$UFhlY1g774naKbBs3Io.pOnS.nCbtriLBQdVWL.RwYzmzIbVOotjG",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/men/85.jpg",
+    "jobTitle": "Mobile App Developer",
+    "specialization": "Development",
+    "skills": [
+      "React Native",
+      "Swift",
+      "iOS",
+      "Android"
+    ],
+    "bio": "Experienced mobile developer building cross-platform apps.",
+    "rate": "$70/hr",
+    "location": "Toronto, Canada",
+    "experience": "6 Years",
+    "rating": 4.9,
+    "reviews": 15,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:01.856Z",
+    "updatedAt": "2026-02-13T04:43:02.032Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd2d",
+    "name": "Emily Davis",
+    "email": "emily@example.com",
+    "password": "$2a$10$OssNiGS4f1Cyfg9aWeaLEeta439e2maW9cpA.EC45jB2jYEOaN/P2",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/women/22.jpg",
+    "jobTitle": "Graphic Designer",
+    "specialization": "Design",
+    "skills": [
+      "Photoshop",
+      "Illustrator",
+      "Branding",
+      "Digital Art"
+    ],
+    "bio": "Creative graphic designer with a keen eye for detail and color.",
+    "rate": "$40/hr",
+    "location": "Berlin, Germany",
+    "experience": "3 Years",
+    "rating": 4.5,
+    "reviews": 5,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.029Z",
+    "updatedAt": "2026-02-13T04:43:02.091Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd30",
+    "name": "James Wilson",
+    "email": "james@example.com",
+    "password": "$2a$10$5mZxibWgj7mbHWWJCriiLeC3oBWQsF/qXJb.OKxn1fwRF6J/WXyCG",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/men/50.jpg",
+    "jobTitle": "DevOps Engineer",
+    "specialization": "Development",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "CI/CD"
+    ],
+    "bio": "Ensuring smooth deployment and scalable infrastructure.",
+    "rate": "$90/hr",
+    "location": "Austin, USA",
+    "experience": "8 Years",
+    "rating": 5,
+    "reviews": 30,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.240Z",
+    "updatedAt": "2026-02-13T04:43:02.144Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd33",
+    "name": "Sophia Martinez",
+    "email": "sophia@example.com",
+    "password": "$2a$10$kYnUOVyAD51yOz9yZn9Uy.WrGZxAC5L.nRW/cSUrD1SOcVWkDyPVS",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/women/90.jpg",
+    "jobTitle": "Content Writer",
+    "specialization": "Marketing",
+    "skills": [
+      "Copywriting",
+      "Blogging",
+      "SEO",
+      "Editing"
+    ],
+    "bio": "Crafting compelling stories and engaging content for brands.",
+    "rate": "$35/hr",
+    "location": "Madrid, Spain",
+    "experience": "2 Years",
+    "rating": 4.3,
+    "reviews": 3,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.434Z",
+    "updatedAt": "2026-02-13T04:43:02.189Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd36",
+    "name": "Robert Taylor",
+    "email": "robert@example.com",
+    "password": "$2a$10$oOIlCwboIR6YWbax0bg4YuYoF2BLV9dsPDpzBoFxlnthN//ufRFM.",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/men/28.jpg",
+    "jobTitle": "Frontend Developer",
+    "specialization": "Development",
+    "skills": [
+      "Vue.js",
+      "JavaScript",
+      "HTML/CSS",
+      "Tailwind"
+    ],
+    "bio": "Frontend specialist focusing on responsive and accessible interfaces.",
+    "rate": "$55/hr",
+    "location": "Sydney, Australia",
+    "experience": "4 Years",
+    "rating": 4.7,
+    "reviews": 10,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.617Z",
+    "updatedAt": "2026-02-13T04:43:02.240Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd39",
+    "name": "Olivia Brown",
+    "email": "olivia@example.com",
+    "password": "$2a$10$MnOm1fN6yDdVIpXPRG12VOCT.7..M/UAO9lIOXCBmBESFq8710Vri",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/women/33.jpg",
+    "jobTitle": "Product Manager",
+    "specialization": "Management",
+    "skills": [
+      "Agile",
+      "Scrum",
+      "Roadmapping",
+      "Leadership"
+    ],
+    "bio": "Bridging the gap between business requirements and technical solutions.",
+    "rate": "$95/hr",
+    "location": "Singapore",
+    "experience": "9 Years",
+    "rating": 4.9,
+    "reviews": 40,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.795Z",
+    "updatedAt": "2026-02-13T04:43:02.299Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "697c4996df13c3ebe403cd3c",
+    "name": "William Lee",
+    "email": "william@example.com",
+    "password": "$2a$10$aZkY15Z94c5lIuAWqS9rwOBw.nMjg3jdwn24cW9Bzai9W4j6fdrxy",
+    "role": "candidate",
+    "image": "https://randomuser.me/api/portraits/men/60.jpg",
+    "jobTitle": "Cybersecurity Analyst",
+    "specialization": "IT",
+    "skills": [
+      "Network Security",
+      "Penetration Testing",
+      "Python",
+      "Linux"
+    ],
+    "bio": "Protecting digital assets from evolving threats.",
+    "rate": "$100/hr",
+    "location": "Tel Aviv, Israel",
+    "experience": "6 Years",
+    "rating": 4.8,
+    "reviews": 18,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-01-30T06:03:02.989Z",
+    "updatedAt": "2026-02-13T04:43:02.441Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e6639",
+    "name": "Chelsea Parisian",
+    "email": "chelsea.parisian@example.com",
+    "password": "$2a$10$hV9ksd3SY0pQusBCVad4HuQtlK5zJUYNlrHyHyrNfUW6ZY3HRgfbS",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
+    "jobTitle": "Senior Frontend Developer",
+    "specialization": "Creative",
+    "skills": [
+      "React",
+      "Vue.js",
+      "Tailwind",
+      "Programming"
+    ],
+    "bio": "Chelsea is a passionate Frontend Developer with over 5 years of experience in building responsive and accessible web applications.",
+    "rate": "$85/hr",
+    "location": "New York, USA",
+    "experience": "5 Years",
+    "rating": 4.8,
+    "reviews": 12,
+    "phone": "+1 202 555 0101",
+    "languages": [
+      "English",
+      "French"
+    ],
+    "qualification": "Master's Degree in CS",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.034Z",
+    "updatedAt": "2026-02-13T04:43:02.484Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e663c",
+    "name": "Bertrand Proffer",
+    "email": "bertrand.proffer@example.com",
+    "password": "$2a$10$4L/V0hIaTTptT.OHd2czle9cjb7OFrWVqHS81CZGrcdK9SAO11ksO",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
+    "jobTitle": "Lead UI/UX Designer",
+    "specialization": "Design",
+    "skills": [
+      "Figma",
+      "Sketch",
+      "Prototyping",
+      "UX/UI",
+      "Adobe XD",
+      "Design"
+    ],
+    "bio": "Bertrand creates intuitive and visually stunning user interfaces. With a background in psychology, he focuses on user-centered design principles.",
+    "rate": "$95/hr",
+    "location": "London, UK",
+    "experience": "4 Years",
+    "rating": 4.5,
+    "reviews": 8,
+    "phone": "+44 20 7946 0958",
+    "languages": [
+      "English",
+      "Spanish"
+    ],
+    "qualification": "Bachelor's in Design",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.230Z",
+    "updatedAt": "2026-02-13T04:43:02.529Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e663f",
+    "name": "Madison Kohler",
+    "email": "madison.kohler@example.com",
+    "password": "$2a$10$VJThXi7/uXl85YnRL.F8J.BorDO4khs2ARi3GXK5baeZzEN4YbbAO",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop",
+    "jobTitle": "Senior SEO Strategist",
+    "specialization": "Marketing",
+    "skills": [
+      "SEO",
+      "Content Strategy",
+      "Analytics",
+      "Digital"
+    ],
+    "bio": "Madison helps businesses grow their organic traffic through data-driven SEO strategies.",
+    "rate": "$65/hr",
+    "location": "Berlin, Germany",
+    "experience": "6 Years",
+    "rating": 4.9,
+    "reviews": 24,
+    "phone": "+49 30 123456",
+    "languages": [
+      "English",
+      "German"
+    ],
+    "qualification": "MBA in Marketing",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.385Z",
+    "updatedAt": "2026-02-13T04:43:02.643Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e6642",
+    "name": "Wilford Johns",
+    "email": "wilford.johns@example.com",
+    "password": "$2a$10$3JZnEH2AnIfAWOgCnj/ee.pKIKCVF95EIXD3msZD8t1T7iPUjC1Vi",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop",
+    "jobTitle": "Creative Brand Designer",
+    "specialization": "Creative",
+    "skills": [
+      "Illustrator",
+      "Photoshop",
+      "Branding",
+      "Design"
+    ],
+    "bio": "Wilford is a versatile graphic designer with a unique artistic style. He specializes in branding, illustration, and print design.",
+    "rate": "$55/hr",
+    "location": "Paris, France",
+    "experience": "3 Years",
+    "rating": 4.2,
+    "reviews": 5,
+    "phone": "+33 1 23 45 67 89",
+    "languages": [
+      "English",
+      "French"
+    ],
+    "qualification": "Diploma in Graphic Design",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.555Z",
+    "updatedAt": "2026-02-13T04:43:02.684Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e6645",
+    "name": "Lana Steiner",
+    "email": "lana.steiner@example.com",
+    "password": "$2a$10$UzQqLLVFVDKY2T0.2Md9QOK0SLGmNyEh3KjSZhVlltOrbg4H2qNBK",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop",
+    "jobTitle": "Principal Software Engineer",
+    "specialization": "Development",
+    "skills": [
+      "Node.js",
+      "React",
+      "MongoDB",
+      "APP",
+      "Programming"
+    ],
+    "bio": "Lana is a full-stack wizard capable of building complex web applications from scratch. She writes clean, maintainable code and is an expert in the MERN stack.",
+    "rate": "$110/hr",
+    "location": "Toronto, Canada",
+    "experience": "8 Years",
+    "rating": 5,
+    "reviews": 31,
+    "phone": "+1 416 555 0199",
+    "languages": [
+      "English",
+      "Russian"
+    ],
+    "qualification": "B.Sc in Computer Science",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.710Z",
+    "updatedAt": "2026-02-13T04:43:02.738Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd03849bee3f08e6648",
+    "name": "David Smith",
+    "email": "david.smith@example.com",
+    "password": "$2a$10$aZE/seS1hifusB5Ibb7au.6c6yWo6qbDORYkt1i.dGsUssggwc5ae",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
+    "jobTitle": "Senior Product Designer",
+    "specialization": "Design",
+    "skills": [
+      "UX Research",
+      "Figma",
+      "Design Systems",
+      "UX/UI",
+      "Design"
+    ],
+    "bio": "David bridges the gap between business goals and user needs. He specializes in building comprehensive design systems and conducting in-depth user research.",
+    "rate": "$120/hr",
+    "location": "Austin, USA",
+    "experience": "6 Years",
+    "rating": 4.7,
+    "reviews": 19,
+    "phone": "+1 512 555 0122",
+    "languages": [
+      "English"
+    ],
+    "qualification": "Master's in HCI",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:08.889Z",
+    "updatedAt": "2026-02-13T04:43:02.797Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd13849bee3f08e664b",
+    "name": "Sarah Jenkins",
+    "email": "sarah.jenkins@example.com",
+    "password": "$2a$10$a06wYewN7pwHHXLvNbqkxuVDm3aW.OWUv2uHtR/zmOCR9BZusZaA6",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop",
+    "jobTitle": "Social Media Specialist",
+    "specialization": "Marketing",
+    "skills": [
+      "Instagram",
+      "Content Creation",
+      "Strategy",
+      "Digital"
+    ],
+    "bio": "Sarah turns followers into customers. She creates engaging content strategies that resonate with audiences and drive real business results across social platforms.",
+    "rate": "$50/hr",
+    "location": "Chicago, USA",
+    "experience": "4 Years",
+    "rating": 4.6,
+    "reviews": 14,
+    "phone": "+1 312 555 0144",
+    "languages": [
+      "English"
+    ],
+    "qualification": "BA in Communications",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:09.060Z",
+    "updatedAt": "2026-02-13T04:43:02.832Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd13849bee3f08e664e",
+    "name": "Michael Chen",
+    "email": "michael.chen.freelancer@example.com",
+    "password": "$2a$10$WvrTk8RD7KgXLokxfsAGPOPzonK1jmyxz0G5qpiDYm8UeE.uSAPqK",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop",
+    "jobTitle": "Senior Mobile Architect",
+    "specialization": "Development",
+    "skills": [
+      "React Native",
+      "iOS",
+      "Android",
+      "APP",
+      "Programming"
+    ],
+    "bio": "Michael builds silky smooth mobile experiences. Whether it's native iOS/Android or cross-platform with React Native, he delivers high-performance apps that users love.",
+    "rate": "$135/hr",
+    "location": "San Francisco, USA",
+    "experience": "7 Years",
+    "rating": 4.9,
+    "reviews": 42,
+    "phone": "+1 415 555 0188",
+    "languages": [
+      "English",
+      "Mandarin"
+    ],
+    "qualification": "M.Sc in Software Engineering",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:09.311Z",
+    "updatedAt": "2026-02-13T04:43:02.874Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd13849bee3f08e6651",
+    "name": "Emma Wilson",
+    "email": "emma.wilson@example.com",
+    "password": "$2a$10$5yEzFE9hMZxE5FGNB62r9eYpJRoEEh5UCODXeUIsTcVpA6ETOElRG",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop",
+    "jobTitle": "Creative Copywriter",
+    "specialization": "Creative",
+    "skills": [
+      "Copywriting",
+      "Editing",
+      "Blogging",
+      "Digital"
+    ],
+    "bio": "Emma crafts compelling narratives that convert. From punchy headlines to in-depth blog posts, she finds the right words to tell your brand's story.",
+    "rate": "$70/hr",
+    "location": "Sydney, Australia",
+    "experience": "5 Years",
+    "rating": 4.4,
+    "reviews": 9,
+    "phone": "+61 2 9876 5432",
+    "languages": [
+      "English"
+    ],
+    "qualification": "BA in English Literature",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:09.775Z",
+    "updatedAt": "2026-02-13T04:43:02.927Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd13849bee3f08e6654",
+    "name": "James Rodriguez",
+    "email": "james.rodriguez@example.com",
+    "password": "$2a$10$AUyB8VxMEGwIjrwv74bfveBW4IRolIpa.HV7NUsAEiShaGU1DVqgu",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop",
+    "jobTitle": "Digital Illustrator",
+    "specialization": "Design",
+    "skills": [
+      "Digital Art",
+      "Illustration",
+      "Character Design",
+      "Design",
+      "PSD"
+    ],
+    "bio": "James brings ideas to life through vibrant and imaginative illustrations. Specializing in character design and editorial illustration, his work adds personality to any project.",
+    "rate": "$80/hr",
+    "location": "Barcelona, Spain",
+    "experience": "6 Years",
+    "rating": 4.8,
+    "reviews": 27,
+    "phone": "+34 93 123 4567",
+    "languages": [
+      "English",
+      "Spanish"
+    ],
+    "qualification": "Fine Arts Degree",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:09.945Z",
+    "updatedAt": "2026-02-13T04:43:02.964Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd23849bee3f08e6657",
+    "name": "Olivia Thompson",
+    "email": "olivia.thompson@example.com",
+    "password": "$2a$10$.yC3S.OkZcLB1OFac172ke6CGwZUYf1pd.PC5fxA4oyXSh3rE1I2m",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop",
+    "jobTitle": "Email Lifecycle Expert",
+    "specialization": "Marketing",
+    "skills": [
+      "Mailchimp",
+      "Automation",
+      "Copywriting",
+      "Digital"
+    ],
+    "bio": "Olivia designs high-converting email flows. From welcome series to retention campaigns, she ensures your message reaches the right inbox at the right time.",
+    "rate": "$60/hr",
+    "location": "London, UK",
+    "experience": "4 Years",
+    "rating": 4.3,
+    "reviews": 11,
+    "phone": "+44 20 1234 5678",
+    "languages": [
+      "English"
+    ],
+    "qualification": "B.Sc in Marketing",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:10.090Z",
+    "updatedAt": "2026-02-13T04:43:03.007Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69802fd23849bee3f08e665a",
+    "name": "Daniel Kim",
+    "email": "daniel.kim@example.com",
+    "password": "$2a$10$3vLncLtHoZVQxsnnbaEjF.NTXpPkPAWOHcMiNis9GSSkzMtv.HwBq",
+    "role": "candidate",
+    "image": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=200&h=200&fit=crop",
+    "jobTitle": "Senior Backend Developer",
+    "specialization": "Development",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL",
+      "Programming",
+      "APP"
+    ],
+    "bio": "Daniel architects robust backend systems. He loves solving hard algorithmic problems and ensuring APIs are fast, secure, and document-ready.",
+    "rate": "$100/hr",
+    "location": "Seoul, South Korea",
+    "experience": "6 Years",
+    "rating": 4.9,
+    "reviews": 36,
+    "phone": "+82 10 1234 5678",
+    "languages": [
+      "Korean",
+      "English"
+    ],
+    "qualification": "Master's in Computer Science",
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T05:02:10.242Z",
+    "updatedAt": "2026-02-13T04:43:03.058Z",
+    "__v": 1,
+    "isFreelancer": true,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "698042b49cd3d0032a971b2f",
+    "name": "Amanda Johnson",
+    "email": "amanda.johnson@example.com",
+    "password": "$2a$10$.1g6OS.awv8bIknV6qdELefzskf5yvgJl2KagHUTJJzgMw3Edckqq",
+    "role": "employer",
+    "image": "http://localhost:5001/uploads/file-1770015811055.png",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Portuguese"
+    ],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-02T06:22:44.845Z",
+    "updatedAt": "2026-02-13T04:43:03.130Z",
+    "__v": 6,
+    "bio": "Passionate professional with 5+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "jobTitle": "DevOps Engineer",
+    "location": "1655 Main St, Suite 854",
+    "phone": "+1 244-437-4041",
+    "qualification": "HSC",
+    "rate": "$500 - $800",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/amanda-johnson",
+      "twitter": "https://twitter.com/amanda_johnson",
+      "facebook": "https://facebook.com/amandajohnson",
+      "instagram": "https://instagram.com/amandajohnson"
+    },
+    "specialization": "Financing",
+    "age": "18",
+    "city": "Paris",
+    "country": "United Kingdom",
+    "expectedSalary": "$800 - $1600",
+    "latitude": 44.722841,
+    "longitude": -72.143882,
+    "experience": "HTML",
+    "jobType": "Finance",
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "6981773136e19dca9df0c28c",
+    "name": "Tech Corp",
+    "email": "employer@example.com",
+    "password": "$2a$10$ZCQBob1GBnOdRTsqkihR/O7XY.6Qa.7RbM/dDAt1bUKUQ4GRuYo.K",
+    "role": "employer",
+    "image": "https://via.placeholder.com/150",
+    "companyName": "Tech Corp",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-03T04:18:57.958Z",
+    "updatedAt": "2026-02-13T04:43:03.203Z",
+    "__v": 1,
+    "isProfileComplete": false,
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "69818c6e82e00809ed934978",
+    "name": "Sanji",
+    "email": "Sanji@gmail.com",
+    "password": "$2a$10$p/h2hFK9FBsYrTm0L84VX.Ch61ArVXfSubkAmf6NcLuFwWkGge/NS",
+    "role": "candidate",
+    "image": "https://via.placeholder.com/150",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-03T05:49:35.014Z",
+    "updatedAt": "2026-02-13T04:43:03.561Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "698199a2c11e74b55a37e19d",
+    "name": "John Doe",
+    "email": "candidate@example.com",
+    "password": "$2a$10$WM1Gymis0d9dwDKrRM9NPOQ0LbGxjDP6vklhOsqMx1gxi8b.7V3My",
+    "role": "candidate",
+    "image": "https://via.placeholder.com/150",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-03T06:45:54.966Z",
+    "updatedAt": "2026-02-13T04:43:03.624Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69819f65d23fad1c74302ab0",
+    "name": "Test User",
+    "email": "testcomp_1770102628891@example.com",
+    "password": "$2a$10$QEwgAxNJvxIP/y5ToOpaOe/I25ODnV6zkvoRiutRbXywqUEknP0fW",
+    "role": "employer",
+    "image": "https://via.placeholder.com/150",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-03T07:10:29.067Z",
+    "updatedAt": "2026-02-13T04:43:04.888Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "isProfileComplete": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "6982f2897227fcf1ae225185",
+    "name": "John Brown",
+    "email": "john.brown@example.com",
+    "password": "$2a$10$1VS4iuLDptCVnde81VeGwef3VsQ6lDM2nrS4mK7CcasmN5Z0nniPm",
+    "role": "employer",
+    "image": "http://localhost:5001https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770267919/torado-jobs/iw7duwqcn85m3wixaucg.jpg",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "English"
+    ],
+    "fundamentalSkills": [],
+    "createdAt": "2026-02-04T07:17:29.078Z",
+    "updatedAt": "2026-02-13T04:43:04.924Z",
+    "__v": 3,
+    "isProfileComplete": false,
+    "location": "9054 Innovation Way, Suite 881",
+    "phone": "+1 775-377-7890",
+    "age": "20",
+    "bio": "Passionate professional with 6+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "city": "Paris",
+    "country": "United States",
+    "expectedSalary": "$800 - $1600",
+    "experience": "Wordpress",
+    "jobTitle": "Product Manager",
+    "jobType": "Accounting",
+    "latitude": 44.261769,
+    "longitude": -64.601343,
+    "qualification": "HSC",
+    "rate": "$700 - $1400",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/john-brown",
+      "twitter": "https://twitter.com/john_brown",
+      "facebook": "https://facebook.com/johnbrown",
+      "instagram": "https://instagram.com/johnbrown"
+    },
+    "specialization": "Accounting",
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "69842bd46ec29e3d4dc6d909",
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "password": "$2a$10$PIC3jD4Wz648lzDS2oREXuBtx1kdT6SIovtbRRacISaQBqXm1Cdl2",
+    "role": "employer",
+    "image": "error",
+    "companyName": "Boss Corp",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Italiana"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-05T05:34:12.270Z",
+    "updatedAt": "2026-02-13T04:43:05.046Z",
+    "__v": 2,
+    "age": "22",
+    "bio": "Passionate professional with 6+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "city": "New York",
+    "country": "Canada",
+    "expectedSalary": "$900 - $1800",
+    "experience": "Wordpress",
+    "jobTitle": "DevOps Engineer",
+    "jobType": "Multimedia",
+    "latitude": 47.218296,
+    "location": "9375 Innovation Way, Suite 994",
+    "longitude": -72.462331,
+    "phone": "+1 474-310-6232",
+    "qualification": "HSC",
+    "rate": "$1000 - $2000",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/jane-smith",
+      "twitter": "https://twitter.com/jane_smith",
+      "facebook": "https://facebook.com/janesmith",
+      "instagram": "https://instagram.com/janesmith"
+    },
+    "specialization": "Finance",
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "6984343d088859cfc851648a",
+    "name": "Jane Miller",
+    "email": "jane.miller@example.com",
+    "password": "$2a$10$kzgKoFyjWp3CIokKsfYwg.bNUyuxkmxyItjZCbiHEFrRIo3yQvW7q",
+    "role": "candidate",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770273191/torado-jobs/mphzajk7epwo0qz3cfkj.jpg",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Bangla"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-05T06:10:05.952Z",
+    "updatedAt": "2026-02-13T04:43:05.106Z",
+    "__v": 2,
+    "bio": "Passionate professional with 3+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "experience": "Wordpress",
+    "jobTitle": "DevOps Engineer",
+    "location": "1957 Main St, Suite 844",
+    "phone": "+1 340-331-2285",
+    "specialization": "Development",
+    "age": "20",
+    "city": "London",
+    "country": "United Kingdom",
+    "expectedSalary": "$500 - $800",
+    "jobType": "Resources",
+    "latitude": 44.955952,
+    "longitude": -64.532369,
+    "qualification": "SSC",
+    "rate": "$700 - $1400",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/jane-miller",
+      "twitter": "https://twitter.com/jane_miller",
+      "facebook": "https://facebook.com/janemiller",
+      "instagram": "https://instagram.com/janemiller"
+    },
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "69843f28e067b0d81d69eaf7",
+    "name": "Michael Williams",
+    "email": "michael.williams@example.com",
+    "password": "$2a$10$Eljv/biiAg/Br3wgGD3Beu7I9n7UCiSC2bwCLNgUhPMx7cnkCw5o6",
+    "role": "candidate",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770274936/torado-jobs/w9hbqtc7fb9nj2zreays.jpg",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Deutsche"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-05T06:56:40.383Z",
+    "updatedAt": "2026-02-13T04:43:05.165Z",
+    "__v": 2,
+    "bio": "Passionate professional with 5+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "experience": "Php",
+    "jobTitle": "DevOps Engineer",
+    "location": "2828 Oak Ave, Suite 989",
+    "phone": "+1 723-451-1885",
+    "specialization": "Financing",
+    "age": "26",
+    "city": "New York",
+    "country": "Canada",
+    "expectedSalary": "$700 - $1400",
+    "jobType": "Web Design",
+    "latitude": 45.733104,
+    "longitude": -69.68517,
+    "qualification": "B.A",
+    "rate": "$800 - $1600",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/michael-williams",
+      "twitter": "https://twitter.com/michael_williams",
+      "facebook": "https://facebook.com/michaelwilliams",
+      "instagram": "https://instagram.com/michaelwilliams"
+    },
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "6984428ce067b0d81d69eb24",
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "password": "$2a$10$JUPAqY32v6G4NL0rkSOwA.RwOmsPD5y7Wjsk40KlFhS.9M7H.FgdK",
+    "role": "candidate",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770276208/torado-jobs/evpdwsmhxexucmxmggo7.jpg",
+    "skills": [
+      "4464",
+      "65656545",
+      "323213213213213213213213213213213213210321321321321321321"
+    ],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "简体中文"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-05T07:11:08.979Z",
+    "updatedAt": "2026-02-13T04:43:05.336Z",
+    "__v": 3,
+    "bio": "Passionate professional with 9+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "experience": "Wordpress",
+    "jobTitle": "Senior Developer",
+    "location": "1947 Tech Blvd, Suite 206",
+    "phone": "+1 732-235-5054",
+    "specialization": "Development",
+    "age": "22",
+    "city": "London",
+    "country": "Canada",
+    "expectedSalary": "$500 - $800",
+    "jobType": "Accounting",
+    "latitude": 44.71033,
+    "longitude": -69.859839,
+    "qualification": "HSC",
+    "rate": "$900 - $1800",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/john-smith",
+      "twitter": "https://twitter.com/john_smith",
+      "facebook": "https://facebook.com/johnsmith",
+      "instagram": "https://instagram.com/johnsmith"
+    },
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ]
+  },
+  {
+    "_id": "6985749fd7b84be00c8f2f7d",
+    "name": "Browser Boss",
+    "email": "boss2@gmail.com",
+    "password": "$2a$10$lkkE1vHGFH/ekpf.tH8eOOv6y8r7E55dlb6r/VUwQOoOXtxTIHhKC",
+    "role": "employer",
+    "image": "https://via.placeholder.com/150",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [],
+    "fundamentalSkills": [],
+    "isProfileComplete": false,
+    "createdAt": "2026-02-06T04:57:03.280Z",
+    "updatedAt": "2026-02-13T04:43:05.743Z",
+    "__v": 1,
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ]
+  },
+  {
+    "_id": "69857a152c5c17b25c47f2c3",
+    "name": "Emily Miller211311",
+    "email": "boss1@gmail.com",
+    "password": "$2a$10$WsHwuGZ4r8GydlU2m0WrB.ZNXj/CecyRlGgkWzHaVtUKxq9CNPBaK",
+    "role": "employer",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770614229/torado-jobs/j7pgsgwgza7bg3dzydn7.png",
+    "skills": [],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Deutsche"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-06T05:20:21.635Z",
+    "updatedAt": "2026-02-13T04:43:05.797Z",
+    "__v": 2,
+    "location": "5905 Innovation Way, Suite 426",
+    "phone": "+1 968-381-3940",
+    "age": "18",
+    "bio": "Passionate professional with 9+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "city": "Paris",
+    "country": "United States",
+    "expectedSalary": "$500 - $800",
+    "experience": "Php",
+    "jobTitle": "UI Designer",
+    "jobType": "Software",
+    "latitude": 40.486489,
+    "longitude": -67.039047,
+    "qualification": "SSC",
+    "rate": "$500 - $800",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/emily-miller",
+      "twitter": "https://twitter.com/emily_miller",
+      "facebook": "https://facebook.com/emilymiller",
+      "instagram": "https://instagram.com/emilymiller"
+    },
+    "specialization": "Finance",
+    "imageAction": {
+      "x": 18.690060719892788,
+      "y": 9.534026178955548,
+      "width": 33.333333333333336,
+      "height": 18.3948107270791
+    },
+    "isFreelancer": false,
+    "roles": [
+      "698eabd6aecb26ae9016c3e4"
+    ],
+    "isDeleted": false,
+    "status": "active"
+  },
+  {
+    "_id": "698977583b51c048184efa6d",
+    "name": "Sarah Smith",
+    "email": "sanji2@gmail.com",
+    "password": "$2a$10$XNKzuJyfD1CryDxPsNEjSOc11PD7kwnBSxsTvXIJoetb0DNEJ21W.",
+    "role": "candidate",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770621120/torado-jobs/wdritzwbwi1slkqsa1zd.png",
+    "imageAction": {
+      "x": 53.58115552018443,
+      "y": 41.02049740423492,
+      "width": 33.333333333333336,
+      "height": 18.18181818181818
+    },
+    "skills": [
+      "q",
+      "w",
+      "e",
+      "r"
+    ],
+    "rating": 0,
+    "reviews": 0,
+    "languages": [
+      "Portuguese"
+    ],
+    "fundamentalSkills": [],
+    "isProfileComplete": true,
+    "createdAt": "2026-02-09T05:57:44.209Z",
+    "updatedAt": "2026-02-13T06:47:13.743Z",
+    "__v": 4,
+    "bio": "Passionate professional with 8+ years of experience in the tech industry. Skilled in problem-solving, team collaboration, and delivering high-quality results. Always eager to learn new technologies and contribute to innovative projects.",
+    "experience": "Php",
+    "jobTitle": "DevOps Engineer",
+    "location": "2039 Innovation Way, Suite 725",
+    "phone": "+1 924-581-1243",
+    "specialization": "Resources",
+    "age": "20",
+    "city": "New York",
+    "country": "United States",
+    "expectedSalary": "$900 - $1800",
+    "jobType": "Financing",
+    "latitude": 40.331896,
+    "longitude": -68.527618,
+    "qualification": "B.A",
+    "rate": "$800 - $1600",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/in/sarah-smith",
+      "twitter": "https://twitter.com/sarah_smith",
+      "facebook": "https://facebook.com/sarahsmith",
+      "instagram": "https://instagram.com/sarahsmith"
+    },
+    "resumeUrl": "dashboard-resume://698ad723808c93df6a9b2e70",
+    "isFreelancer": true,
+    "roles": [
+      "698eabd6aecb26ae9016c3e5"
+    ],
+    "isDeleted": false,
+    "status": "active"
+  }
+]

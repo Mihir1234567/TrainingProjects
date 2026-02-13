@@ -1,0 +1,67 @@
+[
+  {
+    "_id": "6978538b1ec89254ac9b325a",
+    "jobId": "6978538a1ec89254ac9b3252",
+    "candidateId": "6978538a1ec89254ac9b3255",
+    "resume": "https://example.com/resume.pdf",
+    "status": "Pending",
+    "createdAt": "2026-01-27T05:56:27.067Z",
+    "updatedAt": "2026-01-27T05:56:27.067Z",
+    "__v": 0
+  },
+  {
+    "_id": "69785b77fa05f16a0381049d",
+    "jobId": "6978538a1ec89254ac9b3252",
+    "candidateId": "697856b0fa05f16a03810478",
+    "resume": "https://example.com/resume.pdf",
+    "coverLetter": "I am very interested!",
+    "status": "Pending",
+    "createdAt": "2026-01-27T06:30:15.939Z",
+    "updatedAt": "2026-01-27T06:30:15.939Z",
+    "__v": 0
+  },
+  {
+    "_id": "69785bb2fa05f16a038104b1",
+    "jobId": "69785a15fa05f16a03810492",
+    "candidateId": "697856b0fa05f16a03810478",
+    "resume": "https://example.com/resume.pdf",
+    "coverLetter": "I am very interested!",
+    "status": "Pending",
+    "createdAt": "2026-01-27T06:31:14.762Z",
+    "updatedAt": "2026-01-27T06:31:14.762Z",
+    "__v": 0
+  },
+  {
+    "_id": "69785dbafa05f16a038104c6",
+    "jobId": "69785a15fa05f16a03810492",
+    "candidateId": "69785da7fa05f16a038104c0",
+    "resume": "https://example.com/resume.pdf",
+    "coverLetter": "I am very interested!",
+    "status": "Pending",
+    "createdAt": "2026-01-27T06:39:54.026Z",
+    "updatedAt": "2026-01-27T06:39:54.026Z",
+    "__v": 0
+  },
+  {
+    "_id": "697861f9faab68f677eb4d61",
+    "jobId": "697861c9faab68f677eb4d57",
+    "candidateId": "69785da7fa05f16a038104c0",
+    "resume": "https://example.com/resume.pdf",
+    "coverLetter": "I am very interested!",
+    "status": "Pending",
+    "createdAt": "2026-01-27T06:58:01.335Z",
+    "updatedAt": "2026-01-27T06:58:01.335Z",
+    "__v": 0
+  },
+  {
+    "_id": "698c0b21e547409657bfdeb9",
+    "jobId": "698976733b51c048184efa3f",
+    "candidateId": "698977583b51c048184efa6d",
+    "resume": "dashboard-resume://698ad723808c93df6a9b2e70",
+    "coverLetter": "",
+    "status": "Pending",
+    "createdAt": "2026-02-11T04:52:49.318Z",
+    "updatedAt": "2026-02-11T04:52:49.318Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "_id": "698ad723808c93df6a9b2e70",
+    "userId": "698977583b51c048184efa6d",
+    "name": "Sarah Smith",
+    "image": "https://res.cloudinary.com/dy6fyjfsp/image/upload/v1770621120/torado-jobs/wdritzwbwi1slkqsa1zd.png",
+    "imageAction": {
+      "x": 53.58115552018443,
+      "y": 41.02049740423492,
+      "width": 33.333333333333336,
+      "height": 18.18181818181818
+    },
+    "email": "sanji2@gmail.com",
+    "jobCategory": "Resources",
+    "professionalTitle": "Senior Software Engineer",
+    "resumeContent": "Experienced software engineer with a proven track record of delivering high-quality web applications. Skilled in React, Node.js, and cloud technologies. Passionate about writing clean, maintainable code and mentoring junior developers.",
+    "education": [
+      {
+        "school": "University of Technology",
+        "qualification": "Bachelor of Science in Computer Science",
+        "startDate": "2014-09",
+        "endDate": "2018-05",
+        "notes": "Graduated with Honors. Member of the Coding Club and Hackathon Team.",
+        "_id": "698ad723808c93df6a9b2e71"
+      }
+    ],
+    "experience": [
+      {
+        "employer": "Tech Corp Inc.",
+        "jobTitle": "Senior Developer",
+        "startDate": "2020-01",
+        "endDate": "Present",
+        "notes": "Led a team of 5 developers in building a scalable e-commerce platform. Improved site performance by 40% through code optimization and caching strategies.",
+        "_id": "698ad723808c93df6a9b2e72"
+      },
+      {
+        "employer": "Web Solutions LLC",
+        "jobTitle": "Full Stack Developer",
+        "startDate": "2018-03",
+        "endDate": "2019-12",
+        "notes": "Developed and maintained client websites using the MERN stack. Collaborated with designers to implement responsive user interfaces.",
+        "_id": "698ad723808c93df6a9b2e73"
+      }
+    ],
+    "skills": [
+      {
+        "name": "JavaScript",
+        "percentage": 95,
+        "_id": "698ad723808c93df6a9b2e74"
+      },
+      {
+        "name": "React",
+        "percentage": 90,
+        "_id": "698ad723808c93df6a9b2e75"
+      },
+      {
+        "name": "Node.js",
+        "percentage": 85,
+        "_id": "698ad723808c93df6a9b2e76"
+      },
+      {
+        "name": "MongoDB",
+        "percentage": 80,
+        "_id": "698ad723808c93df6a9b2e77"
+      },
+      {
+        "name": "AWS",
+        "percentage": 75,
+        "_id": "698ad723808c93df6a9b2e78"
+      }
+    ],
+    "createdAt": "2026-02-10T06:58:43.611Z",
+    "updatedAt": "2026-02-12T07:04:50.671Z",
+    "__v": 0,
+    "isDefault": true,
+    "type": "Builder"
+  },
+  {
+    "_id": "698d7b6e69d1f6aaf9654344",
+    "userId": "698977583b51c048184efa6d",
+    "name": "gate1",
+    "imageAction": null,
+    "email": "sanji2@gmail.com",
+    "jobCategory": "General",
+    "professionalTitle": "Resume",
+    "fileUrl": "https://res.cloudinary.com/dy6fyjfsp/raw/upload/v1770879858/torado-jobs/gate1-1770879836945",
+    "fileName": "gate1.pdf",
+    "type": "Upload",
+    "isDefault": false,
+    "education": [],
+    "experience": [],
+    "skills": [],
+    "createdAt": "2026-02-12T07:04:14.196Z",
+    "updatedAt": "2026-02-12T07:04:49.786Z",
+    "__v": 0
+  }
+]

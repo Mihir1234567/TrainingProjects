@@ -1,0 +1,1507 @@
+[
+  {
+    "_id": "697c3cc4eb7230320467cf0a",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "UX / UI Designer",
+    "description": "Every month, more than 3 million job seekers visit our website to search for jobs, with more than 130,000 applications per day. Get your own personalized salary estimate. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n\nNemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.",
+    "category": "Design",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 35000,
+      "max": 45000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Ururgent"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "careerLevel": "Senior",
+    "qualification": "Associate Degree",
+    "industry": "Design & Arts",
+    "deadline": "2029-06-27T18:30:00.000Z",
+    "requirements": [
+      "A register demonstrates well-thought-out and polished end-to-end shopper pilgrimages",
+      "10+ years of enterprise knowledge in interactive configuration and/or visual design",
+      "Excellent interpersonal skills Aware of mobile, communication, and collaboration trends",
+      "Capability to construct positively lustrous design prototypes, mockups and other contact prototypes",
+      "History of concerning shipping developments with your work",
+      "Mastership in miscellaneous design tools such as Figma, Photoshop, Illustrator and Sketch"
+    ],
+    "responsibilities": [
+      "Developing user occasions for corporation software/services",
+      "Developing & using selected design principles & interaction patterns",
+      "Aligning or influencing design thinking with teams working in other geographies"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-01-27T18:30:00.000Z",
+    "updatedAt": "2029-01-27T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc4eb7230320467cf0c",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "CMS Developer",
+    "description": "We are seeking a highly skilled CMS Developer to join our dynamic team. In this role, you will be responsible for both front-end and back-end development, including the implementation of themes and plugins. You should have a strong understanding of industry trends and content management systems such as WordPress, Contentful, or Strapi.\n\nYou will work closely with the design team to ensure technical feasibility and translate UI/UX designs into high-quality code. Experience with responsive and adaptive design is strongly preferred.",
+    "category": "Technology",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 40000,
+      "max": 55000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Remote"
+    ],
+    "gender": "Both",
+    "experience": "2 Year",
+    "careerLevel": "Middle",
+    "qualification": "Bachelor's Degree",
+    "industry": "IT & Software",
+    "deadline": "2029-08-14T18:30:00.000Z",
+    "requirements": [
+      "Extensive experience with PHP, HTML5, CSS3, and JavaScript",
+      "Strong understanding of Content Management Systems (CMS) architecture",
+      "Experience with RESTful APIs and asynchronous request handling",
+      "Knowledge of SEO principles and ensuring that application will adhere to them",
+      "Proficiency with version control systems like Git",
+      "Ability to write clean, well-documented, and reusable code"
+    ],
+    "responsibilities": [
+      "Developing custom themes and plugins for enterprise-grade CMS platforms",
+      "Optimizing page speed and performance for high-traffic websites",
+      "Collaborating with cross-functional teams to define and ship new features"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-02-14T18:30:00.000Z",
+    "updatedAt": "2029-02-14T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc4eb7230320467cf0e",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "Marketing Coordinator",
+    "description": "Carmel Flatley is looking for a proactive Marketing Coordinator to support our marketing department in its primary and administrative duties. Your work will be a factor for the growth and expansion of the company's marketing department. You will be responsible for assisting in the organizing of campaigns and developing marketing strategies.\n\nThis role involves analyzing marketing data (campaign results, conversion rates, traffic etc.) to help shape future marketing strategies. You should be familiar with social media platforms and digital marketing tools.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 30000,
+      "max": 42000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "On-site",
+      "Critical"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "careerLevel": "Experienced",
+    "qualification": "Diploma in Marketing",
+    "industry": "Marketing & Advertising",
+    "deadline": "2029-09-09T18:30:00.000Z",
+    "requirements": [
+      "Excellent communication and people skills",
+      "Strong organizational and time-management abilities",
+      "Solid understanding of different marketing techniques",
+      "Proficiency in MS Office and marketing software (e.g. CRM, Adobe Creative Suite)",
+      "Knowledge of Google AdWords, Facebook Ads, and LinkedIn Ads",
+      "Creative mindset with an ability to think outside the box"
+    ],
+    "responsibilities": [
+      "Assisting in the development and execution of annual marketing plans",
+      "Coordinating marketing events and trade shows",
+      "Writing clear and engaging copy for various marketing channels"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-03-09T18:30:00.000Z",
+    "updatedAt": "2029-03-09T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc4eb7230320467cf10",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "Account Executive",
+    "description": "Eunice Borer is seeking a motivated Account Executive to join our Finance team. In this role, you will be responsible for building and maintaining strong relationships with our clients, identifying new business opportunities, and contributing to the overall financial growth of the company.\n\nYou should have a proven track record of meeting and exceeding sales targets, as well as excellent communication and negotiation skills. A background in finance or accounting is highly desirable.",
+    "category": "Finance",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 50000,
+      "max": 65000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "On-site",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "careerLevel": "Senior",
+    "qualification": "BBA in Finance",
+    "industry": "Finance & Insurance",
+    "deadline": "2029-10-19T18:30:00.000Z",
+    "requirements": [
+      "Proven experience as an Account Executive or in a similar sales role",
+      "Excellent communication and negotiation skills",
+      "Solid understanding of financial principles and accounting practices",
+      "Proficient in CRM software and MS Office",
+      "Ability to build and maintain strong client relationships",
+      "Result-driven with a focus on achieving high-quality results"
+    ],
+    "responsibilities": [
+      "Managing a portfolio of high-value accounts",
+      "Developing and executing strategic account plans",
+      "Negotiating contracts and closing deals to drive revenue"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-04-19T18:30:00.000Z",
+    "updatedAt": "2029-04-19T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf12",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "Web Designer",
+    "description": "Sincere Boehm is looking for a creative Web Designer to join our team. You will be responsible for creating aesthetically pleasing and functional website designs. Your work will involve translating user requirements into visual concepts that provide a seamless user experience.",
+    "category": "Design",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 32000,
+      "max": 48000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "Fresh",
+    "careerLevel": "Fresh",
+    "qualification": "Bachelor's In Design",
+    "industry": "IT & Services",
+    "deadline": "2029-11-11T18:30:00.000Z",
+    "requirements": [
+      "Proficiency in design software such as Figma and Adobe Creative Suite",
+      "Strong understanding of responsive design principles",
+      "Experience with HTML5 and CSS3 is a plus",
+      "Excellent communication and collaboration skills",
+      "Attention to detail and a keen eye for aesthetics",
+      "Ability to manage multiple projects and meet deadlines"
+    ],
+    "responsibilities": [
+      "Designing high-converting landing pages",
+      "Creating brand-consistent visual assets for web and mobile",
+      "Conducting user research and applying findings to design iterations"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-05-11T18:30:00.000Z",
+    "updatedAt": "2029-05-11T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf14",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc4eb7230320467cf08",
+    "title": "President Of Sales",
+    "description": "We are seeking a seasoned President of Sales to lead our global sales efforts. The successful candidate will be responsible for developing and implementing strategic sales plans that expand the company's customer base and ensure its strong presence in the market.",
+    "category": "Management",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 70000,
+      "max": 95000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "On-site",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "careerLevel": "Executive",
+    "qualification": "Master's In Business",
+    "industry": "Sales & Business Development",
+    "deadline": "2029-12-04T18:30:00.000Z",
+    "requirements": [
+      "Proven experience as a Sales Director or VP of Sales",
+      "Exceptional leadership and team-building skills",
+      "In-depth knowledge of CRM software and sales metrics",
+      "Strong analytical and decision-making abilities",
+      "Excellent communication and presentation skills",
+      "Ability to drive sales through innovative strategies"
+    ],
+    "responsibilities": [
+      "Leading high-performance sales teams to achieve ambitious targets",
+      "Developing and managing strategic partnerships",
+      "Representing the company at industry events and conferences"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-06-04T18:30:00.000Z",
+    "updatedAt": "2029-06-04T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf18",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf16",
+    "title": "Marketing Specialist",
+    "description": "Alivia Pollich is looking for a creative and data-driven Marketing Specialist to join our marketing team. You will be responsible for developing and executing marketing campaigns across various channels, including social media, email, and search engines.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 28000,
+      "max": 40000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "1 Year",
+    "careerLevel": "Junior",
+    "qualification": "Bachelor's Degree",
+    "industry": "Advertising & PR",
+    "deadline": "2030-02-14T18:30:00.000Z",
+    "requirements": [
+      "Extensive knowledge of digital marketing channels and tools",
+      "Proficiency in analyzing marketing data and generating reports",
+      "Excellent written and verbal communication skills",
+      "Strong understanding of SEO and content marketing strategies",
+      "Experience with email marketing platforms and CRM software",
+      "Ability to work independently and as part of a team"
+    ],
+    "responsibilities": [
+      "Developing and managing lead generation campaigns",
+      "Creating engaging content for a variety of audiences",
+      "Conducting market research to identify trends and opportunities"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-08-14T18:30:00.000Z",
+    "updatedAt": "2029-08-14T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf1a",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf16",
+    "title": "Marketing Research Analyst",
+    "description": "We are looking for a Marketing Research Analyst to join our team. The successful candidate will be responsible for gathering and analyzing data on competitors, consumers, and market trends to help our clients make informed business decisions.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 35000,
+      "max": 50000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "careerLevel": "Experienced",
+    "qualification": "Master's Degree",
+    "industry": "Business Services",
+    "deadline": "2030-03-19T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of market research methodologies and tools",
+      "Strong analytical and problem-solving skills",
+      "Proficiency in data analysis software and MS Office",
+      "Excellent communication and presentation skills",
+      "Ability to interpret complex data and translate it into actionable insights",
+      "Attention to detail and a high level of accuracy"
+    ],
+    "responsibilities": [
+      "Conducting extensive market research for a variety of industries",
+      "Developing and managing research projects from start to finish",
+      "Providing expert advice and guidance to clients on market trends"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-09-19T18:30:00.000Z",
+    "updatedAt": "2029-09-19T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf1e",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf1c",
+    "title": "eCommerce Marketing Specialist",
+    "description": "We are seeking a seasoned eCommerce Marketing Specialist to join our team. The successful candidate will be responsible for developing and implementing marketing strategies to drive traffic and increase sales for our online store.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 30000,
+      "max": 45000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Ururgent"
+    ],
+    "gender": "Both",
+    "experience": "2 Year",
+    "careerLevel": "Middle",
+    "qualification": "Bachelor's Degree",
+    "industry": "E-commerce",
+    "deadline": "2030-05-24T18:30:00.000Z",
+    "requirements": [
+      "Extensive knowledge of eCommerce platforms and digital marketing channels",
+      "Proficiency in analyzing marketing data and generating reports",
+      "Excellent written and verbal communication skills",
+      "Strong understanding of SEO and content marketing strategies",
+      "Experience with email marketing platforms and CRM software",
+      "Ability to work independently and as part of a team"
+    ],
+    "responsibilities": [
+      "Developing and managing lead generation campaigns",
+      "Creating engaging content for a variety of audiences",
+      "Conducting market research to identify trends and opportunities"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-11-24T18:30:00.000Z",
+    "updatedAt": "2029-11-24T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf20",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf1c",
+    "title": "Digital Marketing Manager",
+    "description": "We are seeking a seasoned Digital Marketing Manager to lead our digital marketing efforts. The successful candidate will be responsible for developing and implementing digital marketing strategies that increase brand awareness and drive customer acquisition.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "305 Hick St. USA",
+    "salaryRange": {
+      "min": 45000,
+      "max": 60000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Ururgent"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "careerLevel": "Manager",
+    "qualification": "Master's Degree",
+    "industry": "Consumer Goods",
+    "deadline": "2030-06-29T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of digital marketing channels and tools",
+      "Exceptional leadership and team-building skills",
+      "Proficiency in analyzing marketing data and generating reports",
+      "Strong understanding of SEO, PPC, and social media marketing",
+      "Excellent communication and presentation skills",
+      "Ability to drive marketing success through innovative strategies"
+    ],
+    "responsibilities": [
+      "Leading high-performance digital marketing teams to achieve targets",
+      "Developing and managing multi-channel digital marketing campaigns",
+      "Managing significant marketing budgets and ensuring high ROI"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-29T18:30:00.000Z",
+    "updatedAt": "2029-12-29T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf22",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf1c",
+    "title": "Senior React Developer",
+    "description": "Tech Innovators is looking for a Senior React Developer to join our high-performing engineering team. You will be responsible for architecting and building complex, scalable front-end applications using the latest web technologies.",
+    "category": "Technology",
+    "type": "Remote",
+    "location": "San Francisco, USA",
+    "salaryRange": {
+      "min": 80000,
+      "max": 120000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Remote",
+      "Senior",
+      "React"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "careerLevel": "Senior",
+    "qualification": "Bachelor's Degree",
+    "industry": "Software Engineering",
+    "deadline": "2030-06-23T18:30:00.000Z",
+    "requirements": [
+      "Expert knowledge of React, Redux, and modern JavaScript (ES6+)",
+      "Strong understanding of front-end architecture and state management",
+      "Experience with TypeScript and modern testing frameworks",
+      "In-depth knowledge of CSS-in-JS and responsive design principles",
+      "Excellent problem-solving and code architectural skills",
+      "Ability to mentor junior developers and lead technical initiatives"
+    ],
+    "responsibilities": [
+      "Building and maintaining large-scale React applications",
+      "Optimizing application performance for a smooth user experience",
+      "Collaborating with backend engineers to define and implement APIs"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-23T18:30:00.000Z",
+    "updatedAt": "2029-12-23T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf24",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf1c",
+    "title": "Frontend Enthusiast",
+    "description": "CloudNine is seeking a passionate Frontend Enthusiast to join our creative team part-time. You will work on building beautiful and interactive user interfaces using modern web technologies. This is a great opportunity for someone early in their career to gain experience in a fast-paced environment.",
+    "category": "Technology",
+    "type": "Part Time",
+    "location": "Austin, USA",
+    "salaryRange": {
+      "min": 20000,
+      "max": 35000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Part Time",
+      "Remote",
+      "Ururgent"
+    ],
+    "gender": "Both",
+    "experience": "1 Year",
+    "careerLevel": "Junior",
+    "qualification": "Associate Degree",
+    "industry": "Web Development",
+    "deadline": "2030-06-25T18:30:00.000Z",
+    "requirements": [
+      "Good understanding of HTML5, CSS3, and JavaScript",
+      "Experience with modern frontend frameworks like React or Vue",
+      "Familiarity with responsive design and mobile-first approach",
+      "Knowledge of version control systems like Git",
+      "Excellent communication and collaboration skills",
+      "Strong desire to learn and stay up-to-date with web technologies"
+    ],
+    "responsibilities": [
+      "Developed several personal or academic frontend projects",
+      "Experience with CSS preprocessors like Sass or Less",
+      "Knowledge of UI/UX design principles and tools"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-25T18:30:00.000Z",
+    "updatedAt": "2029-12-25T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf28",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf26",
+    "title": "Backend Architecture Lead",
+    "description": "Logic Labs is looking for a seasoned Backend Architecture Lead to define and lead our backend engineering efforts. You will be responsible for architecting scalable and reliable backend systems, as well as leading a team of talented engineers to deliver high-quality software.",
+    "category": "Technology",
+    "type": "Full Time",
+    "location": "Seattle, USA",
+    "salaryRange": {
+      "min": 110000,
+      "max": 160000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "careerLevel": "Director",
+    "qualification": "Master's In Computer Science",
+    "industry": "Enterprise Software",
+    "deadline": "2029-07-09T18:30:00.000Z",
+    "requirements": [
+      "Extensive experience in architecting and building complex backend systems",
+      "Deep understanding of distributed systems and microservices architecture",
+      "Proficient in several backend languages (e.g., Python, Go, Node.js)",
+      "Strong experience with cloud platforms like AWS or Google Cloud",
+      "Excellent leadership and team management skills",
+      "Ability to define and drive technical vision for the organization"
+    ],
+    "responsibilities": [
+      "Successfully led the architecture and delivery of multiple high-scale backend projects",
+      "Experience in managing and mentoring engineering teams",
+      "Proven track record of driving technical innovation and excellence"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-01-09T18:30:00.000Z",
+    "updatedAt": "2029-01-09T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf2c",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf2a",
+    "title": "Graphic Illustrator",
+    "description": "Visionary Ad is looking for a talented Graphic Illustrator to join our creative team on a freelance basis. You will be responsible for creating high-quality illustrations for various marketing materials, including digital and print campaigns.",
+    "category": "Design",
+    "type": "Freelance",
+    "location": "New York, USA",
+    "salaryRange": {
+      "min": 0,
+      "max": 0
+    },
+    "salaryType": "Yearly",
+    "tags": [
+      "Freelance",
+      "Remote",
+      "Creative"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "careerLevel": "Experienced",
+    "qualification": "BFA in Illustration",
+    "industry": "Advertising & Design",
+    "deadline": "2030-06-18T18:30:00.000Z",
+    "requirements": [
+      "Extensive experience in creating vector and digital illustrations",
+      "Proficient in Adobe Illustrator, Photoshop, and other design tools",
+      "Strong understanding of color theory, composition, and typography",
+      "Ability to translate creative briefs into engaging visual concepts",
+      "Excellent communication and collaboration skills",
+      "Attention to detail and a keen eye for aesthetics"
+    ],
+    "responsibilities": [
+      "Provided high-quality illustrations for major marketing campaigns",
+      "Developed a diverse portfolio of illustration styles",
+      "Experience in working with agencies and creative directors"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-18T18:30:00.000Z",
+    "updatedAt": "2029-12-18T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf2e",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf2a",
+    "title": "Social Media Strategist",
+    "description": "Brand Boost is seeking a creative and data-driven Social Media Strategist to lead our social media efforts. You will be responsible for developing and implementing social media strategies that increase brand awareness and drive customer engagement.",
+    "category": "Marketing",
+    "type": "Full Time",
+    "location": "Miami, USA",
+    "salaryRange": {
+      "min": 28000,
+      "max": 42000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "2 Year",
+    "careerLevel": "Junior",
+    "qualification": "Bachelor's Degree",
+    "industry": "Marketing & Social Media",
+    "deadline": "2030-06-04T18:30:00.000Z",
+    "requirements": [
+      "Extensive knowledge of social media platforms and digital marketing channels",
+      "Proficient in and and analyzing social media metrics and generating reports",
+      "Excellent written and verbal communication skills",
+      "Strong understanding of SEO and content marketing strategies",
+      "Experience with social media management tools like Sprout Social or Hootsuite",
+      "Ability to work independently and as part of a team"
+    ],
+    "responsibilities": [
+      "Developing and managing successful social media campaigns",
+      "Creating engaging content for a variety of audiences",
+      "Conducting market research to identify social media trends and opportunities"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-04T18:30:00.000Z",
+    "updatedAt": "2029-12-04T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf30",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf2a",
+    "title": "Environmental Consultant",
+    "description": "Eco Solutions is looking for a passionate Environmental Consultant intern to join our team. You will assist in conducting environmental impact assessments and developing sustainability strategies for our clients. This is a great opportunity for a student or recent graduate to gain hands-on experience in the environmental sector.",
+    "category": "Science",
+    "type": "Internship",
+    "location": "Portland, USA",
+    "salaryRange": {
+      "min": 25000,
+      "max": 35000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Internship",
+      "Remote",
+      "Green"
+    ],
+    "gender": "Both",
+    "experience": "Fresh",
+    "careerLevel": "Intern",
+    "qualification": "Bachelor's In Environmental Science",
+    "industry": "Environmental Services",
+    "deadline": "2030-06-23T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of environmental laws and regulations",
+      "Strong research and analytical skills",
+      "Proficient in data analysis software and MS Office",
+      "Excellent written and verbal communication skills",
+      "Ability to work independently and as part of a team",
+      "Passion for sustainability and environmental protection"
+    ],
+    "responsibilities": [
+      "Assisted in conducting multiple environmental impact assessments",
+      "Developed and implemented sustainability plans for small businesses",
+      "Conducted extensive research on environmental trends and policies"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-23T18:30:00.000Z",
+    "updatedAt": "2029-12-23T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf34",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf32",
+    "title": "Supply Chain Manager",
+    "description": "Swift Logistics is seeking a seasoned Supply Chain Manager to lead our global supply chain efforts. You will be responsible for defining and implementing supply chain strategies that increase efficiency and ensure the timely delivery of goods to our customers.",
+    "category": "Operations",
+    "type": "Full Time",
+    "location": "Chicago, USA",
+    "salaryRange": {
+      "min": 0,
+      "max": 0
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "careerLevel": "Manager",
+    "qualification": "Bachelor's Degree",
+    "industry": "Logistics & Supply Chain",
+    "deadline": "2030-06-21T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of supply chain methodologies and tools",
+      "Exceptional leadership and team-building skills",
+      "Proficient in ERP software and data analysis tools",
+      "Strong analytical and problem-solving skills",
+      "Excellent communication and negotiation skills",
+      "Ability to drive supply chain success through innovative strategies"
+    ],
+    "responsibilities": [
+      "Successfully led the supply chain for a major global organization",
+      "Developed and managed strategic partnerships with suppliers",
+      "Managed significant supply chain budgets and ensured high efficiency"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-21T18:30:00.000Z",
+    "updatedAt": "2029-12-21T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf36",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf32",
+    "title": "Financial Advisor",
+    "description": "Description for Financial Advisor",
+    "category": "Finance",
+    "type": "Full Time",
+    "location": "Boston, USA",
+    "salaryRange": {
+      "min": 5800,
+      "max": 5800
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Finance",
+      "Advice"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "industry": "Finance",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:21.925Z",
+    "updatedAt": "2026-01-30T05:08:21.925Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc5eb7230320467cf38",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf32",
+    "title": "Fitness Trainer",
+    "description": "Fit Life is looking for a passionate Fitness Trainer to lead our group fitness classes and provide personalized training to our members. You will be responsible for creating and implementing fitness programs that help our members achieve their health and fitness goals.",
+    "category": "Health",
+    "type": "Part Time",
+    "location": "Los Angeles, USA",
+    "salaryRange": {
+      "min": 0,
+      "max": 0
+    },
+    "salaryType": "Yearly",
+    "tags": [
+      "Part Time",
+      "Remote",
+      "Specialist"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "careerLevel": "Experienced",
+    "qualification": "Certified Personal Trainer",
+    "industry": "Health & Fitness",
+    "deadline": "2030-06-11T18:30:00.000Z",
+    "requirements": [
+      "Extensive knowledge of fitness methodologies and tools",
+      "Exceptional communication and people skills",
+      "Proficient in fitness tracking software and apps",
+      "Strong understanding of nutrition and health science",
+      "Experience with group fitness instruction and personal training",
+      "Ability to work independently and as part of a team"
+    ],
+    "responsibilities": [
+      "Led successful group fitness classes for a variety of fitness levels",
+      "Developed and managed personalized training programs for multiple clients",
+      "Provided expert advice and guidance to members on fitness and nutrition"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-11T18:30:00.000Z",
+    "updatedAt": "2029-12-11T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf3a",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf32",
+    "title": "Full Stack Developer",
+    "description": "Code Masters is seeking a skilled Full Stack Developer to join our engineering team. You will be responsible for building and maintaining both the front-end and back-end of our web applications, ensuring high performance and responsiveness to user requirements.",
+    "category": "Technology",
+    "type": "Full Time",
+    "location": "Denver, USA",
+    "salaryRange": {
+      "min": 60000,
+      "max": 85000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "careerLevel": "Experienced",
+    "qualification": "Bachelor's Degree",
+    "industry": "Software Engineering",
+    "deadline": "2030-06-24T18:30:00.000Z",
+    "requirements": [
+      "Proficient in both front-end and back-end development technologies",
+      "Exceptional problem-solving and code architectural skills",
+      "In-depth knowledge of JavaScript frameworks like React and Node.js",
+      "Experience with database management systems like MongoDB or PostgreSQL",
+      "Excellent communication and collaboration skills",
+      "Ability to write clean, well-documented, and reusable code"
+    ],
+    "responsibilities": [
+      "Successfully built and maintained several full-stack web applications",
+      "Optimized application performance for a smooth user experience",
+      "Collaborated with cross-functional teams to define and ship new features"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-24T18:30:00.000Z",
+    "updatedAt": "2029-12-24T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf3c",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc5eb7230320467cf32",
+    "title": "Interior Designer",
+    "description": "Description for Interior Designer",
+    "category": "Design",
+    "type": "Freelance",
+    "location": "Phoenix, USA",
+    "salaryRange": {
+      "min": 3700,
+      "max": 3700
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Interior",
+      "Creative"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "industry": "Design",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.112Z",
+    "updatedAt": "2026-01-30T05:08:22.112Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf40",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf3e",
+    "title": "Cybersecurity Analyst",
+    "description": "Description for Cybersecurity Analyst",
+    "category": "Technology",
+    "type": "Full Time",
+    "location": "Washington DC, USA",
+    "salaryRange": {
+      "min": 3900,
+      "max": 3900
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Security",
+      "Analyst"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "industry": "Technology",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.204Z",
+    "updatedAt": "2026-01-30T05:08:22.204Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf42",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf3e",
+    "title": "HR Manager",
+    "description": "Description for HR Manager",
+    "category": "Management",
+    "type": "Full Time",
+    "location": "Atlanta, USA",
+    "salaryRange": {
+      "min": 2300,
+      "max": 2300
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "HR",
+      "People"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "industry": "Management",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.252Z",
+    "updatedAt": "2026-01-30T05:08:22.252Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf46",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf44",
+    "title": "Data Scientist",
+    "description": "Nova Labs is seeking a data-driven Data Scientist to join our analytics team. You will be responsible for analyzing complex data sets to identify trends and patterns, developing predictive models, and providing actionable insights to help our business make informed decisions.",
+    "category": "Technology",
+    "type": "Full Time",
+    "location": "San Jose, USA",
+    "salaryRange": {
+      "min": 90000,
+      "max": 130000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Full Time",
+      "Remote",
+      "Ururgent"
+    ],
+    "gender": "Both",
+    "experience": "2 Year",
+    "careerLevel": "Middle",
+    "qualification": "Master's Degree",
+    "industry": "Data & AI",
+    "deadline": "2030-06-23T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of data science methodologies and tools",
+      "Exceptional analytical and problem-solving skills",
+      "Proficient in data analysis software like Python, R, and SQL",
+      "Strong understanding of machine learning and artificial intelligence",
+      "Excellent communication and presentation skills",
+      "Ability to interpret complex data and translate it into actionable insights"
+    ],
+    "responsibilities": [
+      "Developing and managing data-driven projects from start to finish",
+      "Created dozens of predictive models that drive business success",
+      "Providing expert advice and guidance to stakeholders on data trends"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-23T18:30:00.000Z",
+    "updatedAt": "2029-12-23T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf48",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf44",
+    "title": "Content Writer",
+    "description": "Description for Content Writer",
+    "category": "Marketing",
+    "type": "Part Time",
+    "location": "Nashville, USA",
+    "salaryRange": {
+      "min": 1900,
+      "max": 1900
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Writing",
+      "Blog"
+    ],
+    "gender": "Both",
+    "experience": "Fresh",
+    "industry": "Marketing",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.414Z",
+    "updatedAt": "2026-01-30T05:08:22.414Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf4a",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf44",
+    "title": "Senior Solutions Architect",
+    "description": "Description for Senior Solutions Architect",
+    "category": "Technology",
+    "type": "Remote",
+    "location": "Remote, USA",
+    "salaryRange": {
+      "min": 7200,
+      "max": 7200
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Cloud",
+      "AWS"
+    ],
+    "gender": "Both",
+    "experience": "5 Year",
+    "industry": "Technology",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.468Z",
+    "updatedAt": "2026-01-30T05:08:22.468Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf4e",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf4c",
+    "title": "Junior UX Researcher",
+    "description": "Description for Junior UX Researcher",
+    "category": "Design",
+    "type": "Internship",
+    "location": "Denver, USA",
+    "salaryRange": {
+      "min": 800,
+      "max": 800
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "UX",
+      "Research"
+    ],
+    "gender": "Both",
+    "experience": "Fresh",
+    "industry": "Design",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.553Z",
+    "updatedAt": "2026-01-30T05:08:22.553Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf52",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf50",
+    "title": "Mobile App Developer",
+    "description": "Description for Mobile App Developer",
+    "category": "Technology",
+    "type": "Contract",
+    "location": "Austin, USA",
+    "salaryRange": {
+      "min": 4500,
+      "max": 4500
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Swift",
+      "Kotlin"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "industry": "Technology",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.644Z",
+    "updatedAt": "2026-01-30T05:08:22.644Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf54",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf50",
+    "title": "Corporate Trainer",
+    "description": "Description for Corporate Trainer",
+    "category": "Management",
+    "type": "Training",
+    "location": "Boston, USA",
+    "salaryRange": {
+      "min": 2800,
+      "max": 2800
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Training",
+      "HR"
+    ],
+    "gender": "Both",
+    "experience": "4 Year",
+    "industry": "Management",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-01-30T05:08:22.687Z",
+    "updatedAt": "2026-01-30T05:08:22.687Z",
+    "__v": 0
+  },
+  {
+    "_id": "697c3cc6eb7230320467cf56",
+    "recruiterId": "697c3cc4eb7230320467cf06",
+    "companyId": "697c3cc6eb7230320467cf50",
+    "title": "DevOps Engineer",
+    "description": "Cloud Sync is seeking a seasoned DevOps Engineer to lead our cloud operations. You will be responsible for defining and implementing DevOps strategies that increase efficiency and ensure the reliable deployment of our software.",
+    "category": "Technology",
+    "type": "Remote",
+    "location": "Portland, USA",
+    "salaryRange": {
+      "min": 85000,
+      "max": 115000
+    },
+    "salaryType": "Monthly",
+    "tags": [
+      "Remote",
+      "Private",
+      "Urgent"
+    ],
+    "gender": "Both",
+    "experience": "3 Year",
+    "careerLevel": "Experienced",
+    "qualification": "Bachelor's Degree",
+    "industry": "Cloud Engineering",
+    "deadline": "2030-06-11T18:30:00.000Z",
+    "requirements": [
+      "In-depth knowledge of DevOps methodologies and tools",
+      "Exceptional leadership and team-building skills",
+      "Proficient in cloud platforms like AWS, Google Cloud, or Azure",
+      "Strong understanding of infrastructure as code and CI/CD pipelines",
+      "Excellent communication and problem-solving skills",
+      "Ability to drive DevOps success through innovative strategies"
+    ],
+    "responsibilities": [
+      "Successfully led the DevOps for a major global organization",
+      "Developed and managed strategic partnerships with cloud providers",
+      "Managed significant DevOps budgets and ensured high efficiency"
+    ],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2029-12-11T18:30:00.000Z",
+    "updatedAt": "2029-12-11T18:30:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "698042bf9cd3d0032a971b35",
+    "recruiterId": "698042b49cd3d0032a971b2f",
+    "companyId": "698042bf9cd3d0032a971b33",
+    "title": "Full Stack Engineer",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Education",
+    "type": "Contract",
+    "location": "New York, USA",
+    "address": "123 Business Center, Tech Park",
+    "salaryRange": {
+      "min": 73000,
+      "max": 131000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Monthly",
+    "tags": [
+      "SQL",
+      "React",
+      "JavaScript",
+      "AWS"
+    ],
+    "gender": "Female",
+    "applyType": "External",
+    "experience": "1 Year",
+    "careerLevel": "Entry Level",
+    "qualification": "High School",
+    "videoUrl": "",
+    "industry": "Finance",
+    "deadline": "2026-02-22T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-02T06:22:55.520Z",
+    "updatedAt": "2026-02-02T06:22:55.520Z",
+    "__v": 0
+  },
+  {
+    "_id": "6981774536e19dca9df0c292",
+    "recruiterId": "6981773136e19dca9df0c28c",
+    "companyId": "6981774536e19dca9df0c290",
+    "title": "DevOps Engineer",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Education",
+    "type": "Full Time",
+    "location": "London, UK",
+    "address": "123 Business Center, Tech Park",
+    "salaryRange": {
+      "min": 90000,
+      "max": 131000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Monthly",
+    "tags": [
+      "GraphQL",
+      "Python",
+      "TypeScript",
+      "AWS",
+      "Docker"
+    ],
+    "gender": "Both",
+    "applyType": "Internal",
+    "experience": "Fresh",
+    "careerLevel": "Entry Level",
+    "qualification": "PhD",
+    "videoUrl": "",
+    "industry": "E-commerce",
+    "deadline": "2026-02-22T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-03T04:19:17.817Z",
+    "updatedAt": "2026-02-03T05:45:31.880Z",
+    "__v": 0
+  },
+  {
+    "_id": "698183261783f2308e4e7123",
+    "recruiterId": "6981773136e19dca9df0c28c",
+    "companyId": "6981774536e19dca9df0c290",
+    "title": "Product Manager",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Marketing",
+    "type": "Contract",
+    "location": "Berlin, Germany",
+    "address": "123 Business Center, Tech Park",
+    "salaryRange": {
+      "min": 49000,
+      "max": 79000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Monthly",
+    "tags": [
+      "SQL",
+      "MongoDB",
+      "Docker"
+    ],
+    "gender": "Both",
+    "applyType": "External",
+    "experience": "1 Year",
+    "careerLevel": "Executive",
+    "qualification": "High School",
+    "videoUrl": "",
+    "industry": "E-commerce",
+    "deadline": "2026-02-11T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-03T05:09:58.278Z",
+    "updatedAt": "2026-02-03T06:14:54.377Z",
+    "__v": 0,
+    "company": "Tech Corp",
+    "companyCategory": "Marketing",
+    "companyType": "Government"
+  },
+  {
+    "_id": "69819cf7c11e74b55a37e1f9",
+    "recruiterId": "6981773136e19dca9df0c28c",
+    "companyId": "6981774536e19dca9df0c290",
+    "company": "CloudBase Systems",
+    "companyCategory": "Education",
+    "companyType": "Private",
+    "title": "UI/UX Designer",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Education",
+    "type": "Part Time",
+    "location": "Singapore",
+    "address": "123 Tech Street, Silicon Valley, CA",
+    "salaryRange": {
+      "min": 61000,
+      "max": 114000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Yearly",
+    "tags": [
+      "SQL",
+      "React",
+      "Python",
+      "AWS"
+    ],
+    "gender": "Female",
+    "applyType": "Internal",
+    "experience": "1 Year",
+    "careerLevel": "Entry Level",
+    "qualification": "High School",
+    "videoUrl": "",
+    "industry": "Finance",
+    "deadline": "2026-03-03T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-03T07:00:07.957Z",
+    "updatedAt": "2026-02-03T07:00:07.957Z",
+    "__v": 0
+  },
+  {
+    "_id": "69819f65d23fad1c74302ab8",
+    "recruiterId": "69819f65d23fad1c74302ab0",
+    "companyId": "69819f65d23fad1c74302ab5",
+    "title": "Company Test Job",
+    "description": "Job desc",
+    "category": "Design",
+    "type": "Full Time",
+    "location": "NYC",
+    "salaryRange": {
+      "min": 50000,
+      "max": 80000
+    },
+    "salaryType": "Yearly",
+    "tags": [],
+    "gender": "Both",
+    "deadline": "2026-12-31T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-03T07:10:29.561Z",
+    "updatedAt": "2026-02-03T07:10:29.561Z",
+    "__v": 0
+  },
+  {
+    "_id": "6981a325d23fad1c74302ac2",
+    "recruiterId": "6981773136e19dca9df0c28c",
+    "companyId": "6981774536e19dca9df0c290",
+    "company": "DataFlow Analytics",
+    "companyCategory": "Marketing",
+    "companyType": "Private",
+    "title": "UI/UX Designer 123456789",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Healthcare",
+    "type": "Contract",
+    "location": "London, UK",
+    "address": "123 Tech Street, Silicon Valley, CA",
+    "salaryRange": {
+      "min": 94000,
+      "max": 126000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Hourly",
+    "tags": [
+      "SQL",
+      "Docker",
+      "GraphQL",
+      "TypeScript",
+      "AWS"
+    ],
+    "gender": "Female",
+    "applyType": "Internal",
+    "experience": "2 Years",
+    "careerLevel": "Mid Level",
+    "qualification": "Bachelor's Degree",
+    "videoUrl": "",
+    "industry": "E-commerce",
+    "deadline": "2026-03-07T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-03T07:26:29.906Z",
+    "updatedAt": "2026-02-03T07:26:29.906Z",
+    "__v": 0
+  },
+  {
+    "_id": "698974d48f4370a3fb9364ef",
+    "recruiterId": "69857a152c5c17b25c47f2c3",
+    "companyId": "69857a1f2c5c17b25c47f2c7",
+    "company": "TechCorp Inc",
+    "companyCategory": "Finance",
+    "companyType": "Private",
+    "title": "Data Scientist",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Technology",
+    "type": "Hybrid",
+    "location": "San Francisco, USA",
+    "address": "123 Tech Street, Silicon Valley, CA",
+    "salaryRange": {
+      "min": 92000,
+      "max": 121000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Monthly",
+    "tags": [
+      "Node.js",
+      "JavaScript",
+      "GraphQL",
+      "TypeScript",
+      "AWS"
+    ],
+    "gender": "Male",
+    "applyType": "Internal",
+    "experience": "5+ Years",
+    "careerLevel": "Senior",
+    "qualification": "High School",
+    "videoUrl": "",
+    "industry": "Finance",
+    "deadline": "2026-03-18T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "status": "Active",
+    "applicationsCount": 0,
+    "createdAt": "2026-02-09T05:47:00.321Z",
+    "updatedAt": "2026-02-09T05:47:00.321Z",
+    "__v": 0
+  },
+  {
+    "_id": "698976733b51c048184efa3f",
+    "recruiterId": "69857a152c5c17b25c47f2c3",
+    "companyId": "69857a1f2c5c17b25c47f2c7",
+    "company": "CloudBase Systems",
+    "companyCategory": "Education",
+    "companyType": "Private",
+    "title": "Full Stack Engineer",
+    "description": "We are looking for a talented professional to join our dynamic team. The ideal candidate will have strong technical skills and a passion for innovation.\n\nKey Responsibilities:\n• Design and develop high-quality software solutions\n• Collaborate with cross-functional teams\n• Participate in code reviews and mentor junior developers\n• Stay updated with the latest industry trends\n\nRequirements:\n• Strong problem-solving abilities\n• Excellent communication skills\n• Team player with a positive attitude",
+    "category": "Healthcare",
+    "type": "Part Time",
+    "location": "Singapore",
+    "address": "123 Tech Street, Silicon Valley, CA",
+    "salaryRange": {
+      "min": 84000,
+      "max": 120000
+    },
+    "salaryCurrency": "USD",
+    "salaryType": "Yearly",
+    "tags": [
+      "React",
+      "JavaScript",
+      "GraphQL",
+      "Docker"
+    ],
+    "gender": "Male",
+    "applyType": "Internal",
+    "experience": "2 Years",
+    "careerLevel": "Mid Level",
+    "qualification": "Master's Degree",
+    "videoUrl": "",
+    "industry": "Healthcare",
+    "deadline": "2026-02-26T00:00:00.000Z",
+    "requirements": [],
+    "responsibilities": [],
+    "fundamentalSkills": [
+      "Node.js",
+      "React",
+      "Docker",
+      "JavaScript",
+      "MongoDB"
+    ],
+    "talentExperience": [
+      "Leadership skills",
+      "5+ years experience",
+      "Team player"
+    ],
+    "status": "Active",
+    "applicationsCount": 1,
+    "createdAt": "2026-02-09T05:53:55.170Z",
+    "updatedAt": "2026-02-11T04:52:49.708Z",
+    "__v": 0
+  }
+]
