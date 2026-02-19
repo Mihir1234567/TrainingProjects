@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prata&display=swap");
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", sans-serif;
+}
+
+.font-serif {
+  font-family: "Prata", serif;
+}
+
+/* Slide Transitions */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slideUpFade 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+/* Staggered Line Animation */
+.clip-text {
+  overflow: hidden;
+  display: block;
+}
+
+@keyframes textSlideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-text-slide-up {
+  display: block;
+  animation: textSlideUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
