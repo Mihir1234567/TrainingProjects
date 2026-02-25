@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import TopBar from "./components/TopBar";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Benefits from "./components/Benefits";
+import NewCollection from "./components/NewCollection";
+import QualitySection from "./components/QualitySection";
+import ShopByCategory from "./components/ShopByCategory";
+import ExploreCollections from "./components/ExploreCollections";
+import OurHappyClients from "./components/OurHappyClients";
+import FeaturedProducts from "./components/FeaturedProducts";
+import ToradoOnInstagram from "./components/ToradoOnInstagram";
+import Newsletter from "./components/Newsletter";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,15 +48,18 @@ function App() {
       <div className="relative">
         {!isScrolled && <Navbar isSticky={false} />}
         <Hero />
+        <Benefits />
+        <NewCollection />
+        <QualitySection />
+        <ShopByCategory />
+        <ExploreCollections />
+        <OurHappyClients />
+        <FeaturedProducts />
+        <ToradoOnInstagram />
+        <Newsletter />
+        <Footer />
+        <ScrollToTop />
       </div>
-      <main className="flex-grow">
-        {/* Placeholder content for scrolling */}
-        <div className="h-[2000px] bg-gradient-to-b from-white to-[#FCF4E9]/30 p-20 text-center">
-          <p className="text-gray-400 text-lg italic">
-            Scroll down to experience the sticky navbar transition...
-          </p>
-        </div>
-      </main>
     </div>
   );
 }

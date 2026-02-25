@@ -1,0 +1,10 @@
+./public/vite.svg
+./src/assets/Landing/Benefits Bar/imgi_21_return-box.svg
+./src/assets/Landing/Hero/imgi_13_hero-slide-1.png
+./src/assets/Landing/Hero/imgi_14_hero-slide-3.png
+./src/assets/Landing/Hero/imgi_15_hero-slide-2.png
+./src/assets/Landing/Hero/imgi_63_hero-bg.jpg
+./src/assets/Logo/logoMain.jpg
+./src/assets/Logo/logoMain.png
+./src/assets/Logo/logoSmall.png
+./src/assets/react.svg
