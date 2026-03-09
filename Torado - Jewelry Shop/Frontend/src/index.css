@@ -21,6 +21,21 @@
   }
 }
 
+@keyframes slideOutFadeUp {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.95);
+  }
+}
+
+.animate-slide-out-fade-up {
+  animation: slideOutFadeUp 0.5s ease-in-out forwards;
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -81,4 +96,12 @@
 }
 .delay-300 {
   animation-delay: 0.3s;
+}
+
+/* Hide subtitle on shorter viewports (e.g. 1440x661) */
+/* Hide subtitle on very short viewports */
+@media (max-height: 600px) {
+  .hero-subtitle {
+    display: none;
+  }
 }

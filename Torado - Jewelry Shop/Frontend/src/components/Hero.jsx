@@ -14,12 +14,12 @@ const slides = [
   {
     subtitle: "Grab your favourite",
     title: "New Arrivals 15%\nOFF",
-    image: heroModel3, // Re-mapped to correct model image
+    image: heroModel3,
   },
   {
     subtitle: "The art of beauty",
     title: "The Perfect\nEssential Style",
-    image: heroModel2, // Re-mapped to correct ring image
+    image: heroModel2,
   },
 ];
 
@@ -70,7 +70,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative w-full h-[900px] bg-[#FCF4E9] select-none cursor-default overflow-hidden"
+      className="relative w-full h-[100svh] min-h-[850px] max-h-[1000px] md:h-screen md:min-h-[500px] md:max-h-[900px] bg-[#FCF4E9] select-none cursor-default overflow-hidden"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -80,65 +80,173 @@ const Hero = () => {
       <img
         src={heroBg}
         alt="Hero Background"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
       />
 
-      {/* Slides Container */}
-      <div className="relative h-full w-full">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 h-full w-full transition-all duration-1500 ${
-              index === currentSlide
-                ? "opacity-100 z-10 pointer-events-auto"
-                : "opacity-0 z-0 pointer-events-none"
-            }`}
-          >
-            <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 lg:gap-12 items-center h-full relative">
-              {/* Left Side: Text Content */}
+      {/* ===== MOBILE LAYOUT (flex column, no overlap) ===== */}
+      <div className="relative z-10 flex flex-col h-full md:hidden">
+        {/* 1. Text Content (top) */}
+        <div className="shrink-0 px-4 pt-20 pb-2 relative">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100" : "hidden"
+              }`}
+            >
               <div
-                className={`flex flex-col space-y-6 pt-20 lg:pt-0 pointer-events-none ${
+                className={`flex flex-col space-y-3 ${
                   index === currentSlide ? "animate-fade-in" : ""
                 }`}
               >
-                <span className="text-[#CB927A] text-lg md:text-xl font-medium tracking-wide clip-text">
-                  <span
+                <div className="text-[#CB927A] text-[15px] font-medium tracking-wide clip-text hero-subtitle w-max">
+                  <div
                     className={
                       index === currentSlide ? "animate-text-slide-up" : ""
                     }
                   >
                     {slide.subtitle}
-                  </span>
-                </span>
-                <h1 className="text-5xl md:text-7xl lg:text-[85px] font-extralight text-gray-900 leading-[1.1] font-serif">
+                  </div>
+                </div>
+
+                <h1 className="text-[40px] leading-[1.1] font-extralight text-gray-900 font-serif">
                   {slide.title.split("\n").map((line, i) => (
-                    <span key={i} className="clip-text">
+                    <span key={i} className="block overflow-hidden pb-1">
                       <span
-                        className={
+                        className={`block ${
                           index === currentSlide
                             ? `animate-text-slide-up delay-${(i + 1) * 100}`
                             : ""
-                        }
+                        }`}
                       >
                         {line}
                       </span>
                     </span>
                   ))}
                 </h1>
-                <div className="pt-8 clip-text pointer-events-auto">
+
+                <div className="pt-2 pointer-events-auto w-max">
                   <div
-                    className={`relative inline-block group w-[266px] h-[62px] ${
+                    className={`relative inline-block group w-[180px] h-[45px] ${
                       index === currentSlide
                         ? "animate-slide-up-fade delay-300"
                         : ""
                     }`}
                   >
-                    {/* Offset Border Layer */}
-                    <div className="absolute top-2 left-2 w-full h-full border border-[#CB927A] transition-all duration-300 group-hover:top-0 group-hover:left-0 z-0"></div>
-
-                    {/* Main Button Layer */}
+                    <div className="absolute top-1.5 left-1.5 w-full h-full border border-[#CB927A] transition-all duration-300 group-hover:top-0 group-hover:left-0 z-0"></div>
                     <button className="relative z-10 w-full h-full bg-[#CB927A] text-white font-light tracking-wide flex items-center justify-center space-x-2 transition-all duration-300 group-hover:shadow-[0_15px_40px_rgba(203,146,122,.5)]">
-                      <span className="text-lg">Show Collection</span>
+                      <span className="text-[13px]">Show Collection</span>
+                      <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 2. Model Image (middle, fills remaining space) */}
+        <div className="flex-1 relative overflow-hidden min-h-[300px]">
+          {slides.map((slide, index) => (
+            <img
+              key={index}
+              src={slide.image}
+              alt="Jewelry Model"
+              className={`absolute inset-0 w-full h-[110%] object-contain object-bottom transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
+              draggable="false"
+            />
+          ))}
+        </div>
+
+        {/* 3. Navigation Controls (bottom) */}
+        <div className="shrink-0 flex flex-col items-center pt-3 pb-4">
+          <div className="font-serif flex items-baseline mb-[10px]">
+            <span className="text-[55px] font-light text-gray-900 leading-none">
+              {(currentSlide + 1).toString().padStart(2, "0")}
+            </span>
+            <span className="text-[20px] text-gray-900 font-light translate-y-[-5px] translate-x-1">
+              /
+            </span>
+            <span className="text-[20px] text-gray-900 font-light tracking-wider translate-x-2">
+              {slides.length.toString().padStart(2, "0")}
+            </span>
+          </div>
+          <div className="flex flex-row space-x-4">
+            <button
+              onClick={prevSlide}
+              className="w-10 h-10 rounded-full border border-[#CB927A]/30 flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-500"
+            >
+              <span>←</span>
+            </button>
+            <button
+              onClick={nextSlide}
+              className="w-10 h-10 rounded-full border border-[#CB927A]/30 flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-500"
+            >
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== DESKTOP LAYOUT (absolute positioning, original design) ===== */}
+      <div className="relative h-full w-full z-10 hidden md:block">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 h-full w-full transition-all duration-1000 ${
+              index === currentSlide
+                ? "opacity-100 z-10 pointer-events-auto"
+                : "opacity-0 z-0 pointer-events-none"
+            }`}
+          >
+            <div className="container mx-auto px-8 flex flex-row items-center h-full relative w-full">
+              {/* Left Side: Text Content */}
+              <div
+                className={`flex flex-col space-y-4 xl:space-y-6 pointer-events-none relative z-30 max-w-[85%] lg:w-1/2 lg:max-w-none ${
+                  index === currentSlide ? "animate-fade-in" : ""
+                }`}
+              >
+                <div className="text-[#CB927A] text-xl font-medium tracking-wide clip-text hero-subtitle w-max">
+                  <div
+                    className={
+                      index === currentSlide ? "animate-text-slide-up" : ""
+                    }
+                  >
+                    {slide.subtitle}
+                  </div>
+                </div>
+
+                <h1 className="text-[60px] lg:text-[70px] xl:text-[85px] leading-[1.1] font-extralight text-gray-900 font-serif max-w-full">
+                  {slide.title.split("\n").map((line, i) => (
+                    <span key={i} className="block overflow-hidden pb-1">
+                      <span
+                        className={`block ${
+                          index === currentSlide
+                            ? `animate-text-slide-up delay-${(i + 1) * 100}`
+                            : ""
+                        }`}
+                      >
+                        {line}
+                      </span>
+                    </span>
+                  ))}
+                </h1>
+
+                <div className="pt-4 xl:pt-8 pointer-events-auto w-max">
+                  <div
+                    className={`relative inline-block group w-[220px] h-[52px] xl:w-[266px] xl:h-[62px] ${
+                      index === currentSlide
+                        ? "animate-slide-up-fade delay-300"
+                        : ""
+                    }`}
+                  >
+                    <div className="absolute top-2 left-2 w-full h-full border border-[#CB927A] transition-all duration-300 group-hover:top-0 group-hover:left-0 z-0"></div>
+                    <button className="relative z-10 w-full h-full bg-[#CB927A] text-white font-light tracking-wide flex items-center justify-center space-x-2 transition-all duration-300 group-hover:shadow-[0_15px_40px_rgba(203,146,122,.5)]">
+                      <span className="text-base xl:text-lg">
+                        Show Collection
+                      </span>
                       <ArrowUpRight className="w-5 h-5" strokeWidth={1.5} />
                     </button>
                   </div>
@@ -146,11 +254,11 @@ const Hero = () => {
               </div>
 
               {/* Right Side: Model Image */}
-              <div className="hidden lg:flex justify-end items-end h-full relative pointer-events-none">
+              <div className="absolute bottom-0 right-0 w-[50%] lg:w-[45%] h-full flex justify-end items-end pointer-events-none z-10 transition-all duration-500">
                 <img
                   src={slide.image}
                   alt="Jewelry Model"
-                  className={`absolute bottom-0 right-0 h-[110%] w-auto object-contain object-bottom block z-10 transition-opacity duration-1500 ${
+                  className={`relative block w-auto max-h-full object-contain object-bottom transition-opacity duration-1000 ${
                     index === currentSlide ? "opacity-100" : "opacity-0"
                   }`}
                   draggable="false"
@@ -161,16 +269,29 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Navigation Controls (Outside Slider Loop) */}
-      <div className="absolute inset-0 pointer-events-none z-20">
-        <div className="container mx-auto px-4 md:px-8 h-full relative">
+      {/* Desktop Navigation Controls */}
+      <div className="absolute inset-0 pointer-events-none z-40 hidden md:block">
+        <div className="container mx-auto px-8 h-full relative">
+          {/* Numeric Slider Counter */}
+          <div className="pointer-events-auto font-serif flex items-baseline absolute bottom-8 xl:bottom-12 left-8 lg:left-5">
+            <span className="text-5xl lg:text-5xl font-light text-gray-900 leading-none">
+              {(currentSlide + 1).toString().padStart(2, "0")}
+            </span>
+            <span className="text-2xl text-gray-900 font-light translate-y-[-5px] translate-x-1">
+              /
+            </span>
+            <span className="text-xl text-gray-900 font-light tracking-wider translate-x-2">
+              {slides.length.toString().padStart(2, "0")}
+            </span>
+          </div>
+
           {/* Navigation Arrows */}
-          <div className="absolute right-10 bottom-[50%] flex flex-col space-y-4 pointer-events-auto">
+          <div className="flex flex-col space-y-4 pointer-events-auto absolute right-10 bottom-[50%]">
             <button
               onClick={prevSlide}
               className="w-12 h-12 rounded-full border border-[#CB927A]/30 flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-500 group"
             >
-              <span className="transform rotate-180">→</span>
+              <span>←</span>
             </button>
             <button
               onClick={nextSlide}
@@ -178,19 +299,6 @@ const Hero = () => {
             >
               <span>→</span>
             </button>
-          </div>
-
-          {/* Numeric Slider Counter */}
-          <div className="absolute bottom-12 left-10 md:left-5 flex items-baseline space-x-2 pointer-events-auto font-serif">
-            <span className="text-xl lg:text-3xl font-light text-gray-900">
-              {(currentSlide + 1).toString().padStart(2, "0")}
-            </span>
-            <span className="text-xl lg:text-2xl text-gray-400 font-light translate-y-[-2px]">
-              /
-            </span>
-            <span className="text-lg lg:text-xl text-gray-500 font-light">
-              {slides.length.toString().padStart(2, "0")}
-            </span>
           </div>
         </div>
       </div>

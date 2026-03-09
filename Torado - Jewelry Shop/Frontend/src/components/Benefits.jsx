@@ -29,23 +29,26 @@ const benefitsData = [
 
 const Benefits = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-40 md:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <section className="py-10 md:py-16 xl:py-20 bg-white">
+      <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 xl:gap-12">
           {benefitsData.map((benefit, index) => (
-            <div key={index} className="flex items-start space-x-4">
+            <div
+              key={index}
+              className="flex items-start space-x-3 sm:space-x-4"
+            >
               <div className="flex-shrink-0">
                 <img
                   src={benefit.icon}
                   alt={benefit.title}
-                  className="w-12 h-12 object-contain"
+                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
                 />
               </div>
               <div className="flex flex-col">
-                <h3 className="text-xl font-serif text-gray-900 mb-1">
+                <h3 className="text-lg sm:text-xl font-serif text-gray-900 mb-1">
                   {benefit.title}
                 </h3>
-                <p className="text-md text-gray-700 leading-relaxed font-normal">
+                <p className="text-sm sm:text-md text-gray-700 leading-relaxed font-normal">
                   {benefit.description}
                 </p>
               </div>

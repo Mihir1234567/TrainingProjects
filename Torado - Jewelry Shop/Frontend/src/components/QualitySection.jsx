@@ -3,9 +3,10 @@ import { ArrowUpRight } from "lucide-react";
 
 const QualitySection = () => {
   return (
-    <section className="flex flex-col items-center text-center py-20 bg-white">
-      <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-12">
-        We Provide The Highest Quality Jewelry <br /> To Our Customer
+    <section className="flex flex-col items-center text-center py-12 md:py-20 px-4 bg-white">
+      <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 md:mb-12 leading-tight">
+        We Provide The Highest Quality Jewelry{" "}
+        <br className="hidden md:block" /> To Our Customer
       </h2>
       <a
         href="#"

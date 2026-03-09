@@ -132,7 +132,7 @@ const NewCollection = () => {
                 <div
                   // Combine ID and Index to guarantee unique keys for clones
                   key={`${item.id}-${index}`}
-                  className="flex-shrink-0 px-6"
+                  className="flex-shrink-0 px-3 md:px-6"
                   style={{ width: `${100 / itemsToShow}%` }}
                 >
                   <div className="relative group w-full h-[500px] overflow-hidden cursor-pointer">
@@ -144,15 +144,15 @@ const NewCollection = () => {
                     />
 
                     {/* Overlay Content */}
-                    <div className="absolute bottom-8 left-8 py-4 pl-4 backdrop-blur-xl border border-white/20 rounded-lg w-[calc(100%-14rem)] transition-all duration-500 group-hover:-translate-y-1">
-                      <h3 className="text-2xl font-serif text-gray-900 mb-2">
+                    <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 py-4 pl-4 pr-6 backdrop-blur-xl border border-white/20 rounded-lg w-fit max-w-[calc(100%-3rem)] transition-all duration-500 group-hover:-translate-y-1">
+                      <h3 className="text-2xl font-serif text-gray-900 mb-2 whitespace-nowrap">
                         {item.title}
                       </h3>
-                      <div className="flex items-center space-x-2 text-gray-800">
-                        <span className="text-sm font-medium uppercase tracking-wide relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1px] after:bg-gray-800 after:transition-all after:duration-500 group-hover:after:w-full">
+                      <div className="flex items-center space-x-2 text-gray-800 whitespace-nowrap">
+                        <span className="text-sm font-medium uppercase tracking-wide whitespace-nowrap relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1px] after:bg-gray-800 after:transition-all after:duration-500 group-hover:after:w-full">
                           Shop Now
                         </span>
-                        <ArrowUpRight className="w-4 h-4 transition-transform duration-300" />
+                        <ArrowUpRight className="w-4 h-4 transition-transform duration-300 flex-shrink-0" />
                       </div>
                     </div>
                   </div>
@@ -164,17 +164,23 @@ const NewCollection = () => {
           {/* Left Arrow */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-6 z-10 w-14 h-14 rounded-full border border-[#CB927A] flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-300 bg-white shadow-sm transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-2 md:left-6 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full border border-[#CB927A] flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-300 bg-white/90 md:bg-white shadow-sm transform md:-translate-x-1/2 -translate-y-1/2"
           >
-            <ArrowLeft className="w-6 h-6 font-light" strokeWidth={1} />
+            <ArrowLeft
+              className="w-5 h-5 md:w-6 md:h-6 font-light"
+              strokeWidth={1}
+            />
           </button>
 
           {/* Right Arrow */}
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-6 z-10 w-14 h-14 rounded-full border border-[#CB927A] flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-300 bg-white shadow-sm transform translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 right-2 md:right-6 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full border border-[#CB927A] flex items-center justify-center text-[#CB927A] hover:bg-[#CB927A] hover:text-white transition-all duration-300 bg-white/90 md:bg-white shadow-sm transform md:translate-x-1/2 -translate-y-1/2"
           >
-            <ArrowRight className="w-6 h-6 font-light" strokeWidth={1} />
+            <ArrowRight
+              className="w-5 h-5 md:w-6 md:h-6 font-light"
+              strokeWidth={1}
+            />
           </button>
         </div>
       </div>

@@ -69,9 +69,9 @@ const OurHappyClients = () => {
         </div>
 
         {/* Testimonial Card Container - increased negative margin to deeply overlap */}
-        <div className="w-full lg:w-[65%] xl:w-[60%] flex lg:justify-start pr-4 sm:pr-6 lg:pr-[max(1rem,calc((100vw-1280px)/2))] pl-4 lg:pl-0 z-10 mt-[-50px] lg:mt-0 lg:-ml-32 xl:-ml-40 lg:py-8 xl:py-12">
+        <div className="w-[95%] sm:w-[90%] md:w-full lg:w-[65%] xl:w-[60%] flex lg:justify-start lg:pr-[max(1rem,calc((100vw-1280px)/2))] z-10 -mt-16 sm:-mt-20 md:-mt-24 lg:mt-0 lg:-ml-32 xl:-ml-40 lg:py-8 xl:py-12 mx-auto lg:mx-0">
           {/* Testimonial Card */}
-          <div className="w-full max-w-[950px] bg-[#FEFBF9] p-10 md:p-16 lg:p-24 relative shadow-sm h-full flex flex-col justify-center transition-opacity duration-300">
+          <div className="w-full max-w-[950px] bg-[#FEFBF9] p-6 sm:p-10 md:p-16 lg:p-24 relative shadow-lg lg:shadow-sm h-full flex flex-col justify-center transition-opacity duration-300 rounded-2xl lg:rounded-none">
             {/* Quote Icon */}
             <div className="flex justify-center mb-8">
               <span className="text-5xl md:text-6xl text-[#D8A790] font-serif leading-none">
@@ -90,8 +90,8 @@ const OurHappyClients = () => {
                   }`}
                 >
                   {/* Fixed height container for quotes to stop author from jumping */}
-                  <div className="h-[300px] md:h-[240px] lg:h-[240px] flex items-center justify-center mb-8 w-full">
-                    <p className="text-[#000] text-[18px] md:text-[20px] lg:text-[22px] leading-[1.8] text-center max-w-4xl mx-auto">
+                  <div className="h-[300px] md:h-[240px] lg:h-[240px] flex items-center justify-center mb-6 md:mb-8 w-full">
+                    <p className="text-[#000] text-[15px] sm:text-[16px] md:text-[20px] lg:text-[22px] leading-[1.6] md:leading-[1.8] text-center max-w-4xl mx-auto px-2 lg:px-0">
                       {testimonial.quote}
                     </p>
                   </div>
@@ -111,13 +111,13 @@ const OurHappyClients = () => {
             {/* Navigation Arrows */}
             <button
               onClick={handlePrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-md text-[#D8A790] hover:bg-[#D8A790] hover:text-white transition-colors border border-[#F0EBE6] z-20"
+              className="absolute left-2 sm:left-4 lg:left-0 top-[60%] lg:top-1/2 -translate-y-1/2 lg:-translate-x-1/2 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-md text-[#D8A790] hover:bg-[#D8A790] hover:text-white transition-colors border border-[#F0EBE6] z-20"
             >
               <ArrowLeft size={18} strokeWidth={1.5} />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-md text-[#D8A790] hover:bg-[#D8A790] hover:text-white transition-colors border border-[#F0EBE6] z-20"
+              className="absolute right-2 sm:right-4 lg:right-0 top-[60%] lg:top-1/2 -translate-y-1/2 lg:translate-x-1/2 w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-md text-[#D8A790] hover:bg-[#D8A790] hover:text-white transition-colors border border-[#F0EBE6] z-20"
             >
               <ArrowRight size={18} strokeWidth={1.5} />
             </button>

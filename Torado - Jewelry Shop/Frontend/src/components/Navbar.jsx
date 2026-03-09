@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Search,
   Heart,
   ShoppingBag,
   LayoutGrid,
   ChevronDown,
+  Menu,
+  MoreHorizontal,
+  X,
+  Plus,
+  Minus,
 } from "lucide-react";
 import logoMain from "../assets/Logo/logoMain.png";
 
 const Navbar = ({ isSticky }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isIconsDropdownOpen, setIsIconsDropdownOpen] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState({});
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsMobileMenuOpen(false);
+        setIsIconsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const toggleSubmenu = (name) => {
+    setOpenSubmenus((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
   const navLinks = [
     { name: "Home", href: "#", hasDropdown: false, active: true },
     { name: "Shop", href: "#", hasDropdown: true },
@@ -20,6 +49,7 @@ const Navbar = ({ isSticky }) => {
 
   return (
     <nav
+      ref={navRef}
       className={`py-4 px-4 md:px-8 left-0 right-0 z-40 transition-all duration-300 ${
         isSticky
           ? "fixed top-0 bg-white shadow-md py-2"
@@ -34,7 +64,7 @@ const Navbar = ({ isSticky }) => {
           </div>
 
           {/* Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="max-[1199px]:hidden min-[1200px]:flex items-center space-x-8">
             {navLinks.map((link) => (
               <div
                 key={link.name}
@@ -264,7 +294,7 @@ const Navbar = ({ isSticky }) => {
                       {/* Column 1 */}
                       <div className="flex flex-col space-y-4">
                         <a
-                          href="#"
+                          href="/shopDefault"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Default
@@ -420,7 +450,7 @@ const Navbar = ({ isSticky }) => {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center space-x-6">
+        <div className="max-[1199px]:hidden min-[1200px]:flex items-center space-x-6">
           <Search
             size={24}
             className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-all transform hover:scale-110 duration-300"
@@ -450,6 +480,238 @@ const Navbar = ({ isSticky }) => {
             size={24}
             className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-all transform hover:scale-110 duration-300"
           />
+        </div>
+
+        {/* Mobile Navbar Actions (< 1200px) */}
+        <div className="flex min-[1200px]:hidden items-center space-x-4 relative">
+          <MoreHorizontal
+            size={24}
+            onClick={() => {
+              setIsIconsDropdownOpen(!isIconsDropdownOpen);
+              if (!isIconsDropdownOpen) setIsMobileMenuOpen(false);
+            }}
+            className="text-[#CB927A] cursor-pointer hover:text-black transition-colors"
+          />
+          {isMobileMenuOpen ? (
+            <X
+              size={24}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"
+            />
+          ) : (
+            <Menu
+              size={24}
+              onClick={() => {
+                setIsMobileMenuOpen(true);
+                setIsIconsDropdownOpen(false);
+              }}
+              className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"
+            />
+          )}
+
+          {/* Mobile Icons Dropdown (< 1200px) */}
+          <div
+            className={`absolute top-full right-0 mt-4 bg-white shadow-xl rounded-lg py-4 px-6 border border-gray-100 flex items-center space-x-6 z-50 transition-all duration-500 ease-out origin-top-right ${
+              isIconsDropdownOpen
+                ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
+                : "opacity-0 scale-95 pointer-events-none -translate-y-4"
+            }`}
+          >
+            <Search
+              size={22}
+              className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"
+            />
+            <div className="relative cursor-pointer">
+              <Heart
+                size={22}
+                className="text-gray-900 hover:text-[#CB927A] transition-colors"
+              />
+              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
+                2
+              </span>
+            </div>
+            <div className="relative cursor-pointer">
+              <ShoppingBag
+                size={22}
+                className="text-gray-900 hover:text-[#CB927A] transition-colors"
+              />
+              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
+                3
+              </span>
+            </div>
+            <LayoutGrid
+              size={22}
+              className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Main Navigation Menu (< 1200px) */}
+      <div
+        className={`absolute top-full left-4 right-4 bg-white shadow-xl border border-gray-100/50 rounded-b-lg z-50 overflow-hidden transition-all duration-500 ease-out origin-top ${
+          isMobileMenuOpen
+            ? "opacity-100 max-h-[80vh] translate-y-0 pointer-events-auto"
+            : "opacity-0 max-h-0 -translate-y-4 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col py-2 px-6 overflow-y-auto max-h-[80vh]">
+          {navLinks.map((link) => (
+            <div
+              key={link.name}
+              className="flex flex-col border-b border-gray-100 last:border-0"
+            >
+              <div
+                className="flex items-center justify-between py-4 cursor-pointer text-gray-700 hover:text-[#CB927A] transition-colors"
+                onClick={() => link.hasDropdown && toggleSubmenu(link.name)}
+              >
+                <span
+                  className={`text-[15px] font-medium ${link.active ? "text-[#CB927A]" : ""}`}
+                >
+                  {link.name}
+                </span>
+                {link.hasDropdown && (
+                  <div className="text-gray-500">
+                    {openSubmenus[link.name] ? (
+                      <Minus
+                        size={16}
+                        className="transition-transform duration-300 rotate-180"
+                      />
+                    ) : (
+                      <Plus
+                        size={16}
+                        className="transition-transform duration-300"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Submenu Content */}
+              {link.hasDropdown && (
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+                    openSubmenus[link.name]
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col pb-4 pl-4 space-y-3">
+                      {link.name === "Shop" && (
+                        <>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Default
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Left Sidebar
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Right Sidebar
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Banner
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Grid 2 Columns
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Grid 3 Columns
+                          </a>
+                        </>
+                      )}
+                      {link.name === "Pages" && (
+                        <>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            About Us
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Gallery
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            FAQ
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            My Account
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Terms & Conditions
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Privacy Policy
+                          </a>
+                        </>
+                      )}
+                      {link.name === "Blog" && (
+                        <>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Standard
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Blog Grid
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Left Sidebar
+                          </a>
+                          <a
+                            href="#"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Right Sidebar
+                          </a>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </nav>

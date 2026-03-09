@@ -20,10 +20,10 @@ const TopBar = () => {
   ];
 
   return (
-    <div className="bg-[#CB927A] text-white py-4 px-4 md:px-8 flex justify-between items-center text-sm font-medium relative z-50">
+    <div className="hidden md:flex bg-[#CB927A] text-white py-3 md:py-4 px-4 flex-col md:flex-row justify-center md:justify-between items-center text-sm font-medium relative z-50 gap-y-3 md:gap-y-0 text-center">
       {/* Left: Social Media */}
-      <div className="flex items-center space-x-4">
-        <span className="opacity-90">Follow us:</span>
+      <div className="flex items-center justify-center space-x-3 md:space-x-4">
+        <span className="opacity-90 tracking-wide">Follow us:</span>
         <div className="flex space-x-3">
           <Facebook
             size={16}
@@ -45,12 +45,12 @@ const TopBar = () => {
       </div>
 
       {/* Center: Message */}
-      <div className="hidden md:block">
+      <div className="w-full md:w-auto md:flex-1 tracking-wide">
         Free shipping on all orders over $50
       </div>
 
       {/* Right: Account & Language */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center justify-center space-x-6">
         <div className="flex items-center space-x-2 cursor-pointer hover:text-black transition-all group">
           <User
             size={16}

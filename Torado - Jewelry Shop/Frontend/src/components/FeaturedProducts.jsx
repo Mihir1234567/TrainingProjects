@@ -167,7 +167,7 @@ const FeaturedProducts = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-contain mix-blend-multiply [clip-path:inset(4px_1px)] transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
 
