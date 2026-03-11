@@ -19,12 +19,12 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { productsData } from "../data/products";
 
-const ShopWithoutSidebar = () => {
+const ShopGrid2Columns = () => {
   // State
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("Recommended");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [viewMode, setViewMode] = useState(4); // 2, 3, 4 columns or 1 (list)
+  const [viewMode, setViewMode] = useState(2); // Default to 2 columns
   const [isScrolled, setIsScrolled] = useState(false);
 
   const itemsPerPage = 12;
@@ -65,13 +65,11 @@ const ShopWithoutSidebar = () => {
       case "Recommended":
       case "Recently Added":
       default:
-        // For these mock cases, we'll sort by ID or rating to simulate
         if (sortBy === "Recommended") {
           sorted.sort((a, b) => b.rating - a.rating);
         } else if (sortBy === "Most Viewed") {
           sorted.sort((a, b) => b.reviewsCount - a.reviewsCount);
         } else {
-          // Recently added (by ID descending)
           sorted.sort((a, b) => b.id - a.id);
         }
         break;
@@ -232,15 +230,15 @@ const ShopWithoutSidebar = () => {
       </div>
 
       {/* Page Header */}
-      <div className="bg-[#FAF8F5] pt-32 pb-20 md:pt-40 md:pb-24 text-center">
-        <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4 tracking-tight">
-          Shop Without Sidebar
+      <div className="bg-gradient-to-b from-[#F5F0EB] to-white pt-28 pb-14 md:pt-36 md:pb-20 text-center">
+        <h1 className="font-serif text-3xl md:text-[42px] text-gray-900 mb-3 tracking-tight leading-tight">
+          Shop 2 Columns
         </h1>
-        <div className="flex items-center justify-center gap-2 text-[14px] text-gray-500 font-medium">
+        <div className="flex items-center justify-center gap-1.5 text-[14px] text-gray-500 font-medium">
           <Link to="/" className="hover:text-[#C59B87] transition-colors">
             Home
           </Link>
-          <span className="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+          <span className="text-gray-400">/</span>
           <span className="text-[#C59B87]">Shop</span>
         </div>
       </div>
@@ -408,4 +406,4 @@ const ShopWithoutSidebar = () => {
   );
 };
 
-export default ShopWithoutSidebar;
+export default ShopGrid2Columns;

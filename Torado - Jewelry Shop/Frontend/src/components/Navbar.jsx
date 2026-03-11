@@ -11,6 +11,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import logoMain from "../assets/Logo/logoMain.png";
 
 const Navbar = ({ isSticky }) => {
@@ -39,7 +40,7 @@ const Navbar = ({ isSticky }) => {
   };
 
   const navLinks = [
-    { name: "Home", href: "#", hasDropdown: false, active: true },
+    { name: "Home", href: "/", hasDropdown: false, active: true },
     { name: "Shop", href: "#", hasDropdown: true },
     { name: "Category", href: "#", hasDropdown: false },
     { name: "Pages", href: "#", hasDropdown: true },
@@ -59,9 +60,9 @@ const Navbar = ({ isSticky }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-12">
           {/* Left: Logo */}
-          <div className="flex items-center cursor-pointer">
+          <Link to="/" className="flex items-center cursor-pointer">
             <img src={logoMain} alt="Torado Logo" className="h-10 w-auto" />
-          </div>
+          </Link>
 
           {/* Navigation Links */}
           <div className="max-[1199px]:hidden min-[1200px]:flex items-center space-x-8">
@@ -72,13 +73,24 @@ const Navbar = ({ isSticky }) => {
                   link.name !== "Shop" ? "relative" : ""
                 } group cursor-pointer flex items-center space-x-1 py-4`}
               >
-                <span
-                  className={`text-base font-medium transition-all duration-300 hover:text-[#CB927A] transform hover:scale-105 ${
-                    link.active ? "text-[#CB927A]" : "text-gray-700"
-                  }`}
-                >
-                  {link.name}
-                </span>
+                {link.href !== "#" ? (
+                  <Link
+                    to={link.href}
+                    className={`text-base font-medium transition-all duration-300 hover:text-[#CB927A] transform hover:scale-105 ${
+                      link.active ? "text-[#CB927A]" : "text-gray-700"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <span
+                    className={`text-base font-medium transition-all duration-300 hover:text-[#CB927A] transform hover:scale-105 ${
+                      link.active ? "text-[#CB927A]" : "text-gray-700"
+                    }`}
+                  >
+                    {link.name}
+                  </span>
+                )}
                 {link.hasDropdown && (
                   <ChevronDown
                     size={14}
@@ -300,31 +312,31 @@ const Navbar = ({ isSticky }) => {
                           Shop Default
                         </a>
                         <a
-                          href="#"
+                          href="/shop-left-sidebar"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Left Sidebar
                         </a>
                         <a
-                          href="#"
+                          href="/shop-right-sidebar"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Right Sidebar
                         </a>
                         <a
-                          href="#"
+                          href="/shop-banner"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Banner
                         </a>
                         <a
-                          href="#"
+                          href="/shop-grid-2-columns"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Grid 2 Columns
                         </a>
                         <a
-                          href="#"
+                          href="/shop-grid-3-columns"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Grid 3 Columns
@@ -333,37 +345,37 @@ const Navbar = ({ isSticky }) => {
                       {/* Column 2 */}
                       <div className="flex flex-col space-y-4">
                         <a
-                          href="#"
+                          href="/shop-grid-4-columns"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Grid 4 Columns
                         </a>
                         <a
-                          href="#"
+                          href="/shop-grid-5-columns"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Grid 5 Columns
                         </a>
                         <a
-                          href="#"
+                          href="/shop-list-view"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop List View
                         </a>
                         <a
-                          href="#"
+                          href="/shop-without-sidebar"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Shop Without Sidebar
                         </a>
                         <a
-                          href="#"
+                          href="/product/:id"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors font-bold"
                         >
                           Product Default
                         </a>
                         <a
-                          href="#"
+                          href="/product-preorders/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Preorders
@@ -372,37 +384,37 @@ const Navbar = ({ isSticky }) => {
                       {/* Column 3 */}
                       <div className="flex flex-col space-y-4">
                         <a
-                          href="#"
+                          href="/product-gallery-thumbnails/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Gallery Thumbnails
                         </a>
                         <a
-                          href="#"
+                          href="/product-bottom-thumbnails/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Bottom Thumbnails
                         </a>
                         <a
-                          href="#"
+                          href="/product-left-thumbnails/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Left Thumbnails
                         </a>
                         <a
-                          href="#"
+                          href="/product-right-thumbnails/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Right Thumbnails
                         </a>
                         <a
-                          href="#"
+                          href="/product-drawer-sidebar/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Drawer Sidebar
                         </a>
                         <a
-                          href="#"
+                          href="/product-countdown/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Product Countdown
@@ -565,11 +577,21 @@ const Navbar = ({ isSticky }) => {
                 className="flex items-center justify-between py-4 cursor-pointer text-gray-700 hover:text-[#CB927A] transition-colors"
                 onClick={() => link.hasDropdown && toggleSubmenu(link.name)}
               >
-                <span
-                  className={`text-[15px] font-medium ${link.active ? "text-[#CB927A]" : ""}`}
-                >
-                  {link.name}
-                </span>
+                {link.href !== "#" ? (
+                  <Link
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`text-[15px] font-medium ${link.active ? "text-[#CB927A]" : ""}`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <span
+                    className={`text-[15px] font-medium ${link.active ? "text-[#CB927A]" : ""}`}
+                  >
+                    {link.name}
+                  </span>
+                )}
                 {link.hasDropdown && (
                   <div className="text-gray-500">
                     {openSubmenus[link.name] ? (
@@ -607,34 +629,82 @@ const Navbar = ({ isSticky }) => {
                             Shop Default
                           </a>
                           <a
-                            href="#"
+                            href="/shop-left-sidebar"
                             className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
                           >
                             Shop Left Sidebar
                           </a>
                           <a
-                            href="#"
+                            href="/shop-right-sidebar"
                             className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
                           >
                             Shop Right Sidebar
                           </a>
                           <a
-                            href="#"
+                            href="/shop-banner"
                             className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
                           >
                             Shop Banner
                           </a>
                           <a
-                            href="#"
+                            href="/shop-grid-2-columns"
                             className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
                           >
                             Shop Grid 2 Columns
                           </a>
                           <a
-                            href="#"
+                            href="/shop-grid-3-columns"
                             className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
                           >
                             Shop Grid 3 Columns
+                          </a>
+                          <a
+                            href="/shop-grid-4-columns"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Grid 4 Columns
+                          </a>
+                          <a
+                            href="/shop-grid-5-columns"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop Grid 5 Columns
+                          </a>
+                          <a
+                            href="/shop-list-view"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Shop List View
+                          </a>
+                          <a
+                            href="/product-preorders/1"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Product Preorders
+                          </a>
+                          <a
+                            href="/product-gallery-thumbnails/1"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Product Gallery Thumbnails
+                          </a>
+                          <a
+                            href="/product-bottom-thumbnails/1"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Product Bottom Thumbnails
+                          </a>
+                          <a
+                            href="/product-right-thumbnails/1"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Product Right Thumbnails
+                          </a>
+                          <a
+                            href="/product-countdown/1"
+                            className="text-[14px] text-gray-500 hover:text-[#CB927A] transition-colors"
+                          >
+                            Product Countdown
                           </a>
                         </>
                       )}

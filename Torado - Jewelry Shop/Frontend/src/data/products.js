@@ -40,6 +40,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "women", "diamond"],
     badge: "Sale!",
+    color: "White",
     description:
       "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.",
     additionalInfo: {
@@ -72,6 +73,7 @@ export const productsData = [
     categories: ["Wedding", "Rings"],
     tags: ["jewelry", "rings", "women", "engagement"],
     badge: "New!",
+    color: "White",
     description:
       "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
     additionalInfo: {
@@ -102,6 +104,7 @@ export const productsData = [
     sku: "MH03N-0036",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "women", "natural"],
+    color: "Green",
     description:
       "Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.",
     additionalInfo: {
@@ -125,6 +128,7 @@ export const productsData = [
     categories: ["Wedding", "Rings"],
     tags: ["jewelry", "rings", "women", "engagement"],
     badge: "Sale!",
+    color: "Red",
     description:
       "Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit.",
     additionalInfo: {
@@ -147,6 +151,7 @@ export const productsData = [
     sku: "MH03N-0038",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "women", "vintage"],
+    color: "Yellow",
     description:
       "Quisque velit nisi, pretium ut lacinia in, elementum id enim.",
     additionalInfo: {
@@ -169,6 +174,7 @@ export const productsData = [
     sku: "MH03N-0039",
     categories: ["Rings", "Wedding"],
     tags: ["jewelry", "rings", "diamond"],
+    color: "White",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     additionalInfo: {
       style: "Solitaire",
@@ -190,6 +196,7 @@ export const productsData = [
     sku: "MH03N-0040",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "gold", "band"],
+    color: "Yellow",
     description:
       "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
     additionalInfo: {
@@ -213,6 +220,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "sapphire"],
     badge: "New!",
+    color: "Blue",
     description: "Vivamus magna justo, lacinia eget consectetur sed.",
     additionalInfo: {
       style: "Solitaire",
@@ -235,6 +243,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "pearl", "promise"],
     badge: "Sale!",
+    color: "White",
     description: "Donec rutrum congue leo eget malesuada.",
     additionalInfo: {
       style: "Promise",
@@ -256,6 +265,7 @@ export const productsData = [
     sku: "MH03N-0043",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "silver", "crown"],
+    color: "White",
     description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.",
     additionalInfo: {
       style: "Crown",
@@ -277,6 +287,7 @@ export const productsData = [
     sku: "MH03N-0044",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "ruby"],
+    color: "Red",
     description: "Praesent sapien massa, convallis a pellentesque nec.",
     additionalInfo: {
       style: "Accent",
@@ -298,6 +309,7 @@ export const productsData = [
     sku: "MH03N-0045",
     categories: ["Wedding", "Rings"],
     tags: ["jewelry", "rings", "wedding", "band"],
+    color: "White",
     description: "Curabitur arcu erat, accumsan id imperdiet et.",
     additionalInfo: {
       style: "Band",
@@ -311,7 +323,7 @@ export const productsData = [
   {
     id: 13,
     name: "Emerald Cut Ring",
-    price: "$890.00",
+    price: "$5500.00",
     image: img13,
     rating: 4,
     reviewsCount: 2,
@@ -320,6 +332,7 @@ export const productsData = [
     categories: ["Rings", "Wedding"],
     tags: ["jewelry", "rings", "emerald"],
     badge: "New!",
+    color: "Green",
     description:
       "Quisque velit nisi, pretium ut lacinia in, elementum id enim.",
     additionalInfo: {
@@ -342,6 +355,7 @@ export const productsData = [
     sku: "MH03N-0047",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "vintage", "filigree"],
+    color: "Yellow",
     description: "Vivamus magna justo, lacinia eget consectetur sed.",
     additionalInfo: {
       style: "Filigree",
@@ -363,6 +377,7 @@ export const productsData = [
     sku: "MH03N-0048",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "rope"],
+    color: "White",
     description: "Donec rutrum congue leo eget malesuada.",
     additionalInfo: {
       style: "Twisted",
@@ -376,7 +391,7 @@ export const productsData = [
   {
     id: 16,
     name: "Diamond Pave Ring",
-    price: "$1200.00",
+    price: "$4500.00",
     image: img16,
     rating: 5,
     reviewsCount: 15,
@@ -385,6 +400,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "diamond", "pave"],
     badge: "Sale!",
+    color: "White",
     description: "Cras ultricies ligula sed magna dictum porta.",
     additionalInfo: {
       style: "Pave",
@@ -406,6 +422,7 @@ export const productsData = [
     sku: "MH03N-0050",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "rose gold"],
+    color: "Red",
     description: "Nulla quis lorem ut libero malesuada feugiat.",
     additionalInfo: {
       style: "Classic",
@@ -427,6 +444,7 @@ export const productsData = [
     sku: "MH03N-0051",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "minimalist"],
+    color: "White",
     description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.",
     additionalInfo: {
       style: "Minimalist",
@@ -448,6 +466,7 @@ export const productsData = [
     sku: "MH03N-0052",
     categories: ["Rings", "Wedding"],
     tags: ["jewelry", "rings", "solitaire", "engagement"],
+    color: "Yellow",
     description: "Donec sollicitudin molestie malesuada.",
     additionalInfo: {
       style: "Solitaire",
@@ -469,6 +488,7 @@ export const productsData = [
     sku: "MH03N-0053",
     categories: ["Rings", "Wedding"],
     tags: ["jewelry", "rings", "eternity", "wedding"],
+    color: "White",
     description: "Pellentesque in ipsum id orci porta dapibus.",
     additionalInfo: {
       style: "Eternity",
@@ -491,6 +511,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "heart"],
     badge: "Sale!",
+    color: "White",
     description: "Vivamus magna justo, lacinia eget consectetur sed.",
     additionalInfo: {
       style: "Heart",
@@ -512,6 +533,7 @@ export const productsData = [
     sku: "MH03N-0055",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "wide band"],
+    color: "Yellow",
     description: "Donec rutrum congue leo eget malesuada.",
     additionalInfo: {
       style: "Wide",
@@ -533,6 +555,7 @@ export const productsData = [
     sku: "MH03N-0056",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "multi-stone"],
+    color: "Black",
     description: "Curabitur arcu erat, accumsan id imperdiet et.",
     additionalInfo: {
       style: "Multi-Stone",
@@ -554,6 +577,7 @@ export const productsData = [
     sku: "MH03N-0057",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "statement", "cocktail"],
+    color: "Black",
     description: "Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.",
     additionalInfo: {
       style: "Statement",
@@ -576,6 +600,7 @@ export const productsData = [
     categories: ["Rings"],
     tags: ["jewelry", "rings", "stackable"],
     badge: "New!",
+    color: "Brown",
     description:
       "Quisque velit nisi, pretium ut lacinia in, elementum id enim.",
     additionalInfo: {
@@ -590,7 +615,7 @@ export const productsData = [
   {
     id: 26,
     name: "Halo Diamond Ring",
-    price: "$1500.00",
+    price: "$3500.00",
     image: img26,
     rating: 5,
     reviewsCount: 8,
@@ -598,6 +623,7 @@ export const productsData = [
     sku: "MH03N-0059",
     categories: ["Rings", "Wedding"],
     tags: ["jewelry", "rings", "diamond", "halo"],
+    color: "White",
     description:
       "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
     additionalInfo: {
@@ -620,6 +646,7 @@ export const productsData = [
     sku: "MH03N-0060",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "beaded"],
+    color: "White",
     description: "Nulla quis lorem ut libero malesuada feugiat.",
     additionalInfo: {
       style: "Textured",
@@ -641,6 +668,7 @@ export const productsData = [
     sku: "MH03N-0061",
     categories: ["Rings"],
     tags: ["jewelry", "rings", "crown"],
+    color: "Yellow",
     description:
       "Sed porttitor lectus nibh. Vestibulum ante ipsum primis in faucibus orci luctus.",
     additionalInfo: {
