@@ -18,8 +18,12 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { productsData } from "../data/products";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../Context/WishlistContext";
 
 const ShopWithoutSidebar = () => {
+  const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist } = useWishlist();
   // State
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("Recommended");
@@ -135,11 +139,25 @@ const ShopWithoutSidebar = () => {
 
             {/* Action Buttons for List View */}
             <div className="flex items-center w-fit border border-gray-100">
-              <button className="flex items-center justify-center w-12 h-12 border-r border-gray-100 text-[#222222] hover:text-[#C59B87] transition-colors">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToCart(product, 1);
+                }}
+                className="flex items-center justify-center w-12 h-12 border-r border-gray-100 text-[#222222] hover:text-[#C59B87] transition-colors"
+              >
                 <ShoppingBag size={18} strokeWidth={2} />
               </button>
-              <button className="flex items-center justify-center w-12 h-12 border-r border-gray-100 text-[#222222] hover:text-[#C59B87] transition-colors">
-                <Heart size={18} strokeWidth={2} />
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToWishlist(product);
+                }}
+                className={`flex items-center justify-center w-12 h-12 border-r border-gray-100 transition-colors ${isInWishlist(product.id) ? "text-[#C59B87]" : "text-[#222222] hover:text-[#C59B87]"}`}
+              >
+                <Heart size={18} strokeWidth={2} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
               </button>
               <button className="flex items-center justify-center w-12 h-12 border-r border-gray-100 text-[#222222] hover:text-[#C59B87] transition-colors">
                 <Eye size={18} strokeWidth={2} />
@@ -181,10 +199,28 @@ const ShopWithoutSidebar = () => {
 
           {/* Hover Action Overlay */}
           <div className="absolute top-1/2 -translate-y-1/2 right-4 flex flex-col items-center gap-2 z-20">
-            <button className="bg-white hover:bg-[#C59B87] hover:text-white text-gray-800 w-[42px] h-[42px] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-in-out delay-0">
-              <Heart size={16} strokeWidth={1.5} />
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToWishlist(product);
+              }}
+              className={`w-[42px] h-[42px] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-in-out delay-0 ${
+                isInWishlist(product.id) 
+                ? "bg-[#C59B87] text-white" 
+                : "bg-white text-gray-800 hover:bg-[#C59B87] hover:text-white"
+              }`}
+            >
+              <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
             </button>
-            <button className="bg-white hover:bg-[#C59B87] hover:text-white text-gray-800 w-[42px] h-[42px] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-in-out delay-0 group-hover:delay-75">
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addToCart(product, 1);
+              }}
+              className="bg-white hover:bg-[#C59B87] hover:text-white text-gray-800 w-[42px] h-[42px] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-in-out delay-0 group-hover:delay-75"
+            >
               <ShoppingBag size={16} strokeWidth={1.5} />
             </button>
             <button className="bg-white hover:bg-[#C59B87] hover:text-white text-gray-800 w-[42px] h-[42px] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-in-out delay-0 group-hover:delay-150">

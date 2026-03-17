@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Facebook,
   Instagram,
@@ -62,19 +63,19 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[10px] ">
               {[
-                "About Us",
-                "Contact Us",
-                "FAQ",
-                "Terms & Conditions",
-                "Privacy Policy",
+                { name: "About Us", path: "#" },
+                { name: "Contact Us", path: "#" },
+                { name: "FAQ", path: "#" },
+                { name: "Terms & Conditions", path: "#" },
+                { name: "Privacy Policy", path: "#" },
               ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
                     className="relative inline-block text-gray-500 hover:text-[#C59B87] text-[15px] transition-colors pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-left after:scale-x-0 after:bg-[#C59B87] after:transition-transform after:duration-[400ms] after:ease-in-out hover:after:scale-x-100"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -87,19 +88,20 @@ const Footer = () => {
             </h3>
             <ul className="space-y-[10px]">
               {[
-                "Latest News",
-                "View Cart",
-                "Wishlist",
-                "Checkout",
-                "Store Locator",
+                { name: "Latest News", path: "#" },
+                { name: "View Cart", path: "/cart" },
+                { name: "Wishlist", path: "/wishlist" },
+                { name: "Checkout", path: "/checkout" },
+                { name: "Track Order", path: "/track-order" },
+                { name: "Store Locator", path: "/find-store" },
               ].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
                     className="relative inline-block text-gray-500 hover:text-[#C59B87] text-[15px] transition-colors pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-left after:scale-x-0 after:bg-[#C59B87] after:transition-transform after:duration-[400ms] after:ease-in-out hover:after:scale-x-100"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>

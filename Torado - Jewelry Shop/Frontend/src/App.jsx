@@ -16,10 +16,19 @@ import ProductGalleryThumbnails from "./pages/ProductGalleryThumbnails";
 import ProductBottomThumbnails from "./pages/ProductBottomThumbnails";
 import ProductRightThumbnails from "./pages/ProductRightThumbnails";
 import ProductCountdown from "./pages/ProductCountdown";
+import Cart from "./pages/Cart";
+import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./Context/WishlistContext";
+import Wishlist from "./pages/Wishlist";
+import Checkout from "./pages/Checkout";
+import TrackOrder from "./pages/TrackOrder";
+import FindStore from "./pages/FindStore";
 
 function App() {
   return (
-    <Routes>
+    <CartProvider>
+      <WishlistProvider>
+        <Routes>
       <Route path="/shopDefault" element={<ShopWithoutSidebar />} />
       <Route path="/shop-without-sidebar" element={<ShopWithoutSidebar />} />
       <Route path="/shop-left-sidebar" element={<ShopLeftSidebar />} />
@@ -56,8 +65,15 @@ function App() {
         path="/product-countdown/:id"
         element={<ProductCountdown />}
       />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/wishlist" element={<Wishlist />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/track-order" element={<TrackOrder />} />
+      <Route path="/find-store" element={<FindStore />} />
       <Route path="/" element={<Home />} />
     </Routes>
+      </WishlistProvider>
+    </CartProvider>
   );
 }
 

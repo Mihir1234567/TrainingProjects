@@ -13,12 +13,16 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import logoMain from "../assets/Logo/logoMain.png";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../Context/WishlistContext";
 
 const Navbar = ({ isSticky }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isIconsDropdownOpen, setIsIconsDropdownOpen] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState({});
   const navRef = useRef(null);
+  const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,6 +50,7 @@ const Navbar = ({ isSticky }) => {
     { name: "Pages", href: "#", hasDropdown: true },
     { name: "Blog", href: "#", hasDropdown: true },
     { name: "Contact Us", href: "#", hasDropdown: false },
+    { name: "Find A Store", href: "/find-store", hasDropdown: false },
   ];
 
   return (
@@ -369,7 +374,7 @@ const Navbar = ({ isSticky }) => {
                           Shop Without Sidebar
                         </a>
                         <a
-                          href="/product/:id"
+                          href="/product/1"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors font-bold"
                         >
                           Product Default
@@ -423,25 +428,25 @@ const Navbar = ({ isSticky }) => {
                       {/* Column 4 */}
                       <div className="flex flex-col space-y-4">
                         <a
-                          href="#"
+                          href="/cart"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Cart
                         </a>
-                        <a
-                          href="#"
+                        <Link
+                          to="/wishlist"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Wishlist
-                        </a>
+                        </Link>
                         <a
-                          href="#"
+                          href="/checkout"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors font-bold"
                         >
                           Checkout
                         </a>
                         <a
-                          href="#"
+                          href="/track-order"
                           className="text-gray-600 hover:text-[#CB927A] text-sm font-medium transition-colors"
                         >
                           Track My Order
@@ -468,25 +473,29 @@ const Navbar = ({ isSticky }) => {
             className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-all transform hover:scale-110 duration-300"
           />
 
-          <div className="relative cursor-pointer group">
+          <Link to="/wishlist" className="relative cursor-pointer group">
             <Heart
               size={24}
               className="text-gray-900 group-hover:text-[#CB927A] transition-all transform group-hover:scale-110 duration-300"
             />
-            <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold group-hover:bg-black transition-colors duration-300">
-              2
-            </span>
-          </div>
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold group-hover:bg-black transition-colors duration-300">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
 
-          <div className="relative cursor-pointer group">
+          <Link to="/cart" className="relative cursor-pointer group">
             <ShoppingBag
               size={24}
               className="text-gray-900 group-hover:text-[#CB927A] transition-all transform group-hover:scale-110 duration-300"
             />
-            <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold group-hover:bg-black transition-colors duration-300">
-              3
-            </span>
-          </div>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold group-hover:bg-black transition-colors duration-300">
+                {cartCount}
+              </span>
+            )}
+          </Link>
 
           <LayoutGrid
             size={24}
@@ -533,24 +542,28 @@ const Navbar = ({ isSticky }) => {
               size={22}
               className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"
             />
-            <div className="relative cursor-pointer">
+            <Link to="/wishlist" className="relative cursor-pointer">
               <Heart
                 size={22}
                 className="text-gray-900 hover:text-[#CB927A] transition-colors"
               />
-              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
-                2
-              </span>
-            </div>
-            <div className="relative cursor-pointer">
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+            <Link to="/cart" className="relative cursor-pointer">
               <ShoppingBag
                 size={22}
                 className="text-gray-900 hover:text-[#CB927A] transition-colors"
               />
-              <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
-                3
-              </span>
-            </div>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#CB927A] text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF4E9] font-bold">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
             <LayoutGrid
               size={22}
               className="text-gray-900 cursor-pointer hover:text-[#CB927A] transition-colors"

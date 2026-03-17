@@ -7,6 +7,8 @@ import {
   ShoppingCart,
   Eye,
 } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../Context/WishlistContext";
 
 import img1 from "../assets/Landing/Featured Products/imgi_1_product-1.png";
 import img2 from "../assets/Landing/Featured Products/imgi_3_product-2.png";
@@ -88,6 +90,8 @@ const products = [
 
 const FeaturedProducts = () => {
   const [startIndex, setStartIndex] = useState(0);
+  const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist } = useWishlist();
 
   // We'll calculate translateX percentage based on index.
   // We'll set the container to overflow-hidden, and map through all products.
@@ -148,18 +152,45 @@ const FeaturedProducts = () => {
                       </div>
                     )}
 
-                    {/* Hover Action Icons (Matches ExploreCollections) */}
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+                     <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
                       {[
-                        { icon: Heart, delay: "delay-0" },
-                        { icon: ShoppingCart, delay: "delay-75" },
-                        { icon: Eye, delay: "delay-150" },
-                      ].map((item, idx) => (
+                        { 
+                          icon: Heart, 
+                          delay: "delay-0", 
+                          action: () => addToWishlist(product),
+                          isActive: isInWishlist(product.id)
+                        },
+                        { 
+                          icon: ShoppingCart, 
+                          delay: "delay-75", 
+                          action: () => addToCart(product, 1) 
+                        },
+                        { 
+                          icon: Eye, 
+                          delay: "delay-150", 
+                          action: null 
+                        },
+                      ].map((actionItem, idx) => (
                         <button
                           key={idx}
-                          className={`w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-700 hover:bg-[#CB927A] hover:text-white transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${item.delay}`}
+                          onClick={(e) => {
+                            if (actionItem.action) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              actionItem.action();
+                            }
+                          }}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${actionItem.delay} ${
+                            actionItem.isActive 
+                            ? "bg-[#CB927A] text-white" 
+                            : "bg-white text-gray-700 hover:bg-[#CB927A] hover:text-white"
+                          }`}
                         >
-                          <item.icon size={18} strokeWidth={1.5} />
+                          <actionItem.icon 
+                            size={18} 
+                            strokeWidth={1.5} 
+                            fill={actionItem.isActive ? "currentColor" : "none"}
+                          />
                         </button>
                       ))}
                     </div>

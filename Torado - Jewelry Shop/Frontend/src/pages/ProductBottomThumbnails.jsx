@@ -21,8 +21,12 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { productsData } from "../data/products";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../Context/WishlistContext";
 
 const ProductBottomThumbnails = () => {
+  const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist } = useWishlist();
   const { id } = useParams();
   const [isScrolled, setIsScrolled] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -395,7 +399,10 @@ const ProductBottomThumbnails = () => {
               </div>
 
               {/* Add to Cart */}
-              <button className="group relative overflow-hidden bg-[#C59B87] text-white text-[14px] font-medium px-8 py-3 w-[180px] h-[45px] flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors">
+              <button 
+                onClick={() => addToCart(product, quantity)}
+                className="group relative overflow-hidden bg-[#C59B87] text-white text-[14px] font-medium px-8 py-3 w-[180px] h-[45px] flex items-center justify-center gap-1.5 whitespace-nowrap transition-colors"
+              >
                 {/* Hover Background overlay */}
                 <div className="absolute inset-0 bg-[#222222] opacity-0 scale-y-0 group-hover:opacity-100 group-hover:scale-y-100 transition-all duration-500 ease-in-out origin-center"></div>
 
@@ -410,9 +417,12 @@ const ProductBottomThumbnails = () => {
               </button>
 
               {/* Add to Wishlist */}
-              <button className="flex items-center gap-2 text-[14px] text-gray-600 hover:text-[#C59B87] transition-colors">
-                <Heart size={16} strokeWidth={1.5} />
-                Add To Wishlist
+              <button 
+                onClick={() => addToWishlist(product)}
+                className={`flex items-center gap-2 text-[14px] transition-colors ${isInWishlist(product.id) ? "text-[#C59B87]" : "text-gray-600 hover:text-[#C59B87]"}`}
+              >
+                <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                {isInWishlist(product.id) ? "In Wishlist" : "Add To Wishlist"}
               </button>
             </div>
 
@@ -807,19 +817,36 @@ const ProductBottomThumbnails = () => {
                         </div>
                       )}
 
-                      {/* Hover Action Icons */}
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+                       <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
                         {[
-                          { icon: Heart, delay: "delay-0" },
-                          { icon: ShoppingBag, delay: "delay-75" },
-                          { icon: Eye, delay: "delay-150" },
-                        ].map((action, idx) => (
+                          { 
+                            icon: Heart, 
+                            delay: "delay-0", 
+                            action: () => addToWishlist(item),
+                            isActive: isInWishlist(item.id)
+                          },
+                          { icon: ShoppingBag, delay: "delay-75", action: () => addToCart(item, 1) },
+                          { icon: Eye, delay: "delay-150", action: null },
+                        ].map((actionItem, idx) => (
                           <button
                             key={idx}
-                            onClick={(e) => e.preventDefault()}
-                            className={`w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-700 hover:bg-[#CB927A] hover:text-white transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${action.delay}`}
+                            onClick={(e) => {
+                              if (actionItem.action) {
+                                e.preventDefault();
+                                actionItem.action();
+                              }
+                            }}
+                            className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${actionItem.delay} ${
+                                actionItem.isActive 
+                                ? "bg-[#CB927A] text-white" 
+                                : "bg-white text-gray-700 hover:bg-[#CB927A] hover:text-white"
+                            }`}
                           >
-                            <action.icon size={18} strokeWidth={1.5} />
+                            <actionItem.icon 
+                                size={18} 
+                                strokeWidth={1.5} 
+                                fill={actionItem.isActive ? "currentColor" : "none"}
+                            />
                           </button>
                         ))}
                       </div>

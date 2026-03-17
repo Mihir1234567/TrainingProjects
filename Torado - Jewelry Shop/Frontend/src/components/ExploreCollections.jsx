@@ -1,4 +1,3 @@
-import React from "react";
 import { Heart, ShoppingCart, Eye, ArrowUpRight } from "lucide-react";
 import ringImg from "../assets/Landing/Explore Collections/imgi_34_product-41.png";
 import necklaceImg from "../assets/Landing/Explore Collections/imgi_35_product-42.png";
@@ -7,13 +6,18 @@ import braceletImg from "../assets/Landing/Explore Collections/imgi_37_product-4
 import modelImg from "../assets/Landing/Explore Collections/imgi_49_insta-8.jpg";
 import banner1Img from "../assets/Landing/Explore Collections/imgi_38_collection-7.jpg";
 import banner2Img from "../assets/Landing/Explore Collections/imgi_39_collection-8.jpg";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../Context/WishlistContext";
 
 const ExploreCollections = () => {
+  const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist } = useWishlist();
+
   const products = [
-    { id: 1, name: "Ring", price: "$150.00", img: ringImg },
-    { id: 2, name: "Necklace", price: "$300.00", img: necklaceImg },
-    { id: 3, name: "Earring", price: "$100.00", img: earringImg },
-    { id: 4, name: "Bracelet", price: "$120.00", img: braceletImg },
+    { id: 101, name: "Ring", price: "$150.00", image: ringImg },
+    { id: 102, name: "Necklace", price: "$300.00", image: necklaceImg },
+    { id: 103, name: "Earring", price: "$100.00", image: earringImg },
+    { id: 104, name: "Bracelet", price: "$120.00", image: braceletImg },
   ];
 
   return (
@@ -38,23 +42,39 @@ const ExploreCollections = () => {
                 {/* Action Icons (Hover) */}
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10 transition-all duration-500">
                   {[
-                    { icon: Heart, delay: "delay-0" },
-                    { icon: ShoppingCart, delay: "delay-75" },
-                    { icon: Eye, delay: "delay-150" },
+                    { 
+                      icon: Heart, 
+                      delay: "delay-0", 
+                      action: () => addToWishlist(product),
+                      isActive: isInWishlist(product.id)
+                    },
+                    { icon: ShoppingCart, delay: "delay-75", action: () => addToCart(product, 1) },
+                    { icon: Eye, delay: "delay-150", action: null },
                   ].map((item, idx) => (
-                    <div
+                    <button
                       key={idx}
-                      className={`w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-gray-700 hover:bg-[#CB927A] hover:text-white transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${item.delay}`}
+                      onClick={(e) => {
+                        if (item.action) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            item.action();
+                        }
+                      }}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-500 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 ${item.delay} ${
+                          item.isActive 
+                          ? "bg-[#CB927A] text-white" 
+                          : "bg-white text-gray-700 hover:bg-[#CB927A] hover:text-white"
+                      }`}
                     >
-                      <item.icon size={18} />
-                    </div>
+                      <item.icon size={18} fill={item.isActive ? "currentColor" : "none"} />
+                    </button>
                   ))}
                 </div>
 
                 {/* Image Container */}
                 <div className="w-full flex-1 flex items-center justify-center overflow-hidden relative">
                   <img
-                    src={product.img}
+                    src={product.image}
                     alt={product.name}
                     className="max-h-[240px] md:max-h-[280px] w-auto object-contain mix-blend-multiply block transition-transform duration-700 group-hover:scale-105"
                   />
